@@ -1,0 +1,65 @@
+options           =   calcPairing ,   calcPairing 
+
+
+Case              =   BaFeAs_5Orbit_5Sheets
+dimension         =   2
+temperature       =   0.02
+numberOfOrbitals  =   5
+chemicalPotential =   0.0
+
+# General TB parameters
+tbParametersFile  =  tbParameters_1111.csv 
+sublattice        =   0
+
+a1x               =   1.0
+a1y               =   0.0
+a1z               =   0.0
+
+a2x               =   0.0
+a2y               =   1.0
+a2z               =   0.0
+
+a3x               =   0.0
+a3y               =   0.0
+a3z               =   1.0
+
+kTrafo            =   0
+
+# Interaction parameters
+Coulomb1U         =   1.3 1.0 1.67
+Coulomb2Up        =   0.9  0.8 1.4612
+Coulomb3J         =   0.2 0.1 0.104375
+Coulomb4Jp        =   0.2 0.1 0.104375
+
+# Parameters for k-space integrations
+nkIntegration     =   32
+nkzIntegration    =   1
+
+
+# Parameters for pairing calculation
+FSforPairingFile  =   FSforPairing.dat 
+nkPerSheet        =   4
+FSnkz             =   1
+staticUFactor     =   1.0
+interpolateChi    =   0
+storeChi          =   0
+readChi           =   0
+ChiForPairingFile =   none
+
+# Parameters for susceptibility calculation
+nqx               =    64
+nqy               =    64
+nqz               =    1
+qxmin             =    0.0
+qxmax             =    1.0
+qymin             =    0.0
+qymax             =    1.0 
+qzmin             =    0.0
+qzmax             =    0.0
+
+nw                =    1
+wmin              =    0.0
+wmax              =    0.0
+
+
+

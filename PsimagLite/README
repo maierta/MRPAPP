@@ -1,0 +1,81 @@
+
+PsimagLite is free software (see file LICENSE) 
+
+Please cite PsimagLite if you base any scientific 
+publication on this software. Citation should read:
+G. Alvarez, (2011), PsimagLite (version 1.0.0) 
+[computer software], Oak Ridge National Laboratory.
+
+-------------------------------------------------------------------------------
+PsimagLite is a collection of C++ classes that are common to 
+ codes for the simulation of strongly correlated electrons.
+PsimagLite is inspired in T.S.'s Psimag software (but PsimagLite is not a fork of Psimag).
+
+The reason for PsimagLite is to share code among different applications.
+Applications that depend on PsimagLite are:
+SpinPhononFermion, DMRG++, Lanczos++, FreeFermions, and GpusDoneRight.
+-----------------------------------------------------------------------------
+
+[DenseLinearAlgebra]
+BLAS // wrapper
+Lapack <-- Temporary class, do not use, use LAPACK instead
+LAPACK // wrapper
+Matrix /// a matrix class
+
+[SparseLinearAlgebra]
+CrsMatrix
+TridiagonalMatrix
+LanczosSolver
+ChebyshevSolver <-- experimental, not ready!
+SparseRow <-- experimental, do not use
+
+[JSON] 
+JSON directory.
+Json support (taken from M.S.'s new implementation which doesn't depend on anything at all)
+
+[Io] Input output support
+IoSimple
+
+[Concurrency] To write the same code for serial and MPI (and in
+the future pthreads and GPUs)
+Concurrency
+ConcurrencyMpi
+ConcurrencySerial
+Pthreads
+NoPthreads
+PackIndices
+Range
+
+[SystemInfo] Basic time/date capability, os, hostname, compiler info
+HostInfo
+MemoryUsage
+Rusage // Rusage class is deprecated, use MemoryUsage instead
+Profiling // Profiling through constructor/destructor paradigm as done by M.S in DCA++
+It should be called actually scope
+ProgressIndicator
+Tokenizer
+TypeToString
+LineMarker
+
+[Math]
+LinearPrediction
+Minimizer
+PlotParams
+Sort
+Random48
+RandomForTests
+AkimaSpline
+GslWrapper
+Fermi
+AlmostEqual
+BitManip
+ContinuedFractionCollection
+ContinuedFraction
+
+[STL extensions] These add operations to std classes and put those
+extensions in the std namespace, no new classes here!
+Complex
+Vector
+Stack
+-------------------------------------------------------------------------------
+

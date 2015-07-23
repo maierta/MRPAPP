@@ -391,8 +391,8 @@ namespace rpa {
 						for (size_t l4=0; l4<nOrb; l4++) {
 							size_t ind1 = l2+l1*nOrb;	
 							size_t ind2 = l4+l3*nOrb;	
-							size_t ind3 = ind2;
-							size_t ind4 = ind1;
+							size_t ind3 = ind1;
+							size_t ind4 = ind2;
 							if (param.pairingSpinParity==0) { // Singlet vertex
 								result(ind1,ind2) = 0.5*(ms(ind3,ind4)-mc(ind3,ind4))*param.staticUFactor 
 							                      - 0.5*uccu(ind3,ind4)*param.chargeFactor

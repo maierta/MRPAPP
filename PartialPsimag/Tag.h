@@ -138,7 +138,7 @@ namespace psimag {
 
   inline std::ostream& operator << (std::ostream& os, const Tag& t) {
     
-    typedef TagAttributes::const_iterator AttributeItr;
+    // typedef TagAttributes::const_iterator AttributeItr;
 
     static const size_t contentBreakPoint = 100;
     std::string content = t.content.str();

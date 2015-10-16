@@ -58,9 +58,9 @@ int main(int argc,char *argv[])
 	// std::string fileName(argv[1]);
 
 
-	typedef std::complex<FieldType>	 			ComplexType;
-	typedef psimag::Matrix<ComplexType> 	    ComplexMatrixType;
-	typedef psimag::Matrix<FieldType> 	        MatrixType;
+	// typedef std::complex<FieldType>	 			ComplexType;
+	// typedef psimag::Matrix<ComplexType> 	    ComplexMatrixType;
+	// typedef psimag::Matrix<FieldType> 	        MatrixType;
 
 
 	ConcurrencyType concurrency(argc,argv);

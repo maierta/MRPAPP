@@ -37,6 +37,7 @@ namespace rpa {
 		std::string gAmpl;
 		Field Delta0;
 		Field Omega0;
+		Field signF; // sign of FF term in BCS chi0 calculation
 		size_t nwn;
 		std::string Case;
 		size_t dimension;
@@ -131,6 +132,7 @@ namespace rpa {
 			gAmpl("LaOFeAs_s_1"),
 			Delta0(0.04),
 			Omega0(0.1),
+			signF(-1.0),
 			nwn(100),
 			Case(""),
 			dimension(2),
@@ -366,6 +368,7 @@ namespace rpa {
 		        else if (text.find("nkPerSheet")!=std::string::npos) str >> (*this).nkPerSheet;
 		        else if (text.find("FSnkz")!=std::string::npos) str >> (*this).FSnkz;
 		        else if (text.find("Omega0")!=std::string::npos) str >> (*this).Omega0;
+		        else if (text.find("signF")!=std::string::npos) str >> (*this).signF;
 		        else if (text.find("damp")!=std::string::npos) str >> (*this).damp;
 		        else if (text.find("calcOnlyDiagonal")!=std::string::npos) str >> (*this).calcOnlyDiagonal;
 			}
@@ -468,6 +471,7 @@ namespace rpa {
 				os << "nkPerSheet = " << (*this).nkPerSheet << "\n";
 				os << "FSnkz = " << (*this).FSnkz << "\n";
 				os << "Omega0 = " << (*this).Omega0 << "\n";
+				os << "signF = " << (*this).signF << "\n";
 				os << "damp = " << (*this).damp << "\n";
 				os << "calcOnlyDiagonal = " << (*this).calcOnlyDiagonal << "\n";
 			}
@@ -576,6 +580,7 @@ namespace rpa {
 		        conc.broadcast((*this).nkPerSheet);
 		        conc.broadcast((*this).FSnkz);
 		        conc.broadcast((*this).Omega0);
+		        conc.broadcast((*this).signF);
 		        conc.broadcast((*this).damp);
 		        conc.broadcast((*this).calcOnlyDiagonal);
 			}

@@ -166,7 +166,7 @@ namespace rpa {
 						ComplexType r1(0.0);
 						ComplexType gap2 = Delta(k,band2,ak); 
 						gap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off
-						r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp);
+						r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);
 
 						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
 							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);

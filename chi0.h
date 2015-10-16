@@ -175,6 +175,9 @@ namespace rpa {
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 							// 	           * akq(l1,band1) * conj(akq(l3,band1));
 
+							// Check if l1,l2 and l3,l4 are on the same site
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue; 
+
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 							chi0matrix(i,j) += c1*r1 ;
 
@@ -253,7 +256,10 @@ namespace rpa {
 
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 							// 	           * akq(l1,band1) * conj(akq(l3,band1));
-					
+	
+							// Check if l1,l2 and l3,l4 are on the same site
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue; 
+				
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 
 							chi0matrix(i,j) += c1*r1 ;
@@ -314,6 +320,8 @@ namespace rpa {
 							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
 							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
 
+							// Check if l1,l2 and l3,l4 are on the same site
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue; 
 							if (calcOnlyDiagonal && ((l1!=l2) || (l3!=l4))) continue;
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 					                       // * akq(l1,band1) * conj(akq(l3,band1));
@@ -333,6 +341,7 @@ namespace rpa {
 			if (kMap_) printChi0k(q);
 
 		}
+
 
 
 

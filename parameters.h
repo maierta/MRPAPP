@@ -70,12 +70,15 @@ namespace rpa {
 		std::string subOptions;
 		MatrixType WTrafo;
 		IntMatrixType indexToOrb;
+		std::vector<int> orbToSite;
 		bool hyb;
 		bool LS;
 		Field hybStrength;
 		size_t hybBand1;
 		size_t hybBand2;
 		size_t nSitesPerUnitCell;
+		std::vector<int> nOrbAtom;
+		std::string nOrbAtomStr;
 		Field damp;
 		bool calcOnlyDiagonal;
 
@@ -161,12 +164,15 @@ namespace rpa {
 			subOptions(""),
 			WTrafo(3,3),
 			indexToOrb(0,0),
+			orbToSite(0),
 			hyb(0),
 			LS(0),
 			hybStrength(0.0),
 			hybBand1(0),
 			hybBand2(0),
 			nSitesPerUnitCell(1),
+			nOrbAtom(0,0),
+			nOrbAtomStr(""),
 			damp(1.0e-3),
 			calcOnlyDiagonal(0)
 
@@ -222,6 +228,7 @@ namespace rpa {
 				// a1[0]= 1.0  ; a1[1]=1.0;
 				// a2[0]= -1.0 ; a2[1]=1.0;
 				// a3[2]=1.0;
+
 			};
 
 			void readFromInputFile(const std::string& file) {
@@ -236,9 +243,11 @@ namespace rpa {
 				        setParamBasedOnText(text,str);
 					}
 				}
+
 				
 				conc.barrier();
 				broadcastParam();
+		        loadVector(nOrbAtom,nOrbAtomStr);
 				// bcTest();
 
 				if(kTrafo==0) {
@@ -353,6 +362,7 @@ namespace rpa {
 		        else if (text.find("hybBand1")!=std::string::npos) str >> (*this).hybBand1;
 		        else if (text.find("hybBand2")!=std::string::npos) str >> (*this).hybBand2;
 		        else if (text.find("nSitesPerUnitCell")!=std::string::npos) str >> (*this).nSitesPerUnitCell;
+		        else if (text.find("nOrbAtom")!=std::string::npos) str >> (*this).nOrbAtomStr;
 		        else if (text.find("nkPerSheet")!=std::string::npos) str >> (*this).nkPerSheet;
 		        else if (text.find("FSnkz")!=std::string::npos) str >> (*this).FSnkz;
 		        else if (text.find("Omega0")!=std::string::npos) str >> (*this).Omega0;
@@ -452,6 +462,9 @@ namespace rpa {
 				os << "hybBand1 = " << (*this).hybBand1 << "\n";
 				os << "hybBand2 = " << (*this).hybBand2 << "\n";
 				os << "nSitesPerUnitCell = " << (*this).nSitesPerUnitCell << "\n";
+				os << "nOrbAtom = ";
+				for (int i=0; i<nOrbAtom.size();i++) os << (*this).nOrbAtom[i] << " "; 
+				os << "\n";
 				os << "nkPerSheet = " << (*this).nkPerSheet << "\n";
 				os << "FSnkz = " << (*this).FSnkz << "\n";
 				os << "Omega0 = " << (*this).Omega0 << "\n";
@@ -559,6 +572,7 @@ namespace rpa {
 		        conc.broadcast((*this).hybBand1);
 		        conc.broadcast((*this).hybBand2);
 		        conc.broadcast((*this).nSitesPerUnitCell);
+		        conc.broadcast((*this).nOrbAtomStr);
 		        conc.broadcast((*this).nkPerSheet);
 		        conc.broadcast((*this).FSnkz);
 		        conc.broadcast((*this).Omega0);
@@ -575,8 +589,36 @@ namespace rpa {
 						indexToOrb(ind,1) = l2;
 					}
 				}
-
+				for (size_t l=0;l<nOrb; l++) {
+					int ll(l);
+					for (size_t site=0;site<nSitesPerUnitCell;site++) {
+						ll -= nOrbAtom[site];
+						if (ll < 0) {
+							orbToSite.push_back(site);
+							break;
+						}
+					}
+				}
+				if (conc.rank()==0) {
+					std::cout << "orbToSite: ";
+					for (size_t l=0;l<nOrb;l++) std::cout << l << "->" << orbToSite[l] << " ";
+					std::cout << "\n";
+				}
 			}
+
+
+			template<typename FieldType>
+			void loadVector(std::vector<FieldType>& v,const std::string& vstring)
+			{
+				std::stringstream ss(vstring);
+				int value;
+				while (ss >> value)
+				{
+					v.push_back(value);
+					if (ss.peek() == ',') ss.ignore();
+				}
+			}
+
 
 	};
 

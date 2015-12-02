@@ -82,6 +82,7 @@ namespace rpa {
 		std::string nOrbAtomStr;
 		Field damp;
 		bool calcOnlyDiagonal;
+		bool writeFullChi0;
 
 		// size_t nktot;
 
@@ -176,7 +177,8 @@ namespace rpa {
 			nOrbAtom(0,0),
 			nOrbAtomStr(""),
 			damp(1.0e-3),
-			calcOnlyDiagonal(0)
+			calcOnlyDiagonal(0),
+			writeFullChi0(0)
 
 			// single-band model in 2-sub-lattice formulation
 			// dimension(2),
@@ -371,6 +373,7 @@ namespace rpa {
 		        else if (text.find("signF")!=std::string::npos) str >> (*this).signF;
 		        else if (text.find("damp")!=std::string::npos) str >> (*this).damp;
 		        else if (text.find("calcOnlyDiagonal")!=std::string::npos) str >> (*this).calcOnlyDiagonal;
+		        else if (text.find("writeFullChi0")!=std::string::npos) str >> (*this).writeFullChi0;
 			}
 
 			void writeParameters(std::ostream& os) {
@@ -473,7 +476,7 @@ namespace rpa {
 				os << "Omega0 = " << (*this).Omega0 << "\n";
 				os << "signF = " << (*this).signF << "\n";
 				os << "damp = " << (*this).damp << "\n";
-				os << "calcOnlyDiagonal = " << (*this).calcOnlyDiagonal << "\n";
+				os << "writeFullChi0 = " << (*this).writeFullChi0 << "\n";
 			}
 
 
@@ -582,7 +585,7 @@ namespace rpa {
 		        conc.broadcast((*this).Omega0);
 		        conc.broadcast((*this).signF);
 		        conc.broadcast((*this).damp);
-		        conc.broadcast((*this).calcOnlyDiagonal);
+		        conc.broadcast((*this).writeFullChi0);
 			}
 
 			void setupOrbitalIndices(){

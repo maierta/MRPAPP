@@ -6,6 +6,9 @@ dimension         =   2
 temperature       =   0.02
 numberOfOrbitals  =   5
 chemicalPotential =   0.0
+nSitesPerUnitCell =   1
+nOrbAtom          =   5
+
 
 # General TB parameters
 tbParametersFile  =  tbParameters_1111.csv 
@@ -60,6 +63,13 @@ qzmax             =    0.0
 nw                =    1
 wmin              =    0.0
 wmax              =    0.0
+damp              =    0.001
 
+writeFullChi0     =    0    
+
+scState           =    0
+gAmpl             =    KFe2Se2_edoped_SO0p05_d
+Delta0            =    0.00
+printGap          =    0
 
 

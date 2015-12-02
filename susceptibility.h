@@ -58,6 +58,7 @@ namespace rpa {
 			std::vector<size_t> indexToiq;
 			std::vector<size_t> indexToiw;
 			FieldType wmin_,wmax_;
+			bool writeFullChi0;
 
 		public:
 			// typedef std::vector<SuscType> BaseType;
@@ -84,7 +85,8 @@ namespace rpa {
 						indexToiq(numberOfQ,0),
 						indexToiw(numberOfQ,0),
 						wmin_(wmin),
-						wmax_(wmax)
+						wmax_(wmax),
+						writeFullChi0(param.writeFullChi0)
 
 
 		{
@@ -313,34 +315,37 @@ namespace rpa {
 		}
 
 		void writeChiqTxt(VectorSuscType& chi0Matrix) {
-			std::ofstream os("chi0Full.txt");
+			int width(10);
+			std::vector<FieldType> q(3);
+			if (writeFullChi0) {
+				std::ofstream os("chi0Full.txt");
+				os.precision(width);
+				os << std::fixed;
+				os << "nq1,nq2,nq3,nw: \n";
+				os << nq1 << " , " << nq2 << " , " << nq3 << " , " << nw << "\n";
+				for (size_t iq=0;iq<numberOfQ;iq++) {
+					q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
+					os << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
+					for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) 
+						os << real(chi0Matrix[iq](l1,l2))<< " , ";
+					for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) 
+						os << imag(chi0Matrix[iq](l1,l2))<< " , ";
+	     			ComplexType sus0(chi0Matrix[iq].calcSus());
+					os << real(sus0) << " , " << imag(sus0);
+					os << "\n";
+				}
+			}
 			std::ofstream os2("chiRPA.txt");
 			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param);
-			int width(10);
-			os.precision(width);
 			os2.precision(width);
-			os << std::fixed;
 			os2 << std::fixed;
-			os << "nq1,nq2,nq3,nw: \n";
-			os << nq1 << " , " << nq2 << " , " << nq3 << " , " << nw << "\n";
-			std::vector<FieldType> q(3);
+			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
-				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
-				os << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
-				for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) {
-					os << real(chi0Matrix[iq](l1,l2))<< " , ";
-				}
-				for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) {
-					os << imag(chi0Matrix[iq](l1,l2))<< " , ";
-				}
-     			ComplexType sus0(chi0Matrix[iq].calcSus());
-				os << real(sus0) << " , " << imag(sus0);
-				os << "\n";
-				SuscType chiRPA(param,conc);
      			rpa.calcRPAResult(chi0Matrix[iq],rpa.spinMatrix,chiRPA,q);
      			ComplexType susR(chiRPA.calcSus());
+     			ComplexType sus1(chi0Matrix[iq].calcSus());
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
-     			os2 << real(susR) << ","  << imag(susR) << " ," << real(sus0) << " , " << imag(sus0) << "\n";
+     			os2 << real(susR) << ","  << imag(susR) << " ," << real(sus1) << " , " << imag(sus1) << "\n";
 			}
 		}
 

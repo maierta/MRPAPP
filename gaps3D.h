@@ -92,6 +92,15 @@ namespace rpa {
 				for (size_t i=0;i<param.nOrb;i++) w[i](0,0) =  1.0;
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
+            } else if (param.gAmpl == "spm-5band") { // simple s+ for all hole pockets and s- for all electron pockets
+                crystHarm = &swave;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[1](0,0) =  1.0;
+                w[2](0,0) =  1.0;
+                w[3](0,0) =  -1.0;
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
 			} else if (param.gAmpl == "LiFeAs_s_1") { // Yan's parametrization of 3D RPA gap for LiFeAs DFT model
                 crystHarm = &swaveRPALiFeAs;
 

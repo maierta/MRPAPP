@@ -72,6 +72,18 @@ namespace rpa {
 					 // + w(1,0) * (cos(2.*kvector[0]) - cos(2.*kvector[1]))
 					 // + w(2,0) * (cos(2.*kvector[0])*cos(kvector[1]) - cos(2.*kvector[1])*cos(kvector[0]));
 			}
+
+	template<typename FieldType, template<typename> class MatrixTemplate>
+	FieldType swave(const std::vector<FieldType>& kvector, 
+					const MatrixTemplate<FieldType>& w,
+				    const std::vector<FieldType>& kz,
+					const FieldType& k0,
+					const size_t band)
+			{
+				return w(0,0) 
+					 + w(1,0) * (cos(kvector[0]) + cos(kvector[1]))
+					 + w(2,0) * (cos(kvector[0]) * cos(kvector[1]));
+			}
 	
 	template<typename FieldType>
 	FieldType dwaveRot(const std::vector<FieldType>& kvector, 

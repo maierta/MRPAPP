@@ -341,6 +341,7 @@ namespace rpa {
 			os2 << std::fixed;
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
+				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
      			rpa.calcRPAResult(chi0Matrix[iq],rpa.spinMatrix,chiRPA,q);
      			ComplexType susR(chiRPA.calcSus());
      			ComplexType sus1(chi0Matrix[iq].calcSus());

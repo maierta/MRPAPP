@@ -327,6 +327,7 @@ namespace rpa {
 					                       // * akq(l1,band1) * conj(akq(l3,band1));
 					
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
+							// if (l1==0 && l2==0 && l3==3 && l4==3 && band1==band2 && abs(r1)>=1.0) std::cout << "band1,band2,c1: " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<","<<c1<<","<<r1 << ","<<ekq[band1]<<","<<ek[band2]<<"\n";
 
 							chi0matrix(i,j) += r1*c1 ;
 							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += real(c1*r1);

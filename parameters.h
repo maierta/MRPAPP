@@ -24,7 +24,7 @@ namespace rpa {
 		Field temperature;
 		const Field pi_f;
 		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;
-		Field staticUFactor,chargeFactor;
+		Field staticUFactor,chargeFactor,spinFactor;
 		std::vector<Field> deltaU;
 		std::vector<Field> a1,a2,a3;
 		std::vector<Field> chia1,chia2,chia3;
@@ -109,6 +109,7 @@ namespace rpa {
 			U_pp_coupl(0.0),
 			staticUFactor(1.0),
 			chargeFactor(1.0),
+			spinFactor(1.0),
 			deltaU(5,0.0),
 			a1(3,0),
 			a2(3,0),
@@ -310,6 +311,7 @@ namespace rpa {
 		        else if (text.find("deltaU4")!=std::string::npos) str >> (*this).deltaU[4]; 
 		        else if (text.find("staticUFactor")!=std::string::npos) str >> (*this).staticUFactor; 				
 		        else if (text.find("chargeFactor")!=std::string::npos) str >> (*this).chargeFactor; 				
+		        else if (text.find("spinFactor")!=std::string::npos) str >> (*this).spinFactor; 				
 		        else if (text.find("nkIntegration")!=std::string::npos) str >> (*this).nkInt; 				
 		        else if (text.find("nkzIntegration")!=std::string::npos) str >> (*this).nkIntz; 				
 		        else if (text.find("kz2D")!=std::string::npos) str >> (*this).kz2D; 				
@@ -419,6 +421,7 @@ namespace rpa {
 				os << "deltaU4 = " << (*this).deltaU[4] << "\n";
 				os << "staticUFactor = " << (*this).staticUFactor << "\n";
 				os << "chargeFactor = " << (*this).chargeFactor << "\n";
+				os << "spinFactor = " << (*this).spinFactor << "\n";
 				os << "nkIntegration = " << (*this).nkInt << "\n";
 				os << "nkzIntegration = " << (*this).nkIntz << "\n";
 				os << "kz2D = " << (*this).kz2D << "\n";
@@ -524,6 +527,7 @@ namespace rpa {
 		        conc.broadcast((*this).deltaU[4]); 
 		        conc.broadcast((*this).staticUFactor); 				
 		        conc.broadcast((*this).chargeFactor); 				
+		        conc.broadcast((*this).spinFactor); 				
 		        conc.broadcast((*this).nkInt); 				
 		        conc.broadcast((*this).nkIntz); 				
 		        conc.broadcast((*this).kz2D); 				

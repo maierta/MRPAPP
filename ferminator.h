@@ -102,6 +102,21 @@ namespace rpa {
 			size_t nkSearch(128);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
 
+		} else if (Case_ == "2D_5orbit_only_electron_pockets") {
+			// 2 FS sheets total, 1 around (pi,0), one around (0,pi)
+			nSheets = 2; 
+			nTotal = nSheets * nkPerSheet; 
+			resizeContainers();
+
+			FSCenters[0][0] = Pi; FSCenters[0][1] = 0;
+			FSBand   [0]    =  3;
+			FSCenters[1][0] = 0; FSCenters[1][1] = Pi;
+			FSBand   [1]    =  3;
+
+			size_t nkSearch(128);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
+
+
 		} else if (Case_ == "KFeSe_10Orbit_overdoped_2D") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
 			nSheets = 5; 

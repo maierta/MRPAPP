@@ -396,7 +396,7 @@ namespace rpa {
 							if (param.pairingSpinParity==0) { // Singlet vertex
 								result(ind1,ind2) = 0.5*(ms(ind3,ind4)-mc(ind3,ind4))*param.staticUFactor 
 							                      - 0.5*uccu(ind3,ind4)*param.chargeFactor
-							                      + 3./2.*ucsu(ind3,ind4);
+							                      + 3./2.*ucsu(ind3,ind4)*param.spinFactor;
 		                    } else if (param.pairingSpinParity==1) { // Triplet vertex
 								result(ind1,ind2) =  -0.5*uccu(ind3,ind4) - 0.5*ucsu(ind3,ind4);
 							}

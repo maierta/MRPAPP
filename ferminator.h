@@ -307,6 +307,29 @@ namespace rpa {
 					calcKF(nkSearch,iSheet,kz,3);
 				}
 			}
+
+		} else if (Case_ == "3D_5Orbit_electron_sheets") {
+			// 2 FS sheets total, one each around (pi,0) and (0,pi)
+			
+			nSheets = 2; 
+			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+			resizeContainers();
+
+			FSCenters[0][0] =  Pi; FSCenters[0][1] = 0.0;
+			FSBand   [0]    =   3; 
+			FSCenters[1][0] = 0.0; FSCenters[1][1] = Pi;
+			FSBand   [1]    =   3;
+
+			size_t nkSearch(256);
+
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
+				if (conc.rank()==0) std::cout << "Sheet nr. " << iSheet << "\n";
+				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
+					FieldType kz(param.kz2D);
+					if (param.FSnkz > 1) kz = float(ikz)*2.*param.pi_f/float(param.FSnkz)-param.pi_f;
+					calcKF(nkSearch,iSheet,kz,3);
+				}
+			}
 		} else if (Case_ == "KFeAs_10Orbit_2D") {
 			// 3 FS sheets total around (0,0), neglecting tiny electron pockets near (pi,pi)
 			nSheets = 3; 

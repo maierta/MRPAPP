@@ -160,6 +160,29 @@ namespace rpa {
 					calcKF(nkSearch,iSheet,kz,3);
 				}
 			}
+		} else if (Case_ == "10Orbit_3D_10_01") {
+			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
+			nSheets = 4; 
+			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+			resizeContainers();
+
+			FSCenters[0][0] = Pi; FSCenters[0][1] = 0;
+			FSBand   [0]    =  7;
+			FSCenters[1][0] = Pi; FSCenters[1][1] = 0;
+			FSBand   [1]    =  6;
+			FSCenters[2][0] =  0; FSCenters[2][1] = Pi;
+			FSBand   [2]    =  7; 
+			FSCenters[3][0] =  0; FSCenters[3][1] = Pi;
+			FSBand   [3]    =  6;
+
+			size_t nkSearch(256);
+
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
+				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
+					FieldType kz(float(ikz)*4.*param.pi_f/float(param.FSnkz)-2.*param.pi_f);
+					calcKF(nkSearch,iSheet,kz,3);
+				}
+			}
 		} else if (Case_ == "KFeSe_10Orbit_overdoped_3D") {
 			// 5 FS sheets total, two around (pi,pi), two around (-pi,pi), one (Z) around (0,0,2pi)
 			// Note that the Z pocket is closed along kz

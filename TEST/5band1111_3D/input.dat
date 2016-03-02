@@ -1,0 +1,85 @@
+options           =   calcBands   calcPairing  ,calcPairing ,   calcSus
+
+Case              =   BaFeAs_5Orbit_5Sheets
+dimension         =   3
+kz2D              =   0.5
+temperature       =   0.002
+numberOfOrbitals  =   5
+chemicalPotential =   -0.06
+
+# General TB parameters
+tbParametersFile  =   hopping_BaFeAs_5Orb.csv
+nSitePerUnitCell  =   1
+sublattice        =   0
+nOrbAtom          =   5
+
+a1x               =    1.0
+a1y               =    0.0
+a1z               =    0.0
+
+a2x               =    0.0 
+a2y               =    1.0
+a2z               =    0.0
+
+a3x               =    0.0 
+a3y               =    0.0 
+a3z               =    1.0
+
+kTrafo            =   0
+
+spinOrbit         =    0
+hybridization     =    0
+hybStrength       =    0.0
+
+
+# Interaction parameters
+Coulomb1U         =   0.8
+Coulomb2Up        =   0.4
+Coulomb3J         =   0.2
+Coulomb4Jp        =   0.2
+
+# Parameters for k-space integrations
+nkIntegration     =   128
+nkzIntegration    =   12
+
+deltax            =   0.0 
+deltay            =   0.0
+deltaz            =   0.0
+
+
+# Parameters for pairing calculation
+FSforPairingFile  =  FSforPairing_3D.dat
+staticUFactor     =   1.0
+nkPerSheet        =   20
+FSnkz             =   10
+interpolateChi    =   1
+storeChi          =   1
+readChi           =   0
+ChiForPairingFile =   susOfQFull.txt 
+
+# Parameters for susceptibility calculation
+
+nqx               =    32
+nqy               =    32
+nqz               =    1
+qxmin             =    0.0
+qxmax             =    1.0
+qymin             =    0.0
+qymax             =    1.0
+qzmin             =    1.0
+qzmax             =    1.0
+
+nw                =    1
+wmin              =    0.0
+wmax              =    0.0
+damp              =    0.005
+
+writeFullChi0     =    0
+
+scState           =    0
+gAmpl             =    KFe2Se2_edoped_SO0p05_d
+Delta0            =    0.00
+printGap          =    0
+
+
+

@@ -162,6 +162,7 @@ namespace rpa {
 			}
 		} else if (Case_ == "10Orbit_3D_10_01") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
+			if (conc.rank()==0) std::cout << "Case: " << "10Orbit_3D_10_01 \n";
 			nSheets = 4; 
 			nTotal = nSheets * nkPerSheet * param.FSnkz; 
 			resizeContainers();
@@ -179,6 +180,7 @@ namespace rpa {
 
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
 				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
+					if (conc.rank()==0) std::cout << "iSheet,ikz="<<iSheet<<","<<ikz<<"\n";
 					FieldType kz(float(ikz)*4.*param.pi_f/float(param.FSnkz)-2.*param.pi_f);
 					calcKF(nkSearch,iSheet,kz,3);
 				}

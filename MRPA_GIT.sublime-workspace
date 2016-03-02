@@ -1,0 +1,1501 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"numb",
+				"numberOfQ"
+			],
+			[
+				"K1",
+				"K1vec"
+			],
+			[
+				"gk",
+				"gk0wn"
+			],
+			[
+				"nOrb",
+				"nOrbAtom"
+			],
+			[
+				"type",
+				"typename"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "//-*-C++-*-\n\n#ifndef PARAMETERS_H\n#define PARAMETERS_H\n\n#include <sstream>\n#include <fstream>\n#include <iostream>\n#include <string>\n#include \"ConcurrencyMpi.h\"\n\n\n\nnamespace rpa {\n	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>\n	class parameters {\n	\n	private:\n		ConcurrencyType& conc;\n	public:\n		typedef MatrixTemplate<Field> 			MatrixType;\n		typedef MatrixTemplate<size_t> 			IntMatrixType;\n\n		Field temperature;\n		const Field pi_f;\n		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;\n		Field staticUFactor,chargeFactor,spinFactor;\n		std::vector<Field> deltaU;\n		std::vector<Field> a1,a2,a3;\n		std::vector<Field> chia1,chia2,chia3;\n		size_t nqx,nqy,nqz;\n		Field qxmin,qxmax,qymin,qymax,qzmin,qzmax;\n		size_t nw;\n		Field wmin,wmax;\n		size_t scState;\n		size_t printGap;\n		std::string gAmpl;\n		Field Delta0;\n		Field Omega0;\n		Field signF; // sign of FF term in BCS chi0 calculation\n		size_t nwn;\n		std::string Case;\n		size_t dimension;\n		size_t nkInt; \n		size_t nkIntz; \n		Field kz2D;\n		size_t FSnkz;\n		size_t nOrb;\n		Field  mu;\n		std::string tbfile;\n		std::string fsfile;\n		bool readFSFromFile;\n		size_t nkPerSheet;\n		bool complexHopping;\n		size_t pairingSpinParity;\n		size_t pairingFromSpin;\n		size_t pairingFromCharge;\n		size_t storeChi;\n		size_t readChi;\n		size_t readChiForSus;\n		std::string chifile;\n		size_t interpolateChi;\n		size_t interpolateNqx;\n		size_t interpolateNqz;\n		size_t sublattice;\n		Field deltax;\n		Field deltay;\n		Field deltaz;\n		size_t kTrafo;\n		std::string options;\n		std::string subOptions;\n		MatrixType WTrafo;\n		IntMatrixType indexToOrb;\n		std::vector<int> orbToSite;\n		bool hyb;\n		bool LS;\n		Field hybStrength;\n		size_t hybBand1;\n		size_t hybBand2;\n		size_t nSitesPerUnitCell;\n		std::vector<int> nOrbAtom;\n		std::string nOrbAtomStr;\n		Field damp;\n		bool calcOnlyDiagonal;\n		bool writeFullChi0;\n\n		// size_t nktot;\n\n\n		parameters(ConcurrencyType& concurrency):\n			conc(concurrency), \n			temperature(1.0),\n			pi_f(3.141592653589793238462643383),\n			U(1.1),\n			Up(0.55),\n			J(0.275),\n			Jp(0.275),\n			U_d_s(0.0),\n			U_d_c(0.0),\n			U_p_s(0.0),\n			U_p_c(0.0),\n			U_pd_s(0.0),\n			U_pd_c(0.0),\n			U_pp_s(0.0),\n			U_pp_c(0.0),\n			U_d_coupl(0.0),\n			U_p_coupl(0.0),\n			U_pd_coupl(0.0),\n			U_pp_coupl(0.0),\n			staticUFactor(1.0),\n			chargeFactor(1.0),\n			spinFactor(1.0),\n			deltaU(5,0.0),\n			a1(3,0),\n			a2(3,0),\n			a3(3,0),\n			chia1(3,0),\n			chia2(3,0),\n			chia3(3,0),\n			nqx(1),\n			nqy(1),\n			nqz(1),\n			qxmin(0.0),\n			qxmax(0.0),\n			qymin(0.0),\n			qymax(0.0),\n			qzmin(0.0),\n			qzmax(0.0),\n			nw(1),\n			wmin(0.0),\n			wmax(0.0),\n			scState(0),\n			printGap(0),\n			gAmpl(\"LaOFeAs_s_1\"),\n			Delta0(0.04),\n			Omega0(0.1),\n			signF(-1.0),\n			nwn(100),\n			Case(\"\"),\n			dimension(2),\n			nkInt(64),\n			nkIntz(16),\n			kz2D(0.0),\n			FSnkz(10),\n			nOrb(1),\n			mu(-0.1),\n			tbfile(\"\"),\n			fsfile(\"FSforPairing.dat\"),\n			readFSFromFile(0),\n			nkPerSheet(40),\n			complexHopping(0),\n			pairingSpinParity(0),\n			pairingFromSpin(1),\n			pairingFromCharge(1),\n			storeChi(0),\n			readChi(0),\n			readChiForSus(0),\n			chifile(\"none\"),\n			interpolateChi(0),\n			interpolateNqx(17),\n			interpolateNqz(5),\n			sublattice(0),\n			deltax(0.0), \n			deltay(0.0), \n			deltaz(0.0),\n			kTrafo(0),\n			options(\"\"),\n			subOptions(\"\"),\n			WTrafo(3,3),\n			indexToOrb(0,0),\n			orbToSite(0),\n			hyb(0),\n			LS(0),\n			hybStrength(0.0),\n			hybBand1(0),\n			hybBand2(0),\n			nSitesPerUnitCell(1),\n			nOrbAtom(0,0),\n			nOrbAtomStr(\"\"),\n			damp(1.0e-3),\n			calcOnlyDiagonal(0),\n			writeFullChi0(0)\n\n			// single-band model in 2-sub-lattice formulation\n			// dimension(2),\n			// nkInt(64),\n			// nOrb(2),\n			// mu(-0.1),\n			// tbfile(\"1band_AB_t.csv\"),\n			// sublattice(1),\n			// deltax(0.0), \n			// deltay(0.0), \n			// deltaz(0.0)\n\n			// 2-orbital model (by Raghu)\n			// dimension(2),\n			// nkInt(64),\n			// nOrb(2),\n			// mu(1.45),\n			// tbfile(\"2band.csv\"),\n			// sublattice(0),\n			// deltax(0.0), \n			// deltay(0.0), \n			// deltaz(0.0)\n\n			// 10-orbital model for LaOFeAs\n			 // dimension(3),\n			 // nkInt(4),\n			 // nOrb(10),\n			 // mu(11.60),\n			 // tbfile(\"tij_LaOFeAs.csv\"),\n			 // sublattice(1),\n			 // deltax(0.5), \n			 // deltay(0.5), \n			 // deltaz(0.0)\n\n			// 10-orbital model for FeSe\n			// dimension(2),\n			// nkInt(8),\n			// nOrb(10),\n			// mu(0.0),\n			// tbfile(\"fese_ab_strain_dx_00_000pc.dat\"),\n			// sublattice(1),\n			// deltax(0.0), \n			// deltay(0.0), \n			// deltaz(0.0)\n\n			{\n				// 1 site / unit cell BZ\n				a1[0]=1.0; a2[1]=1.0; a3[2]=1.0;\n				chia1=a1; chia2=a2; chia3=a3;\n				// 2 sites / unit cell BZ\n				// a1[0]= 1.0  ; a1[1]=1.0;\n				// a2[0]= -1.0 ; a2[1]=1.0;\n				// a3[2]=1.0;\n\n			};\n\n			void readFromInputFile(const std::string& file) {\n				if (conc.rank()==0) {\n					std::ifstream data(file.c_str());\n					\n					std::string line;\n				    while(std::getline(data,line)) {\n				        std::stringstream    str(line);\n				        std::string          text;\n				        std::getline(str,text,'=');\n				        setParamBasedOnText(text,str);\n					}\n				}\n\n				\n				conc.barrier();\n				broadcastParam();\n		        loadVector(nOrbAtom,nOrbAtomStr);\n				// bcTest();\n\n				if(kTrafo==0) {\n					for (int i = 0; i < 3; ++i)\n					{\n						WTrafo(i,i) = 1.0;\n					}\n				} else if(kTrafo==1) {\n					WTrafo(0,0) =  0.5; WTrafo(0,1) = 0.5; WTrafo(0,2) = -0.5;\n					WTrafo(1,0) = -0.5; WTrafo(1,1) = 0.5; WTrafo(1,2) = -0.5;\n					WTrafo(2,0) =  0.5; WTrafo(2,1) = 0.5; WTrafo(2,2) =  0.5;\n					// WTrafo(0,0) =  -0.5   ; WTrafo(0,1) =  0.5   ; WTrafo(0,2) = 0.5;\n					// WTrafo(1,0) =   0.5   ; WTrafo(1,1) = -0.5   ; WTrafo(1,2) = 0.5;\n					// WTrafo(2,0) =   1.8039; WTrafo(2,1) =  1.8039; WTrafo(2,2) =-1.8039;\n				}\n\n		        if (dimension==2) {\n		        	nkIntz=1;\n		        	kz2D *= pi_f;\n		        }\n			}\n\n			void setParamBasedOnText(std::string& text, std::stringstream& str) {\n		        if      (text.find(\"dimension\")!=std::string::npos) str >> (*this).dimension; \n		        else if (text.find(\"temperature\")!=std::string::npos) str >> (*this).temperature; \n		        else if (text.find(\"numberOfOrbitals\")!=std::string::npos) str >> (*this).nOrb; \n		        else if (text.find(\"chemicalPotential\")!=std::string::npos) str >> (*this).mu; \n		        else if (text.find(\"tbParametersFile\")!=std::string::npos) str >> (*this).tbfile; \n		        else if (text.find(\"complexHopping\")!=std::string::npos) str >> (*this).complexHopping; \n		        else if (text.find(\"FSforPairingFile\")!=std::string::npos) str >> (*this).fsfile; \n		        else if (text.find(\"ChiForPairingFile\")!=std::string::npos) str >> (*this).chifile; \n		        else if (text.find(\"interpolateChi\")!=std::string::npos) str >> (*this).interpolateChi; \n		        else if (text.find(\"interpolateNqx\")!=std::string::npos) str >> (*this).interpolateNqx; \n		        else if (text.find(\"interpolateNqz\")!=std::string::npos) str >> (*this).interpolateNqz; \n		        else if (text.find(\"Coulomb1U\")!=std::string::npos) str >> (*this).U; \n		        else if (text.find(\"Coulomb2Up\")!=std::string::npos) str >> (*this).Up; \n		        else if (text.find(\"Coulomb3J\")!=std::string::npos) str >> (*this).J; \n		        else if (text.find(\"Coulomb4Jp\")!=std::string::npos) str >> (*this).Jp; \n		        else if (text.find(\"Coulomb5U_d\")!=std::string::npos) str >> (*this).U_d_c; \n		        else if (text.find(\"Coulomb6U_p\")!=std::string::npos) str >> (*this).U_p_c; \n		        else if (text.find(\"Coulomb7U_pd\")!=std::string::npos) str >> (*this).U_pd_c; \n		        else if (text.find(\"Coulomb8U_pp\")!=std::string::npos) str >> (*this).U_pp_c; \n		        else if (text.find(\"Coulomb9U_d\")!=std::string::npos) str >> (*this).U_d_s; \n		        else if (text.find(\"Coulomb10U_p\")!=std::string::npos) str >> (*this).U_p_s; \n		        else if (text.find(\"Coulomb11U_pd\")!=std::string::npos) str >> (*this).U_pd_s; \n		        else if (text.find(\"Coulomb12U_pp\")!=std::string::npos) str >> (*this).U_pp_s; \n		        else if (text.find(\"Coulomb13U_d_coupl\")!=std::string::npos) str >> (*this).U_d_coupl; \n		        else if (text.find(\"Coulomb14U_p_coupl\")!=std::string::npos) str >> (*this).U_p_coupl; \n		        else if (text.find(\"Coulomb15U_pd_coupl\")!=std::string::npos) str >> (*this).U_pd_coupl; \n		        else if (text.find(\"Coulomb16U_pp_coupl\")!=std::string::npos) str >> (*this).U_pp_coupl; \n		        else if (text.find(\"sublattice\")!=std::string::npos) str >> (*this).sublattice; \n		        else if (text.find(\"deltaU0\")!=std::string::npos) str >> (*this).deltaU[0]; \n		        else if (text.find(\"deltaU1\")!=std::string::npos) str >> (*this).deltaU[1]; \n		        else if (text.find(\"deltaU2\")!=std::string::npos) str >> (*this).deltaU[2]; \n		        else if (text.find(\"deltaU3\")!=std::string::npos) str >> (*this).deltaU[3]; \n		        else if (text.find(\"deltaU4\")!=std::string::npos) str >> (*this).deltaU[4]; \n		        else if (text.find(\"staticUFactor\")!=std::string::npos) str >> (*this).staticUFactor; 				\n		        else if (text.find(\"chargeFactor\")!=std::string::npos) str >> (*this).chargeFactor; 				\n		        else if (text.find(\"spinFactor\")!=std::string::npos) str >> (*this).spinFactor; 				\n		        else if (text.find(\"nkIntegration\")!=std::string::npos) str >> (*this).nkInt; 				\n		        else if (text.find(\"nkzIntegration\")!=std::string::npos) str >> (*this).nkIntz; 				\n		        else if (text.find(\"kz2D\")!=std::string::npos) str >> (*this).kz2D; 				\n		        else if (text.find(\"a1x\")!=std::string::npos) str >> (*this).a1[0]; 				\n		        else if (text.find(\"a1y\")!=std::string::npos) str >> (*this).a1[1]; 				\n		        else if (text.find(\"a1z\")!=std::string::npos) str >> (*this).a1[2]; 				\n		        else if (text.find(\"a2x\")!=std::string::npos) str >> (*this).a2[0]; 				\n		        else if (text.find(\"a2y\")!=std::string::npos) str >> (*this).a2[1]; 				\n		        else if (text.find(\"a2z\")!=std::string::npos) str >> (*this).a2[2]; 				\n		        else if (text.find(\"a3x\")!=std::string::npos) str >> (*this).a3[0]; 				\n		        else if (text.find(\"a3y\")!=std::string::npos) str >> (*this).a3[1]; 				\n		        else if (text.find(\"a3z\")!=std::string::npos) str >> (*this).a3[2]; 				\n		        else if (text.find(\"c1x\")!=std::string::npos) str >> (*this).chia1[0]; 				\n		        else if (text.find(\"c1y\")!=std::string::npos) str >> (*this).chia1[1]; 				\n		        else if (text.find(\"c1z\")!=std::string::npos) str >> (*this).chia1[2]; 				\n		        else if (text.find(\"c2x\")!=std::string::npos) str >> (*this).chia2[0]; 				\n		        else if (text.find(\"c2y\")!=std::string::npos) str >> (*this).chia2[1]; 				\n		        else if (text.find(\"c2z\")!=std::string::npos) str >> (*this).chia2[2]; 				\n		        else if (text.find(\"c3x\")!=std::string::npos) str >> (*this).chia3[0]; 				\n		        else if (text.find(\"c3y\")!=std::string::npos) str >> (*this).chia3[1]; 				\n		        else if (text.find(\"c3z\")!=std::string::npos) str >> (*this).chia3[2]; 				\n		        else if (text.find(\"nqx\")!=std::string::npos) str >> (*this).nqx; 				\n		        else if (text.find(\"nqy\")!=std::string::npos) str >> (*this).nqy; 				\n		        else if (text.find(\"nqz\")!=std::string::npos) str >> (*this).nqz; 				\n		        else if (text.find(\"qxmin\")!=std::string::npos) {str >> (*this).qxmin; qxmin *= pi_f;}\n		        else if (text.find(\"qxmax\")!=std::string::npos) {str >> (*this).qxmax; qxmax *= pi_f;}\n		        else if (text.find(\"qymin\")!=std::string::npos) {str >> (*this).qymin; qymin *= pi_f;}				\n		        else if (text.find(\"qymax\")!=std::string::npos) {str >> (*this).qymax; qymax *= pi_f;}				\n		        else if (text.find(\"qzmin\")!=std::string::npos) {str >> (*this).qzmin; qzmin *= pi_f;}				\n		        else if (text.find(\"qzmax\")!=std::string::npos) {str >> (*this).qzmax; qzmax *= pi_f;}				\n		        else if (text.find(\"nw\")!=std::string::npos) str >> (*this).nw; 				\n		        else if (text.find(\"wmin\")!=std::string::npos) str >> (*this).wmin; 				\n		        else if (text.find(\"wmax\")!=std::string::npos) str >> (*this).wmax; 				\n		        else if (text.find(\"scState\")!=std::string::npos) str >> (*this).scState; 				\n		        else if (text.find(\"printGap\")!=std::string::npos) str >> (*this).printGap; 				\n		        else if (text.find(\"gAmpl\")!=std::string::npos) str >> (*this).gAmpl; 				\n		        else if (text.find(\"Delta0\")!=std::string::npos) str >> (*this).Delta0; 				\n		        else if (text.find(\"deltax\")!=std::string::npos) str >> (*this).deltax; 				\n		        else if (text.find(\"deltay\")!=std::string::npos) str >> (*this).deltay; 				\n		        else if (text.find(\"deltaz\")!=std::string::npos) str >> (*this).deltaz; 				\n		        else if (text.find(\"kTrafo\")!=std::string::npos) str >> (*this).kTrafo; 				\n		        else if (text.find(\"options\")!=std::string::npos) str >> (*this).options; 				\n		        else if (text.find(\"subOptions\")!=std::string::npos) str >> (*this).subOptions; 				\n		        else if (text.find(\"Case\")!=std::string::npos) str >> (*this).Case;\n		        else if (text.find(\"pairingSpinParity\")!=std::string::npos) str >> (*this).pairingSpinParity;\n		        else if (text.find(\"pairingFromSpin\")!=std::string::npos) str >> (*this).pairingFromSpin;\n		        else if (text.find(\"pairingFromCharge\")!=std::string::npos) str >> (*this).pairingFromCharge;\n		        else if (text.find(\"storeChi\")!=std::string::npos) str >> (*this).storeChi;\n		        else if (text.find(\"readChiForPairing\")!=std::string::npos) str >> (*this).readChi;\n		        else if (text.find(\"readChiForSus\")!=std::string::npos) str >> (*this).readChiForSus;\n		        else if (text.find(\"hybridization\")!=std::string::npos) str >> (*this).hyb;\n		        else if (text.find(\"spinOrbit\")!=std::string::npos) str >> (*this).LS;\n		        else if (text.find(\"hybStrength\")!=std::string::npos) str >> (*this).hybStrength;\n		        else if (text.find(\"hybBand1\")!=std::string::npos) str >> (*this).hybBand1;\n		        else if (text.find(\"hybBand2\")!=std::string::npos) str >> (*this).hybBand2;\n		        else if (text.find(\"nSitesPerUnitCell\")!=std::string::npos) str >> (*this).nSitesPerUnitCell;\n		        else if (text.find(\"nOrbAtom\")!=std::string::npos) str >> (*this).nOrbAtomStr;\n		        else if (text.find(\"nkPerSheet\")!=std::string::npos) str >> (*this).nkPerSheet;\n		        else if (text.find(\"FSnkz\")!=std::string::npos) str >> (*this).FSnkz;\n		        else if (text.find(\"Omega0\")!=std::string::npos) str >> (*this).Omega0;\n		        else if (text.find(\"signF\")!=std::string::npos) str >> (*this).signF;\n		        else if (text.find(\"damp\")!=std::string::npos) str >> (*this).damp;\n		        else if (text.find(\"calcOnlyDiagonal\")!=std::string::npos) str >> (*this).calcOnlyDiagonal;\n		        else if (text.find(\"writeFullChi0\")!=std::string::npos) str >> (*this).writeFullChi0;\n			}\n\n			void writeParameters(std::ostream& os) {\n				os << \"Case = \" << (*this).Case << \"\\n\";\n				os << \"dimension = \" << (*this).dimension << \"\\n\";\n				os << \"temperature = \" << (*this).temperature << \"\\n\";\n				os << \"numberOfOrbitals = \" << (*this).nOrb << \"\\n\";\n				os << \"chemicalPotential = \" << (*this).mu << \"\\n\";\n				os << \"tbParametersFile = \" << (*this).tbfile << \"\\n\";\n				os << \"complexHopping = \" << (*this).complexHopping << \"\\n\";\n				os << \"FSforPairingFile = \" << (*this).fsfile << \"\\n\";\n				os << \"pairingSpinParity = \" << (*this).pairingSpinParity << \"\\n\";\n				os << \"pairingFromSpin = \" << (*this).pairingFromSpin << \"\\n\";\n				os << \"pairingFromCharge = \" << (*this).pairingFromCharge << \"\\n\";\n				os << \"storeChi = \" << (*this).storeChi << \"\\n\";\n				os << \"readChiForPairing = \" << (*this).readChi << \"\\n\";\n				os << \"readChiForSus = \" << (*this).readChiForSus << \"\\n\";\n				os << \"ChiforPairingFile = \" << (*this).chifile << \"\\n\";\n				os << \"interpolateChi = \" << (*this).interpolateChi << \"\\n\";\n				os << \"interpolateNqx = \" << (*this).interpolateNqx << \"\\n\";\n				os << \"interpolateNqz = \" << (*this).interpolateNqz << \"\\n\";\n				os << \"Coulomb1U = \" << (*this).U << \"\\n\";\n				os << \"Coulomb2Up = \" << (*this).Up << \"\\n\";\n				os << \"Coulomb3J = \" << (*this).J << \"\\n\";\n				os << \"Coulomb4Jp = \" << (*this).Jp << \"\\n\";\n				os << \"Coulomb5U_d = \" << (*this).U_d_c << \"\\n\";\n				os << \"Coulomb6U_p = \" << (*this).U_p_c << \"\\n\";\n				os << \"Coulomb7U_pd = \" << (*this).U_pd_c << \"\\n\";\n				os << \"Coulomb8U_pp = \" << (*this).U_pp_c << \"\\n\";\n				os << \"Coulomb9U_d = \" << (*this).U_d_s << \"\\n\";\n				os << \"Coulomb10U_p = \" << (*this).U_p_s << \"\\n\";\n				os << \"Coulomb11U_pd = \" << (*this).U_pd_s << \"\\n\";\n				os << \"Coulomb12U_pp = \" << (*this).U_pp_s << \"\\n\";\n				os << \"Coulomb13U_d_coupl = \" << (*this).U_d_coupl << \"\\n\";\n				os << \"Coulomb14U_p_coupl = \" << (*this).U_p_coupl << \"\\n\";\n				os << \"Coulomb15U_pd_coupl = \" << (*this).U_pd_coupl << \"\\n\";\n				os << \"Coulomb16U_pp_coupl = \" << (*this).U_pp_coupl << \"\\n\";\n				os << \"sublattice = \" << (*this).sublattice << \"\\n\";\n				os << \"deltaU0 = \" << (*this).deltaU[0] << \"\\n\";\n				os << \"deltaU1 = \" << (*this).deltaU[1] << \"\\n\";\n				os << \"deltaU2 = \" << (*this).deltaU[2] << \"\\n\";\n				os << \"deltaU3 = \" << (*this).deltaU[3] << \"\\n\";\n				os << \"deltaU4 = \" << (*this).deltaU[4] << \"\\n\";\n				os << \"staticUFactor = \" << (*this).staticUFactor << \"\\n\";\n				os << \"chargeFactor = \" << (*this).chargeFactor << \"\\n\";\n				os << \"spinFactor = \" << (*this).spinFactor << \"\\n\";\n				os << \"nkIntegration = \" << (*this).nkInt << \"\\n\";\n				os << \"nkzIntegration = \" << (*this).nkIntz << \"\\n\";\n				os << \"kz2D = \" << (*this).kz2D << \"\\n\";\n				os << \"a1x = \" << (*this).a1[0] << \"\\n\";\n				os << \"a1y = \" << (*this).a1[1] << \"\\n\";\n				os << \"a1z = \" << (*this).a1[2] << \"\\n\";\n				os << \"a2x = \" << (*this).a2[0] << \"\\n\";\n				os << \"a2y = \" << (*this).a2[1] << \"\\n\";\n				os << \"a2z = \" << (*this).a2[2] << \"\\n\";\n				os << \"a3x = \" << (*this).a3[0] << \"\\n\";\n				os << \"a3y = \" << (*this).a3[1] << \"\\n\";\n				os << \"a3z = \" << (*this).a3[2] << \"\\n\";\n				os << \"chia1x = \" << (*this).chia1[0] << \"\\n\";\n				os << \"chia1y = \" << (*this).chia1[1] << \"\\n\";\n				os << \"chia1z = \" << (*this).chia1[2] << \"\\n\";\n				os << \"chia2x = \" << (*this).chia2[0] << \"\\n\";\n				os << \"chia2y = \" << (*this).chia2[1] << \"\\n\";\n				os << \"chia2z = \" << (*this).chia2[2] << \"\\n\";\n				os << \"chia3x = \" << (*this).chia3[0] << \"\\n\";\n				os << \"chia3y = \" << (*this).chia3[1] << \"\\n\";\n				os << \"chia3z = \" << (*this).chia3[2] << \"\\n\";\n				os << \"nqx = \" << (*this).nqx << \"\\n\";\n				os << \"nqy = \" << (*this).nqy << \"\\n\";\n				os << \"nqz = \" << (*this).nqz << \"\\n\";\n				os << \"qxmin = \" << (*this).qxmin << \"\\n\";\n				os << \"qxmax = \" << (*this).qxmax << \"\\n\";\n				os << \"qymin = \" << (*this).qymin << \"\\n\";\n				os << \"qymax = \" << (*this).qymax << \"\\n\";\n				os << \"qzmin = \" << (*this).qzmin << \"\\n\";\n				os << \"qzmax = \" << (*this).qzmax << \"\\n\";\n				os << \"nw = \" << (*this).nw << \"\\n\";\n				os << \"wmin = \" << (*this).wmin << \"\\n\";\n				os << \"wmax = \" << (*this).wmax << \"\\n\";\n				os << \"scState = \" << (*this).scState << \"\\n\";\n				os << \"printGap = \" << (*this).printGap << \"\\n\";\n				os << \"gAmpl = \" << (*this).gAmpl << \"\\n\";\n				os << \"Delta0 = \" << (*this).Delta0 << \"\\n\";\n				os << \"deltax = \" << (*this).deltax << \"\\n\";\n				os << \"deltay = \" << (*this).deltay << \"\\n\";\n				os << \"deltaz = \" << (*this).deltaz << \"\\n\";\n				os << \"kTrafo = \" << (*this).kTrafo << \"\\n\";\n				os << \"options = \" << (*this).options << \"\\n\";\n				os << \"subOptions = \" << (*this).subOptions << \"\\n\";\n				os << \"hybridization = \" << (*this).hyb << \"\\n\";\n				os << \"spinOrbit = \" << (*this).LS << \"\\n\";\n				os << \"hybStrength = \" << (*this).hybStrength << \"\\n\";\n				os << \"hybBand1 = \" << (*this).hybBand1 << \"\\n\";\n				os << \"hybBand2 = \" << (*this).hybBand2 << \"\\n\";\n				os << \"nSitesPerUnitCell = \" << (*this).nSitesPerUnitCell << \"\\n\";\n				os << \"nOrbAtom = \";\n				for (int i=0; i<nOrbAtom.size();i++) os << (*this).nOrbAtom[i] << \" \"; \n				os << \"\\n\";\n				os << \"nkPerSheet = \" << (*this).nkPerSheet << \"\\n\";\n				os << \"FSnkz = \" << (*this).FSnkz << \"\\n\";\n				os << \"Omega0 = \" << (*this).Omega0 << \"\\n\";\n				os << \"signF = \" << (*this).signF << \"\\n\";\n				os << \"damp = \" << (*this).damp << \"\\n\";\n				os << \"writeFullChi0 = \" << (*this).writeFullChi0 << \"\\n\";\n			}\n\n\n			void bcTest() {\n				int h(0);\n				if (conc.rank()==0) h=5;\n		        conc.broadcast(h); \n			}\n			void broadcastParam() {\n\n		        if (conc.rank()==0) std::cout << \"Now broadcasting parameters! \\n\";\n		        conc.broadcast((*this).Case);\n		        conc.broadcast((*this).dimension); \n		        conc.broadcast((*this).temperature); \n		        conc.broadcast((*this).nOrb); \n		        conc.broadcast((*this).mu); \n		        conc.broadcast((*this).tbfile); \n		        conc.broadcast((*this).complexHopping);\n		        conc.broadcast((*this).fsfile); \n		        conc.broadcast((*this).chifile); \n		        conc.broadcast((*this).interpolateChi); \n		        conc.broadcast((*this).interpolateNqx); \n		        conc.broadcast((*this).interpolateNqz); \n		        conc.broadcast((*this).U); \n		        conc.broadcast((*this).Up); \n		        conc.broadcast((*this).J); \n		        conc.broadcast((*this).Jp); \n		        conc.broadcast((*this).U_d_c); \n		        conc.broadcast((*this).U_p_c); \n		        conc.broadcast((*this).U_pd_c); \n		        conc.broadcast((*this).U_pp_c); \n		        conc.broadcast((*this).U_d_s); \n		        conc.broadcast((*this).U_p_s); \n		        conc.broadcast((*this).U_pd_s); \n		        conc.broadcast((*this).U_pp_s); \n		        conc.broadcast((*this).U_d_coupl); \n		        conc.broadcast((*this).U_p_coupl); \n		        conc.broadcast((*this).U_pd_coupl); \n		        conc.broadcast((*this).U_pp_coupl); \n		        conc.broadcast((*this).sublattice); \n		        conc.broadcast((*this).deltaU[0]); \n		        conc.broadcast((*this).deltaU[1]); \n		        conc.broadcast((*this).deltaU[2]); \n		        conc.broadcast((*this).deltaU[3]); \n		        conc.broadcast((*this).deltaU[4]); \n		        conc.broadcast((*this).staticUFactor); 				\n		        conc.broadcast((*this).chargeFactor); 				\n		        conc.broadcast((*this).spinFactor); 				\n		        conc.broadcast((*this).nkInt); 				\n		        conc.broadcast((*this).nkIntz); 				\n		        conc.broadcast((*this).kz2D); 				\n		        conc.broadcast((*this).a1[0]); 				\n		        conc.broadcast((*this).a1[1]); 				\n		        conc.broadcast((*this).a1[2]); 				\n		        conc.broadcast((*this).a2[0]); 				\n		        conc.broadcast((*this).a2[1]); 				\n		        conc.broadcast((*this).a2[2]); 				\n		        conc.broadcast((*this).a3[0]); 				\n		        conc.broadcast((*this).a3[1]); 				\n		        conc.broadcast((*this).a3[2]); 				\n		        conc.broadcast((*this).chia1[0]); 				\n		        conc.broadcast((*this).chia1[1]); 				\n		        conc.broadcast((*this).chia1[2]); 				\n		        conc.broadcast((*this).chia2[0]); 				\n		        conc.broadcast((*this).chia2[1]); 				\n		        conc.broadcast((*this).chia2[2]); 				\n		        conc.broadcast((*this).chia3[0]); 				\n		        conc.broadcast((*this).chia3[1]); 				\n		        conc.broadcast((*this).chia3[2]); 				\n		        conc.broadcast((*this).nqx); 				\n		        conc.broadcast((*this).nqy); 				\n		        conc.broadcast((*this).nqz); 				\n		        conc.broadcast((*this).qxmin);\n		        conc.broadcast((*this).qxmax);				\n		        conc.broadcast((*this).qymin);				\n		        conc.broadcast((*this).qymax);				\n		        conc.broadcast((*this).qzmin);				\n		        conc.broadcast((*this).qzmax);				\n		        conc.broadcast((*this).nw); 				\n		        conc.broadcast((*this).wmin); 				\n		        conc.broadcast((*this).wmax); 				\n		        conc.broadcast((*this).scState); 				\n		        conc.broadcast((*this).printGap); 				\n		        conc.broadcast((*this).gAmpl); 				\n		        conc.broadcast((*this).Delta0); 				\n		        conc.broadcast((*this).deltax); 			\n		        conc.broadcast((*this).deltay); 				\n		        conc.broadcast((*this).deltaz); 				\n		        conc.broadcast((*this).kTrafo); 				\n		        conc.broadcast((*this).options); 				\n		        conc.broadcast((*this).subOptions); 				\n		        conc.broadcast((*this).pairingSpinParity);\n		        conc.broadcast((*this).pairingFromSpin);\n		        conc.broadcast((*this).pairingFromCharge);\n		        conc.broadcast((*this).storeChi);\n		        conc.broadcast((*this).readChi);\n		        conc.broadcast((*this).readChiForSus);\n		        conc.broadcast((*this).hyb);\n		        conc.broadcast((*this).LS);\n		        conc.broadcast((*this).hybStrength);\n		        conc.broadcast((*this).hybBand1);\n		        conc.broadcast((*this).hybBand2);\n		        conc.broadcast((*this).nSitesPerUnitCell);\n		        conc.broadcast((*this).nOrbAtomStr);\n		        conc.broadcast((*this).nkPerSheet);\n		        conc.broadcast((*this).FSnkz);\n		        conc.broadcast((*this).Omega0);\n		        conc.broadcast((*this).signF);\n		        conc.broadcast((*this).damp);\n		        conc.broadcast((*this).writeFullChi0);\n			}\n\n			void setupOrbitalIndices(){\n				indexToOrb.resize(nOrb*nOrb,2);\n				for (size_t l1 = 0; l1 < nOrb; ++l1){\n					for (size_t l2 = 0; l2 < nOrb; ++l2){\n						size_t ind=l2+l1*nOrb;\n						indexToOrb(ind,0) = l1;\n						indexToOrb(ind,1) = l2;\n					}\n				}\n				for (size_t l=0;l<nOrb; l++) {\n					int ll(l);\n					for (size_t site=0;site<nSitesPerUnitCell;site++) {\n						ll -= nOrbAtom[site];\n						if (ll < 0) {\n							orbToSite.push_back(site);\n							break;\n						}\n					}\n				}\n				if (conc.rank()==0) {\n					std::cout << \"orbToSite: \";\n					for (size_t l=0;l<nOrb;l++) std::cout << l << \"->\" << orbToSite[l] << \" \";\n					std::cout << \"\\n\";\n				}\n			}\n\n\n			template<typename FieldType>\n			void loadVector(std::vector<FieldType>& v,const std::string& vstring)\n			{\n				std::stringstream ss(vstring);\n				int value;\n				while (ss >> value)\n				{\n					v.push_back(value);\n					if (ss.peek() == ',') ss.ignore();\n				}\n			}\n\n\n	};\n\n}\n\n#endif\n",
+			"file": "parameters.h",
+			"file_size": 25873,
+			"file_write_time": 130972744500000000,
+			"settings":
+			{
+				"buffer_size": 25873,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "susceptibility.h",
+			"settings":
+			{
+				"buffer_size": 21657,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gaps3D.h",
+			"settings":
+			{
+				"buffer_size": 29428,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ferminator.h",
+			"settings":
+			{
+				"buffer_size": 25777,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "chi0.h",
+			"settings":
+			{
+				"buffer_size": 22627,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pairing.h",
+			"settings":
+			{
+				"buffer_size": 21870,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "susInt.h",
+			"settings":
+			{
+				"buffer_size": 2372,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CrystalHarmonics2D.h",
+			"settings":
+			{
+				"buffer_size": 16801,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TEST/5band1111/input_1111.dat",
+			"settings":
+			{
+				"buffer_size": 1671,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/R-Box/support/R-Box.sublime-build",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/R-Box/support/R-Box.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 147.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"git pus",
+				"Git: Push"
+			],
+			[
+				"git",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add Current File"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"gitp",
+				"Git: Push"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"repl",
+				"SublimeREPL: R"
+			],
+			[
+				"R",
+				"SublimeREPL: R"
+			],
+			[
+				"replip",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"late",
+				"LaTeXTools: Reconfigure and migrate settings"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 521.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP",
+		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST",
+		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111"
+	],
+	"file_history":
+	[
+		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/PartialPsimag/Symmetry/SuperCrystalBuilder.h",
+		"/Projects/Triangular_Hubbard/HalfFilling_t-1/OutputData/n0/b0[3]/Maxent.py",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Send-selection.py",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Send-Selection.py",
+		"/Users/t7m/Dropbox/C++Code/TEST/BaFeAs/PlotFSAndChiAnd3DGap.R",
+		"/Projects/Scripts/RGL_Plot_of_FS.R",
+		"/Projects/ETH_Reps/symmetrize_Nc4x4.py",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/t7m/Dropbox/C++Code/CrystalHarmonics.h",
+		"/Users/t7m/Dropbox/C++Code/gap.h",
+		"/Users/t7m/Downloads/BILAYER/BiLayer/Plot_Chi_PairField.R",
+		"/Users/t7m/.matplotlib/matplotlibrc",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/SublimeREPL.sublime-settings",
+		"/Projects/PairInt2DHubbard/ANALYSIS/3DPlotsOfGammaPPAndChiOfQ/Test/LatticePlotWireframeAndCloudOfGamma.R",
+		"/Projects/ETH_Reps/dca_ethz_Aug15/dca_ethz/src/phys_library/DCA+_algorithms/compute_band_structure/compute_band_structure.h",
+		"/Projects/FRG_vs_DCA/whichQ_for_Nc32.py",
+		"/Users/t7m/Dropbox/reducible_vertex/SC_Nc=32_U=2/prep_red_vertex.py",
+		"/Users/t7m/Dropbox/reducible_vertex/SC_Nc=32_U=2/error.txt",
+		"/Users/t7m/Dropbox/reducible_vertex/SC_Nc=32_U=4/input_G2.json",
+		"/Users/t7m/Dropbox/reducible_vertex/SC_Nc=32_U=4/compute_eigenvalues.py",
+		"/Users/t7m/Dropbox/reducible_vertex/SC_Nc=32_U=4/batch_script.slm",
+		"/Users/t7m/Dropbox/DCA+_phi/DCA_coarsegrarining.tex",
+		"/Users/t7m/Dropbox/DCA+_phi/refs.bib",
+		"/Users/t7m/Dropbox/INCITE16/INCITE16_Renewal_Maier.tex",
+		"/Users/t7m/Dropbox/INCITE16/INCITE16_Project_Plans_Maier.tex",
+		"/Users/t7m/Dropbox/INCITE16/Project_Achievements_template.tex",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/t7m/Downloads/data_d=0.90_Nc=12A_U=7_BSE_PARTICLE_PARTICLE_SUPERCONDUCTING_0_0_nwnRed.json",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/README.markdown",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
+		"/Users/t7m/Dropbox/Jülich15/Maier_v4.tex"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"calcChiNematicRPA",
+			"chargeFactor",
+			"charge",
+			"calcFS",
+			"susOfQFull",
+			"printGap",
+			"Omega",
+			"damp",
+			"do_DCA",
+			"compute_G_K_w",
+			"perform_cluster_mapping_Greens_function",
+			"perform_cluster_mapping",
+			"particleholemagnetic",
+			"TaskSetter",
+			"PHM",
+			"require(misc3d)\nrequire(rgl)\nopen3d()\nread.table(\"ek.dat\", header = F) -> b\nnlevels(factor(b$V3)) -> nkz\nsqrt(length(b$V1)/nkz) -> nk\nlength(b)-3 -> nbands\ncol=c(\"red\",\"blue\",\"green\",\"orange\",\"yellow\",\"brown\",\"purple\",\"grey\",\"pink\",\"beige\")\nadd <- F\nfor (i in 4:(nbands+3)) {\n	FS <- range(b[,i])[1]*range(b[,i])[2]\n	if (FS < 0) {\n		contour3d(array(b[,i],dim=c(nk,nk,nkz)),level=0,color=col[i-3],aspect=c(1,10),frames=T,perspective=T,distance=2,smooth=T,lwd=2,add=add,ticktype=\"\")\n		add <- T\n	}\n}\naspect3d(1,1,1.44592)\n# axes3d(edges = \"bbox\",labels=FALSE,tick=FALSE)\n# box3d()\nmy.ticks=c(1,16,32)\naxis3d('x',at=my.ticks,labels=c(-1,0,1))\naxis3d('y',at=my.ticks,labels=c(-1,0,1))\naxis3d('z',at=my.ticks,labels=c(-1,0,1))\n",
+			"writer",
+			"G4_k_k_w_w",
+			"get_G4",
+			"G4",
+			"accumulator_nonlocal_chi_obj",
+			"accumulator_nonlocal_chi",
+			"G4",
+			"accumulate_particle_particle_superconducting",
+			"G4_k_k_w_w",
+			"accumulator_nonlocal_chi_obj",
+			"accumulator_nonlocal_chi",
+			"iK2Map",
+			"\\bm",
+			"br",
+			"wrap",
+			"8093",
+			"chiRPA",
+			"Gap not implement",
+			"dwave",
+			"gap",
+			"crystHarm",
+			"crystHarm2",
+			"gampl",
+			"dwave",
+			"damp",
+			"susInt",
+			"chiRPA.txt",
+			"param.gampl",
+			"font",
+			"plot",
+			"color",
+			"axes",
+			"xlabel",
+			"pad",
+			"interpolate",
+			"uj",
+			"ujson",
+			"M_r_w_squared",
+			"perform_cluster_mapping_Greens_function",
+			"perform_Cluster",
+			"compute_G_K_w",
+			"perform_cluster_mapping_Greens_function",
+			"perform_cluster_mapping",
+			"compute_G0_K_w_cluster_excluded",
+			"perform_cluster_exclusion_step",
+			"cluster_exclusion",
+			"compute_G0_K_t",
+			"compute_G_q_t",
+			"compute_G0_K_t",
+			",\n",
+			"initialize_G0",
+			"compute_G0_K_t",
+			"compute_G0_K_w_cluster_excluded",
+			"perform_cluster_exclusion_step",
+			"G0_K",
+			"initialize",
+			"Monte_Carlo_Integrator_type",
+			"MonteCarloIntegrator",
+			"solve_cluster_problem",
+			"initialize",
+			"dca_object",
+			"initialize_G0",
+			"start coarsegraining G0_k_w",
+			"quadrature_integration_G_q_t_st",
+			"compute_G_q_t",
+			"compute_G0_K_t",
+			"initialize_G0",
+			"initialize",
+			"initialize_G0",
+			"compute_G0_K_t",
+			"start coarsegraining G0_k_t",
+			"compute_G0_K_w_cluster_excluded",
+			"execute",
+			"perform_cluster_exclusion_step",
+			"dump_cluster_Greens_functions_str",
+			"dump_cluster_Greens_functions",
+			"dump_cluster",
+			"writer.execute(Sigma",
+			"write",
+			"Sigma_cluster",
+			"Sigma",
+			"perform_cluster_mapping_Greens_function",
+			"perform_cluster_mapping",
+			"perform_cluster_exclusion_step",
+			"Sigma_cluster",
+			"write(Sigma",
+			"write(MOMS.",
+			"wire(MOMS.",
+			"write",
+			"perform_cluster_mapping_Greens_function",
+			"compute_G0_K_w_cluster_excluded",
+			"execute",
+			"cluster_exclusion_type",
+			"cluster_exclusion_obj",
+			"perform_cluster_exclusion_step",
+			"get_double_counting_method",
+			"execute_before_solver",
+			"adjust_coarsegrained_self_energy",
+			"compute_G_K_w",
+			"perform_cluster_mapping_Greens_function",
+			"perform_cluster_mapping",
+			"read",
+			"nSitesPerUnitCell",
+			"nSites",
+			"do_DCA",
+			"do-DCA",
+			"filename",
+			"Brillouin-zone-names",
+			"square_lattice",
+			"use_interpolated_Self_energy",
+			"compute_G_K_w",
+			"GFS"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "parameters.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25873,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2584,
+								2584
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1415.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "susceptibility.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21657,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8254,
+								8254
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3065.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "gaps3D.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 29428,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3098,
+								3098
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 991.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "ferminator.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25777,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								25090,
+								25090
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11314.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "chi0.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22627,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10978,
+								10980
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4648.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "pairing.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21870,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13173,
+								13173
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 24.0,
+						"translation.y": 5709.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "susInt.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2372,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								385,
+								385
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 40.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "CrystalHarmonics2D.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16801,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2219,
+								2219
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 919.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "TEST/5band1111/input_1111.dat",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1671,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								245,
+								245
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountSyntax": "plain text",
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 491.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 106.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 106.0
+	},
+	"pinned_build_system": "",
+	"project": "MRPA_GIT.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"susce",
+				"PartialPsimag/Symmetry/SuperCrystalBuilder.h"
+			],
+			[
+				"",
+				"pairing.h"
+			],
+			[
+				"param",
+				"parameters.h"
+			],
+			[
+				"pairing",
+				"pairing.h"
+			],
+			[
+				"susceptib",
+				"susceptibility.h"
+			],
+			[
+				"susin",
+				"susInt.h"
+			],
+			[
+				"chi0",
+				"chi0.h"
+			],
+			[
+				"fermin",
+				"ferminator.h"
+			],
+			[
+				"suscept",
+				"susceptibility.h"
+			],
+			[
+				"crysta",
+				"CrystalHarmonics2D.h"
+			],
+			[
+				"gaps",
+				"gaps3D.h"
+			],
+			[
+				"para",
+				"parameters.h"
+			],
+			[
+				"trian",
+				"src/Input/Models/TriangularLatticeModel.h"
+			],
+			[
+				"write",
+				"comp_library/IO_library/HDF5/HDF5_writer.h"
+			],
+			[
+				"gap",
+				"gap.h"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"crystal",
+				"CrystalHarmonics.h"
+			],
+			[
+				"sucep",
+				"susceptibility.h"
+			],
+			[
+				"crys",
+				"CrystalHarmonics2D.h"
+			],
+			[
+				"gaps2",
+				"gaps2D.h"
+			],
+			[
+				"suscep",
+				"susceptibility.h"
+			],
+			[
+				"symmetr",
+				"phys_library/DCA+_step/symmetrization/symmetrize_single_particle_function.h"
+			],
+			[
+				"symm",
+				"phys_library/DCA+_step/symmetrization/symmetrize.h"
+			],
+			[
+				"coarse",
+				"phys_library/DCA+_step/cluster_mapping/coarsegraining_step/coarsegraining_sp.h"
+			],
+			[
+				"coar",
+				"phys_library/DCA+_step/cluster_mapping/coarsegraining_step/coarsegraining_sp.h"
+			],
+			[
+				"exclus",
+				"phys_library/DCA+_step/cluster_mapping/cluster_exclusion_step.h"
+			],
+			[
+				"cluster",
+				"phys_library/DCA+_step/cluster_mapping/cluster_exclusion_step.h"
+			],
+			[
+				"dca+",
+				"phys_library/DCA+_loop/DCA+_loop.h"
+			],
+			[
+				"main",
+				"main.cpp"
+			],
+			[
+				"bands",
+				"bandstructure.h"
+			],
+			[
+				"bse",
+				"src/phys_library/DCA+_analysis/BSE_solver/BSE_cluster_solver.h"
+			],
+			[
+				"dcaloo",
+				"src/phys_library/DCA+_loop/DCA+_loop.h"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 566.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 222.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

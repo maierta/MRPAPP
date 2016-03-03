@@ -308,7 +308,7 @@ namespace rpa {
 				if (conc.rank()==0) std::cout << "Sheet nr. " << iSheet << "\n";
 				FieldType kz(param.kz2D);
 				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
-					if (param.FSnkz > 1)  kz = float(ikz)*2.*param.pi_f/float(param.FSnkz)-2.*param.pi_f;
+					if (param.FSnkz > 1)  kz = float(ikz)*2.*param.pi_f/float(param.FSnkz)-param.pi_f;
 					calcKF(nkSearch,iSheet,kz,3);
 				}
 			}

@@ -313,6 +313,38 @@ namespace rpa {
 				}
 			}
 
+		}  else if (Case_ == "5Orbit_3D_6Sheets_00_11_10_01" || Case_ == "1111_10orbit") {
+			// 7 FS sheets total, two around (pi,pi), two around (-pi,pi), 3 around (0,0,0)
+			// Note: One of the hole-pockets around Gamma may be closed along kz
+			
+			nSheets = 6; 
+			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+			resizeContainers();
+
+			FSCenters[0][0] =  0; FSCenters[0][1] = 0;
+			FSBand   [0]    =  1;
+			FSCenters[1][0] =  0; FSCenters[1][1] = 0;
+			FSBand   [1]    =  2;
+			FSCenters[2][0] =  Pi; FSCenters[2][1] = Pi;
+			FSBand   [2]    =  1; 
+			FSCenters[3][0] =  Pi; FSCenters[3][1] = Pi;
+			FSBand   [3]    =  2;
+			FSCenters[4][0] = Pi;FSCenters[4][1] = 0.0;
+			FSBand   [4]    =  3;
+			FSCenters[5][0] =  0;FSCenters[5][1] = Pi;
+			FSBand   [5]    =  3;
+
+			size_t nkSearch(256);
+
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
+				if (conc.rank()==0) std::cout << "Sheet nr. " << iSheet << "\n";
+				FieldType kz(param.kz2D);
+				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
+					if (param.FSnkz > 1)  kz = float(ikz)*2.*param.pi_f/float(param.FSnkz)-param.pi_f;
+					calcKF(nkSearch,iSheet,kz,3);
+				}
+			}
+
 		} else if (Case_ == "BaFeAs_5Orbit_5Sheets") {
 			// 5 FS sheets total, two around (0,0), one each around (pi,0) and (0,pi), 1 around (pi,pi)
 			

@@ -66,6 +66,7 @@ namespace rpa {
 			// GNorm(3,0)
 			{
 				set_primitiveVectors();
+				shift[0] = -0.25; shift[1] = -0.25; shift[2] = -0.5;
 			}
 
 		momentumDomain(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, 

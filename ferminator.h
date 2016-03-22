@@ -117,6 +117,26 @@ namespace rpa {
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
 
 
+		} else if (Case_ == "2D_5orbit_5Sheets") {
+			// 5 FS sheets total, 2 at (0,0), 1 at (pi,0), one at (0,pi), 1 at (pi,pi)
+			nSheets = 5; 
+			nTotal = nSheets * nkPerSheet; 
+			resizeContainers();
+
+			FSCenters[0][0] =  0; FSCenters[0][1] = 0;
+			FSBand   [0]    =  1;
+			FSCenters[1][0] =  0; FSCenters[1][1] = 0;
+			FSBand   [1]    =  2;
+			FSCenters[2][0] = Pi; FSCenters[2][1] = 0;
+			FSBand   [2]    =  3;
+			FSCenters[3][0] = 0; FSCenters[3][1] = Pi;
+			FSBand   [3]    =  3;
+			FSCenters[4][0] = Pi; FSCenters[4][1] = Pi;
+			FSBand   [4]    =  2;
+
+			size_t nkSearch(128);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
+
 		} else if (Case_ == "KFeSe_10Orbit_overdoped_2D") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
 			nSheets = 5; 

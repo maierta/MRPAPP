@@ -14,6 +14,7 @@
 #include "utilities.h"
 #include "Range.h"
 #include "SrRuO.h"
+#include "BaFeAs_5orb.h"
 #include "bilayer.h"
 
 namespace rpa {
@@ -185,6 +186,13 @@ namespace rpa {
 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
 			s.getBands(k,eigenvals,eigenvects);
+
+#elif USE_BAFEAS
+			BaFeAs<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
+			s.getBands(k,eigenvects);
+			for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
+			eigen(eigenvals,eigenvects);
+			return;
 #else
 			FieldType exponent(0.);
 			int n = eigenvects.n_col();

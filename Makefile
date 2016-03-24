@@ -13,7 +13,8 @@ cc                   = mpicxx
 MatrixBoundsChecking = -DNDEBUG 
 
 # FLAGS        = $(MatrixBoundsChecking)  -g  -Wall  -Werror -DUSE_MPI  -DUSE_SCGAP3D
-FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D 
+# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D 
+FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BAFEAS
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI  -DUSE_BILAYER
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI  
 

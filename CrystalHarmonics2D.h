@@ -304,14 +304,15 @@ namespace rpa {
 						      const size_t band)
 		{
 
-			std::vector<FieldType> kRot(3,0);
-			kRot[0] = 0.5*(kvector[1]-kvector[0]);
-			kRot[1] = 0.5*(kvector[0]+kvector[1]);
-			kRot[2] = kvector[2];
+			// std::vector<FieldType> kRot(3,0);
+			// kRot[0] = 0.5*(kvector[1]-kvector[0]);
+			// kRot[1] = 0.5*(kvector[0]+kvector[1]);
+			// kRot[2] = kvector[2];
 
-			if (band==6 && cos(kRot[0])*cos(kRot[1]) > 0.0) { // we are dealing with the Z-pocket
-				return 0.5;
-			} else return w(0,0);
+			// if (band==6 && cos(kRot[0])*cos(kRot[1]) > 0.0) { // we are dealing with the Z-pocket
+			// 	return 0.5;
+			// } else return w(0,0);
+			return w(0,0);
 		}
 
 	template<typename FieldType, template<typename> class MatrixTemplate>

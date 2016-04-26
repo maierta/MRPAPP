@@ -445,7 +445,7 @@ namespace rpa {
             // } else if (param.gAmpl == "KFeSe_overdoped_PhenD") {
                 // crystHarm2 = &dwavePhenomKFe2Se2_overdoped;
                 
-            } else if (param.gAmpl == "10-orbit_7Sheets_s+-") { // standard s+- gap for 10-orbital model with 5 sheets
+            } else if (param.gAmpl == "10-orbit_7Sheets_s+-") { // standard s+- gap for 10-orbital model with 7 sheets
                 crystHarm = &MazinKFe2Se2_wZ;
 
                 w.resize(10,MatrixType(1,1));
@@ -460,6 +460,25 @@ namespace rpa {
                 w[6](0,0) = -1.0;
                 // inner electron pocket
                 w[7](0,0) = -1.0;
+
+                kz.resize(10,VectorType(0,0.0));
+                k0.resize(10,FieldType(0.0));
+
+            } else if (param.gAmpl == "10-orbit_7Sheets_s+-_aniso") { // standard s+- gap for 10-orbital model with 7 sheets and anisotropic gap on electron sheets
+                crystHarm = &MazinKFe2Se2_wZ;
+
+                w.resize(10,MatrixType(1,1));
+
+                // 1. hole pocket
+                w[3](0,0) =  1.0;
+                // 2. hole pocket
+                w[4](0,0) =  1.0;
+                // 3. hole pocket
+                w[5](0,0) =  1.0;
+                // outer electron pocket
+                w[6](0,0) = -1.0;
+                // inner electron pocket
+                w[7](0,0) = -0.5;
 
                 kz.resize(10,VectorType(0,0.0));
                 k0.resize(10,FieldType(0.0));

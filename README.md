@@ -9,4 +9,4 @@ interactions for the normal and superconducting states. It can also be
 used to calculate the pairing interaction in these models using an RPA 
 approximation and to predict the superconducting gap structure. 
 
-
+The MRPA++ code has been developed with resources from the Center of Nanophase Materials Sciences, which is a DOE Office of Science User Facility, and the NSF under DMR-1308603. 

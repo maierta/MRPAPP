@@ -66,7 +66,7 @@ namespace rpa {
 			// GNorm(3,0)
 			{
 				set_primitiveVectors();
-				shift[0] = -0.25; shift[1] = -0.25; shift[2] = -0.5;
+				// shift[0] = -0.25; shift[1] = -0.25; shift[2] = -0.5;
 			}
 
 		momentumDomain(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, 
@@ -210,6 +210,7 @@ namespace rpa {
 		void set_momenta(const bool& indexation) {
 						 	
 					if (dim==2) {	
+						// std::cout << "shift=" << shift[0] << ", b[0,0]" << b(0,0) << ", b[1,0]" << b(1,0) << "\n";
 						for (size_t ikx = 0; ikx < nk; ++ikx) {
 							for (size_t iky = 0; iky < nk; ++iky) {
 								size_t ind = index(ikx,iky);
@@ -218,6 +219,8 @@ namespace rpa {
 								momenta(ind,1) = (float(ikx)/float(nk) + shift[0]) * b(0,1) + 
 											     (float(iky)/float(nk) + shift[1]) * b(1,1) ;
 								momenta(ind,2) = param.kz2D;
+
+								// std::cout << "momenta=" << momenta(ind,0) << "," << momenta(ind,1) << "\n";
 
 								index2Components(ind,0) = ikx;
 								index2Components(ind,1) = iky;

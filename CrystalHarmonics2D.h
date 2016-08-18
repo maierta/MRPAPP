@@ -68,9 +68,9 @@ namespace rpa {
 					const FieldType& k0,
 					const size_t band)
 			{
-				return 0.5 * (cos(kvector[0]) - cos(kvector[1]));
-					 // + w(1,0) * (cos(2.*kvector[0]) - cos(2.*kvector[1]))
-					 // + w(2,0) * (cos(2.*kvector[0])*cos(kvector[1]) - cos(2.*kvector[1])*cos(kvector[0]));
+				return w(0,0) * (cos(kvector[0]) - cos(kvector[1]))
+					 + w(1,0) * (cos(2.*kvector[0]) - cos(2.*kvector[1]))
+					 + w(2,0) * (cos(2.*kvector[0])*cos(kvector[1]) - cos(2.*kvector[1])*cos(kvector[0]));
 			}
 
 	template<typename FieldType, template<typename> class MatrixTemplate>

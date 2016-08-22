@@ -92,11 +92,18 @@ namespace rpa {
 				for (size_t i=0;i<param.nOrb;i++) w[i](0,0) =  1.0;
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
-            } else if (param.gAmpl == "dwave_2D_KFe2Se2") { // coskx-cosky + 1.62*(cos2kx-cos2ky); see Maier et al., PRB 83, 100515(R)
+            } else if (param.gAmpl == "dwave_2D_KFe2Se2_RPA") { // coskx-cosky + 1.62*(cos2kx-cos2ky); see Maier et al., PRB 83, 100515(R)
                 crystHarm = &dwave;
 
                 w.resize(param.nOrb,MatrixType(3,1));
                 w[3](0,0) =  1.0; w[3](1,0) = 1.62; // band 3 has the electron pocket
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+            } else if (param.gAmpl == "dwave_2D_KFe2Se2_iso") { // coskx-cosky (isotropic d-wave)
+                crystHarm = &dwave;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[3](0,0) =  1.0; // band 3 has the electron pocket
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
             } else if (param.gAmpl == "spm-5band") { // simple s+ for all hole pockets and s- for all electron pockets

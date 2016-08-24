@@ -371,7 +371,8 @@ namespace rpa {
 			
 
 			if (conc.rank()==0) {
-				std::ofstream os(file);
+				const char *filename = file.c_str();
+				std::ofstream os(filename);
 				int precision=5;
 				os.precision(precision);
 				for (size_t ik=0; ik<nktot; ik++) {

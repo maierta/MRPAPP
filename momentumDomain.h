@@ -134,7 +134,8 @@ namespace rpa {
 		nktot(nk),
 		momenta(nk,3)
 		{ 
-			set_momenta_Path1(); 
+			if (path == "Path1") set_momenta_Path1(); 
+			if (path == "Path2") set_momenta_Path2(); 
 		}
 
 
@@ -210,7 +211,7 @@ namespace rpa {
 		void set_momenta(const bool& indexation) {
 						 	
 					if (dim==2) {	
-						// std::cout << "shift=" << shift[0] << ", b[0,0]" << b(0,0) << ", b[1,0]" << b(1,0) << "\n";
+						std::cout << "shift=" << shift[0] << ", b[0,0]" << b(0,0) << ", b[1,0]" << b(1,0) << "\n";
 						for (size_t ikx = 0; ikx < nk; ++ikx) {
 							for (size_t iky = 0; iky < nk; ++iky) {
 								size_t ind = index(ikx,iky);
@@ -292,13 +293,13 @@ namespace rpa {
 
 			size_t nks(nk/4);
 			size_t ind(0);
-			for (size_t ik=0; ik<nks; ik++) {
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> M
 				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
 				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
 				momenta(ind,2) = 0.0;
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) {
+			for (size_t ik=0; ik<nks; ik++) { 
 				momenta(ind,0) = param.pi_f + float(ik)/float(nks) * param.pi_f;
 				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f;
 				momenta(ind,2) = 0.0;
@@ -318,6 +319,31 @@ namespace rpa {
 			}
 
 		}
+
+		void set_momenta_Path2() { // Gamma -> X -> M -> Gamma
+
+			size_t nks(nk/3);
+			size_t ind(0);
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> X
+				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = 0.0;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // X -> M
+				momenta(ind,0) = param.pi_f;
+				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // M -> Gamma
+				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+		}
+
 
 		size_t index(size_t ikx,size_t iky,size_t ikz=0) const {
 			// return ikz+iky*nkz+ikx*nkz*nk;

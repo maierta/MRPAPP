@@ -39,7 +39,14 @@ void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& para
 	// std::cout << "w = " << w << "\n";
 	// std::cout << "v(1,6),v(1,7) = " << v(1,6) << " , " << v(1,7) << "\n";
 
-	bands.calcBandStructure();
+	bands.calcBandStructure("ek.dat",true);
+
+	// Now calculate bands along high-symmetry direction
+	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh2(param,conc,"Path2",66);
+	// kmesh2.set_momenta_Path2();
+	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands2(param,conc,kmesh2,false);
+	bands2.calcBandStructure("ek_high_sym.dat",false);
+
 }
 
 int main(int argc,char *argv[])

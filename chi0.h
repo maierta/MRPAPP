@@ -77,6 +77,7 @@ namespace rpa {
 					size_t ind1(l1+l1*nOrb);
 					size_t ind2(l2+l2*nOrb);
 					// chiPhys += 0.5*real((*this)(ind1,ind2));
+					// std::cout << "in calcSus: " << ind1 << "," << ind2 << "," << (*this)(ind1,ind2) << "\n";
 					chiPhys += 0.5*(*this)(ind1,ind2);
 				}
 			}
@@ -88,6 +89,15 @@ namespace rpa {
 
 		void allReduce() {
 			conc.allReduce((*this));
+		}
+
+		void print() {
+			for (size_t ind1 = 0; ind1 < msize; ++ind1) {
+				for (size_t ind2 = 0; ind2 < msize; ++ind2){
+					std::cout << ind1<<","<<ind2<<" , " << (*this)(ind1,ind2);
+				}
+			}
+
 		}
 
 	};
@@ -168,7 +178,7 @@ namespace rpa {
 						gap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off
 						r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);
 
-						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
 							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
 							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
 
@@ -186,9 +196,9 @@ namespace rpa {
 					}
 				}
 			}
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) 
+			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) 
 					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
-			chi0matrix.setLowerTriangle();
+			// chi0matrix.setLowerTriangle();
 
 			if (kMap_) printChi0k(q);
 		}
@@ -250,7 +260,10 @@ namespace rpa {
 						ComplexType r1(0.0);
 						r1 = susInt(ekq[band1],ek[band2],invT,omega,param.damp);
 
-						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+						// if (imag(r1)>=1.e-5) std::cout << band1 << "," << band2 << "," << ekq[band1]<<","<<ek[band2]<<","<<imag(r1) << "\n";
+
+						// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
 							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
 							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
 
@@ -263,15 +276,20 @@ namespace rpa {
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 
 							chi0matrix(i,j) += c1*r1 ;
+							// chi0matrix(i,j) += r1 ;
 							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += imag(c1*r1);
 
 						}
 					}
 				}
 			}
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) 
+			// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
 					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
-			chi0matrix.setLowerTriangle();
+					// std::cout << chi0matrix(i,j) << "\n";
+				}
+			// chi0matrix.print();
+			// chi0matrix.setLowerTriangle(); // For finite omega there is a damping term w + ii*damp which breaks this symmetry
 			if (kMap_) printChi0k(q);
 
 		}

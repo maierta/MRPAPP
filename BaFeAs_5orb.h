@@ -190,6 +190,7 @@ namespace rpa {
 			eigenvects(0,0) = 2.0*tx(0,0)*cx + 2.0*ty(0,0)*cy +
 			                  4.0*txy(0,0)*cx*cy + 2.0*txx(0,0)*(c2x-c2y) +
 			                  4.0*txxy(0,0)*c2x*cy + 4.0*txyy(0,0)*c2y*cx + 
+
 			                  4.0*txxyy(0,0)*c2x*c2y + 4.0*txz(0,0)*(cx+cy)*cz + 
 			                  4.0*txxz(0,0)*(c2x-c2y)*cz
 			                  + 0.0987;

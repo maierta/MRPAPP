@@ -15,6 +15,7 @@
 #include "Range.h"
 #include "SrRuO.h"
 #include "BaFeAs_5orb.h"
+#include "KFe2Se2.h"
 #include "bilayer.h"
 
 namespace rpa {
@@ -193,6 +194,12 @@ namespace rpa {
 			for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
 			eigen(eigenvals,eigenvects);
 			return;
+#elif USE_KFE2SE2
+			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
+			s.getBands(k,eigenvects);
+			for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
+			eigen(eigenvals,eigenvects);
+			return;
 #else
 			FieldType exponent(0.);
 			int n = eigenvects.n_col();
@@ -337,30 +344,34 @@ namespace rpa {
 		}
 
 
-		void calcBandStructure() {
+		void calcBandStructure(std::string file,bool printOccupation) {
 			size_t nktot(kmesh.nktot);
 			RangeType range(0,nktot,conc);
 			std::vector<std::vector<FieldType> > ek(nktot,VectorType(nbands,0));
 			ComplexMatrixType ak(nbands,nbands);
+			
 			VectorType occupation(nktot,0);
-			for (;!range.end();range.next()) {
-				size_t ik = range.index();
-				std::vector<FieldType> k(3);
-				kmesh.momenta.getRow(ik,k);
-				getEkAndAk(k,ek[ik],ak);
-				for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[ik][i],1./param.temperature);
-			}
-			for (size_t ik=0;ik<nktot;ik++) conc.reduce(ek[ik]);
-			conc.reduce(occupation);
-
-			FieldType occ(0.0);
-			for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
-			occ /= FieldType(nktot);
-			// if (conc.rank()==0) std::cout << "Filling = " << 2 * occ / param.nSitesPerUnitCell << "\n";
-			if (conc.rank()==0) std::cout << "Filling = " << 2 * occ  << "\n";
+				for (;!range.end();range.next()) {
+					size_t ik = range.index();
+					std::vector<FieldType> k(3);
+					kmesh.momenta.getRow(ik,k);
+					getEkAndAk(k,ek[ik],ak);
+					if (printOccupation) {
+						for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[ik][i],1./param.temperature);
+					}
+				}
+				for (size_t ik=0;ik<nktot;ik++) conc.reduce(ek[ik]);
+				if (printOccupation) {
+					conc.reduce(occupation);
+					FieldType occ(0.0);
+					for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
+					occ /= FieldType(nktot);
+					if (conc.rank()==0) std::cout << "Filling = " << 2 * occ  << "\n";
+				}
+			
 
 			if (conc.rank()==0) {
-				std::ofstream os("ek.dat");
+				std::ofstream os(file);
 				int precision=5;
 				os.precision(precision);
 				for (size_t ik=0; ik<nktot; ik++) {

@@ -154,7 +154,7 @@ namespace rpa {
 					std::cout << "iQ = " << iQ << " q= " << q << " w = " << QVec[iQ][3]    
 					          << "  of " << numberOfQ
 	                          << " total. ChiPhys=" << chi0Matrix[iQ].calcSus()
-	                          << "chi0_{1133}" << chi0Matrix[iQ](0,18)
+	                          // << "chi0_{1133}" << chi0Matrix[iQ](0,18)
 	                          << "\n";
                 }
 			}

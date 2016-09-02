@@ -16,6 +16,7 @@
 #include "SrRuO.h"
 #include "BaFeAs_5orb.h"
 #include "KFe2Se2.h"
+#include "FourOrbital.h"
 #include "bilayer.h"
 
 namespace rpa {
@@ -179,6 +180,7 @@ namespace rpa {
 								   VectorType& eigenvals, 
 								   ComplexMatrixType& eigenvects,
 								   int spin=1)  {
+
 			// eigenvects=ComplexMatrixType(nbands,nbands,nbands,0.0);
 #ifdef USE_SRRUO
 			SrRuO<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
@@ -196,6 +198,12 @@ namespace rpa {
 			return;
 #elif USE_KFE2SE2
 			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
+			s.getBands(k,eigenvects);
+			for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
+			eigen(eigenvals,eigenvects);
+			return;
+#elif USE_FOURORBITAL
+			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
 			s.getBands(k,eigenvects);
 			for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
 			eigen(eigenvals,eigenvects);
@@ -349,7 +357,7 @@ namespace rpa {
 			RangeType range(0,nktot,conc);
 			std::vector<std::vector<FieldType> > ek(nktot,VectorType(nbands,0));
 			ComplexMatrixType ak(nbands,nbands);
-			
+
 			VectorType occupation(nktot,0);
 				for (;!range.end();range.next()) {
 					size_t ik = range.index();
@@ -369,7 +377,6 @@ namespace rpa {
 					if (conc.rank()==0) std::cout << "Filling = " << 2 * occ  << "\n";
 				}
 			
-
 			if (conc.rank()==0) {
 				const char *filename = file.c_str();
 				std::ofstream os(filename);

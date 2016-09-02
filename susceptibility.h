@@ -100,7 +100,7 @@ namespace rpa {
 
 			if (param.scState==1 && param.printGap==1 && conc.rank()==0) {
 				if (conc.rank()==0) std::cout << "Now writing gap.txt \n";
-				printGap3();
+				printGap2();
 				if (conc.rank()==0) std::cout << "Done writing gap.txt \n";
 			}
 
@@ -534,14 +534,15 @@ namespace rpa {
 			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
 				kmesh.momenta.getRow(ik,k);
 				bands.getEkAndAk(k,ek,ak);
-				std::vector<FieldType> gap1(param.nOrb);
+				std::vector<ComplexType> gap1(param.nOrb);
 				for (size_t iband=0;iband<param.nOrb;iband++) {	
-					gap1[iband] = real(Delta(k,iband));
+					gap1[iband] = Delta(k,iband,ak);
 					gap1[iband] *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off
 				}
 
-				os << k[0] << "  " << k[1] << "  " << k[2] << "  " 
-					   << gap1 << "\n";
+				os << k[0] << "  " << k[1] << "  " << k[2] << "  " ;
+				for (size_t ib=0;ib<param.nOrb;ib++) os	 << real(gap1[ib]) << " ";
+				os << "\n";
 			}
 		}
 

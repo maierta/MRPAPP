@@ -30,6 +30,7 @@ template <typename Field,  template<typename> class MatrixTemplate, typename Con
 void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ConcurrencyType& conc) {
 	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 	kmesh.set_momenta(false);	
+
 	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands(param,conc,kmesh,false);
 	// std::vector<FieldType> w(10);
 	// ComplexMatrixType v(10,10);

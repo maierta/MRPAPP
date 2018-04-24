@@ -541,6 +541,20 @@ namespace rpa {
 				os2 << normalization[ik];
 				if (ik<nkF-1) os2 << ", ";
 			}
+			os2 << "],\n";
+			os2 << " \"Velocity\": [\n";
+			os2 << "[";
+			for(size_t ik=0;ik<nkF;ik++) {
+				os2 << FSpoints.vkF[ik];
+				if (ik<nkF-1) os2 << ", ";
+			}
+			os2 << "],\n";
+			os2 << " \"gammaB1G\": [\n";
+			os2 << "[";
+			for(size_t ik=0;ik<nkF;ik++) {
+				os2 << FSpoints.gammaB1GkF[ik];
+				if (ik<nkF-1) os2 << ", ";
+			}
 			os2 << "]],\n";
 			os2 << " \"chikk\": [\n";
 			for(size_t ik=0;ik<nkF;ik++) {

@@ -40,7 +40,7 @@ namespace rpa {
 		size_t nkPerSheet,nSheets,nTotal;
 		VectorType kFx,kFy,kFz;
 		VectorIntType kFtoBand;
-		VectorType deltakF,vkF;
+		VectorType deltakF,vkF,gammaB1GkF;
 		std::vector<std::vector<FieldType> > FSCenters;
 		std::vector<size_t> FSBand;
 		BandsType bands;
@@ -64,6 +64,7 @@ namespace rpa {
 		kFtoBand(0,0),
 		deltakF(0,0),
 		vkF(0,0),
+		gammaB1GkF(0,0),
 		FSCenters(0),
 		FSBand(0),
 		bands(param,conc),
@@ -706,6 +707,7 @@ namespace rpa {
 					size_t ic(kFx.size()-1);
 					deltakF.push_back(calcDeltaKF(kFx[ic],kFy[ic],kFz[ic],iSheet,dim));
 					vkF.push_back(calcVkF(kFx[ic],kFy[ic],kFz[ic],FSBand[iSheet],dim));
+					gammaB1GkF.push_back(calcgammaB1GkF(kFx[ic],kFy[ic],kFz[ic],FSBand[iSheet],dim));
 					if (calcOW_) {
 						VectorType mk(3,0);
 						ComplexMatrixType mv(param.nOrb,param.nOrb);
@@ -835,6 +837,30 @@ namespace rpa {
 		} else {
 			return sqrt(pow(rx,2)+pow(ry,2)+pow(rz,2));
 		}
+	}
+
+	FieldType calcgammaB1GkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,
+		           		   const size_t iband, size_t dim) {
+		FieldType dk(0.0001);
+		VectorType k(3,0);
+		FieldType ekpx,ekpy,ekmx,ekmy,ek;
+		VectorType w(param.nOrb);
+		ComplexMatrixType v(param.nOrb,param.nOrb);
+		k[0] = kFx; k[1] = kFy;
+		bands.getBands(k,w,v) ;   ek = w[iband];
+		k[0] = kFx+dk; k[1] = kFy;
+		bands.getBands(k,w,v) ; ekpx = w[iband];
+		k[0] = kFx; k[1] = kFy + dk;
+		bands.getBands(k,w,v) ; ekpy = w[iband];
+		k[0] = kFx-dk; k[1] = kFy;
+		bands.getBands(k,w,v) ; ekmx = w[iband];
+		k[0] = kFx; k[1] = kFy - dk;
+		bands.getBands(k,w,v) ; ekmy = w[iband];
+
+		FieldType fxx((ekpx+ekmx-2.*ek)/(pow(dk,2)));
+		FieldType fyy((ekpy+ekmy-2.*ek)/(pow(dk,2)));
+
+		return fxx - fyy;
 	}
 
 	FieldType calcVkFz(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,

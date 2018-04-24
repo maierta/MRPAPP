@@ -34,7 +34,7 @@ namespace rpa {
  		typedef psimag::Matrix<std::complex<Field> > BaseType;
 		size_t nOrb,msize;
 
-	private:	
+	private:
 		susc() {}
 
 	public:
@@ -68,7 +68,7 @@ namespace rpa {
 			for (size_t i = 0; i < msize; ++i) for (size_t j = 0; j < i; ++j) {
 				(*this)(i,j) = conj((*this)(j,i));
 			}
-		}		
+		}
 
 		std::complex<Field> calcSus() const {
 			std::complex<Field> chiPhys(0.0);
@@ -85,7 +85,7 @@ namespace rpa {
 			// if (param.sublattice==1) factor=param.nSitesPerUnitCell;
 			return chiPhys/factor;
 
-		}	
+		}
 
 		void allReduce() {
 			conc.allReduce((*this));
@@ -103,7 +103,7 @@ namespace rpa {
 	};
 
 	// class to calculate the susceptibility matrix
-	template<typename Field, typename SuscType, typename BandsType, 
+	template<typename Field, typename SuscType, typename BandsType,
 			 typename GapType,
 	         template<typename> class MatrixTemplate,
 	         typename ConcurrencyType>
@@ -153,20 +153,20 @@ namespace rpa {
 		kMap_(kMap),
 		chi0k(kMap?kmeshIn.nktot:0,0.0)
 
-		{		
+		{
 			GapType& Delta(DeltaIn);
 			VectorType k(3),kq(3);
 			VectorType ek(nOrb,0),ekq(nOrb,0);
 			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
 
-			
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) 
+
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 					chi0matrix(i,j) = ComplexType(0.0,0.0);
 
 			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
 				kmesh.momenta.getRow(ik,k);
 				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);	
+				bands.getEkAndAk(k,ek,ak);
 				bands.getEkAndAk(kq,ekq,akq);
 				kmesh.mapTo1BZ(kq); // make sure kq is in 1. BZ because gap may not be periodic in kz
 				for (size_t band1 = 0; band1 < nOrb; ++band1){
@@ -174,7 +174,7 @@ namespace rpa {
 					gap1 *= pow(param.Omega0,2)/(pow(ekq[band1],2)+pow(param.Omega0,2)); // Lorentzian cut-off
 					for (size_t band2 = 0; band2 < nOrb; ++band2){
 						ComplexType r1(0.0);
-						ComplexType gap2 = Delta(k,band2,ak); 
+						ComplexType gap2 = Delta(k,band2,ak);
 						gap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off
 						r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);
 
@@ -186,7 +186,7 @@ namespace rpa {
 							// 	           * akq(l1,band1) * conj(akq(l3,band1));
 
 							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue; 
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
 
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 							chi0matrix(i,j) += c1*r1 ;
@@ -196,7 +196,7 @@ namespace rpa {
 					}
 				}
 			}
-			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) 
+			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++)
 					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
 			// chi0matrix.setLowerTriangle();
 
@@ -214,7 +214,7 @@ namespace rpa {
 			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
 				std::vector<FieldType> k(3);
 				std::vector<FieldType> kq(3);
-				kmesh.momenta.getRow(ik,k);	
+				kmesh.momenta.getRow(ik,k);
 				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
 				kmesh.mapTo1BZ(kq);
 				os << k[0]/param.pi_f << " , " << k[1]/param.pi_f << " , " << k[2]/param.pi_f << " , " << chi0k[ik] << "\n";
@@ -241,19 +241,19 @@ namespace rpa {
 		kMap_(kMap),
 		chi0k(kMap?kmeshIn.nktot:0,0.0)
 
-		{		
+		{
 			VectorType k(3),kq(3);
 			VectorType ek(nOrb,0),ekq(nOrb,0);
 			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
 
-			
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) 
+
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 					chi0matrix(i,j) = ComplexType(0.0,0.0);
 
 			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
 				kmesh.momenta.getRow(ik,k);
 				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);	
+				bands.getEkAndAk(k,ek,ak);
 				bands.getEkAndAk(kq,ekq,akq);
 				for (size_t band1 = 0; band1 < nOrb; ++band1){
 					for (size_t band2 = 0; band2 < nOrb; ++band2){
@@ -269,10 +269,10 @@ namespace rpa {
 
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 							// 	           * akq(l1,band1) * conj(akq(l3,band1));
-	
+
 							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue; 
-				
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
+
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 
 							chi0matrix(i,j) += c1*r1 ;
@@ -316,18 +316,18 @@ namespace rpa {
 		calcOnlyDiagonal_(calcOnlyDiagonal),
 		chi0k(kMap?kmeshIn.nktot:0,0.0)
 
-		{		
+		{
 			VectorType k(3),kq(3);
 			VectorType ek(nOrb,0),ekq(nOrb,0);
 			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
-			
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) 
+
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 					chi0matrix(i,j) = ComplexType(0.0,0.0);
 
 			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
 				kmesh.momenta.getRow(ik,k);
 				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);	
+				bands.getEkAndAk(k,ek,ak);
 				bands.getEkAndAk(kq,ekq,akq);
 				for (size_t band1 = 0; band1 < nOrb; ++band1){
 					for (size_t band2 = 0; band2 < nOrb; ++band2){
@@ -339,11 +339,11 @@ namespace rpa {
 							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
 
 							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue; 
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
 							if (calcOnlyDiagonal && ((l1!=l2) || (l3!=l4))) continue;
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 					                       // * akq(l1,band1) * conj(akq(l3,band1));
-					
+
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 							// if (l1==0 && l2==0 && l3==3 && l4==3 && band1==band2 && abs(r1)>=1.0) std::cout << "band1,band2,c1: " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<","<<c1<<","<<r1 << ","<<ekq[band1]<<","<<ek[band2]<<"\n";
 
@@ -354,7 +354,7 @@ namespace rpa {
 					}
 				}
 			}
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) 
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
 			chi0matrix.setLowerTriangle();
 			if (kMap_) printChi0k(q);
@@ -381,24 +381,24 @@ namespace rpa {
 		msize(nOrb*nOrb),
 		invT(1./param.temperature)
 
-		{	
+		{
 			VectorType k(3),kq(3);
 			VectorType ek(nOrb,0),ekq(nOrb,0);
 			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
 
-			for (size_t i=0; i<chi0.n_row(); i++) for (size_t j=0; j<chi0.n_col(); j++) 
+			for (size_t i=0; i<chi0.n_row(); i++) for (size_t j=0; j<chi0.n_col(); j++)
 				chi0(i,j) = ComplexType(0.0);
-			for (size_t i=0; i<chi0_gg.n_row(); i++) for (size_t j=0; j<chi0_gg.n_col(); j++) 
+			for (size_t i=0; i<chi0_gg.n_row(); i++) for (size_t j=0; j<chi0_gg.n_col(); j++)
 				chi0_gg(i,j) = ComplexType(0.0);
-			for (size_t i=0; i<chi0_g.n_row(); i++) for (size_t j=0; j<chi0_g.n_col(); j++) 
+			for (size_t i=0; i<chi0_g.n_row(); i++) for (size_t j=0; j<chi0_g.n_col(); j++)
 				chi0_g(i,j) = ComplexType(0.0);
 
 			for (size_t ik=0; ik<kmesh.nktot; ik++) { // loop over k-points
 				kmesh.momenta.getRow(ik,k);
-				sepBasis<FieldType,psimag::Matrix,ConcurrencyType> basis(param,conc,k);	
+				sepBasis<FieldType,psimag::Matrix,ConcurrencyType> basis(param,conc,k);
 			for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);	
-				bands.getEkAndAk(kq,ekq,akq);	
+				bands.getEkAndAk(k,ek,ak);
+				bands.getEkAndAk(kq,ekq,akq);
 				for (size_t band1=0; band1<nOrb; ++band1) for (size_t band2=0; band2<nOrb; ++band2)  { // loop over band indices
 					ComplexType r1 = ComplexType(susInt(ekq[band1],ek[band2],invT),0); // f(e_k+q-f_ek/(ek+q-ek))
 					for (size_t i=0; i<msize; i++) for (size_t j=0; j<msize; j++)  { // loop over orbital indices
@@ -406,7 +406,7 @@ namespace rpa {
 						size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
 						ComplexType me = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 						ComplexType integrand = r1*me;
-		
+
 						if ((l1 == l2) && (l3 == l4)) chi0(l1,l3) += integrand; // chi0_l1,l2 only diag. elements
 						for (size_t iB=0; iB<19; iB++) for (size_t jB=0; jB<19; jB++)  // loop over basis set
 							chi0_gg(iB,jB) += integrand*basis(iB,l4,l3)*basis(jB,l2,l1);
@@ -446,10 +446,10 @@ namespace rpa {
 		const FieldType& dr(real(akq(l3,band1)));
 		const FieldType& di(imag(akq(l3,band1)));
 
-		FieldType t1r(ar*br+ai*bi); 
-		FieldType t1i(ai*br-ar*bi); 
-		FieldType t2r(cr*dr+ci*di); 
-		FieldType t2i(ci*dr-cr*di); 
+		FieldType t1r(ar*br+ai*bi);
+		FieldType t1i(ai*br-ar*bi);
+		FieldType t2r(cr*dr+ci*di);
+		FieldType t2i(ci*dr-cr*di);
 
 		ComplexType c1(t1r*t2r-t1i*t2i,t1r*t2i+t1i*t2r);
 
@@ -522,20 +522,20 @@ namespace rpa {
 				}
 			}
 		}
-		
+
 		void calcChi0q() {
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
 			BandsType bands(param,conc,kmesh,true);
 			RangeType range(0,qMesh.nktot,conc);
 			for (;!range.end();range.next()) {
-				
+
 				size_t iq = range.index();
-			
+
 				std::vector<FieldType> q(3);
 				qMesh.momenta.getRow(iq,q);
 
-				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType>
 				             calcChi0(param,kmesh,bands,q,conc,(*this)[iq]);
 
 				// for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) (*this)[iq](i,j) = calcChi0(i,j);
@@ -543,15 +543,15 @@ namespace rpa {
 
 				if (conc.rank()==0) {
 					std::cout.precision(7);
-					std::cout << "iq = " << iq << " q= " << q << " of " << qMesh.nktot 
+					std::cout << "iq = " << iq << " q= " << q << " of " << qMesh.nktot
 	                          << " total. ChiPhys=" << (*this)[iq].calcSus()
 	                          << "\n";
                 }
 			}
-			// for (size_t iq=0;iq<qMesh.nktot;iq++) conc.allReduce((*this)[iq]); 
+			// for (size_t iq=0;iq<qMesh.nktot;iq++) conc.allReduce((*this)[iq]);
 			for (size_t iq=0;iq<qMesh.nktot;iq++) (*this)[iq].allReduce();
 			if (conc.rank()==0) {
-				std::cout << "Now printing out chiq \n";	
+				std::cout << "Now printing out chiq \n";
 				writeChiqTxt();
 			}
 		}
@@ -603,9 +603,9 @@ namespace rpa {
 				qMesh.momenta(iq,0) = data[2+iq*step];
 				qMesh.momenta(iq,1) = data[2+iq*step+1];
 				qMesh.momenta(iq,2) = data[2+iq*step+2];
-				for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) 
+				for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++)
 					(*this)[iq](l1,l2) = data[2+iq*step+3+l2+l1*msize]; // real part
-				for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) 
+				for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++)
 					(*this)[iq](l1,l2) = ComplexType(real((*this)[iq](l1,l2)),data[2+iq*step+3+msize*msize+l2+l1*msize]); // imag. part
 				std::vector<FieldType> q(3);
 				qMesh.momenta.getRow(iq,q);
@@ -617,7 +617,7 @@ namespace rpa {
 	};
 
 	template<typename FieldType, typename SuscType>
-	void writeChiqTxt2(const std::vector<std::vector<FieldType> >& qField, 
+	void writeChiqTxt2(const std::vector<std::vector<FieldType> >& qField,
 					   const std::vector<SuscType>& chiField,
 					   const std::string& filename) {
 		std::ofstream os(filename.c_str());
@@ -640,10 +640,10 @@ namespace rpa {
 	}
 
 	template<typename FieldType, typename SuscType>
-	void readChiqTxt2(std::vector<std::vector<FieldType> >& qField, 
+	void readChiqTxt2(std::vector<std::vector<FieldType> >& qField,
 				      std::vector<SuscType>& chiField,
 				      const std::string& filename) {
-		
+
 		std::vector<FieldType> data;
 		typedef std::complex<FieldType> ComplexType;
 		loadVector(data,filename);
@@ -664,7 +664,7 @@ namespace rpa {
 				chiField[iq](l1,l2) = ComplexType(r1,i1);
 			}
 
-			// std::cout << "iq,q,chi.calcSus,file.calcSus: " << iq << ", " << qField[iq] << ", " 
+			// std::cout << "iq,q,chi.calcSus,file.calcSus: " << iq << ", " << qField[iq] << ", "
 			          // << chiField[iq].calcSus() << ", " << data[2*msize*msize + 3 + iq*step] << "\n";
 		}
 	}

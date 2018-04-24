@@ -479,6 +479,7 @@ namespace rpa {
 				os << "Omega0 = " << (*this).Omega0 << "\n";
 				os << "signF = " << (*this).signF << "\n";
 				os << "damp = " << (*this).damp << "\n";
+				os << "calcOnlyDiagonal = " << (*this).calcOnlyDiagonal << "\n";
 				os << "writeFullChi0 = " << (*this).writeFullChi0 << "\n";
 			}
 

@@ -27,7 +27,7 @@ namespace rpa {
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
-		
+
 	public:
 		FieldType nbands;
 
@@ -39,7 +39,7 @@ namespace rpa {
 			nbands(param.nOrb)
 		{
 		}
-		
+
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
 		  	FieldType t,tp,tpp,tperp;
 
@@ -52,10 +52,53 @@ namespace rpa {
 			FieldType cx,cy,cz,c2x,c2y;
 			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]);
 			c2x = cos(2*k[0]); c2y = cos(2*k[1]);
-			
+
 			FieldType ek   = -2*t*(cx+cy) + 4*tp*cx*cy - 2*tpp*(c2x+c2y) - param.mu;
-			FieldType ekz  = tperp*pow((cx-cy),2)*cz;   
-			// FieldType ekz  = -tperp*cz;   
+			FieldType ekz  = tperp*pow((cx-cy),2)*cz;
+			// FieldType ekz  = -tperp*cz;
+
+			eigenvals[0] = ek + ekz;
+
+			eigenvects(0,0) =  1.0;
+		}
+
+	};
+
+	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>
+	class bilayerFESC {
+	private:
+		typedef MatrixTemplate<Field> 		MatrixType;
+		typedef std::complex<Field>			ComplexType;
+		typedef MatrixTemplate<ComplexType> ComplexMatrixType;
+		typedef std::vector<Field>      	VectorType;
+		typedef Field 						FieldType;
+		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		ConcurrencyType& conc;
+		size_t dim;
+
+	public:
+		FieldType nbands;
+
+
+		bilayerFESC(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
+			param(parameters),
+			conc(concurrency),
+			dim(param.dimension),
+			nbands(param.nOrb)
+		{
+		}
+
+		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
+		  	FieldType t,tp,tpp,tperp,tperpp,tperppp;
+
+		  	t = -1.0; tp = -1.0; tpp = 0.0; tperp = 6.0; tperpp = -0.5; tperppp = 1.0;
+
+			FieldType cx,cy,cz,c2x,c2y;
+			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]);
+			c2x = cos(2*k[0]); c2y = cos(2*k[1]);
+
+			FieldType ek   = -2*t*(cx+cy) - 4*tp*cx*cy - 2*tpp*(c2x+c2y) - param.mu;
+			FieldType ekz  = (tperp+tperpp*(cx+cy)+tperppp*cx*cy)*cz;
 
 			eigenvals[0] = ek + ekz;
 
@@ -75,7 +118,7 @@ namespace rpa {
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
-		
+
 	public:
 		FieldType nbands;
 
@@ -87,7 +130,7 @@ namespace rpa {
 			nbands(param.nOrb)
 		{
 		}
-		
+
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
 		  	FieldType t,tp,tpp,V,tperp;
 
@@ -97,10 +140,10 @@ namespace rpa {
 			FieldType cx,cy,cz,c2x,c2y;
 			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]);
 			c2x = cos(2*k[0]); c2y = cos(2*k[1]);
-			
+
 			FieldType ek   = -2*t*cy - 2*tpp*(c2x+c2y) - param.mu;
-			// FieldType ekz  = tperp*pow((cx-cy),2)*cz;   
-			FieldType ekz  = -tperp*cz;   
+			// FieldType ekz  = tperp*pow((cx-cy),2)*cz;
+			FieldType ekz  = -tperp*cz;
 			FieldType ekOrtho = sqrt(4.*pow(cx,2)*pow((t-2.*tp*cy),2) + pow(V,2)/4.0);
 
 			eigenvals[0] = ek + ekz - ekOrtho;

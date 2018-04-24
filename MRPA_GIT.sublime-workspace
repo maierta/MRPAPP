@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"Delta",
+				"Deltax2y2"
+			],
+			[
+				"Del",
+				"Deltaxy"
+			],
+			[
+				"Field",
+				"FieldType"
+			],
+			[
+				"Comple",
+				"ComplexMatrixType"
+			],
+			[
+				"Matr",
+				"MatrixType"
+			],
+			[
+				"print",
+				"printOccupation"
+			],
+			[
+				"set_mom",
+				"set_momenta_Path1"
+			],
+			[
+				"kmes",
+				"kmesh"
+			],
+			[
 				"numb",
 				"numberOfQ"
 			],
@@ -28,13 +60,11 @@
 	"buffers":
 	[
 		{
-			"contents": "//-*-C++-*-\n\n#ifndef PARAMETERS_H\n#define PARAMETERS_H\n\n#include <sstream>\n#include <fstream>\n#include <iostream>\n#include <string>\n#include \"ConcurrencyMpi.h\"\n\n\n\nnamespace rpa {\n	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>\n	class parameters {\n	\n	private:\n		ConcurrencyType& conc;\n	public:\n		typedef MatrixTemplate<Field> 			MatrixType;\n		typedef MatrixTemplate<size_t> 			IntMatrixType;\n\n		Field temperature;\n		const Field pi_f;\n		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;\n		Field staticUFactor,chargeFactor,spinFactor;\n		std::vector<Field> deltaU;\n		std::vector<Field> a1,a2,a3;\n		std::vector<Field> chia1,chia2,chia3;\n		size_t nqx,nqy,nqz;\n		Field qxmin,qxmax,qymin,qymax,qzmin,qzmax;\n		size_t nw;\n		Field wmin,wmax;\n		size_t scState;\n		size_t printGap;\n		std::string gAmpl;\n		Field Delta0;\n		Field Omega0;\n		Field signF; // sign of FF term in BCS chi0 calculation\n		size_t nwn;\n		std::string Case;\n		size_t dimension;\n		size_t nkInt; \n		size_t nkIntz; \n		Field kz2D;\n		size_t FSnkz;\n		size_t nOrb;\n		Field  mu;\n		std::string tbfile;\n		std::string fsfile;\n		bool readFSFromFile;\n		size_t nkPerSheet;\n		bool complexHopping;\n		size_t pairingSpinParity;\n		size_t pairingFromSpin;\n		size_t pairingFromCharge;\n		size_t storeChi;\n		size_t readChi;\n		size_t readChiForSus;\n		std::string chifile;\n		size_t interpolateChi;\n		size_t interpolateNqx;\n		size_t interpolateNqz;\n		size_t sublattice;\n		Field deltax;\n		Field deltay;\n		Field deltaz;\n		size_t kTrafo;\n		std::string options;\n		std::string subOptions;\n		MatrixType WTrafo;\n		IntMatrixType indexToOrb;\n		std::vector<int> orbToSite;\n		bool hyb;\n		bool LS;\n		Field hybStrength;\n		size_t hybBand1;\n		size_t hybBand2;\n		size_t nSitesPerUnitCell;\n		std::vector<int> nOrbAtom;\n		std::string nOrbAtomStr;\n		Field damp;\n		bool calcOnlyDiagonal;\n		bool writeFullChi0;\n\n		// size_t nktot;\n\n\n		parameters(ConcurrencyType& concurrency):\n			conc(concurrency), \n			temperature(1.0),\n			pi_f(3.141592653589793238462643383),\n			U(1.1),\n			Up(0.55),\n			J(0.275),\n			Jp(0.275),\n			U_d_s(0.0),\n			U_d_c(0.0),\n			U_p_s(0.0),\n			U_p_c(0.0),\n			U_pd_s(0.0),\n			U_pd_c(0.0),\n			U_pp_s(0.0),\n			U_pp_c(0.0),\n			U_d_coupl(0.0),\n			U_p_coupl(0.0),\n			U_pd_coupl(0.0),\n			U_pp_coupl(0.0),\n			staticUFactor(1.0),\n			chargeFactor(1.0),\n			spinFactor(1.0),\n			deltaU(5,0.0),\n			a1(3,0),\n			a2(3,0),\n			a3(3,0),\n			chia1(3,0),\n			chia2(3,0),\n			chia3(3,0),\n			nqx(1),\n			nqy(1),\n			nqz(1),\n			qxmin(0.0),\n			qxmax(0.0),\n			qymin(0.0),\n			qymax(0.0),\n			qzmin(0.0),\n			qzmax(0.0),\n			nw(1),\n			wmin(0.0),\n			wmax(0.0),\n			scState(0),\n			printGap(0),\n			gAmpl(\"LaOFeAs_s_1\"),\n			Delta0(0.04),\n			Omega0(0.1),\n			signF(-1.0),\n			nwn(100),\n			Case(\"\"),\n			dimension(2),\n			nkInt(64),\n			nkIntz(16),\n			kz2D(0.0),\n			FSnkz(10),\n			nOrb(1),\n			mu(-0.1),\n			tbfile(\"\"),\n			fsfile(\"FSforPairing.dat\"),\n			readFSFromFile(0),\n			nkPerSheet(40),\n			complexHopping(0),\n			pairingSpinParity(0),\n			pairingFromSpin(1),\n			pairingFromCharge(1),\n			storeChi(0),\n			readChi(0),\n			readChiForSus(0),\n			chifile(\"none\"),\n			interpolateChi(0),\n			interpolateNqx(17),\n			interpolateNqz(5),\n			sublattice(0),\n			deltax(0.0), \n			deltay(0.0), \n			deltaz(0.0),\n			kTrafo(0),\n			options(\"\"),\n			subOptions(\"\"),\n			WTrafo(3,3),\n			indexToOrb(0,0),\n			orbToSite(0),\n			hyb(0),\n			LS(0),\n			hybStrength(0.0),\n			hybBand1(0),\n			hybBand2(0),\n			nSitesPerUnitCell(1),\n			nOrbAtom(0,0),\n			nOrbAtomStr(\"\"),\n			damp(1.0e-3),\n			calcOnlyDiagonal(0),\n			writeFullChi0(0)\n\n			// single-band model in 2-sub-lattice formulation\n			// dimension(2),\n			// nkInt(64),\n			// nOrb(2),\n			// mu(-0.1),\n			// tbfile(\"1band_AB_t.csv\"),\n			// sublattice(1),\n			// deltax(0.0), \n			// deltay(0.0), \n			// deltaz(0.0)\n\n			// 2-orbital model (by Raghu)\n			// dimension(2),\n			// nkInt(64),\n			// nOrb(2),\n			// mu(1.45),\n			// tbfile(\"2band.csv\"),\n			// sublattice(0),\n			// deltax(0.0), \n			// deltay(0.0), \n			// deltaz(0.0)\n\n			// 10-orbital model for LaOFeAs\n			 // dimension(3),\n			 // nkInt(4),\n			 // nOrb(10),\n			 // mu(11.60),\n			 // tbfile(\"tij_LaOFeAs.csv\"),\n			 // sublattice(1),\n			 // deltax(0.5), \n			 // deltay(0.5), \n			 // deltaz(0.0)\n\n			// 10-orbital model for FeSe\n			// dimension(2),\n			// nkInt(8),\n			// nOrb(10),\n			// mu(0.0),\n			// tbfile(\"fese_ab_strain_dx_00_000pc.dat\"),\n			// sublattice(1),\n			// deltax(0.0), \n			// deltay(0.0), \n			// deltaz(0.0)\n\n			{\n				// 1 site / unit cell BZ\n				a1[0]=1.0; a2[1]=1.0; a3[2]=1.0;\n				chia1=a1; chia2=a2; chia3=a3;\n				// 2 sites / unit cell BZ\n				// a1[0]= 1.0  ; a1[1]=1.0;\n				// a2[0]= -1.0 ; a2[1]=1.0;\n				// a3[2]=1.0;\n\n			};\n\n			void readFromInputFile(const std::string& file) {\n				if (conc.rank()==0) {\n					std::ifstream data(file.c_str());\n					\n					std::string line;\n				    while(std::getline(data,line)) {\n				        std::stringstream    str(line);\n				        std::string          text;\n				        std::getline(str,text,'=');\n				        setParamBasedOnText(text,str);\n					}\n				}\n\n				\n				conc.barrier();\n				broadcastParam();\n		        loadVector(nOrbAtom,nOrbAtomStr);\n				// bcTest();\n\n				if(kTrafo==0) {\n					for (int i = 0; i < 3; ++i)\n					{\n						WTrafo(i,i) = 1.0;\n					}\n				} else if(kTrafo==1) {\n					WTrafo(0,0) =  0.5; WTrafo(0,1) = 0.5; WTrafo(0,2) = -0.5;\n					WTrafo(1,0) = -0.5; WTrafo(1,1) = 0.5; WTrafo(1,2) = -0.5;\n					WTrafo(2,0) =  0.5; WTrafo(2,1) = 0.5; WTrafo(2,2) =  0.5;\n					// WTrafo(0,0) =  -0.5   ; WTrafo(0,1) =  0.5   ; WTrafo(0,2) = 0.5;\n					// WTrafo(1,0) =   0.5   ; WTrafo(1,1) = -0.5   ; WTrafo(1,2) = 0.5;\n					// WTrafo(2,0) =   1.8039; WTrafo(2,1) =  1.8039; WTrafo(2,2) =-1.8039;\n				}\n\n		        if (dimension==2) {\n		        	nkIntz=1;\n		        	kz2D *= pi_f;\n		        }\n			}\n\n			void setParamBasedOnText(std::string& text, std::stringstream& str) {\n		        if      (text.find(\"dimension\")!=std::string::npos) str >> (*this).dimension; \n		        else if (text.find(\"temperature\")!=std::string::npos) str >> (*this).temperature; \n		        else if (text.find(\"numberOfOrbitals\")!=std::string::npos) str >> (*this).nOrb; \n		        else if (text.find(\"chemicalPotential\")!=std::string::npos) str >> (*this).mu; \n		        else if (text.find(\"tbParametersFile\")!=std::string::npos) str >> (*this).tbfile; \n		        else if (text.find(\"complexHopping\")!=std::string::npos) str >> (*this).complexHopping; \n		        else if (text.find(\"FSforPairingFile\")!=std::string::npos) str >> (*this).fsfile; \n		        else if (text.find(\"ChiForPairingFile\")!=std::string::npos) str >> (*this).chifile; \n		        else if (text.find(\"interpolateChi\")!=std::string::npos) str >> (*this).interpolateChi; \n		        else if (text.find(\"interpolateNqx\")!=std::string::npos) str >> (*this).interpolateNqx; \n		        else if (text.find(\"interpolateNqz\")!=std::string::npos) str >> (*this).interpolateNqz; \n		        else if (text.find(\"Coulomb1U\")!=std::string::npos) str >> (*this).U; \n		        else if (text.find(\"Coulomb2Up\")!=std::string::npos) str >> (*this).Up; \n		        else if (text.find(\"Coulomb3J\")!=std::string::npos) str >> (*this).J; \n		        else if (text.find(\"Coulomb4Jp\")!=std::string::npos) str >> (*this).Jp; \n		        else if (text.find(\"Coulomb5U_d\")!=std::string::npos) str >> (*this).U_d_c; \n		        else if (text.find(\"Coulomb6U_p\")!=std::string::npos) str >> (*this).U_p_c; \n		        else if (text.find(\"Coulomb7U_pd\")!=std::string::npos) str >> (*this).U_pd_c; \n		        else if (text.find(\"Coulomb8U_pp\")!=std::string::npos) str >> (*this).U_pp_c; \n		        else if (text.find(\"Coulomb9U_d\")!=std::string::npos) str >> (*this).U_d_s; \n		        else if (text.find(\"Coulomb10U_p\")!=std::string::npos) str >> (*this).U_p_s; \n		        else if (text.find(\"Coulomb11U_pd\")!=std::string::npos) str >> (*this).U_pd_s; \n		        else if (text.find(\"Coulomb12U_pp\")!=std::string::npos) str >> (*this).U_pp_s; \n		        else if (text.find(\"Coulomb13U_d_coupl\")!=std::string::npos) str >> (*this).U_d_coupl; \n		        else if (text.find(\"Coulomb14U_p_coupl\")!=std::string::npos) str >> (*this).U_p_coupl; \n		        else if (text.find(\"Coulomb15U_pd_coupl\")!=std::string::npos) str >> (*this).U_pd_coupl; \n		        else if (text.find(\"Coulomb16U_pp_coupl\")!=std::string::npos) str >> (*this).U_pp_coupl; \n		        else if (text.find(\"sublattice\")!=std::string::npos) str >> (*this).sublattice; \n		        else if (text.find(\"deltaU0\")!=std::string::npos) str >> (*this).deltaU[0]; \n		        else if (text.find(\"deltaU1\")!=std::string::npos) str >> (*this).deltaU[1]; \n		        else if (text.find(\"deltaU2\")!=std::string::npos) str >> (*this).deltaU[2]; \n		        else if (text.find(\"deltaU3\")!=std::string::npos) str >> (*this).deltaU[3]; \n		        else if (text.find(\"deltaU4\")!=std::string::npos) str >> (*this).deltaU[4]; \n		        else if (text.find(\"staticUFactor\")!=std::string::npos) str >> (*this).staticUFactor; 				\n		        else if (text.find(\"chargeFactor\")!=std::string::npos) str >> (*this).chargeFactor; 				\n		        else if (text.find(\"spinFactor\")!=std::string::npos) str >> (*this).spinFactor; 				\n		        else if (text.find(\"nkIntegration\")!=std::string::npos) str >> (*this).nkInt; 				\n		        else if (text.find(\"nkzIntegration\")!=std::string::npos) str >> (*this).nkIntz; 				\n		        else if (text.find(\"kz2D\")!=std::string::npos) str >> (*this).kz2D; 				\n		        else if (text.find(\"a1x\")!=std::string::npos) str >> (*this).a1[0]; 				\n		        else if (text.find(\"a1y\")!=std::string::npos) str >> (*this).a1[1]; 				\n		        else if (text.find(\"a1z\")!=std::string::npos) str >> (*this).a1[2]; 				\n		        else if (text.find(\"a2x\")!=std::string::npos) str >> (*this).a2[0]; 				\n		        else if (text.find(\"a2y\")!=std::string::npos) str >> (*this).a2[1]; 				\n		        else if (text.find(\"a2z\")!=std::string::npos) str >> (*this).a2[2]; 				\n		        else if (text.find(\"a3x\")!=std::string::npos) str >> (*this).a3[0]; 				\n		        else if (text.find(\"a3y\")!=std::string::npos) str >> (*this).a3[1]; 				\n		        else if (text.find(\"a3z\")!=std::string::npos) str >> (*this).a3[2]; 				\n		        else if (text.find(\"c1x\")!=std::string::npos) str >> (*this).chia1[0]; 				\n		        else if (text.find(\"c1y\")!=std::string::npos) str >> (*this).chia1[1]; 				\n		        else if (text.find(\"c1z\")!=std::string::npos) str >> (*this).chia1[2]; 				\n		        else if (text.find(\"c2x\")!=std::string::npos) str >> (*this).chia2[0]; 				\n		        else if (text.find(\"c2y\")!=std::string::npos) str >> (*this).chia2[1]; 				\n		        else if (text.find(\"c2z\")!=std::string::npos) str >> (*this).chia2[2]; 				\n		        else if (text.find(\"c3x\")!=std::string::npos) str >> (*this).chia3[0]; 				\n		        else if (text.find(\"c3y\")!=std::string::npos) str >> (*this).chia3[1]; 				\n		        else if (text.find(\"c3z\")!=std::string::npos) str >> (*this).chia3[2]; 				\n		        else if (text.find(\"nqx\")!=std::string::npos) str >> (*this).nqx; 				\n		        else if (text.find(\"nqy\")!=std::string::npos) str >> (*this).nqy; 				\n		        else if (text.find(\"nqz\")!=std::string::npos) str >> (*this).nqz; 				\n		        else if (text.find(\"qxmin\")!=std::string::npos) {str >> (*this).qxmin; qxmin *= pi_f;}\n		        else if (text.find(\"qxmax\")!=std::string::npos) {str >> (*this).qxmax; qxmax *= pi_f;}\n		        else if (text.find(\"qymin\")!=std::string::npos) {str >> (*this).qymin; qymin *= pi_f;}				\n		        else if (text.find(\"qymax\")!=std::string::npos) {str >> (*this).qymax; qymax *= pi_f;}				\n		        else if (text.find(\"qzmin\")!=std::string::npos) {str >> (*this).qzmin; qzmin *= pi_f;}				\n		        else if (text.find(\"qzmax\")!=std::string::npos) {str >> (*this).qzmax; qzmax *= pi_f;}				\n		        else if (text.find(\"nw\")!=std::string::npos) str >> (*this).nw; 				\n		        else if (text.find(\"wmin\")!=std::string::npos) str >> (*this).wmin; 				\n		        else if (text.find(\"wmax\")!=std::string::npos) str >> (*this).wmax; 				\n		        else if (text.find(\"scState\")!=std::string::npos) str >> (*this).scState; 				\n		        else if (text.find(\"printGap\")!=std::string::npos) str >> (*this).printGap; 				\n		        else if (text.find(\"gAmpl\")!=std::string::npos) str >> (*this).gAmpl; 				\n		        else if (text.find(\"Delta0\")!=std::string::npos) str >> (*this).Delta0; 				\n		        else if (text.find(\"deltax\")!=std::string::npos) str >> (*this).deltax; 				\n		        else if (text.find(\"deltay\")!=std::string::npos) str >> (*this).deltay; 				\n		        else if (text.find(\"deltaz\")!=std::string::npos) str >> (*this).deltaz; 				\n		        else if (text.find(\"kTrafo\")!=std::string::npos) str >> (*this).kTrafo; 				\n		        else if (text.find(\"options\")!=std::string::npos) str >> (*this).options; 				\n		        else if (text.find(\"subOptions\")!=std::string::npos) str >> (*this).subOptions; 				\n		        else if (text.find(\"Case\")!=std::string::npos) str >> (*this).Case;\n		        else if (text.find(\"pairingSpinParity\")!=std::string::npos) str >> (*this).pairingSpinParity;\n		        else if (text.find(\"pairingFromSpin\")!=std::string::npos) str >> (*this).pairingFromSpin;\n		        else if (text.find(\"pairingFromCharge\")!=std::string::npos) str >> (*this).pairingFromCharge;\n		        else if (text.find(\"storeChi\")!=std::string::npos) str >> (*this).storeChi;\n		        else if (text.find(\"readChiForPairing\")!=std::string::npos) str >> (*this).readChi;\n		        else if (text.find(\"readChiForSus\")!=std::string::npos) str >> (*this).readChiForSus;\n		        else if (text.find(\"hybridization\")!=std::string::npos) str >> (*this).hyb;\n		        else if (text.find(\"spinOrbit\")!=std::string::npos) str >> (*this).LS;\n		        else if (text.find(\"hybStrength\")!=std::string::npos) str >> (*this).hybStrength;\n		        else if (text.find(\"hybBand1\")!=std::string::npos) str >> (*this).hybBand1;\n		        else if (text.find(\"hybBand2\")!=std::string::npos) str >> (*this).hybBand2;\n		        else if (text.find(\"nSitesPerUnitCell\")!=std::string::npos) str >> (*this).nSitesPerUnitCell;\n		        else if (text.find(\"nOrbAtom\")!=std::string::npos) str >> (*this).nOrbAtomStr;\n		        else if (text.find(\"nkPerSheet\")!=std::string::npos) str >> (*this).nkPerSheet;\n		        else if (text.find(\"FSnkz\")!=std::string::npos) str >> (*this).FSnkz;\n		        else if (text.find(\"Omega0\")!=std::string::npos) str >> (*this).Omega0;\n		        else if (text.find(\"signF\")!=std::string::npos) str >> (*this).signF;\n		        else if (text.find(\"damp\")!=std::string::npos) str >> (*this).damp;\n		        else if (text.find(\"calcOnlyDiagonal\")!=std::string::npos) str >> (*this).calcOnlyDiagonal;\n		        else if (text.find(\"writeFullChi0\")!=std::string::npos) str >> (*this).writeFullChi0;\n			}\n\n			void writeParameters(std::ostream& os) {\n				os << \"Case = \" << (*this).Case << \"\\n\";\n				os << \"dimension = \" << (*this).dimension << \"\\n\";\n				os << \"temperature = \" << (*this).temperature << \"\\n\";\n				os << \"numberOfOrbitals = \" << (*this).nOrb << \"\\n\";\n				os << \"chemicalPotential = \" << (*this).mu << \"\\n\";\n				os << \"tbParametersFile = \" << (*this).tbfile << \"\\n\";\n				os << \"complexHopping = \" << (*this).complexHopping << \"\\n\";\n				os << \"FSforPairingFile = \" << (*this).fsfile << \"\\n\";\n				os << \"pairingSpinParity = \" << (*this).pairingSpinParity << \"\\n\";\n				os << \"pairingFromSpin = \" << (*this).pairingFromSpin << \"\\n\";\n				os << \"pairingFromCharge = \" << (*this).pairingFromCharge << \"\\n\";\n				os << \"storeChi = \" << (*this).storeChi << \"\\n\";\n				os << \"readChiForPairing = \" << (*this).readChi << \"\\n\";\n				os << \"readChiForSus = \" << (*this).readChiForSus << \"\\n\";\n				os << \"ChiforPairingFile = \" << (*this).chifile << \"\\n\";\n				os << \"interpolateChi = \" << (*this).interpolateChi << \"\\n\";\n				os << \"interpolateNqx = \" << (*this).interpolateNqx << \"\\n\";\n				os << \"interpolateNqz = \" << (*this).interpolateNqz << \"\\n\";\n				os << \"Coulomb1U = \" << (*this).U << \"\\n\";\n				os << \"Coulomb2Up = \" << (*this).Up << \"\\n\";\n				os << \"Coulomb3J = \" << (*this).J << \"\\n\";\n				os << \"Coulomb4Jp = \" << (*this).Jp << \"\\n\";\n				os << \"Coulomb5U_d = \" << (*this).U_d_c << \"\\n\";\n				os << \"Coulomb6U_p = \" << (*this).U_p_c << \"\\n\";\n				os << \"Coulomb7U_pd = \" << (*this).U_pd_c << \"\\n\";\n				os << \"Coulomb8U_pp = \" << (*this).U_pp_c << \"\\n\";\n				os << \"Coulomb9U_d = \" << (*this).U_d_s << \"\\n\";\n				os << \"Coulomb10U_p = \" << (*this).U_p_s << \"\\n\";\n				os << \"Coulomb11U_pd = \" << (*this).U_pd_s << \"\\n\";\n				os << \"Coulomb12U_pp = \" << (*this).U_pp_s << \"\\n\";\n				os << \"Coulomb13U_d_coupl = \" << (*this).U_d_coupl << \"\\n\";\n				os << \"Coulomb14U_p_coupl = \" << (*this).U_p_coupl << \"\\n\";\n				os << \"Coulomb15U_pd_coupl = \" << (*this).U_pd_coupl << \"\\n\";\n				os << \"Coulomb16U_pp_coupl = \" << (*this).U_pp_coupl << \"\\n\";\n				os << \"sublattice = \" << (*this).sublattice << \"\\n\";\n				os << \"deltaU0 = \" << (*this).deltaU[0] << \"\\n\";\n				os << \"deltaU1 = \" << (*this).deltaU[1] << \"\\n\";\n				os << \"deltaU2 = \" << (*this).deltaU[2] << \"\\n\";\n				os << \"deltaU3 = \" << (*this).deltaU[3] << \"\\n\";\n				os << \"deltaU4 = \" << (*this).deltaU[4] << \"\\n\";\n				os << \"staticUFactor = \" << (*this).staticUFactor << \"\\n\";\n				os << \"chargeFactor = \" << (*this).chargeFactor << \"\\n\";\n				os << \"spinFactor = \" << (*this).spinFactor << \"\\n\";\n				os << \"nkIntegration = \" << (*this).nkInt << \"\\n\";\n				os << \"nkzIntegration = \" << (*this).nkIntz << \"\\n\";\n				os << \"kz2D = \" << (*this).kz2D << \"\\n\";\n				os << \"a1x = \" << (*this).a1[0] << \"\\n\";\n				os << \"a1y = \" << (*this).a1[1] << \"\\n\";\n				os << \"a1z = \" << (*this).a1[2] << \"\\n\";\n				os << \"a2x = \" << (*this).a2[0] << \"\\n\";\n				os << \"a2y = \" << (*this).a2[1] << \"\\n\";\n				os << \"a2z = \" << (*this).a2[2] << \"\\n\";\n				os << \"a3x = \" << (*this).a3[0] << \"\\n\";\n				os << \"a3y = \" << (*this).a3[1] << \"\\n\";\n				os << \"a3z = \" << (*this).a3[2] << \"\\n\";\n				os << \"chia1x = \" << (*this).chia1[0] << \"\\n\";\n				os << \"chia1y = \" << (*this).chia1[1] << \"\\n\";\n				os << \"chia1z = \" << (*this).chia1[2] << \"\\n\";\n				os << \"chia2x = \" << (*this).chia2[0] << \"\\n\";\n				os << \"chia2y = \" << (*this).chia2[1] << \"\\n\";\n				os << \"chia2z = \" << (*this).chia2[2] << \"\\n\";\n				os << \"chia3x = \" << (*this).chia3[0] << \"\\n\";\n				os << \"chia3y = \" << (*this).chia3[1] << \"\\n\";\n				os << \"chia3z = \" << (*this).chia3[2] << \"\\n\";\n				os << \"nqx = \" << (*this).nqx << \"\\n\";\n				os << \"nqy = \" << (*this).nqy << \"\\n\";\n				os << \"nqz = \" << (*this).nqz << \"\\n\";\n				os << \"qxmin = \" << (*this).qxmin << \"\\n\";\n				os << \"qxmax = \" << (*this).qxmax << \"\\n\";\n				os << \"qymin = \" << (*this).qymin << \"\\n\";\n				os << \"qymax = \" << (*this).qymax << \"\\n\";\n				os << \"qzmin = \" << (*this).qzmin << \"\\n\";\n				os << \"qzmax = \" << (*this).qzmax << \"\\n\";\n				os << \"nw = \" << (*this).nw << \"\\n\";\n				os << \"wmin = \" << (*this).wmin << \"\\n\";\n				os << \"wmax = \" << (*this).wmax << \"\\n\";\n				os << \"scState = \" << (*this).scState << \"\\n\";\n				os << \"printGap = \" << (*this).printGap << \"\\n\";\n				os << \"gAmpl = \" << (*this).gAmpl << \"\\n\";\n				os << \"Delta0 = \" << (*this).Delta0 << \"\\n\";\n				os << \"deltax = \" << (*this).deltax << \"\\n\";\n				os << \"deltay = \" << (*this).deltay << \"\\n\";\n				os << \"deltaz = \" << (*this).deltaz << \"\\n\";\n				os << \"kTrafo = \" << (*this).kTrafo << \"\\n\";\n				os << \"options = \" << (*this).options << \"\\n\";\n				os << \"subOptions = \" << (*this).subOptions << \"\\n\";\n				os << \"hybridization = \" << (*this).hyb << \"\\n\";\n				os << \"spinOrbit = \" << (*this).LS << \"\\n\";\n				os << \"hybStrength = \" << (*this).hybStrength << \"\\n\";\n				os << \"hybBand1 = \" << (*this).hybBand1 << \"\\n\";\n				os << \"hybBand2 = \" << (*this).hybBand2 << \"\\n\";\n				os << \"nSitesPerUnitCell = \" << (*this).nSitesPerUnitCell << \"\\n\";\n				os << \"nOrbAtom = \";\n				for (int i=0; i<nOrbAtom.size();i++) os << (*this).nOrbAtom[i] << \" \"; \n				os << \"\\n\";\n				os << \"nkPerSheet = \" << (*this).nkPerSheet << \"\\n\";\n				os << \"FSnkz = \" << (*this).FSnkz << \"\\n\";\n				os << \"Omega0 = \" << (*this).Omega0 << \"\\n\";\n				os << \"signF = \" << (*this).signF << \"\\n\";\n				os << \"damp = \" << (*this).damp << \"\\n\";\n				os << \"writeFullChi0 = \" << (*this).writeFullChi0 << \"\\n\";\n			}\n\n\n			void bcTest() {\n				int h(0);\n				if (conc.rank()==0) h=5;\n		        conc.broadcast(h); \n			}\n			void broadcastParam() {\n\n		        if (conc.rank()==0) std::cout << \"Now broadcasting parameters! \\n\";\n		        conc.broadcast((*this).Case);\n		        conc.broadcast((*this).dimension); \n		        conc.broadcast((*this).temperature); \n		        conc.broadcast((*this).nOrb); \n		        conc.broadcast((*this).mu); \n		        conc.broadcast((*this).tbfile); \n		        conc.broadcast((*this).complexHopping);\n		        conc.broadcast((*this).fsfile); \n		        conc.broadcast((*this).chifile); \n		        conc.broadcast((*this).interpolateChi); \n		        conc.broadcast((*this).interpolateNqx); \n		        conc.broadcast((*this).interpolateNqz); \n		        conc.broadcast((*this).U); \n		        conc.broadcast((*this).Up); \n		        conc.broadcast((*this).J); \n		        conc.broadcast((*this).Jp); \n		        conc.broadcast((*this).U_d_c); \n		        conc.broadcast((*this).U_p_c); \n		        conc.broadcast((*this).U_pd_c); \n		        conc.broadcast((*this).U_pp_c); \n		        conc.broadcast((*this).U_d_s); \n		        conc.broadcast((*this).U_p_s); \n		        conc.broadcast((*this).U_pd_s); \n		        conc.broadcast((*this).U_pp_s); \n		        conc.broadcast((*this).U_d_coupl); \n		        conc.broadcast((*this).U_p_coupl); \n		        conc.broadcast((*this).U_pd_coupl); \n		        conc.broadcast((*this).U_pp_coupl); \n		        conc.broadcast((*this).sublattice); \n		        conc.broadcast((*this).deltaU[0]); \n		        conc.broadcast((*this).deltaU[1]); \n		        conc.broadcast((*this).deltaU[2]); \n		        conc.broadcast((*this).deltaU[3]); \n		        conc.broadcast((*this).deltaU[4]); \n		        conc.broadcast((*this).staticUFactor); 				\n		        conc.broadcast((*this).chargeFactor); 				\n		        conc.broadcast((*this).spinFactor); 				\n		        conc.broadcast((*this).nkInt); 				\n		        conc.broadcast((*this).nkIntz); 				\n		        conc.broadcast((*this).kz2D); 				\n		        conc.broadcast((*this).a1[0]); 				\n		        conc.broadcast((*this).a1[1]); 				\n		        conc.broadcast((*this).a1[2]); 				\n		        conc.broadcast((*this).a2[0]); 				\n		        conc.broadcast((*this).a2[1]); 				\n		        conc.broadcast((*this).a2[2]); 				\n		        conc.broadcast((*this).a3[0]); 				\n		        conc.broadcast((*this).a3[1]); 				\n		        conc.broadcast((*this).a3[2]); 				\n		        conc.broadcast((*this).chia1[0]); 				\n		        conc.broadcast((*this).chia1[1]); 				\n		        conc.broadcast((*this).chia1[2]); 				\n		        conc.broadcast((*this).chia2[0]); 				\n		        conc.broadcast((*this).chia2[1]); 				\n		        conc.broadcast((*this).chia2[2]); 				\n		        conc.broadcast((*this).chia3[0]); 				\n		        conc.broadcast((*this).chia3[1]); 				\n		        conc.broadcast((*this).chia3[2]); 				\n		        conc.broadcast((*this).nqx); 				\n		        conc.broadcast((*this).nqy); 				\n		        conc.broadcast((*this).nqz); 				\n		        conc.broadcast((*this).qxmin);\n		        conc.broadcast((*this).qxmax);				\n		        conc.broadcast((*this).qymin);				\n		        conc.broadcast((*this).qymax);				\n		        conc.broadcast((*this).qzmin);				\n		        conc.broadcast((*this).qzmax);				\n		        conc.broadcast((*this).nw); 				\n		        conc.broadcast((*this).wmin); 				\n		        conc.broadcast((*this).wmax); 				\n		        conc.broadcast((*this).scState); 				\n		        conc.broadcast((*this).printGap); 				\n		        conc.broadcast((*this).gAmpl); 				\n		        conc.broadcast((*this).Delta0); 				\n		        conc.broadcast((*this).deltax); 			\n		        conc.broadcast((*this).deltay); 				\n		        conc.broadcast((*this).deltaz); 				\n		        conc.broadcast((*this).kTrafo); 				\n		        conc.broadcast((*this).options); 				\n		        conc.broadcast((*this).subOptions); 				\n		        conc.broadcast((*this).pairingSpinParity);\n		        conc.broadcast((*this).pairingFromSpin);\n		        conc.broadcast((*this).pairingFromCharge);\n		        conc.broadcast((*this).storeChi);\n		        conc.broadcast((*this).readChi);\n		        conc.broadcast((*this).readChiForSus);\n		        conc.broadcast((*this).hyb);\n		        conc.broadcast((*this).LS);\n		        conc.broadcast((*this).hybStrength);\n		        conc.broadcast((*this).hybBand1);\n		        conc.broadcast((*this).hybBand2);\n		        conc.broadcast((*this).nSitesPerUnitCell);\n		        conc.broadcast((*this).nOrbAtomStr);\n		        conc.broadcast((*this).nkPerSheet);\n		        conc.broadcast((*this).FSnkz);\n		        conc.broadcast((*this).Omega0);\n		        conc.broadcast((*this).signF);\n		        conc.broadcast((*this).damp);\n		        conc.broadcast((*this).writeFullChi0);\n			}\n\n			void setupOrbitalIndices(){\n				indexToOrb.resize(nOrb*nOrb,2);\n				for (size_t l1 = 0; l1 < nOrb; ++l1){\n					for (size_t l2 = 0; l2 < nOrb; ++l2){\n						size_t ind=l2+l1*nOrb;\n						indexToOrb(ind,0) = l1;\n						indexToOrb(ind,1) = l2;\n					}\n				}\n				for (size_t l=0;l<nOrb; l++) {\n					int ll(l);\n					for (size_t site=0;site<nSitesPerUnitCell;site++) {\n						ll -= nOrbAtom[site];\n						if (ll < 0) {\n							orbToSite.push_back(site);\n							break;\n						}\n					}\n				}\n				if (conc.rank()==0) {\n					std::cout << \"orbToSite: \";\n					for (size_t l=0;l<nOrb;l++) std::cout << l << \"->\" << orbToSite[l] << \" \";\n					std::cout << \"\\n\";\n				}\n			}\n\n\n			template<typename FieldType>\n			void loadVector(std::vector<FieldType>& v,const std::string& vstring)\n			{\n				std::stringstream ss(vstring);\n				int value;\n				while (ss >> value)\n				{\n					v.push_back(value);\n					if (ss.peek() == ',') ss.ignore();\n				}\n			}\n\n\n	};\n\n}\n\n#endif\n",
 			"file": "parameters.h",
-			"file_size": 25873,
-			"file_write_time": 130972744500000000,
 			"settings":
 			{
-				"buffer_size": 25873,
+				"buffer_size": 25942,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -42,7 +72,15 @@
 			"file": "susceptibility.h",
 			"settings":
 			{
-				"buffer_size": 21657,
+				"buffer_size": 21722,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "momentumDomain.h",
+			"settings":
+			{
+				"buffer_size": 18836,
 				"line_ending": "Unix"
 			}
 		},
@@ -50,7 +88,87 @@
 			"file": "gaps3D.h",
 			"settings":
 			{
-				"buffer_size": 29428,
+				"buffer_size": 30932,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 1955,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bandstructure.h",
+			"settings":
+			{
+				"buffer_size": 17971,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 7650,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TEST/5band1111_3D/input.dat",
+			"settings":
+			{
+				"buffer_size": 1858,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bilayer.h",
+			"settings":
+			{
+				"buffer_size": 3329,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "SrRuO.h",
+			"settings":
+			{
+				"buffer_size": 2301,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "KFe2Se2.h",
+			"settings":
+			{
+				"buffer_size": 7701,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "FourOrbital.h",
+			"settings":
+			{
+				"buffer_size": 2246,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "4Orbital.h",
+			"settings":
+			{
+				"buffer_size": 2268,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "BaFeAs_5orb.h",
+			"settings":
+			{
+				"buffer_size": 7206,
 				"line_ending": "Unix"
 			}
 		},
@@ -58,7 +176,7 @@
 			"file": "ferminator.h",
 			"settings":
 			{
-				"buffer_size": 25777,
+				"buffer_size": 30979,
 				"line_ending": "Unix"
 			}
 		},
@@ -66,7 +184,7 @@
 			"file": "chi0.h",
 			"settings":
 			{
-				"buffer_size": 22627,
+				"buffer_size": 23384,
 				"line_ending": "Unix"
 			}
 		},
@@ -90,16 +208,18 @@
 			"file": "CrystalHarmonics2D.h",
 			"settings":
 			{
-				"buffer_size": 16801,
+				"buffer_size": 16836,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "TEST/5band1111/input_1111.dat",
+			"contents": "Searching 286 files for \"FSpoints\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/ferminator.h:\n  873  \n  874  \tvoid writeKF() {\n  875: \t\tstd::ofstream os(\"FSpoints.txt\");\n  876  \t\tint width(8);\n  877  \t\tos.precision(width);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/main.cpp:\n   91  \ttypedef bandstructure<FieldType,psimag::Matrix,ConcurrencyType> BandsType;\n   92  \tif (param.options.find(\"calcFS\")!=std::string::npos) {\n   93: \t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,concurrency,1);\n   94  \t}\n   95  \n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/pairing.h:\n   98  \t\tstd::vector<SuscType> chiStore;\n   99  \t\tstd::vector<VectorType> qStore;\n  100: \t\tferminator<FieldType,BandsType,MatrixTemplate,ConcurrencyType> FSpoints;\n  101  \t\tsize_t nkF;\n  102  \t\tMatrixType chikk;\n  ...\n  134  \t\t\tchiStore(0,SuscType(param,conc)),\n  135  \t\t\tqStore(0,VectorType(3)),\n  136: \t\t\tFSpoints(param,conc),\n  137: \t\t\tnkF(FSpoints.nTotal),\n  138  \t\t\tchikk(nkF,nkF)\n  139  \t\t{\t\t\t\n  140  \t\t\t// determineKF(file);\n  141  \n  142: \t\t\t// size_t nkF(FSpoints.nTotal);\n  143  \t\t\tnTotal = (nkF * nkF + nkF) / 2;\n  144  \t\t\t// nTotal = nkF * nkF;\n  ...\n  188  \t\t\t// We have (nkF^2+nkF)/2 total elements to calculate for Gamma\n  189  \t\t\t// size_t nTotal((nkF*nkF+nkF)/2);\n  190: \t\t\t// size_t nkF(FSpoints.nTotal);\n  191  \t\t\tstd::vector<size_t> indToi(nTotal);\n  192  \t\t\tstd::vector<size_t> indToj(nTotal);\n  ...\n  217  \t\t\t\t// if (ik1==0 && ik2==16) {\n  218  \n  219: \t\t\t\tk1[0] = FSpoints.kFx[ik1]; k1[1] = FSpoints.kFy[ik1]; k1[2] = FSpoints.kFz[ik1];\n  220: \t\t\t\tk2[0] = FSpoints.kFx[ik2]; k2[1] = FSpoints.kFy[ik2]; k2[2] = FSpoints.kFz[ik2];\n  221: \t\t\t\tsize_t band1(FSpoints.kFtoBand[ik1]);\n  222: \t\t\t\tsize_t band2(FSpoints.kFtoBand[ik2]); \n  223  \t\t\t\t// q = kF1-kF2\n  224  \t\t\t\tfor (int l=0;l<3;l++) q[l] = k1[l]-k2[l];\n  ...\n  481  \n  482  \t\tvoid calcNorm() {\n  483: \t\t\tsize_t nkF(FSpoints.nTotal);\n  484  \t\t\tfor (size_t ik=0; ik<nkF; ++ik) {\n  485  \t\t\t\tVectorType k(3,0);\n  ...\n  488  \t\t\t\t// FieldType vkF2 = bands.fermiVelocity2D(k,band);\n  489  \t\t\t\t// std::cout << k[0] << \" , \" << k[1] << \" , \" << band << \" , \" << vkF2 << \"\\n\";\n  490: \t\t\t\tnormalization[ik]=FSpoints.deltakF[ik]/(pow(2.*param.pi_f,dim)*FSpoints.vkF[ik]);\n  491  \t\t\t}\n  492  \t\t}\n  ...\n  495  \t\t\t// std::cout << \"kFx1,kFy1\" << kFx[0] << \",\" << kFy[0];\n  496  \t\t\t// First in a format suitable for reading into R using the script in gammapp_diag.R\n  497: \t\t\tsize_t nkF(FSpoints.nTotal);\n  498  \t\t\tstd::ofstream os(\"Gammakkp.txt\");\n  499  \t\t\tos << \"nkF:\\n\" << nkF << \"\\n\";\n  500: \t\t\tos << \"kFx:\\n\" << FSpoints.kFx << \"\\n\";\n  501: \t\t\tos << \"kFy:\\n\" << FSpoints.kFy << \"\\n\";\n  502: \t\t\tos << \"kFz:\\n\" << FSpoints.kFz << \"\\n\";\n  503  \t\t\tos << \"U,U',J,J':\\n\" << param.U << \" , \" << param.Up << \" , \" << param.J << \" , \" << param.Jp << \"\\n\\n\";\n  504  \t\t\tos << \"Gamma(k,k'): \\n\";\n  ...\n  521  \t\t\tos2 << \" \\\"kfPoints\\\": [\\n\";\n  522  \t\t\tfor (size_t ik=0;ik<nkF;ik++) {\n  523: \t\t\t\tos2 << \"[\" << FSpoints.kFx[ik] << \" ,\" << FSpoints.kFy[ik] << \" ,\" << FSpoints.kFz[ik] << \"] \";\n  524  \t\t\t\tif (ik<nkF-1) os2 << \",\";\n  525  \t\t\t}\n  ...\n  599  \t\tos2 << \" \\\"kfPoints\\\": [\\n\";\n  600  \t\tfor (size_t ik=0;ik<nkF;ik++) {\n  601: \t\t\tos2 << \"[\" << FSpoints.kFx[ik] << \" ,\" << FSpoints.kFy[ik] << \" ,\" << FSpoints.kFz[ik] << \"] \";\n  602  \t\t\tif (ik<nkF-1) os2 << \",\";\n  603  \t\t}\n  ...\n  634  \n  635  \t\tfor (size_t ik=0;ik<nkF;ik++) {\n  636: \t\t\tsize_t band(FSpoints.kFtoBand[ik]);\n  637  \t\t\tVectorType k(3,0);\n  638: \t\t\tk[0] = FSpoints.kFx[ik];\n  639: \t\t\tk[1] = FSpoints.kFy[ik];\n  640: \t\t\tk[2] = FSpoints.kFz[ik];\n  641  \n  642  \t\t\tComplexMatrixType ak(nOrb,nOrb);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/susceptibility.h:\n  547  \n  548  \t\tvoid printGap3() {\n  549: \t\t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);\n  550: \t\t\tsize_t nk(FSpoints.nTotal);\n  551  \t\t\tmomentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);\n  552  \t\t\tBandsType bands(param,conc,kmesh,true);\n  ...\n  560  \t\t\tfor (size_t ik = 0; ik < nk; ++ik)\t{\n  561  \t\t\t\tVectorType k(3,0); size_t iband;\n  562: \t\t\t\tk[0] = FSpoints.kFx[ik];\n  563: \t\t\t\tk[1] = FSpoints.kFy[ik];\n  564: \t\t\t\tk[2] = FSpoints.kFz[ik];\n  565: \t\t\t\tiband = FSpoints.kFtoBand[ik];\n  566  \t\t\t\tbands.getEkAndAk(k,ek,ak);\n  567  \t\t\t\tComplexType gap1 = Delta(k,iband,ak);\n  ...\n  569  \t\t\t\tos << k[0] << \" , \" << k[1] << \" , \" << k[2] << \" , \" \n  570  \t\t\t\t\t   << iband;\n  571: \t\t\t\tfor (size_t iorb=0;iorb<param.nOrb;iorb++) os << \" , \" << FSpoints.weights[ik][iorb];\n  572  \t\t\t    os << \" , \" << real(gap1) << \"\\n\";\n  573  \t\t\t}\n\n41 matches across 6 files\n\n\nSearching 286 files for \"FSpoints.txt\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/ferminator.h:\n  873  \n  874  \tvoid writeKF() {\n  875: \t\tstd::ofstream os(\"FSpoints.txt\");\n  876  \t\tint width(8);\n  877  \t\tos.precision(width);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n3 matches across 3 files\n\n\nSearching 288 files for \"printGap\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/parameters.h:\n   34  \t\tField wmin,wmax;\n   35  \t\tsize_t scState;\n   36: \t\tsize_t printGap;\n   37  \t\tstd::string gAmpl;\n   38  \t\tField Delta0;\n   ..\n  131  \t\t\twmax(0.0),\n  132  \t\t\tscState(0),\n  133: \t\t\tprintGap(0),\n  134  \t\t\tgAmpl(\"LaOFeAs_s_1\"),\n  135  \t\t\tDelta0(0.04),\n  ...\n  347  \t\t        else if (text.find(\"wmax\")!=std::string::npos) str >> (*this).wmax; \t\t\t\t\n  348  \t\t        else if (text.find(\"scState\")!=std::string::npos) str >> (*this).scState; \t\t\t\t\n  349: \t\t        else if (text.find(\"printGap\")!=std::string::npos) str >> (*this).printGap; \t\t\t\t\n  350  \t\t        else if (text.find(\"gAmpl\")!=std::string::npos) str >> (*this).gAmpl; \t\t\t\t\n  351  \t\t        else if (text.find(\"Delta0\")!=std::string::npos) str >> (*this).Delta0; \t\t\t\t\n  ...\n  457  \t\t\t\tos << \"wmax = \" << (*this).wmax << \"\\n\";\n  458  \t\t\t\tos << \"scState = \" << (*this).scState << \"\\n\";\n  459: \t\t\t\tos << \"printGap = \" << (*this).printGap << \"\\n\";\n  460  \t\t\t\tos << \"gAmpl = \" << (*this).gAmpl << \"\\n\";\n  461  \t\t\t\tos << \"Delta0 = \" << (*this).Delta0 << \"\\n\";\n  ...\n  563  \t\t        conc.broadcast((*this).wmax); \t\t\t\t\n  564  \t\t        conc.broadcast((*this).scState); \t\t\t\t\n  565: \t\t        conc.broadcast((*this).printGap); \t\t\t\t\n  566  \t\t        conc.broadcast((*this).gAmpl); \t\t\t\t\n  567  \t\t        conc.broadcast((*this).Delta0); \t\t\t\t\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/susceptibility.h:\n   99  \t\t\t\t               wmin,wmax,QVec);\n  100  \n  101: \t\t\tif (param.scState==1 && param.printGap==1 && conc.rank()==0) {\n  102  \t\t\t\tif (conc.rank()==0) std::cout << \"Now writing gap.txt \\n\";\n  103: \t\t\t\tprintGap3();\n  104  \t\t\t\tif (conc.rank()==0) std::cout << \"Done writing gap.txt \\n\";\n  105  \t\t\t}\n  ...\n  481  \n  482  \n  483: \t\tvoid printGap(const std::string& file=\"gapRPA.txt\") {\n  484  \t\t\tVectorType data;\n  485  \t\t\tloadVector(data,file);\n  ...\n  521  \t\t}\n  522  \n  523: \t\tvoid printGap2() {\n  524  \t\t\tGapType Delta(param,conc);\n  525  \t\t\tmomentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);\n  ...\n  546  \t\t}\n  547  \n  548: \t\tvoid printGap3() {\n  549  \t\t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);\n  550  \t\t\tsize_t nk(FSpoints.nTotal);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111/input_1111.dat:\n   71  gAmpl             =    KFe2Se2_edoped_SO0p05_d\n   72  Delta0            =    0.00\n   73: printGap          =    0\n   74  \n   75  \n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111_3D/input.dat:\n   80  gAmpl             =    KFe2Se2_edoped_SO0p05_d\n   81  Delta0            =    0.00\n   82: printGap          =    0\n   83  \n   84  \n\n19 matches across 6 files\n",
 			"settings":
 			{
-				"buffer_size": 1671,
-				"line_ending": "Unix"
+				"buffer_size": 7935,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
 			}
 		}
 	],
@@ -190,17 +310,25 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 147.0,
+		"height": 400.0,
 		"last_filter": "",
 		"selected_items":
 		[
 			[
-				"git pus",
-				"Git: Push"
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
 			],
 			[
 				"git",
 				"Git: Commit"
+			],
+			[
+				"git pus",
+				"Git: Push"
 			],
 			[
 				"git add",
@@ -233,13 +361,9 @@
 			[
 				"late",
 				"LaTeXTools: Reconfigure and migrate settings"
-			],
-			[
-				"insta",
-				"Package Control: Install Package"
 			]
 		],
-		"width": 521.0
+		"width": 529.0
 	},
 	"console":
 	{
@@ -261,11 +385,15 @@
 	"expanded_folders":
 	[
 		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP",
+		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/PythonScripts",
 		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST",
 		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111"
 	],
 	"file_history":
 	[
+		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111/input_1111.dat",
+		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/t7m/Library/Caches/com.binarynights.ForkLift2/#0/Gammakkp.txt",
 		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/PartialPsimag/Symmetry/SuperCrystalBuilder.h",
 		"/Projects/Triangular_Hubbard/HalfFilling_t-1/OutputData/n0/b0[3]/Maxent.py",
 		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
@@ -275,7 +403,6 @@
 		"/Projects/Scripts/RGL_Plot_of_FS.R",
 		"/Projects/ETH_Reps/symmetrize_Nc4x4.py",
 		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
-		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/t7m/Dropbox/C++Code/CrystalHarmonics.h",
 		"/Users/t7m/Dropbox/C++Code/gap.h",
 		"/Users/t7m/Downloads/BILAYER/BiLayer/Plot_Chi_PairField.R",
@@ -303,7 +430,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -318,6 +445,54 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dwave",
+			"dwave_2D_KFe2Se2_iso",
+			"calcOnly",
+			"calcOn",
+			"kmap",
+			"kMap",
+			"printChi0k",
+			"chikk.txt",
+			"Omega0",
+			"GapType",
+			"printGap",
+			"4Orbi",
+			"ifdef",
+			"FSpoints.txt",
+			"FSpoints",
+			"KFe2Se2",
+			"l2",
+			"l1",
+			"dgInv",
+			"shift",
+			"shif",
+			"Hk",
+			"eigenvec",
+			"eigenvects",
+			" - param.mu",
+			"param.mu",
+			"BaFe",
+			"4,5",
+			"3,5",
+			"3,4",
+			"1,5",
+			"2,5",
+			"1,5",
+			"1,4",
+			"2,4",
+			"1,4",
+			"1,3",
+			"1,2",
+			"5,5",
+			"4,4",
+			"1",
+			"character",
+			"directions",
+			"symmetry",
+			"ifdef",
+			"ifdev",
+			"dwave",
+			"Gammakkp.jsn",
 			"calcChiNematicRPA",
 			"chargeFactor",
 			"charge",
@@ -333,7 +508,7 @@
 			"particleholemagnetic",
 			"TaskSetter",
 			"PHM",
-			"require(misc3d)\nrequire(rgl)\nopen3d()\nread.table(\"ek.dat\", header = F) -> b\nnlevels(factor(b$V3)) -> nkz\nsqrt(length(b$V1)/nkz) -> nk\nlength(b)-3 -> nbands\ncol=c(\"red\",\"blue\",\"green\",\"orange\",\"yellow\",\"brown\",\"purple\",\"grey\",\"pink\",\"beige\")\nadd <- F\nfor (i in 4:(nbands+3)) {\n	FS <- range(b[,i])[1]*range(b[,i])[2]\n	if (FS < 0) {\n		contour3d(array(b[,i],dim=c(nk,nk,nkz)),level=0,color=col[i-3],aspect=c(1,10),frames=T,perspective=T,distance=2,smooth=T,lwd=2,add=add,ticktype=\"\")\n		add <- T\n	}\n}\naspect3d(1,1,1.44592)\n# axes3d(edges = \"bbox\",labels=FALSE,tick=FALSE)\n# box3d()\nmy.ticks=c(1,16,32)\naxis3d('x',at=my.ticks,labels=c(-1,0,1))\naxis3d('y',at=my.ticks,labels=c(-1,0,1))\naxis3d('z',at=my.ticks,labels=c(-1,0,1))\n",
+			"require(misc3d)\nrequire(rgl)\nopen3d()\nread.table(\"ek.dat\", header = F) -> b\nnlevels(factor(b$V3)) -> nkz\nsqrt(length(b$V1)/nkz) -> nk\nlength(b)-3 -> nbands\ncol=c(\"red\",\"blue\",\"green\",\"orange\",\"yellow\",\"brown\",\"purple\",\"grey\",\"pink\",\"beige\")\nadd <- F\nfor (i in 4:(nbands+3)) {\n\tFS <- range(b[,i])[1]*range(b[,i])[2]\n\tif (FS < 0) {\n\t\tcontour3d(array(b[,i],dim=c(nk,nk,nkz)),level=0,color=col[i-3],aspect=c(1,10),frames=T,perspective=T,distance=2,smooth=T,lwd=2,add=add,ticktype=\"\")\n\t\tadd <- T\n\t}\n}\naspect3d(1,1,1.44592)\n# axes3d(edges = \"bbox\",labels=FALSE,tick=FALSE)\n# box3d()\nmy.ticks=c(1,16,32)\naxis3d('x',at=my.ticks,labels=c(-1,0,1))\naxis3d('y',at=my.ticks,labels=c(-1,0,1))\naxis3d('z',at=my.ticks,labels=c(-1,0,1))\n",
 			"writer",
 			"G4_k_k_w_w",
 			"get_G4",
@@ -397,55 +572,7 @@
 			"dca_object",
 			"initialize_G0",
 			"start coarsegraining G0_k_w",
-			"quadrature_integration_G_q_t_st",
-			"compute_G_q_t",
-			"compute_G0_K_t",
-			"initialize_G0",
-			"initialize",
-			"initialize_G0",
-			"compute_G0_K_t",
-			"start coarsegraining G0_k_t",
-			"compute_G0_K_w_cluster_excluded",
-			"execute",
-			"perform_cluster_exclusion_step",
-			"dump_cluster_Greens_functions_str",
-			"dump_cluster_Greens_functions",
-			"dump_cluster",
-			"writer.execute(Sigma",
-			"write",
-			"Sigma_cluster",
-			"Sigma",
-			"perform_cluster_mapping_Greens_function",
-			"perform_cluster_mapping",
-			"perform_cluster_exclusion_step",
-			"Sigma_cluster",
-			"write(Sigma",
-			"write(MOMS.",
-			"wire(MOMS.",
-			"write",
-			"perform_cluster_mapping_Greens_function",
-			"compute_G0_K_w_cluster_excluded",
-			"execute",
-			"cluster_exclusion_type",
-			"cluster_exclusion_obj",
-			"perform_cluster_exclusion_step",
-			"get_double_counting_method",
-			"execute_before_solver",
-			"adjust_coarsegrained_self_energy",
-			"compute_G_K_w",
-			"perform_cluster_mapping_Greens_function",
-			"perform_cluster_mapping",
-			"read",
-			"nSitesPerUnitCell",
-			"nSites",
-			"do_DCA",
-			"do-DCA",
-			"filename",
-			"Brillouin-zone-names",
-			"square_lattice",
-			"use_interpolated_Self_energy",
-			"compute_G_K_w",
-			"GFS"
+			"quadrature_integration_G_q_t_st"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -453,6 +580,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"3,3",
+			"0"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -463,7 +592,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -472,15 +601,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 25873,
+						"buffer_size": 25942,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2584,
-								2584
+								20210,
+								20223
 							]
 						],
 						"settings":
@@ -546,14 +675,88 @@
 								"bh_square_close",
 								"bh_square_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1415.0,
+						"translation.y": 7742.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -562,15 +765,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21657,
+						"buffer_size": 21722,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8254,
-								8254
+								4978,
+								4978
 							]
 						],
 						"settings":
@@ -636,36 +839,221 @@
 								"bh_square_close",
 								"bh_square_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3065.0,
+						"translation.y": 1856.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "gaps3D.h",
+					"file": "momentumDomain.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 29428,
+						"buffer_size": 18836,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3098,
-								3098
+								6163,
+								6163
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3513.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "gaps3D.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 30932,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3952,
+								4003
 							]
 						],
 						"settings":
 						{
 							"BracketHighlighterBusy": false,
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": false,
+								"selection": false,
+								"status": -1,
+								"syntax": "plain text"
+							},
 							"WordCountSyntax": "c++",
 							"bh_regions":
 							[
@@ -725,171 +1113,183 @@
 								"bh_tag_close",
 								"bh_tag_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										4127,
+										4128
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										3809,
+										3810
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 991.0,
+						"translation.y": 484.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "ferminator.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 25777,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								25090,
-								25090
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"WordCountShouldRun": true,
-							"WordCountSyntax": "c++",
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 11314.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "chi0.h",
+					"file": "Makefile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22627,
+						"buffer_size": 1955,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10978,
-								10980
+								1202,
+								1202
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"WordCountShouldRun": true,
-							"WordCountSyntax": "c++",
-							"bh_regions":
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
 							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
@@ -900,24 +1300,1277 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "bandstructure.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17971,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6950,
+								6950
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content"
 							],
-							"syntax": "Packages/C++/C++.tmLanguage",
+							"syntax": "Packages/C++/C++.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4648.0,
+						"translation.y": 2950.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7650,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1416,
+								1416
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/R-Box/syntax/Rcpp.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
+					"file": "TEST/5band1111_3D/input.dat",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1858,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 243.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "bilayer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3329,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								112,
+								112
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 30.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "SrRuO.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2301,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								2301
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "KFe2Se2.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7701,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								7701
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "FourOrbital.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2246,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1263,
+								1263
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 397.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "4Orbital.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2268,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1002,
+								1002
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "BaFeAs_5orb.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7206,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1013,
+								1013
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 292.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "ferminator.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 30979,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2731,
+								2731
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1230.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "chi0.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23384,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9475,
+								9475
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "c++",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
 					"file": "pairing.h",
 					"semi_transient": false,
 					"settings":
@@ -929,8 +2582,8 @@
 						"selection":
 						[
 							[
-								13173,
-								13173
+								17903,
+								17903
 							]
 						],
 						"settings":
@@ -996,18 +2649,92 @@
 								"bh_square_close",
 								"bh_square_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 24.0,
-						"translation.y": 5709.0,
+						"translation.x": 0.0,
+						"translation.y": 8002.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 17,
 					"file": "susInt.h",
 					"semi_transient": false,
 					"settings":
@@ -1086,6 +2813,80 @@
 								"bh_square_close",
 								"bh_square_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
@@ -1093,24 +2894,24 @@
 						"translation.y": 40.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 19,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 18,
 					"file": "CrystalHarmonics2D.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16801,
+						"buffer_size": 16836,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2219,
-								2219
+								1732,
+								1732
 							]
 						],
 						"settings":
@@ -1175,54 +2976,350 @@
 								"bh_angle_close",
 								"bh_angle_content"
 							],
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 919.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "TEST/5band1111/input_1111.dat",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1671,
-						"regions":
-						{
-						},
-						"selection":
-						[
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
 							[
-								245,
-								245
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"WordCountSyntax": "plain text",
-							"bh_regions":
-							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 352.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7935,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										145,
+										153
+									],
+									[
+										478,
+										486
+									],
+									[
+										851,
+										859
+									],
+									[
+										1004,
+										1012
+									],
+									[
+										1040,
+										1048
+									],
+									[
+										1161,
+										1169
+									],
+									[
+										1402,
+										1410
+									],
+									[
+										1584,
+										1592
+									],
+									[
+										1611,
+										1619
+									],
+									[
+										1638,
+										1646
+									],
+									[
+										1676,
+										1684
+									],
+									[
+										1703,
+										1711
+									],
+									[
+										1730,
+										1738
+									],
+									[
+										1773,
+										1781
+									],
+									[
+										1822,
+										1830
+									],
+									[
+										1989,
+										1997
+									],
+									[
+										2270,
+										2278
+									],
+									[
+										2315,
+										2323
+									],
+									[
+										2544,
+										2552
+									],
+									[
+										2675,
+										2683
+									],
+									[
+										2725,
+										2733
+									],
+									[
+										2775,
+										2783
+									],
+									[
+										3059,
+										3067
+									],
+									[
+										3087,
+										3095
+									],
+									[
+										3115,
+										3123
+									],
+									[
+										3299,
+										3307
+									],
+									[
+										3327,
+										3335
+									],
+									[
+										3355,
+										3363
+									],
+									[
+										3505,
+										3513
+									],
+									[
+										3575,
+										3583
+									],
+									[
+										3610,
+										3618
+									],
+									[
+										3645,
+										3653
+									],
+									[
+										3877,
+										3885
+									],
+									[
+										3921,
+										3929
+									],
+									[
+										4227,
+										4235
+									],
+									[
+										4263,
+										4271
+									],
+									[
+										4299,
+										4307
+									],
+									[
+										4336,
+										4344
+									],
+									[
+										4612,
+										4620
+									],
+									[
+										4879,
+										4891
+									],
+									[
+										5374,
+										5382
+									],
+									[
+										5494,
+										5502
+									],
+									[
+										5792,
+										5800
+									],
+									[
+										5838,
+										5846
+									],
+									[
+										6173,
+										6181
+									],
+									[
+										6197,
+										6205
+									],
+									[
+										6478,
+										6486
+									],
+									[
+										6746,
+										6754
+									],
+									[
+										6860,
+										6868
+									],
+									[
+										6992,
+										7000
+									],
+									[
+										7140,
+										7148
+									],
+									[
+										7353,
+										7361
+									],
+									[
+										7665,
+										7673
+									],
+									[
+										7867,
+										7875
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								6645,
+								6645
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -1243,11 +3340,11 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -1258,19 +3355,42 @@
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"default_dir": "/Users/t7m/Dropbox/GIT_CODE/MRPAPP",
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2805.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1278,7 +3398,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 24.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -1309,7 +3429,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 491.0
+		"height": 467.0
 	},
 	"output.find_results":
 	{
@@ -1327,7 +3447,7 @@
 	"project": "MRPA_GIT.sublime-project",
 	"replace":
 	{
-		"height": 44.0
+		"height": 72.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1337,12 +3457,116 @@
 		"selected_items":
 		[
 			[
-				"susce",
-				"PartialPsimag/Symmetry/SuperCrystalBuilder.h"
+				"",
+				"gaps3D.h"
 			],
 			[
-				"",
-				"pairing.h"
+				"cr",
+				"CrystalHarmonics2D.h"
+			],
+			[
+				"gaps",
+				"gaps3D.h"
+			],
+			[
+				"inpu",
+				"TEST/5band1111_3D/input.dat"
+			],
+			[
+				"main",
+				"main.cpp"
+			],
+			[
+				"para",
+				"parameters.h"
+			],
+			[
+				"suscept",
+				"susceptibility.h"
+			],
+			[
+				"chi0",
+				"chi0.h"
+			],
+			[
+				"gap",
+				"gaps3D.h"
+			],
+			[
+				"fermin",
+				"ferminator.h"
+			],
+			[
+				"fou",
+				"FourOrbital.h"
+			],
+			[
+				"mak",
+				"Makefile"
+			],
+			[
+				"bands",
+				"bandstructure.h"
+			],
+			[
+				"four",
+				"FourOrbital.h"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"kfe",
+				"KFe2Se2.h"
+			],
+			[
+				"susce",
+				"susceptibility.h"
+			],
+			[
+				"momen",
+				"momentumDomain.h"
+			],
+			[
+				"chi",
+				"chi0.h"
+			],
+			[
+				"baf",
+				"BaFeAs_5orb.h"
+			],
+			[
+				"band",
+				"bandstructure.h"
+			],
+			[
+				"sr",
+				"SrRuO.h"
+			],
+			[
+				"bila",
+				"bilayer.h"
+			],
+			[
+				"moment",
+				"momentumDomain.h"
+			],
+			[
+				"crys",
+				"CrystalHarmonics2D.h"
+			],
+			[
+				"bafe",
+				"BaFeAs_5orb.h"
+			],
+			[
+				"gaps3",
+				"gaps3D.h"
+			],
+			[
+				"crysta",
+				"CrystalHarmonics2D.h"
 			],
 			[
 				"param",
@@ -1361,30 +3585,6 @@
 				"susInt.h"
 			],
 			[
-				"chi0",
-				"chi0.h"
-			],
-			[
-				"fermin",
-				"ferminator.h"
-			],
-			[
-				"suscept",
-				"susceptibility.h"
-			],
-			[
-				"crysta",
-				"CrystalHarmonics2D.h"
-			],
-			[
-				"gaps",
-				"gaps3D.h"
-			],
-			[
-				"para",
-				"parameters.h"
-			],
-			[
 				"trian",
 				"src/Input/Models/TriangularLatticeModel.h"
 			],
@@ -1393,24 +3593,12 @@
 				"comp_library/IO_library/HDF5/HDF5_writer.h"
 			],
 			[
-				"gap",
-				"gap.h"
-			],
-			[
-				"make",
-				"Makefile"
-			],
-			[
 				"crystal",
 				"CrystalHarmonics.h"
 			],
 			[
 				"sucep",
 				"susceptibility.h"
-			],
-			[
-				"crys",
-				"CrystalHarmonics2D.h"
 			],
 			[
 				"gaps2",
@@ -1449,14 +3637,6 @@
 				"phys_library/DCA+_loop/DCA+_loop.h"
 			],
 			[
-				"main",
-				"main.cpp"
-			],
-			[
-				"bands",
-				"bandstructure.h"
-			],
-			[
 				"bse",
 				"src/phys_library/DCA+_analysis/BSE_solver/BSE_cluster_solver.h"
 			],
@@ -1492,7 +3672,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 222.0,
 	"status_bar_visible": true,
 	"template_settings":

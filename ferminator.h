@@ -15,8 +15,8 @@
 
 namespace rpa {
 
-	template<typename Field, typename BandsType, 
-	         template<typename> class MatrixTemplate, 
+	template<typename Field, typename BandsType,
+	         template<typename> class MatrixTemplate,
 	         typename ConcurrencyType>
 	class ferminator {
 
@@ -49,7 +49,7 @@ namespace rpa {
 		std::vector<std::vector<ComplexType> > weights2;
 
 
-	ferminator(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, 
+	ferminator(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			   ConcurrencyType& concurrency,bool calcOW=0):
 		param(parameters),
 		conc(concurrency),
@@ -86,8 +86,8 @@ namespace rpa {
 
 		if (Case_ == "KFeSe_10Orbit_underdoped_2D") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
-			nSheets = 4; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -95,7 +95,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = Pi;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =-Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =-Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 
@@ -104,8 +104,8 @@ namespace rpa {
 
 		} else if (Case_ == "2D_5orbit_only_electron_pockets") {
 			// 2 FS sheets total, 1 around (pi,0), one around (0,pi)
-			nSheets = 2; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = 0;
@@ -119,8 +119,8 @@ namespace rpa {
 
 		} else if (Case_ == "2D_4orbit_2_hole_2_electron") {
 			// 4-orbital model: 4 FS sheets total, 1 around (pi,0), one around (0,pi), 2 at Gamma
-			nSheets = 4; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = 0; FSCenters[0][1] = 0;
@@ -138,8 +138,8 @@ namespace rpa {
 
 		} else if (Case_ == "2D_5orbit_5Sheets") {
 			// 5 FS sheets total, 2 at (0,0), 1 at (pi,0), one at (0,pi), 1 at (pi,pi)
-			nSheets = 5; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 5;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] =  0; FSCenters[0][1] = 0;
@@ -158,8 +158,8 @@ namespace rpa {
 
 		} else if (Case_ == "KFeSe_10Orbit_overdoped_2D") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
-			nSheets = 5; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 5;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -167,7 +167,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = Pi;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =-Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =-Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 			FSCenters[4][0] =2*Pi; FSCenters[4][1] = 0.0;
@@ -178,8 +178,8 @@ namespace rpa {
 
 		} else if (Case_ == "KFeSe_10Orbit_underdoped_3D") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
-			nSheets = 4; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -187,7 +187,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = Pi;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =-Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =-Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 
@@ -202,8 +202,8 @@ namespace rpa {
 		} else if (Case_ == "10Orbit_3D_10_01") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
 			if (conc.rank()==0) std::cout << "Case: " << "10Orbit_3D_10_01 \n";
-			nSheets = 4; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = 0;
@@ -211,7 +211,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = 0;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =  0; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =  0; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 
@@ -227,9 +227,9 @@ namespace rpa {
 		} else if (Case_ == "KFeSe_10Orbit_overdoped_3D") {
 			// 5 FS sheets total, two around (pi,pi), two around (-pi,pi), one (Z) around (0,0,2pi)
 			// Note that the Z pocket is closed along kz
-			
-			nSheets = 5; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 5;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -237,7 +237,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = Pi;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =-Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =-Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 			FSCenters[4][0] =2*Pi;FSCenters[4][1] = 0.0;
@@ -256,9 +256,9 @@ namespace rpa {
 		} else if (Case_ == "BaFeAs_10Orbit_3D_6Sheets") {
 			// 6 FS sheets total, two around (pi,pi), two around (-pi,pi), two around (0,0,0)
 			// Note: One of the hole-pockets around Gamma may be closed along kz
-			
-			nSheets = 6; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 6;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -266,7 +266,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = Pi;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =-Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =-Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 			FSCenters[4][0] =0.0;FSCenters[4][1] = 0.0;
@@ -287,9 +287,9 @@ namespace rpa {
 		} else if (Case_ == "BaFeAs_10Orbit_3D_7Sheets" || Case_ == "1111_10orbit") {
 			// 7 FS sheets total, two around (pi,pi), two around (-pi,pi), 3 around (0,0,0)
 			// Note: One of the hole-pockets around Gamma may be closed along kz
-			
-			nSheets = 7; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 7;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -297,7 +297,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = Pi;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =-Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =-Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 			FSCenters[4][0] =0.0;FSCenters[4][1] = 0.0;
@@ -321,9 +321,9 @@ namespace rpa {
 		} else if (Case_ == "10Orbit_3D_7Sheets_00_10_01" || Case_ == "1111_10orbit") {
 			// 7 FS sheets total, two around (pi,pi), two around (-pi,pi), 3 around (0,0,0)
 			// Note: One of the hole-pockets around Gamma may be closed along kz
-			
-			nSheets = 7; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 7;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = 0;
@@ -331,7 +331,7 @@ namespace rpa {
 			FSCenters[1][0] = Pi; FSCenters[1][1] = 0;
 			FSBand   [1]    =  6;
 			FSCenters[2][0] =  0; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  7; 
+			FSBand   [2]    =  7;
 			FSCenters[3][0] =  0; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  6;
 			FSCenters[4][0] =0.0;FSCenters[4][1] = 0.0;
@@ -355,9 +355,9 @@ namespace rpa {
 		}  else if (Case_ == "5Orbit_3D_6Sheets_00_11_10_01" || Case_ == "1111_10orbit") {
 			// 7 FS sheets total, two around (pi,pi), two around (-pi,pi), 3 around (0,0,0)
 			// Note: One of the hole-pockets around Gamma may be closed along kz
-			
-			nSheets = 6; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 6;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] =  0; FSCenters[0][1] = 0;
@@ -365,7 +365,7 @@ namespace rpa {
 			FSCenters[1][0] =  0; FSCenters[1][1] = 0;
 			FSBand   [1]    =  2;
 			FSCenters[2][0] =  Pi; FSCenters[2][1] = Pi;
-			FSBand   [2]    =  1; 
+			FSBand   [2]    =  1;
 			FSCenters[3][0] =  Pi; FSCenters[3][1] = Pi;
 			FSBand   [3]    =  2;
 			FSCenters[4][0] = Pi;FSCenters[4][1] = 0.0;
@@ -386,9 +386,9 @@ namespace rpa {
 
 		} else if (Case_ == "BaFeAs_5Orbit_5Sheets") {
 			// 5 FS sheets total, two around (0,0), one each around (pi,0) and (0,pi), 1 around (pi,pi)
-			
-			nSheets = 5; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 5;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = 0.0; FSCenters[0][1] = 0.0;
@@ -396,7 +396,7 @@ namespace rpa {
 			FSCenters[1][0] = 0.0; FSCenters[1][1] = 0.0;
 			FSBand   [1]    =   2;
 			FSCenters[2][0] =  Pi; FSCenters[2][1] = 0.0;
-			FSBand   [2]    =   3; 
+			FSBand   [2]    =   3;
 			FSCenters[3][0] = 0.0; FSCenters[3][1] = Pi;
 			FSBand   [3]    =   3;
 			FSCenters[4][0] =  Pi;FSCenters[4][1] =  Pi;
@@ -413,9 +413,9 @@ namespace rpa {
 			}
 		} else if (Case_ == "BaFeAs_5Orbit_4Sheets") {
 			// 4 FS sheets total, two around (0,0), one each around (pi,0) and (0,pi)
-			
-			nSheets = 4; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = 0.0; FSCenters[0][1] = 0.0;
@@ -423,7 +423,7 @@ namespace rpa {
 			FSCenters[1][0] = 0.0; FSCenters[1][1] = 0.0;
 			FSBand   [1]    =   2;
 			FSCenters[2][0] =  Pi; FSCenters[2][1] = 0.0;
-			FSBand   [2]    =   3; 
+			FSBand   [2]    =   3;
 			FSCenters[3][0] = 0.0; FSCenters[3][1] = Pi;
 			FSBand   [3]    =   3;
 
@@ -440,13 +440,13 @@ namespace rpa {
 
 		} else if (Case_ == "3D_5Orbit_electron_sheets") {
 			// 2 FS sheets total, one each around (pi,0) and (0,pi)
-			
-			nSheets = 2; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] =  Pi; FSCenters[0][1] = 0.0;
-			FSBand   [0]    =   3; 
+			FSBand   [0]    =   3;
 			FSCenters[1][0] = 0.0; FSCenters[1][1] = Pi;
 			FSBand   [1]    =   3;
 
@@ -462,8 +462,8 @@ namespace rpa {
 			}
 		} else if (Case_ == "KFeAs_10Orbit_2D") {
 			// 3 FS sheets total around (0,0), neglecting tiny electron pockets near (pi,pi)
-			nSheets = 3; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 3;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = 0.; FSCenters[0][1] = 0.;
@@ -471,14 +471,14 @@ namespace rpa {
 			FSCenters[1][0] = 0.; FSCenters[1][1] = 0.;
 			FSBand   [1]    =  4;
 			FSCenters[2][0] = 0.; FSCenters[2][1] = 0.;
-			FSBand   [2]    =  5; 
-			
+			FSBand   [2]    =  5;
+
 			size_t nkSearch(512);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
 		}   else if (Case_ == "FeSe_monolayer") {
 			// 5 FS sheets total, 3 hole around (0,0) + 2 electron pockets
-			nSheets = 7; 
-			nTotal = nSheets * nkPerSheet; 
+			nSheets = 7;
+			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = 0.; FSCenters[0][1] = 0.;
@@ -486,16 +486,16 @@ namespace rpa {
 			FSCenters[1][0] = 0.; FSCenters[1][1] = 0.;
 			FSBand   [1]    =  4;
 			FSCenters[2][0] = 0.; FSCenters[2][1] = 0.;
-			FSBand   [2]    =  5; 
+			FSBand   [2]    =  5;
 			FSCenters[3][0] = Pi; FSCenters[3][1] = Pi;
-			FSBand   [3]    =  6; 
+			FSBand   [3]    =  6;
 			FSCenters[4][0] = Pi; FSCenters[4][1] = Pi;
-			FSBand   [4]    =  7; 
+			FSBand   [4]    =  7;
 			FSCenters[5][0] = -Pi; FSCenters[5][1] = Pi;
-			FSBand   [5]    =  6; 
+			FSBand   [5]    =  6;
 			FSCenters[6][0] = -Pi; FSCenters[6][1] = Pi;
-			FSBand   [6]    =  7; 
-			
+			FSBand   [6]    =  7;
+
 			size_t nkSearch(512);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
 		} else if (Case_ == "YBCO_orthoII_perpStripes") {
@@ -605,9 +605,9 @@ namespace rpa {
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
 		} else if (Case_ == "Cuprate_Bilayer_3D") {
 			// 2 FS sheets total both cylidrical around (pi,pi)
-			
-			nSheets = 2; 
-			nTotal = nSheets * nkPerSheet * param.FSnkz; 
+
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi; FSCenters[0][1] = Pi;
@@ -625,7 +625,7 @@ namespace rpa {
 				}
 			}
 		} else if (Case_ == "trilayer") {
-			// 2D 1-band trilayer; 3 bands, 4 FS sheets. 
+			// 2D 1-band trilayer; 3 bands, 4 FS sheets.
 			nSheets = 4;
 			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
@@ -833,7 +833,7 @@ namespace rpa {
 		if (dim==2) {
 			return sqrt(pow(rx,2)+pow(ry,2));
 		} else {
-			return sqrt(pow(rx,2)+pow(ry,2)+pow(rz,2));			
+			return sqrt(pow(rx,2)+pow(ry,2)+pow(rz,2));
 		}
 	}
 
@@ -849,7 +849,7 @@ namespace rpa {
 		k[0] = kFx; k[1] = kFy; k[2] = kFz - dk;
 		bands.getBands(k,w,v) ; ekmz = w[iband];
 		FieldType rz((ekpz-ekmz)/(2.*dk));
-		return rz;			
+		return rz;
 	}
 
 	void readFromFile() {
@@ -873,7 +873,7 @@ namespace rpa {
 				vkF.push_back     (data[i*step+5]);
 			}
 		}
-		conc.broadcast(nTotal); 
+		conc.broadcast(nTotal);
 		if (conc.rank()!=0) {
 			kFx.resize(nTotal);
 			kFy.resize(nTotal);
@@ -899,11 +899,11 @@ namespace rpa {
 			os << kFx[i] << " , " << kFy[i] << " , " << kFz[i] << " , ";
 			os << kFtoBand[i] << " , " << deltakF[i] << " , " << vkF [i] ; // << "\n";
 			if (calcOW_) {
-				for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << abs(weights[i][iorb]) ;
-				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights[i][iorb])<< " , " << imag(weights[i][iorb]);
+				//for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << abs(weights[i][iorb]) ;
+				for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights[i][iorb])<< " , " << imag(weights[i][iorb]);
 				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights2[i][iorb])<< " , " << imag(weights2[i][iorb]);
 			}
-			
+
 			os << "\n";
 		}
 	}

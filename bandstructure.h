@@ -376,7 +376,7 @@ namespace rpa {
 					FieldType occ(0.0);
 					for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
 					occ /= FieldType(nktot);
-					if (conc.rank()==0) std::cout << "Filling = " << 2 * occ  << "\n";
+					if (conc.rank()==0) std::cout << "\n\t\tFilling = " << 2 * occ  << "\n\n";
 				}
 
 			if (conc.rank()==0) {

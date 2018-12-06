@@ -4,7 +4,7 @@ from numpy import *
 from matplotlib.pyplot import *
 
 imag = False # Plot imaginary part of chi; otherwise real part
-column = 6
+column = 4
 if imag: column=5
 # file = "chiRPA_U1.0_Up0.5_J0.25_Jp0.25.txt"
 file = "chiRPA.txt"
@@ -22,15 +22,15 @@ omega = data[0,3]
 
 ax=figure().gca(projection='3d')
 z=data[:,column]
-ax.plot_surface(x,y,z.reshape(nk,nk),rstride=1,cstride=1,linewidth=1.0,alpha=0.75,cmap='viridis')
+ax.plot_surface(x,y,z.reshape(nk,nk),rstride=1,cstride=1,linewidth=1.0,alpha=0.75,cmap='jet')
 zmax=ax.get_zlim()[1]
-#ax.set_zlim(0,zmax)
+ax.set_zlim(0,zmax)
 ax.contour(x,y,z.reshape(nk,nk),zdir='z',offset=0,cmap='jet')
 
 ax.set_aspect(0.75)
 
-ax.set_xlabel("$q_x/\pi$",fontsize=13,labelpad=10)
-ax.set_ylabel("$q_y/\pi$",fontsize=13,labelpad=10)
+ax.set_xlabel(r"$q_x/\pi$",fontsize=13,labelpad=10)
+ax.set_ylabel(r"$q_y/\pi$",fontsize=13,labelpad=10)
 if imag:
     ax.set_title(r"$\chi^{''}(q,\omega)$ for $\omega=$"+str(round(omega,5)),fontsize=13)
 else:
@@ -47,10 +47,10 @@ show()
 fig2 = figure(figsize=(8,6))
 ax2=fig2.add_subplot(111)
 
-cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="bilinear")
+cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="bilinear",origin='lower',cmap='jet')
 fig2.colorbar(cset)
-ax2.set_xlabel("$q_x/\pi$",fontsize=13,labelpad=10)
-ax2.set_ylabel("$q_y/\pi$",fontsize=13,labelpad=10)
+ax2.set_xlabel(r"$q_x/\pi$",fontsize=13,labelpad=10)
+ax2.set_ylabel(r"$q_y/\pi$",fontsize=13,labelpad=10)
 
 if imag:
     ax2.set_title(r"$\chi^{''}(q,\omega)$ for $\omega=$"+str(round(omega,5)))

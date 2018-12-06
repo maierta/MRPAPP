@@ -549,6 +549,29 @@ namespace rpa {
 
 			size_t nkSearch(256);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+		} else if (Case_ == "Ba2CuO3") {
+			// 2 bands, 2 FS sheets, 1 around Gamma, 1 around (pi,pi)
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = 0   ; FSCenters[0][1] = 0   ; FSBand[0]  =  1;
+			FSCenters[1][0] = Pi  ; FSCenters[1][1] = Pi  ; FSBand[1]  =  0;
+
+			size_t nkSearch(256);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
+		} else if (Case_ == "Ba2CuO3_1sheet") {
+			// 2 bands, 2 FS sheets, 1 around Gamma, 1 around (pi,pi)
+			nSheets = 1;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = Pi   ; FSCenters[0][1] = Pi   ; FSBand[0]  =  1;
+
+			size_t nkSearch(256);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
 		} else if (Case_ == "1band") {
 			// 2D 1-band Hubbard; 1 band, 1 FS sheet. Here we assume that it is closed around (pi,pi)
 			nSheets = 1;
@@ -721,6 +744,7 @@ namespace rpa {
 							FieldType re2(real(mv(iorb,FSBand[iSheet])));
 							FieldType im2(imag(mv(iorb,FSBand[iSheet])));
 							// weights[ic][iorb] =  sqrt(pow(re,2)+pow(im,2));
+							// std::cout <<  "Orbital weight for " << iorb << ": " <<  sqrt(pow(re,2)+pow(im,2)) << "\n";
 							weights[ic][iorb] =   ComplexType(re,im);
 							weights2[ic][iorb] =  ComplexType(re2,im2);
 						}
@@ -925,8 +949,8 @@ namespace rpa {
 			os << kFx[i] << " , " << kFy[i] << " , " << kFz[i] << " , ";
 			os << kFtoBand[i] << " , " << deltakF[i] << " , " << vkF [i] ; // << "\n";
 			if (calcOW_) {
-				//for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << abs(weights[i][iorb]) ;
-				for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights[i][iorb])<< " , " << imag(weights[i][iorb]);
+				for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << abs(weights[i][iorb]) ;
+				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights[i][iorb])<< " , " << imag(weights[i][iorb]);
 				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights2[i][iorb])<< " , " << imag(weights2[i][iorb]);
 			}
 

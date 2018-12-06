@@ -65,6 +65,7 @@ namespace rpa {
 		ConcurrencyType& conc;
 		size_t interpolateChi_;
 		size_t storeChi_;
+		size_t storeGammaOrb_;
 		size_t readChi_;
 		momentumDomain<FieldType,psimag::Matrix,ConcurrencyType>& qMesh;
 		const size_t& nOrb,nk;
@@ -113,6 +114,7 @@ namespace rpa {
 			conc(concurrency),
 			interpolateChi_(interpolateChi),
 			storeChi_(param.storeChi),
+			storeGammaOrb_(param.storeGammaOrb),
 			readChi_(param.readChi),
 			qMesh(qMeshIn),
 			nOrb(param.nOrb),
@@ -209,6 +211,9 @@ namespace rpa {
 			FieldType chiTerm(0.0);
 			// FieldType term2(0.0);
 
+			std::ofstream os("GammaPPOrb.txt");
+			os << "#i\t j\t l1\t l2\t l3\t l4\t Gammma_{l1,l2,l3,l4}(k_i,k_j)\n";
+
 			for (;!range.end();range.next()) {
 				ind = range.index();
 				size_t ik1 = indToi[ind];
@@ -223,8 +228,9 @@ namespace rpa {
 				// q = kF1-kF2
 				for (int l=0;l<3;l++) q[l] = k1[l]-k2[l];
 				// for (int l=0;l<3;l++) q[l] = k2[l]-k1[l];
-				if (param.Case == "Emery") calcGammaPPEmery(q,k1,k2,ik1,ik2,band1,band2,term1);
-				else calcGammaPPTerms(ind,q,k1,k2,ik1,ik2,band1,band2,term1,chiTerm);
+				if (param.Case == "Emery") calcGammaPPEmery(q,k1,k2,ik1,ik2,band1,band2,term1,os);
+				
+				else calcGammaPPTerms(ind,q,k1,k2,ik1,ik2,band1,band2,term1,chiTerm,os);
 				Container[ind] = term1;
 				Container2[ind] = chiTerm;
 				if (conc.rank()==0) std::cout << "now calculating " << ind 
@@ -241,6 +247,7 @@ namespace rpa {
 
 			conc.reduce(Container);
 			conc.reduce(Container2);
+			os.close();
 			if (conc.rank()==0) {
 				for (size_t ind = 0; ind < nTotal; ++ind){
 					size_t i = indToi[ind];
@@ -260,7 +267,8 @@ namespace rpa {
 		void calcGammaPPEmery(std::vector<FieldType> q, 
 							  VectorType& k1, VectorType& k2, size_t ik1,size_t ik2,
 							  size_t band1, size_t band2, 
-							  FieldType& result) {
+							  FieldType& result,
+							  std::ofstream& os) {
 			ComplexMatrixType chi0_gg(19,19);
 			ComplexMatrixType chi0(3,3); //not needed (dummy)
 			ComplexMatrixType chi0_g(19,3); //not needed (dummy)
@@ -296,7 +304,7 @@ namespace rpa {
 
 			calcGammaPPOrbEmery(GammaS,GammaC,bareSpin,bareCharge,k1,k2,temps);
 
-			calcGammaPPBand(temps,k1,k2,band1,band2,result);
+			calcGammaPPBand(temps,ik1,ik2,k1,k2,band1,band2,result,os);
 		}
 
 		void calcGammaPPOrbEmery(ComplexMatrixType& GammaS, ComplexMatrixType& GammaC, 
@@ -339,7 +347,8 @@ namespace rpa {
 							  VectorType& k1, VectorType& k2, size_t ik1,size_t ik2,
 							  size_t band1, size_t band2, 
 							  FieldType& result,
-							  FieldType& chiTerm) {
+							  FieldType& chiTerm,
+							  std::ofstream& os) {
 			// SuscType* chiq;
 			SuscType chiq(param,conc);
 			SuscType chi0Intq(param,conc);
@@ -375,7 +384,17 @@ namespace rpa {
 			// if (ik1==0&&ik2==24) std::cout << "in calcGammaPPTerms chiRPAs=" << chiRPAs.calcSus() << "\n";
 			calcGammaPPOrb(rpa.spinMatrix,chiRPAs,rpa.chargeMatrix,chiRPAc,temps);
 
-			calcGammaPPBand(temps,k1,k2,band1,band2,result);
+			// if (storeGammaOrb_)	{
+			// 	for (size_t i=0; i < msize; i++) for (size_t j=0; j < msize; j++) {
+			// 		size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+			// 		size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+
+			// 		os << ik1 << "\t" << ik2 << "\t" << l1 << "\t" << l2 << "\t" << l3 << "\t" << l4 << "\t" << real(temps(i,j)) << "\n";
+			// 		if (ik1!=ik2) os << ik2 << "\t" << ik1 << "\t" << l1 << "\t" << l2 << "\t" << l3 << "\t" << l4 << "\t" << real(temps(i,j)) << "\n";
+			// 	}
+			// }
+
+			calcGammaPPBand(temps,ik1,ik2,k1,k2,band1,band2,result,os);
 			// if (ik1==0&&ik2==40) std::cout << "in calcGammaPPTerms result=" << result << "\n";
 		}
 
@@ -407,11 +426,13 @@ namespace rpa {
 		}
 
 		void calcGammaPPBand(const ComplexMatrixType& gammaOrb, 
+							 size_t ik1, size_t ik2,
 							 VectorType& k1, 
 							 VectorType& k2, 
 							 size_t band1,
 							 size_t band2,
-							 FieldType& result) {
+							 FieldType& result,
+							 std::ofstream& os) {
 
 			VectorType ek1(nOrb,0);
 			VectorType ek2(nOrb,0);
@@ -452,6 +473,12 @@ namespace rpa {
 
                 c2 += c1*gammaOrb(ind1,ind2);
                 
+
+				if (storeGammaOrb_)	{
+					os << ik1 << "\t" << ik2 << "\t" << l1 << "\t" << l2 << "\t" << l3 << "\t" << l4 << "\t" << real(gammaOrb(ind1,ind2)) << "\t" << real(c1*gammaOrb(ind1,ind2)) << "\n";
+					if (ik1!=ik2) os << ik2 << "\t" << ik1 << "\t" << l1 << "\t" << l2 << "\t" << l3 << "\t" << l4 << "\t" << real(gammaOrb(ind1,ind2)) << "\t" << real(c1*gammaOrb(ind1,ind2)) << "\n";
+					}
+
                 // c2 += conj(c1)*gammaOrb(ind1,ind2);
 
                 // if (ind1==8 && ind2==4) std::cout << "c1,k1,k2,a...a" << c1<<ak2(l2,band2) <<  ak2m(l3,band2)

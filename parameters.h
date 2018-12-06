@@ -56,6 +56,7 @@ namespace rpa {
 		size_t pairingFromSpin;
 		size_t pairingFromCharge;
 		size_t storeChi;
+		size_t storeGammaOrb;
 		size_t readChi;
 		size_t readChiForSus;
 		std::string chifile;
@@ -83,6 +84,7 @@ namespace rpa {
 		Field damp;
 		bool calcOnlyDiagonal;
 		bool writeFullChi0;
+		bool fixEvecs;
 
 		// size_t nktot;
 
@@ -153,6 +155,7 @@ namespace rpa {
 			pairingFromSpin(1),
 			pairingFromCharge(1),
 			storeChi(0),
+			storeGammaOrb(0),
 			readChi(0),
 			readChiForSus(0),
 			chifile("none"),
@@ -179,7 +182,8 @@ namespace rpa {
 			nOrbAtomStr(""),
 			damp(1.0e-3),
 			calcOnlyDiagonal(0),
-			writeFullChi0(0)
+			writeFullChi0(0),
+			fixEvecs(0)
 
 			// single-band model in 2-sub-lattice formulation
 			// dimension(2),
@@ -360,6 +364,7 @@ namespace rpa {
 		        else if (text.find("pairingFromSpin")!=std::string::npos) str >> (*this).pairingFromSpin;
 		        else if (text.find("pairingFromCharge")!=std::string::npos) str >> (*this).pairingFromCharge;
 		        else if (text.find("storeChi")!=std::string::npos) str >> (*this).storeChi;
+		        else if (text.find("storeGammaOrb")!=std::string::npos) str >> (*this).storeGammaOrb;
 		        else if (text.find("readChiForPairing")!=std::string::npos) str >> (*this).readChi;
 		        else if (text.find("readChiForSus")!=std::string::npos) str >> (*this).readChiForSus;
 		        else if (text.find("hybridization")!=std::string::npos) str >> (*this).hyb;
@@ -376,6 +381,7 @@ namespace rpa {
 		        else if (text.find("damp")!=std::string::npos) str >> (*this).damp;
 		        else if (text.find("calcOnlyDiagonal")!=std::string::npos) str >> (*this).calcOnlyDiagonal;
 		        else if (text.find("writeFullChi0")!=std::string::npos) str >> (*this).writeFullChi0;
+		        else if (text.find("fixEvecs")!=std::string::npos) str >> (*this).fixEvecs;
 			}
 
 			void writeParameters(std::ostream& os) {
@@ -391,6 +397,7 @@ namespace rpa {
 				os << "pairingFromSpin = " << (*this).pairingFromSpin << "\n";
 				os << "pairingFromCharge = " << (*this).pairingFromCharge << "\n";
 				os << "storeChi = " << (*this).storeChi << "\n";
+				os << "storeGammaOrb = " << (*this).storeGammaOrb << "\n";
 				os << "readChiForPairing = " << (*this).readChi << "\n";
 				os << "readChiForSus = " << (*this).readChiForSus << "\n";
 				os << "ChiforPairingFile = " << (*this).chifile << "\n";
@@ -481,6 +488,7 @@ namespace rpa {
 				os << "damp = " << (*this).damp << "\n";
 				os << "calcOnlyDiagonal = " << (*this).calcOnlyDiagonal << "\n";
 				os << "writeFullChi0 = " << (*this).writeFullChi0 << "\n";
+				os << "fixEvecs = " << (*this).fixEvecs << "\n";
 			}
 
 
@@ -576,6 +584,7 @@ namespace rpa {
 		        conc.broadcast((*this).pairingFromSpin);
 		        conc.broadcast((*this).pairingFromCharge);
 		        conc.broadcast((*this).storeChi);
+		        conc.broadcast((*this).storeGammaOrb);
 		        conc.broadcast((*this).readChi);
 		        conc.broadcast((*this).readChiForSus);
 		        conc.broadcast((*this).hyb);
@@ -591,6 +600,7 @@ namespace rpa {
 		        conc.broadcast((*this).signF);
 		        conc.broadcast((*this).damp);
 		        conc.broadcast((*this).writeFullChi0);
+		        conc.broadcast((*this).fixEvecs);
 			}
 
 			void setupOrbitalIndices(){

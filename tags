@@ -8,8 +8,8 @@ A	PartialPsimag/Symmetry/MetricTensor.h	/^    Field  A() const { return (*this)(
 A	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      A,   \/* Looking for _rray (array)     *\/$/;"	e	enum:JsonParser::StatesMixin::states
 AKIMA_H_	PsimagLite/src/AkimaSpline.h	/^#define AKIMA_H_$/;"	d
 ALLOWS_ZERO	PsimagLite/src/ChebyshevSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::ChebyshevSolver::__anon114
-ALLOWS_ZERO	PsimagLite/src/LanczosSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosSolver::__anon130
-ALLOWS_ZERO	PsimagLite/src/LanczosVectors.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosVectors::__anon131
+ALLOWS_ZERO	PsimagLite/src/LanczosSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosSolver::__anon122
+ALLOWS_ZERO	PsimagLite/src/LanczosVectors.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosVectors::__anon113
 ALMOST_EQUAL_H	PsimagLite/src/AlmostEqual.h	/^#define ALMOST_EQUAL_H$/;"	d
 AR	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      AR,  \/* array    *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 AR	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      AR,  \/* Looking for __ray (array)     *\/$/;"	e	enum:JsonParser::StatesMixin::states
@@ -152,7 +152,7 @@ CB	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      CB = -10, \/* 
 CC	Makefile	/^CC                   = mpicxx$/;"	m
 CC	PsimagLite/src/JSON/JsonParser/Makefile	/^CC                   = g++$/;"	m
 CE	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      CE = -11, \/* comment end *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
-CHAIN	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon117
+CHAIN	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon126
 CHAIN_H	PsimagLite/src/Geometry/Chain.h	/^#define CHAIN_H$/;"	d
 CHEBYSHEV_FUNCTION_H	PsimagLite/src/ChebyshevFunction.h	/^#define CHEBYSHEV_FUNCTION_H$/;"	d
 CHEBYSHEV_SERIALIZER_H	PsimagLite/src/ChebyshevSerializer.h	/^#define CHEBYSHEV_SERIALIZER_H$/;"	d
@@ -167,7 +167,7 @@ COL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    static const size_t COL = NCOL
 COL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    static const size_t COL = NCOL - COLS_LEFT;$/;"	m	class:psimag::FOREACH_ELS
 COL	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    static const size_t COL = NCOL - 1;$/;"	m	class:psimag::FOREACH2_ELS
 COL	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    static const size_t COL = NCOL - COLS_LEFT;$/;"	m	class:psimag::FOREACH2_ELS
-COL	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { COL = 0 };$/;"	e	enum:psimag::TRANSPOSE_ELS::__anon73
+COL	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { COL = 0 };$/;"	e	enum:psimag::TRANSPOSE_ELS::__anon47
 COMBINE	PartialPsimag/Symmetry/Mat/MatEqual.h	/^      static T COMBINE(T lhs, T rhs, ArgType& arg) {$/;"	f	class:psimag::CLOSE::CloseReducerType
 COMBINE	PartialPsimag/Symmetry/Mat/MatEqual.h	/^      static T COMBINE(T lhs, T rhs, ArgType& arg) {$/;"	f	class:psimag::EQUAL::EqualReducerType
 COMBINE	PartialPsimag/Symmetry/Mat/MatEqual.h	/^      static T COMBINE(T lhs, T rhs, ArgType& arg) {$/;"	f	class:psimag::EQUAL_VAL::EqualReducerType
@@ -356,23 +356,23 @@ CellTranslationType	PartialPsimag/Symmetry/SymmetryElement.h	/^    typedef CellT
 CellTranslationType	PartialPsimag/Symmetry/ThreeFold2D.h	/^    typedef CellTranslation<Field,DIM>                CellTranslationType;$/;"	t	class:psimag::ThreeFold
 CellTranslationType	PartialPsimag/Symmetry/ThreeFoldN2D.h	/^    typedef CellTranslation<Field,DIM>                CellTranslationType;$/;"	t	class:psimag::ThreeFoldN
 CellTranslationType	PartialPsimag/Symmetry/TwoFold2D.h	/^    typedef CellTranslation<Field,DIM>                CellTranslationType;$/;"	t	class:psimag::TwoFold
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon88
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon97
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon98
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon99
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon100
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon101
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon102
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon103
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon104
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon89
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon90
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon91
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon93
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon94
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon95
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon92
-Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon82
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon91
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon92
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon93
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon94
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon95
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon97
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon98
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon83
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon84
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon85
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon87
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon88
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon89
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon86
+Centered	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon90
 CenteredToPrimitive	PartialPsimag/Symmetry/CeneringPointGroup.h	/^    static const TransformationType CenteredToPrimitive() {$/;"	f	class:psimag::CenteringPointGroup
 CenteredToPrimitive	PartialPsimag/Symmetry/Centering2D.h	/^    static const TransformationType CenteredToPrimitive() {$/;"	f	class:psimag::Centering
 Centering	PartialPsimag/Symmetry/Centering.h	/^  class Centering: public CenteringBase<Field,DIM> {$/;"	c	namespace:psimag
@@ -425,7 +425,7 @@ ComplexMatrixType	FourOrbital.h	/^		typedef MatrixTemplate<ComplexType> ComplexM
 ComplexMatrixType	KFe2Se2.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::KFe2Se2
 ComplexMatrixType	SrRuO.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::SrRuO
 ComplexMatrixType	bands.h	/^		typedef MatrixTemplate<ComplexType> 	ComplexMatrixType;$/;"	t	class:rpa::Bands
-ComplexMatrixType	bandstructure.h	/^		typedef MatrixTemplate<ComplexType> 	ComplexMatrixType;$/;"	t	class:rpa::bandstructure
+ComplexMatrixType	bandstructure.h	/^		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;$/;"	t	class:rpa::bandstructure
 ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::bilayer
 ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::bilayerFESC
 ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::orthoIIBilayer
@@ -570,8 +570,8 @@ DCA_CrystalHarmonics_H	CrystalHarmonics2D.h	/^#define DCA_CrystalHarmonics_H$/;"
 DCA_JSON_READER_HEADER_H	PsimagLite/src/JSON/JsonReader.h	/^#define DCA_JSON_READER_HEADER_H$/;"	d
 DE	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      DE = -15, \/* double detected by exponent e E *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 DEBUG	PsimagLite/src/ChebyshevSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::ChebyshevSolver::__anon114
-DEBUG	PsimagLite/src/LanczosSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosSolver::__anon130
-DEBUG	PsimagLite/src/LanczosVectors.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosVectors::__anon131
+DEBUG	PsimagLite/src/LanczosSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosSolver::__anon122
+DEBUG	PsimagLite/src/LanczosVectors.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosVectors::__anon113
 DET	PartialPsimag/Symmetry/Mat/MatDet.h	/^  class DET $/;"	c	namespace:psimag
 DET	PartialPsimag/Symmetry/Mat/MatDet.h	/^  class DET<MatType, Traits, 1> {$/;"	c	namespace:psimag
 DET	PartialPsimag/Symmetry/Mat/MatDet.h	/^  class DET<MatType, Traits, 2> {$/;"	c	namespace:psimag
@@ -580,58 +580,58 @@ DF	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      DF = -16, \/* 
 DGETRF	PartialPsimag/LAPACK.h	/^  inline void DGETRF(int ma, int na, double* a, int lda, int* pivot, int& info) {$/;"	f	namespace:psimag::LAPACK
 DGETRI	PartialPsimag/LAPACK.h	/^  inline void DGETRI(int na, double* a, int lda, int* pivot, double* work, int lwork, int& info) {$/;"	f	namespace:psimag::LAPACK
 DIFFERENCE	PartialPsimag/Symmetry/Mat/MatDifference.h	/^  class DIFFERENCE {$/;"	c	namespace:psimag
-DIM	PartialPsimag/Symmetry/FourFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::FourFold::__anon12
-DIM	PartialPsimag/Symmetry/FourFoldN2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::FourFoldN::__anon13
-DIM	PartialPsimag/Symmetry/Glide2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::Glide::__anon14
-DIM	PartialPsimag/Symmetry/IdentityElement2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::IdentityElement::__anon15
-DIM	PartialPsimag/Symmetry/Mirror2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::Mirror::__anon76
-DIM	PartialPsimag/Symmetry/ReciprocalLattice.h	/^    enum {DIM=1};$/;"	e	enum:psimag::ReciprocalLattice::__anon80
-DIM	PartialPsimag/Symmetry/ReciprocalLattice.h	/^    enum {DIM=2};$/;"	e	enum:psimag::ReciprocalLattice::__anon81
-DIM	PartialPsimag/Symmetry/ReciprocalLattice.h	/^    enum {DIM=3};$/;"	e	enum:psimag::ReciprocalLattice::__anon82
-DIM	PartialPsimag/Symmetry/Simple2DReducer.h	/^    enum {DIM=2};$/;"	e	enum:psimag::Simple2DReducer::__anon84
-DIM	PartialPsimag/Symmetry/SixFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::SixFold::__anon85
-DIM	PartialPsimag/Symmetry/SixFoldN2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::SixFoldN::__anon86
-DIM	PartialPsimag/Symmetry/SpaceGroup2D.h	/^    enum {DIM=2, NUMGROUPS=17};$/;"	e	enum:psimag::SpaceGroup::__anon87
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon88
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon97
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon98
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon99
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon100
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon101
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon102
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon103
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon104
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon89
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon90
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon91
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon93
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon94
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon95
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon92
-DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon96
-DIM	PartialPsimag/Symmetry/SuperCrystalBuilder.h	/^    enum {DIM=2};$/;"	e	enum:psimag::SuperCrystalBuilder::__anon105
-DIM	PartialPsimag/Symmetry/SymmetryElements2D.h	/^    enum {DIM=2};$/;"	e	enum:psimag::SymmetryElements::__anon107
-DIM	PartialPsimag/Symmetry/SymmetryOperations2D.h	/^    enum {DIM=2, NUMOPS=51};$/;"	e	enum:psimag::SymmetryOperations::__anon108
-DIM	PartialPsimag/Symmetry/ThreeFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::ThreeFold::__anon109
+DIM	PartialPsimag/Symmetry/FourFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::FourFold::__anon2
+DIM	PartialPsimag/Symmetry/FourFoldN2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::FourFoldN::__anon63
+DIM	PartialPsimag/Symmetry/Glide2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::Glide::__anon70
+DIM	PartialPsimag/Symmetry/IdentityElement2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::IdentityElement::__anon64
+DIM	PartialPsimag/Symmetry/Mirror2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::Mirror::__anon66
+DIM	PartialPsimag/Symmetry/ReciprocalLattice.h	/^    enum {DIM=1};$/;"	e	enum:psimag::ReciprocalLattice::__anon79
+DIM	PartialPsimag/Symmetry/ReciprocalLattice.h	/^    enum {DIM=2};$/;"	e	enum:psimag::ReciprocalLattice::__anon80
+DIM	PartialPsimag/Symmetry/ReciprocalLattice.h	/^    enum {DIM=3};$/;"	e	enum:psimag::ReciprocalLattice::__anon81
+DIM	PartialPsimag/Symmetry/Simple2DReducer.h	/^    enum {DIM=2};$/;"	e	enum:psimag::Simple2DReducer::__anon71
+DIM	PartialPsimag/Symmetry/SixFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::SixFold::__anon72
+DIM	PartialPsimag/Symmetry/SixFoldN2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::SixFoldN::__anon67
+DIM	PartialPsimag/Symmetry/SpaceGroup2D.h	/^    enum {DIM=2, NUMGROUPS=17};$/;"	e	enum:psimag::SpaceGroup::__anon107
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon82
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon91
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon92
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon93
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon94
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon95
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon97
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon98
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon83
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon84
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon85
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon87
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon88
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon89
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon86
+DIM	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon90
+DIM	PartialPsimag/Symmetry/SuperCrystalBuilder.h	/^    enum {DIM=2};$/;"	e	enum:psimag::SuperCrystalBuilder::__anon75
+DIM	PartialPsimag/Symmetry/SymmetryElements2D.h	/^    enum {DIM=2};$/;"	e	enum:psimag::SymmetryElements::__anon68
+DIM	PartialPsimag/Symmetry/SymmetryOperations2D.h	/^    enum {DIM=2, NUMOPS=51};$/;"	e	enum:psimag::SymmetryOperations::__anon109
+DIM	PartialPsimag/Symmetry/ThreeFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::ThreeFold::__anon99
 DIM	PartialPsimag/Symmetry/ThreeFoldN2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::ThreeFoldN::__anon110
-DIM	PartialPsimag/Symmetry/TwoFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::TwoFold::__anon111
-DIRECTION_BATH	PsimagLite/src/Geometry/LadderBath.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_BATH};$/;"	e	enum:PsimagLite::LadderBath::__anon122
-DIRECTION_X	PsimagLite/src/Geometry/Chain.h	/^			enum { DIRECTION_X };$/;"	e	enum:PsimagLite::Chain::__anon115
-DIRECTION_X	PsimagLite/src/Geometry/Ladder.h	/^		enum {DIRECTION_X,DIRECTION_Y};$/;"	e	enum:PsimagLite::Ladder::__anon121
-DIRECTION_X	PsimagLite/src/Geometry/LadderBath.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_BATH};$/;"	e	enum:PsimagLite::LadderBath::__anon122
-DIRECTION_X	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon123
-DIRECTION_XMY	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon123
-DIRECTION_XPY	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon123
-DIRECTION_Y	PsimagLite/src/Geometry/Ladder.h	/^		enum {DIRECTION_X,DIRECTION_Y};$/;"	e	enum:PsimagLite::Ladder::__anon121
-DIRECTION_Y	PsimagLite/src/Geometry/LadderBath.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_BATH};$/;"	e	enum:PsimagLite::LadderBath::__anon122
-DIRECTION_Y	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon123
-DIRICHLET	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon113
-DIR_X	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon120
-DIR_XMY	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon120
-DIR_XPY	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon120
-DIR_Y	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon120
-DIVIDE	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon1
-DIVIDE	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+DIM	PartialPsimag/Symmetry/TwoFold2D.h	/^    enum { DIM=2 };$/;"	e	enum:psimag::TwoFold::__anon69
+DIRECTION_BATH	PsimagLite/src/Geometry/LadderBath.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_BATH};$/;"	e	enum:PsimagLite::LadderBath::__anon125
+DIRECTION_X	PsimagLite/src/Geometry/Chain.h	/^			enum { DIRECTION_X };$/;"	e	enum:PsimagLite::Chain::__anon123
+DIRECTION_X	PsimagLite/src/Geometry/Ladder.h	/^		enum {DIRECTION_X,DIRECTION_Y};$/;"	e	enum:PsimagLite::Ladder::__anon131
+DIRECTION_X	PsimagLite/src/Geometry/LadderBath.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_BATH};$/;"	e	enum:PsimagLite::LadderBath::__anon125
+DIRECTION_X	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon127
+DIRECTION_XMY	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon127
+DIRECTION_XPY	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon127
+DIRECTION_Y	PsimagLite/src/Geometry/Ladder.h	/^		enum {DIRECTION_X,DIRECTION_Y};$/;"	e	enum:PsimagLite::Ladder::__anon131
+DIRECTION_Y	PsimagLite/src/Geometry/LadderBath.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_BATH};$/;"	e	enum:PsimagLite::LadderBath::__anon125
+DIRECTION_Y	PsimagLite/src/Geometry/LadderX.h	/^			enum {DIRECTION_X=LadderType::DIRECTION_X,DIRECTION_Y=LadderType::DIRECTION_Y,DIRECTION_XPY,DIRECTION_XMY};$/;"	e	enum:PsimagLite::LadderX::__anon127
+DIRICHLET	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon121
+DIR_X	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon130
+DIR_XMY	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon130
+DIR_XPY	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon130
+DIR_Y	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {DIR_X,DIR_Y,DIR_XPY,DIR_XMY};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon130
+DIVIDE	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon112
+DIVIDE	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 DOT	PsimagLite/src/BLAS.h	/^inline double DOT(int n,double* dx,int incx,double* dy,int incy)$/;"	f	namespace:psimag::BLAS
 DataArray	PartialPsimag/Symmetry/SeitzMatrix.h	/^      typedef IN_TYPE DataArray[DIM+1*DIM+1];$/;"	t	class:psimag::SeitzMatrix::TypeComputer
 DataArray2D	PartialPsimag/Symmetry/SeitzMatrix.h	/^      typedef IN_TYPE DataArray2D[DIM+1][DIM+1];$/;"	t	class:psimag::SeitzMatrix::TypeComputer
@@ -650,7 +650,7 @@ DifferenceFunctionType	PartialPsimag/Symmetry/Mat/MatDifference.h	/^    class Di
 DirectionVectorType	PartialPsimag/Symmetry/CeneringPointGroup.h	/^    typedef std::vector<CellDirection<Field,DIM> > DirectionVectorType;$/;"	t	class:psimag::CenteringPointGroup
 DirectionVectorType	PartialPsimag/Symmetry/Centering2D.h	/^    typedef std::vector<CellDirection<Field,DIM> > DirectionVectorType;$/;"	t	class:psimag::Centering
 DoNext	PsimagLite/src/JSON/JsonParser/ActionsMixin.h	/^      DoNext,        \/* DoNext                 *\/$/;"	e	enum:JsonParser::ActionsMixin::actions
-DocType	PartialPsimag/XMLHeading.h	/^    typedef enum { XHTML, SVG} DocType;$/;"	t	class:psimag::XMLHeading	typeref:enum:psimag::XMLHeading::__anon112
+DocType	PartialPsimag/XMLHeading.h	/^    typedef enum { XHTML, SVG} DocType;$/;"	t	class:psimag::XMLHeading	typeref:enum:psimag::XMLHeading::__anon1
 DoubleIndexTraits	PartialPsimag/Symmetry/Mat/MatTraits.h	/^  class DoubleIndexTraits$/;"	c	namespace:psimag
 DoubleVectorType	PartialPsimag/MatrixLike.h	/^      typedef std::vector<VectorLikeType>        DoubleVectorType;$/;"	t	class:psimag::MatrixLike::DoubleVectorWrap
 DoubleVectorType	PsimagLite/src/JSON/MatrixLike.h	/^      typedef std::vector<VectorLikeType>        DoubleVectorType;$/;"	t	class:psimag::MatrixLike::DoubleVectorWrap
@@ -843,7 +843,7 @@ FieldType	PsimagLite/src/Minimizer.h	/^		typedef typename FunctionType::FieldTyp
 FieldType	PsimagLite/src/Sort.h	/^	typedef typename ContainerType::value_type FieldType;$/;"	t	class:Sort
 FieldType	SrRuO.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::SrRuO
 FieldType	bands.h	/^		typedef Field 					FieldType;$/;"	t	class:rpa::Bands
-FieldType	bandstructure.h	/^		typedef Field 					FieldType;$/;"	t	class:rpa::bandstructure
+FieldType	bandstructure.h	/^		typedef Field					FieldType;$/;"	t	class:rpa::bandstructure
 FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::bilayer
 FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::bilayerFESC
 FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::orthoIIBilayer
@@ -859,7 +859,7 @@ FieldType	momentumDomain.h	/^		typedef Field 								FieldType;$/;"	t	class:rpa:
 FieldType	pairing.h	/^		typedef Field 							FieldType;$/;"	t	class:rpa::pairing
 FieldType	susceptibility.h	/^			typedef Field 				               FieldType;$/;"	t	class:rpa::susceptibility
 FiniteGroup	PartialPsimag/Symmetry/FiniteGroup.h	/^  class FiniteGroup {$/;"	c	namespace:psimag
-First	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	e	enum:dca::JSN::__anon126
+First	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	e	enum:dca::JSN::__anon119
 FlatMapType	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    typedef std::map<std::wstring,const JsonParser::Whatever*> FlatMapType;$/;"	t	class:JsonParser::Whatever
 FlatMapType	PsimagLite/src/JSON/JsonReader.h	/^    typedef JsonParser::Whatever::FlatMapType          FlatMapType;$/;"	t	class:dca::JsonReader
 FlatPrintFunctionType	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    class FlatPrintFunctionType {$/;"	c	class:psimag::PRINT_FUNCTOR
@@ -890,8 +890,8 @@ FourOrbital	4Orbital.h	/^		FourOrbital(const rpa::parameters<Field,MatrixTemplat
 FourOrbital	4Orbital.h	/^	class FourOrbital {$/;"	c	namespace:rpa
 FourOrbital	FourOrbital.h	/^		FourOrbital(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):$/;"	f	class:rpa::FourOrbital
 FourOrbital	FourOrbital.h	/^	class FourOrbital {$/;"	c	namespace:rpa
-FourierTransform	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon1
-FourierTransform	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+FourierTransform	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon112
+FourierTransform	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 Fraction	PartialPsimag/Symmetry/SymmetryElementName.h	/^  class Fraction {$/;"	c	namespace:psimag
 FunctionParsing	PsimagLite/scripts/FunctionParsing.pm	/^package FunctionParsing;$/;"	p
 GAPS2D_H	gaps2D.h	/^#define GAPS2D_H$/;"	d
@@ -1052,11 +1052,11 @@ HermiteNormalFormType	PartialPsimag/Symmetry/SymmetryOperation.h	/^    typedef H
 HostInfo	PsimagLite/src/HostInfo.h	/^	class HostInfo {$/;"	c	namespace:PsimagLite
 INCLUDES	Makefile	/^INCLUDES =  -I. \\$/;"	m
 INCLUDES	PsimagLite/src/JSON/JsonParser/Makefile	/^INCLUDES =  -I. -I$(SRC_DIR) $/;"	m
-IND	PartialPsimag/Symmetry/LatticeCoordinates.h	/^    enum{ IND=0 };$/;"	e	enum:psimag::LatticeCoordinates::__anon16
+IND	PartialPsimag/Symmetry/LatticeCoordinates.h	/^    enum{ IND=0 };$/;"	e	enum:psimag::LatticeCoordinates::__anon103
 INTERPOLATION_H	interpolation.h	/^#define INTERPOLATION_H$/;"	d
 INV	PartialPsimag/Matrix.h	/^  INV(const psimag::Matrix<T>& mat)$/;"	f	namespace:psimag
-INV	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon1
-INV	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+INV	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon112
+INV	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 INVERT	PartialPsimag/Matrix.h	/^  class INVERT {$/;"	c	namespace:psimag
 INVERT	PartialPsimag/MatrixLike.h	/^    class INVERT {$/;"	c	namespace:psimag::MatrixLike
 INVERT	PsimagLite/src/JSON/MatrixLike.h	/^    class INVERT {$/;"	c	namespace:psimag::MatrixLike
@@ -1088,7 +1088,7 @@ IntPairType	PartialPsimag/Symmetry/GroupMultiplicationTable.h	/^    typedef cons
 IntPairType	PartialPsimag/Symmetry/SymmetryGroup.h	/^    typedef const std::pair<int,int>                                          IntPairType;$/;"	t	class:psimag::SymmetryGroup
 Integer	PsimagLite/src/JSON/JsonParser/DefaultContext.h	/^    void Integer(ParseBuffer& s) {$/;"	f	class:JsonParser::DefaultContext
 IntegerType	PartialPsimag/Symmetry/rational.h	/^  typedef Int            IntegerType;$/;"	t	class:rational
-Integrate	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+Integrate	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 InternalMatrix	PsimagLite/src/ChebyshevSolver.h	/^			InternalMatrix(const MatrixType& mat)$/;"	f	class:PsimagLite::ChebyshevSolver::InternalMatrix
 InternalMatrix	PsimagLite/src/ChebyshevSolver.h	/^		class InternalMatrix {$/;"	c	class:PsimagLite::ChebyshevSolver
 IntervalType	PsimagLite/drivers/akimaSpline.cpp	/^typedef AkimaSplineType::IntervalType IntervalType;$/;"	t	file:
@@ -1106,22 +1106,22 @@ IoSimpleIn	PsimagLite/src/IoSimple.h	/^		IoSimpleIn(const char* fn) : PsimagLite
 IoSimpleIn	PsimagLite/src/IoSimple.h	/^	class IoSimpleIn : public PsimagLite::IoSimple::In {$/;"	c	namespace:Spf
 J	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;$/;"	m	class:rpa::parameters
 J	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
-JACKSON	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon113
+JACKSON	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon121
 JSN	PsimagLite/src/JSON/JSN_Writer.h	/^    JSN(size_t offset_=0):$/;"	f	class:dca::JSN
 JSN	PsimagLite/src/JSON/JSN_Writer.h	/^  class JSN {$/;"	c	namespace:dca
-JSON_T_ARRAY_BEGIN	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_ARRAY_BEGIN,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_ARRAY_END	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_ARRAY_END,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_FALSE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_FALSE,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_FLOAT	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_FLOAT,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_INTEGER	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_INTEGER,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_KEY	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_KEY,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_MAX	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_MAX$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_NONE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_NONE = 0,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_NULL	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_NULL,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_OBJECT_BEGIN	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_OBJECT_BEGIN,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_OBJECT_END	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_OBJECT_END,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_STRING	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_STRING,$/;"	e	enum:JsonParser::TypesMixin::__anon127
-JSON_T_TRUE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_TRUE,$/;"	e	enum:JsonParser::TypesMixin::__anon127
+JSON_T_ARRAY_BEGIN	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_ARRAY_BEGIN,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_ARRAY_END	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_ARRAY_END,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_FALSE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_FALSE,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_FLOAT	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_FLOAT,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_INTEGER	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_INTEGER,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_KEY	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_KEY,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_MAX	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_MAX$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_NONE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_NONE = 0,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_NULL	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_NULL,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_OBJECT_BEGIN	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_OBJECT_BEGIN,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_OBJECT_END	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_OBJECT_END,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_STRING	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_STRING,$/;"	e	enum:JsonParser::TypesMixin::__anon116
+JSON_T_TRUE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_TRUE,$/;"	e	enum:JsonParser::TypesMixin::__anon116
 JUST_NUMBERS	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    static void JUST_NUMBERS(const MatType& m, std::ostream& os, bool flat=false) {$/;"	f	class:psimag::MAT_PRINT
 Jp	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;$/;"	m	class:rpa::parameters
 Jp	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
@@ -1158,14 +1158,14 @@ JsonParser_TypesMixin_H	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^#define  J
 JsonParser_Whatever_H	PsimagLite/src/JSON/JsonParser/Whatever.h	/^#define  JsonParser_Whatever_H$/;"	d
 JsonReader	PsimagLite/src/JSON/JsonReader.h	/^    JsonReader(std::string inputFileName):$/;"	f	class:dca::JsonReader
 JsonReader	PsimagLite/src/JSON/JsonReader.h	/^  class JsonReader$/;"	c	namespace:dca
-JsonType	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^    } JsonType;$/;"	t	class:JsonParser::TypesMixin	typeref:enum:JsonParser::TypesMixin::__anon127
+JsonType	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^    } JsonType;$/;"	t	class:JsonParser::TypesMixin	typeref:enum:JsonParser::TypesMixin::__anon116
 KE	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      KE,  \/* key      *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 KFE2SE2_H	KFe2Se2.h	/^#define KFE2SE2_H$/;"	d
 KFe2Se2	KFe2Se2.h	/^		KFe2Se2(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):$/;"	f	class:rpa::KFe2Se2
 KFe2Se2	KFe2Se2.h	/^	class KFe2Se2 {$/;"	c	namespace:rpa
 KISS	PartialPsimag/KISS.h	/^    explicit KISS(seed_type s=1) : _small(217), _fixed(20030711)$/;"	f	class:psimag::KISS
 KISS	PartialPsimag/KISS.h	/^class KISS {$/;"	c	namespace:psimag
-KTWONIFFOUR	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon117
+KTWONIFFOUR	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon126
 KTWONIFFOUR_H	PsimagLite/src/Geometry/KTwoNiFFour.h	/^#define KTWONIFFOUR_H$/;"	d
 KTwoNiFFour	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		KTwoNiFFour(size_t linSize,int signChange) $/;"	f	class:PsimagLite::KTwoNiFFour
 KTwoNiFFour	PsimagLite/src/Geometry/KTwoNiFFour.h	/^	class KTwoNiFFour  {$/;"	c	namespace:PsimagLite
@@ -1183,9 +1183,9 @@ L2Norm	PartialPsimag/Vec.h	/^  T L2Norm(const Vec <T,DIM> &a)$/;"	f	namespace:ps
 L2Norm	PartialPsimag/Vec.h	/^  template < typename T > T L2Norm(const Vec<T,2>& a)$/;"	f	namespace:psimag
 L2Norm	PartialPsimag/Vec.h	/^  template < typename T > T L2Norm(const Vec<T,3>& a)$/;"	f	namespace:psimag
 L2Norm	PartialPsimag/Vec.h	/^  template<typename T> T L2Norm(T a) { return std::abs(a); }$/;"	f	namespace:psimag
-LADDER	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon117
-LADDERBATH	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon117
-LADDERX	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon117
+LADDER	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon126
+LADDERBATH	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon126
+LADDERX	PsimagLite/src/Geometry/GeometryFactory.h	/^		enum {CHAIN,LADDER,LADDERX,LADDERBATH,KTWONIFFOUR};$/;"	e	enum:PsimagLite::GeometryFactory::__anon126
 LADDERX_H	PsimagLite/src/Geometry/LadderX.h	/^#define LADDERX_H$/;"	d
 LADDER_BATH_H	PsimagLite/src/Geometry/LadderBath.h	/^#define LADDER_BATH_H$/;"	d
 LADDER_H	PsimagLite/src/Geometry/Ladder.h	/^#define LADDER_H$/;"	d
@@ -1195,8 +1195,8 @@ LAPACK	PartialPsimag/LAPACK.h	/^namespace LAPACK {$/;"	n	namespace:psimag
 LAPACK_H_	PsimagLite/src/Lapack.h	/^#define LAPACK_H_$/;"	d
 LAST_COL	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^      static const bool LAST_COL   = (COL_ == DIM);$/;"	m	class:psimag::SeitzMatrixTraits::REF
 LAST_INSTANCE	PsimagLite/src/IoSimple.h	/^				static const int LAST_INSTANCE=-1;$/;"	m	class:PsimagLite::IoSimple::In
-LCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecPos::__anon44
-LCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecRow::__anon46
+LCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecPos::__anon4
+LCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecRow::__anon6
 LDFLAGS	PsimagLite/drivers/Makefile	/^LDFLAGS =       -lm  -lpthread -lblas -llapack$/;"	m
 LENGTH	PartialPsimag/Symmetry/Mat/Mat.h	/^    enum { LENGTH=NCOL*NROW };$/;"	e	enum:psimag::Mat::__anon17
 LHSType	PartialPsimag/Symmetry/Mat/MatCopy.h	/^      typedef typename TraitsLHS::ElType LHSType;$/;"	t	class:psimag::COPY::CopyFunctionType
@@ -1209,8 +1209,8 @@ LHSType	PartialPsimag/Symmetry/Mat/MatPrint.h	/^      typedef typename TraitsLHS
 LHSType	PartialPsimag/Symmetry/Mat/MatSum.h	/^      typedef typename TraitsLHS::ElType    LHSType;$/;"	t	class:psimag::SUM::SumFunctionType
 LINEAR_PREDICTION_H	PsimagLite/src/LinearPrediction.h	/^#define LINEAR_PREDICTION_H$/;"	d
 LINE_MARKER_H	PsimagLite/src/LineMarker.h	/^#define LINE_MARKER_H$/;"	d
-LORENTZ	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon113
-LROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LROW=0, NLCOL=Traits::NCOL};$/;"	e	enum:psimag::MatMultVecRow::__anon47
+LORENTZ	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon121
+LROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LROW=0, NLCOL=Traits::NCOL};$/;"	e	enum:psimag::MatMultVecRow::__anon7
 LS	parameters.h	/^		bool LS;$/;"	m	class:rpa::parameters
 Ladder	PsimagLite/src/Geometry/Ladder.h	/^		Ladder(size_t linSize,size_t leg) : linSize_(linSize),leg_(leg)$/;"	f	class:PsimagLite::Ladder
 Ladder	PsimagLite/src/Geometry/Ladder.h	/^	class Ladder  {$/;"	c	namespace:PsimagLite
@@ -1228,7 +1228,7 @@ LanczosVectors	PsimagLite/src/LanczosVectors.h	/^		LanczosVectors(const MatrixTy
 LanczosVectors	PsimagLite/src/LanczosVectors.h	/^	class LanczosVectors {$/;"	c	namespace:PsimagLite
 LanczosVectorsType	PsimagLite/src/ChebyshevSolver.h	/^		typedef LanczosVectors<RealType,MatrixType,VectorType> LanczosVectorsType;$/;"	t	class:PsimagLite::ChebyshevSolver
 LanczosVectorsType	PsimagLite/src/LanczosSolver.h	/^		typedef LanczosVectors<RealType,MatrixType,VectorType> LanczosVectorsType;$/;"	t	class:PsimagLite::LanczosSolver
-Last	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	e	enum:dca::JSN::__anon126
+Last	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	e	enum:dca::JSN::__anon119
 LastColRetriever	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^			      RotRetriever >::Result  LastColRetriever;$/;"	t	class:psimag::SeitzMatrixTraits::REF
 LastRowType	PartialPsimag/Symmetry/SeitzMatrix.h	/^    typedef Vec<Field, DIM+1>                     LastRowType;$/;"	t	class:psimag::SeitzMatrix
 Lattice	PartialPsimag/Symmetry/Lattice.h	/^    Lattice(): $/;"	f	class:psimag::Lattice
@@ -1325,15 +1325,15 @@ M	PartialPsimag/Symmetry/Mat/MatInverse.h	/^    typedef MatType<T,2,2,Traits>   
 M	PartialPsimag/Symmetry/Mat/MatInverse.h	/^    typedef MatType<T,3,3,Traits>   M;$/;"	t	class:psimag::AssembleInverse3
 M	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    typedef MatType              M;$/;"	t	class:psimag::TRANSPOSE_ELS
 MAGNITUDE	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^  class MAGNITUDE {$/;"	c	namespace:psimag
-MATRICES	PsimagLite/src/Geometry/GeometryDirection.h	/^			enum {NUMBERS,MATRICES};$/;"	e	enum:PsimagLite::GeometryDirection::__anon116
+MATRICES	PsimagLite/src/Geometry/GeometryDirection.h	/^			enum {NUMBERS,MATRICES};$/;"	e	enum:PsimagLite::GeometryDirection::__anon124
 MATRIX_H_	PsimagLite/src/Matrix.h	/^#define MATRIX_H_$/;"	d
 MAT_PRINT	PartialPsimag/Symmetry/Mat/MatPrint.h	/^  class MAT_PRINT {$/;"	c	namespace:psimag
 MAX	PartialPsimag/Symmetry/Mat/MatMax.h	/^  class MAX {$/;"	c	namespace:psimag
 MEMORY_USAGE_H	PsimagLite/src/MemoryUsage.h	/^#define MEMORY_USAGE_H$/;"	d
 MI	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      MI,  \/* minus    *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 MINIMIZER_H	PsimagLite/src/Minimizer.h	/^#define MINIMIZER_H$/;"	d
-MINUS	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon1
-MINUS	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+MINUS	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon112
+MINUS	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 MODE_ARRAY	PsimagLite/src/JSON/JsonParser/ModesMixin.h	/^      MODE_ARRAY = 1, $/;"	e	enum:JsonParser::ModesMixin::modes
 MODE_DONE	PsimagLite/src/JSON/JsonParser/ModesMixin.h	/^      MODE_DONE = 2,  $/;"	e	enum:JsonParser::ModesMixin::modes
 MODE_KEY	PsimagLite/src/JSON/JsonParser/ModesMixin.h	/^      MODE_KEY = 3,   $/;"	e	enum:JsonParser::ModesMixin::modes
@@ -1418,7 +1418,7 @@ MatrixType	PsimagLite/src/Geometry/GeometryDirection.h	/^		typedef Matrix<RealTy
 MatrixType	PsimagLite/src/LinearPrediction.h	/^		typedef Matrix<FieldType> MatrixType;$/;"	t	class:PsimagLite::LinearPrediction
 MatrixType	SrRuO.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::SrRuO
 MatrixType	bands.h	/^		typedef MatrixTemplate<Field> 	MatrixType;$/;"	t	class:rpa::Bands
-MatrixType	bandstructure.h	/^		typedef MatrixTemplate<Field> 	MatrixType;$/;"	t	class:rpa::bandstructure
+MatrixType	bandstructure.h	/^		typedef MatrixTemplate<Field>	MatrixType;$/;"	t	class:rpa::bandstructure
 MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::bilayer
 MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::bilayerFESC
 MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::orthoIIBilayer
@@ -1455,7 +1455,7 @@ MetricTensor	PartialPsimag/Symmetry/MetricTensor.h	/^  class MetricTensor<Field,
 MetricTensorSortHelper	PartialPsimag/Symmetry/MetricTensor.h	/^    MetricTensorSortHelper(const MetricTensor<Field,DIM>& mt): metricTensor(mt) {}$/;"	f	class:psimag::MetricTensorSortHelper
 MetricTensorSortHelper	PartialPsimag/Symmetry/MetricTensor.h	/^  class MetricTensorSortHelper {$/;"	c	namespace:psimag
 MetricType	PartialPsimag/Symmetry/Lattice.h	/^    typedef MetricTensor<Field,DIM>                       MetricType;$/;"	t	class:psimag::Lattice
-Middle	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	e	enum:dca::JSN::__anon126
+Middle	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	e	enum:dca::JSN::__anon119
 MillerDirection	PartialPsimag/Symmetry/MillerDirection.h	/^    MillerDirection(): SeitzVector<Field, DIM, 0>() {}$/;"	f	class:psimag::MillerDirection
 MillerDirection	PartialPsimag/Symmetry/MillerDirection.h	/^    MillerDirection(const ArrayType& vals):  SeitzVector<Field, DIM, 0>(vals) {}$/;"	f	class:psimag::MillerDirection
 MillerDirection	PartialPsimag/Symmetry/MillerDirection.h	/^    MillerDirection(const MillerDirection<Field, DIM>& v): SeitzVector<Field, DIM, 0>(v) {}$/;"	f	class:psimag::MillerDirection
@@ -1490,102 +1490,102 @@ N	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      N,   \/* Looking for _ull
 N1	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      N1,  \/* nu       *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 N2	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      N2,  \/* nul      *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 N3	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      N3,  \/* null     *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
-NCOL	PartialPsimag/Symmetry/Mat/MatCopy.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::COPY::__anon18
-NCOL	PartialPsimag/Symmetry/Mat/MatDifference.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::DIFFERENCE::__anon19
-NCOL	PartialPsimag/Symmetry/Mat/MatEqual.h	/^	   NCOL = Traits::NCOL };$/;"	e	enum:psimag::CLOSE::__anon21
-NCOL	PartialPsimag/Symmetry/Mat/MatEqual.h	/^	   NCOL = Traits::NCOL };$/;"	e	enum:psimag::EQUAL::__anon20
-NCOL	PartialPsimag/Symmetry/Mat/MatEqual.h	/^	   NCOL = Traits::NCOL };$/;"	e	enum:psimag::EQUAL_VAL::__anon22
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_::__anon25
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_::__anon26
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon23
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon24
+NCOL	PartialPsimag/Symmetry/Mat/MatCopy.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::COPY::__anon27
+NCOL	PartialPsimag/Symmetry/Mat/MatDifference.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::DIFFERENCE::__anon60
+NCOL	PartialPsimag/Symmetry/Mat/MatEqual.h	/^	   NCOL = Traits::NCOL };$/;"	e	enum:psimag::CLOSE::__anon35
+NCOL	PartialPsimag/Symmetry/Mat/MatEqual.h	/^	   NCOL = Traits::NCOL };$/;"	e	enum:psimag::EQUAL::__anon34
+NCOL	PartialPsimag/Symmetry/Mat/MatEqual.h	/^	   NCOL = Traits::NCOL };$/;"	e	enum:psimag::EQUAL_VAL::__anon36
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_::__anon14
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_::__anon15
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon12
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon13
 NCOL	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^	   NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_::__anon30
 NCOL	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_::__anon31
 NCOL	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_ELS::__anon28
 NCOL	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_ELS::__anon29
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon35
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon36
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon33
-NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon34
-NCOL	PartialPsimag/Symmetry/Mat/MatIdentity.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::MakeIDENTITY::__anon39
-NCOL	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::L2NORM::__anon41
-NCOL	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::MAGNITUDE::__anon40
-NCOL	PartialPsimag/Symmetry/Mat/MatMax.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::MAX::__anon42
-NCOL	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::PRINT_FUNCTOR::__anon51
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE::__anon56
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_::__anon54
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_::__anon55
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon52
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon53
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2::__anon61
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon59
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon60
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon57
-NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon58
-NCOL	PartialPsimag/Symmetry/Mat/MatSum.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::SUM::__anon63
-NCOL	PartialPsimag/Symmetry/Mat/MatTrace.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::TRACE::__anon64
-NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::ColMajorTraits::__anon67
-NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::ConstantTraits::__anon69
-NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::DoubleIndexTraits::__anon71
-NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::ReverseDoubleIndexTraits::__anon72
-NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::RowMajorTraits::__anon65
-NCOL	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon74
-NCOL	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { ROW=0, NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon75
-NCOL	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^	   NCOL        = NCOL_ };$/;"	e	enum:psimag::SeitzMatrixTraits::__anon83
-NLCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LROW=0, NLCOL=Traits::NCOL};$/;"	e	enum:psimag::MatMultVecRow::__anon47
-NLCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { NLCOL=Traits::NCOL};$/;"	e	enum:psimag::MatMultVecRow::__anon45
-NLROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { NLROW=Traits::NROW};$/;"	e	enum:psimag::MatMultVecCol::__anon48
-NLROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { RCOL= 0, NLROW=Traits::NROW};$/;"	e	enum:psimag::MatMultVecCol::__anon49
-NORM	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon39
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon40
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon37
+NCOL	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon38
+NCOL	PartialPsimag/Symmetry/Mat/MatIdentity.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::MakeIDENTITY::__anon33
+NCOL	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::L2NORM::__anon20
+NCOL	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::MAGNITUDE::__anon19
+NCOL	PartialPsimag/Symmetry/Mat/MatMax.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::MAX::__anon18
+NCOL	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::PRINT_FUNCTOR::__anon61
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE::__anon26
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_::__anon24
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^	   NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_::__anon25
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon22
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon23
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2::__anon46
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon44
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon45
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon42
+NCOL	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon43
+NCOL	PartialPsimag/Symmetry/Mat/MatSum.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::SUM::__anon11
+NCOL	PartialPsimag/Symmetry/Mat/MatTrace.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::TRACE::__anon51
+NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::ColMajorTraits::__anon54
+NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::ConstantTraits::__anon56
+NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::DoubleIndexTraits::__anon58
+NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::ReverseDoubleIndexTraits::__anon59
+NCOL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NCOL        = NCOL_  };$/;"	e	enum:psimag::RowMajorTraits::__anon52
+NCOL	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon48
+NCOL	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { ROW=0, NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon49
+NCOL	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^	   NCOL        = NCOL_ };$/;"	e	enum:psimag::SeitzMatrixTraits::__anon74
+NLCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LROW=0, NLCOL=Traits::NCOL};$/;"	e	enum:psimag::MatMultVecRow::__anon7
+NLCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { NLCOL=Traits::NCOL};$/;"	e	enum:psimag::MatMultVecRow::__anon5
+NLROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { NLROW=Traits::NROW};$/;"	e	enum:psimag::MatMultVecCol::__anon8
+NLROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { RCOL= 0, NLROW=Traits::NROW};$/;"	e	enum:psimag::MatMultVecCol::__anon9
+NORM	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 NO_PTHREADS_HEADER_H	PsimagLite/src/NoPthreads.h	/^#define NO_PTHREADS_HEADER_H$/;"	d
-NRCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { NRCOL =TraitsO::NCOL};$/;"	e	enum:psimag::MatMultVec::__anon50
-NROW	PartialPsimag/Symmetry/Mat/MatCopy.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::COPY::__anon18
-NROW	PartialPsimag/Symmetry/Mat/MatDifference.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::DIFFERENCE::__anon19
-NROW	PartialPsimag/Symmetry/Mat/MatEqual.h	/^    enum { NROW = Traits::NROW, $/;"	e	enum:psimag::CLOSE::__anon21
-NROW	PartialPsimag/Symmetry/Mat/MatEqual.h	/^    enum { NROW = Traits::NROW, $/;"	e	enum:psimag::EQUAL::__anon20
-NROW	PartialPsimag/Symmetry/Mat/MatEqual.h	/^    enum { NROW = Traits::NROW, $/;"	e	enum:psimag::EQUAL_VAL::__anon22
-NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW };$/;"	e	enum:psimag::FOREACH::__anon27
-NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::FOREACH_::__anon25
-NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_::__anon26
-NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon23
-NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon24
+NRCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { NRCOL =TraitsO::NCOL};$/;"	e	enum:psimag::MatMultVec::__anon10
+NROW	PartialPsimag/Symmetry/Mat/MatCopy.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::COPY::__anon27
+NROW	PartialPsimag/Symmetry/Mat/MatDifference.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::DIFFERENCE::__anon60
+NROW	PartialPsimag/Symmetry/Mat/MatEqual.h	/^    enum { NROW = Traits::NROW, $/;"	e	enum:psimag::CLOSE::__anon35
+NROW	PartialPsimag/Symmetry/Mat/MatEqual.h	/^    enum { NROW = Traits::NROW, $/;"	e	enum:psimag::EQUAL::__anon34
+NROW	PartialPsimag/Symmetry/Mat/MatEqual.h	/^    enum { NROW = Traits::NROW, $/;"	e	enum:psimag::EQUAL_VAL::__anon36
+NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW };$/;"	e	enum:psimag::FOREACH::__anon16
+NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::FOREACH_::__anon14
+NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_::__anon15
+NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon12
+NROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::FOREACH_ELS::__anon13
 NROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW };$/;"	e	enum:psimag::FOREACH2::__anon32
 NROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, $/;"	e	enum:psimag::FOREACH2_::__anon30
 NROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_::__anon31
 NROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_ELS::__anon28
 NROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH2_ELS::__anon29
-NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW };$/;"	e	enum:psimag::FOREACH3::__anon37
-NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon35
-NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon36
-NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon33
-NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon34
-NROW	PartialPsimag/Symmetry/Mat/MatForEachDiagonal.h	/^    enum { NROW=Traits::NROW };$/;"	e	enum:psimag::FOREACH_DIAG::__anon38
-NROW	PartialPsimag/Symmetry/Mat/MatIdentity.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::MakeIDENTITY::__anon39
-NROW	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::L2NORM::__anon41
-NROW	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::MAGNITUDE::__anon40
-NROW	PartialPsimag/Symmetry/Mat/MatMax.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::MAX::__anon42
-NROW	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::PRINT_FUNCTOR::__anon51
-NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::REDUCE::__anon56
-NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::REDUCE_::__anon54
-NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::REDUCE_::__anon55
-NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon52
-NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon53
-NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2::__anon61
-NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon59
-NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon60
-NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon57
-NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon58
-NROW	PartialPsimag/Symmetry/Mat/MatReduceDiagonal.h	/^    enum { NROW=Traits::NROW };$/;"	e	enum:psimag::REDUCE_DIAG::__anon62
-NROW	PartialPsimag/Symmetry/Mat/MatSum.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::SUM::__anon63
-NROW	PartialPsimag/Symmetry/Mat/MatTrace.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::TRACE::__anon64
-NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::ColMajorTraits::__anon67
-NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::ConstantTraits::__anon69
-NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::DoubleIndexTraits::__anon71
-NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::ReverseDoubleIndexTraits::__anon72
-NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::RowMajorTraits::__anon65
-NROW	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::SeitzMatrixTraits::__anon83
-NROWS	PartialPsimag/Symmetry/Pattern.h	/^    enum { NROWS=DIM+1};$/;"	e	enum:psimag::Pattern::__anon78
-NROWS	PartialPsimag/Symmetry/PatternWithLattice.h	/^    enum { NROWS=DIM+1};$/;"	e	enum:psimag::PatternWithLattice::__anon79
+NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW };$/;"	e	enum:psimag::FOREACH3::__anon41
+NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon39
+NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_::__anon40
+NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon37
+NROW	PartialPsimag/Symmetry/Mat/MatForEach3.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::FOREACH3_ELS::__anon38
+NROW	PartialPsimag/Symmetry/Mat/MatForEachDiagonal.h	/^    enum { NROW=Traits::NROW };$/;"	e	enum:psimag::FOREACH_DIAG::__anon50
+NROW	PartialPsimag/Symmetry/Mat/MatIdentity.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::MakeIDENTITY::__anon33
+NROW	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::L2NORM::__anon20
+NROW	PartialPsimag/Symmetry/Mat/MatMagnitude.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::MAGNITUDE::__anon19
+NROW	PartialPsimag/Symmetry/Mat/MatMax.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::MAX::__anon18
+NROW	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::PRINT_FUNCTOR::__anon61
+NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::REDUCE::__anon26
+NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::REDUCE_::__anon24
+NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, $/;"	e	enum:psimag::REDUCE_::__anon25
+NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon22
+NROW	PartialPsimag/Symmetry/Mat/MatReduce.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE_ELS::__anon23
+NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2::__anon46
+NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon44
+NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_::__anon45
+NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon42
+NROW	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::REDUCE2_ELS::__anon43
+NROW	PartialPsimag/Symmetry/Mat/MatReduceDiagonal.h	/^    enum { NROW=Traits::NROW };$/;"	e	enum:psimag::REDUCE_DIAG::__anon21
+NROW	PartialPsimag/Symmetry/Mat/MatSum.h	/^    enum { NROW=TraitsLHS::NROW, NCOL=TraitsLHS::NCOL };$/;"	e	enum:psimag::SUM::__anon11
+NROW	PartialPsimag/Symmetry/Mat/MatTrace.h	/^    enum { NROW=Traits::NROW, NCOL=Traits::NCOL };$/;"	e	enum:psimag::TRACE::__anon51
+NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::ColMajorTraits::__anon54
+NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::ConstantTraits::__anon56
+NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::DoubleIndexTraits::__anon58
+NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::ReverseDoubleIndexTraits::__anon59
+NROW	PartialPsimag/Symmetry/Mat/MatTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::RowMajorTraits::__anon52
+NROW	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^	   NROW        = NROW_, $/;"	e	enum:psimag::SeitzMatrixTraits::__anon74
+NROWS	PartialPsimag/Symmetry/Pattern.h	/^    enum { NROWS=DIM+1};$/;"	e	enum:psimag::Pattern::__anon73
+NROWS	PartialPsimag/Symmetry/PatternWithLattice.h	/^    enum { NROWS=DIM+1};$/;"	e	enum:psimag::PatternWithLattice::__anon104
 NR_ACTIONS	PsimagLite/src/JSON/JsonParser/ActionsMixin.h	/^      NR_ACTIONS$/;"	e	enum:JsonParser::ActionsMixin::actions
 NR_CLASSES	PsimagLite/src/JSON/JsonParser/CharacterMapper.h	/^      NR_CLASSES$/;"	e	enum:JsonParser::CharacterMapper::classes
 NR_STATES	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      NR_STATES,$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
@@ -1593,12 +1593,12 @@ NR_STATES	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      NR_STATES$/;"	e	e
 NU	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      NU = -14, \/* null *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 NU	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      NU,  \/* Looking for __ll (null)     *\/$/;"	e	enum:JsonParser::StatesMixin::states
 NUL	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      NUL, \/* Looking for ___l (null)     *\/$/;"	e	enum:JsonParser::StatesMixin::states
-NUM	PartialPsimag/Symmetry/ForEachCentering.h	/^    enum { NUM=Centerings<2>::NumCenterings };$/;"	e	enum:psimag::ForEachCentering::__anon11
-NUM	PartialPsimag/Symmetry/ForEachCentering.h	/^    enum {NUM=0};$/;"	e	enum:psimag::ForEachCentering_::__anon10
-NUMBERS	PsimagLite/src/Geometry/GeometryDirection.h	/^			enum {NUMBERS,MATRICES};$/;"	e	enum:PsimagLite::GeometryDirection::__anon116
-NUMGROUPS	PartialPsimag/Symmetry/SpaceGroup2D.h	/^    enum {DIM=2, NUMGROUPS=17};$/;"	e	enum:psimag::SpaceGroup::__anon87
-NUMGROUPS	PartialPsimag/Symmetry/Symmetry.h	/^    enum { NUMGROUPS= SpaceGroupType::NUMGROUPS};$/;"	e	enum:psimag::Symmetry::__anon106
-NUMOPS	PartialPsimag/Symmetry/SymmetryOperations2D.h	/^    enum {DIM=2, NUMOPS=51};$/;"	e	enum:psimag::SymmetryOperations::__anon108
+NUM	PartialPsimag/Symmetry/ForEachCentering.h	/^    enum { NUM=Centerings<2>::NumCenterings };$/;"	e	enum:psimag::ForEachCentering::__anon106
+NUM	PartialPsimag/Symmetry/ForEachCentering.h	/^    enum {NUM=0};$/;"	e	enum:psimag::ForEachCentering_::__anon105
+NUMBERS	PsimagLite/src/Geometry/GeometryDirection.h	/^			enum {NUMBERS,MATRICES};$/;"	e	enum:PsimagLite::GeometryDirection::__anon124
+NUMGROUPS	PartialPsimag/Symmetry/SpaceGroup2D.h	/^    enum {DIM=2, NUMGROUPS=17};$/;"	e	enum:psimag::SpaceGroup::__anon107
+NUMGROUPS	PartialPsimag/Symmetry/Symmetry.h	/^    enum { NUMGROUPS= SpaceGroupType::NUMGROUPS};$/;"	e	enum:psimag::Symmetry::__anon111
+NUMOPS	PartialPsimag/Symmetry/SymmetryOperations2D.h	/^    enum {DIM=2, NUMOPS=51};$/;"	e	enum:psimag::SymmetryOperations::__anon109
 NUMPOS	PartialPsimag/Symmetry/Pattern.h	/^    size_t                  NUMPOS;$/;"	m	class:psimag::Pattern
 Name	PartialPsimag/Symmetry/CeneringPointGroup.h	/^    static const std::string Name() { return "BodyCentered"; }$/;"	f	class:psimag::CenteringPointGroup
 Name	PartialPsimag/Symmetry/CeneringPointGroup.h	/^    static const std::string Name() { return "mmm"; }$/;"	f	class:psimag::CenteringPointGroup
@@ -1608,53 +1608,53 @@ NoPthreads	PsimagLite/src/NoPthreads.h	/^	class NoPthreads : public Concurrency<
 None	PsimagLite/src/JSON/JsonParser/DefaultContext.h	/^    void None() {$/;"	f	class:JsonParser::DefaultContext
 Null	PsimagLite/src/JSON/JsonParser/DefaultContext.h	/^    void Null( ) {$/;"	f	class:JsonParser::DefaultContext
 NullType	PartialPsimag/Symmetry/NullType.h	/^  class NullType {};$/;"	c	namespace:psimag
-NumCenterings	PartialPsimag/Symmetry/Centering.h	/^    enum{ NumCenterings=0 };$/;"	e	enum:psimag::Centerings::__anon4
-NumCenterings	PartialPsimag/Symmetry/Centering.h	/^    enum{ NumCenterings=2 };$/;"	e	enum:psimag::Centerings::__anon5
-NumCenterings	PartialPsimag/Symmetry/Centering.h	/^    enum{ NumCenterings=6 }; \/\/ Probably more check this.$/;"	e	enum:psimag::Centerings::__anon6
-NumCenterings	PartialPsimag/Symmetry/Centering2D.h	/^    enum{ NumCenterings=0 };$/;"	e	enum:psimag::Centerings::__anon7
-NumCenterings	PartialPsimag/Symmetry/Centering2D.h	/^    enum{ NumCenterings=2 };$/;"	e	enum:psimag::Centerings::__anon8
-NumCenterings	PartialPsimag/Symmetry/Centering2D.h	/^    enum{ NumCenterings=6 }; \/\/ Probably more check this.$/;"	e	enum:psimag::Centerings::__anon9
-NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::ColMajorTraits::__anon67
-NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::ConstantTraits::__anon69
-NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::DoubleIndexTraits::__anon71
-NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::ReverseDoubleIndexTraits::__anon72
-NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::RowMajorTraits::__anon65
-NumElements	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::SeitzMatrixTraits::__anon83
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon88
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon97
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon98
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon99
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon100
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon101
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon102
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon103
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon104
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon89
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon90
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon91
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon93
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon94
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon95
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon92
-NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon96
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon88
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon97
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon98
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon99
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon100
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon101
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon102
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon103
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon104
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon89
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon90
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon91
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon93
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon94
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon95
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon92
-NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon96
-NumPointGroups	PartialPsimag/Symmetry/CeneringPointGroup.h	/^    enum { NumPointGroups:2 }$/;"	e	enum:psimag::CenteringPointGroup::__anon3
+NumCenterings	PartialPsimag/Symmetry/Centering.h	/^    enum{ NumCenterings=0 };$/;"	e	enum:psimag::Centerings::__anon76
+NumCenterings	PartialPsimag/Symmetry/Centering.h	/^    enum{ NumCenterings=2 };$/;"	e	enum:psimag::Centerings::__anon77
+NumCenterings	PartialPsimag/Symmetry/Centering.h	/^    enum{ NumCenterings=6 }; \/\/ Probably more check this.$/;"	e	enum:psimag::Centerings::__anon78
+NumCenterings	PartialPsimag/Symmetry/Centering2D.h	/^    enum{ NumCenterings=0 };$/;"	e	enum:psimag::Centerings::__anon100
+NumCenterings	PartialPsimag/Symmetry/Centering2D.h	/^    enum{ NumCenterings=2 };$/;"	e	enum:psimag::Centerings::__anon101
+NumCenterings	PartialPsimag/Symmetry/Centering2D.h	/^    enum{ NumCenterings=6 }; \/\/ Probably more check this.$/;"	e	enum:psimag::Centerings::__anon102
+NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::ColMajorTraits::__anon54
+NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::ConstantTraits::__anon56
+NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::DoubleIndexTraits::__anon58
+NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::ReverseDoubleIndexTraits::__anon59
+NumElements	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::RowMajorTraits::__anon52
+NumElements	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^    enum { NumElements = NROW_*NCOL_, $/;"	e	enum:psimag::SeitzMatrixTraits::__anon74
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon82
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon91
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon92
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon93
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon94
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon95
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon97
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon98
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon83
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon84
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon85
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon87
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon88
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon89
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon86
+NumGenerators	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon90
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon82
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon91
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon92
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon93
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon94
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon95
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon97
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon98
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon83
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon84
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon85
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon87
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon88
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon89
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon86
+NumOperations	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon90
+NumPointGroups	PartialPsimag/Symmetry/CeneringPointGroup.h	/^    enum { NumPointGroups:2 }$/;"	e	enum:psimag::CenteringPointGroup::__anon108
 OB	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      OB,  \/* object   *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 OBJECTS	Makefile	/^OBJECTS      =  main.o$/;"	m
 OBJECTS	PsimagLite/src/JSON/JsonParser/Makefile	/^OBJECTS      = main.o$/;"	m
@@ -1714,8 +1714,8 @@ PATTERN_H	PartialPsimag/Symmetry/Pattern.h	/^#define PATTERN_H$/;"	d
 PI	PartialPsimag/Real.h	/^#define PI /;"	d
 PI	PartialPsimag/Real.h	/^#undef PI$/;"	d
 PLOT_PARAMS_H	PsimagLite/src/PlotParams.h	/^#define PLOT_PARAMS_H$/;"	d
-PLUS	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon1
-PLUS	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+PLUS	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon112
+PLUS	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 PRINT_FUNCTOR	PartialPsimag/Symmetry/Mat/MatPrint.h	/^  class PRINT_FUNCTOR {$/;"	c	namespace:psimag
 PRODUCE	PartialPsimag/Symmetry/Mat/MatEqual.h	/^      static T PRODUCE(EType el, ArgType& arg) {$/;"	f	class:psimag::EQUAL_VAL::EqualReducerType
 PRODUCE	PartialPsimag/Symmetry/Mat/MatEqual.h	/^      static T PRODUCE(EType el, OType otherEl, ArgType& arg) {$/;"	f	class:psimag::CLOSE::CloseReducerType
@@ -1889,9 +1889,9 @@ PlotParamsType	PsimagLite/src/ContinuedFraction.h	/^		typedef PlotParams<RealTyp
 PlotParamsType	PsimagLite/src/ContinuedFractionCollection.h	/^		typedef typename ContinuedFractionType::PlotParamsType PlotParamsType;$/;"	t	class:PsimagLite::ContinuedFractionCollection
 PointPermutationType	PartialPsimag/Symmetry/GroupAction.h	/^    typedef std::vector<int>                                                  PointPermutationType;$/;"	t	class:psimag::GroupAction
 PointPermutationType	PartialPsimag/Symmetry/SymmetryGroup.h	/^    typedef std::vector<int>                                                  PointPermutationType;$/;"	t	class:psimag::SymmetryGroup
-Position	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	t	class:dca::JSN	typeref:enum:dca::JSN::__anon126
-PositionMatCols	PartialPsimag/Symmetry/OriginLocator.h	/^    enum { PositionMatCols= NUMPOS, PositionMatRows=DIM+1};$/;"	e	enum:psimag::OriginLocator::__anon77
-PositionMatRows	PartialPsimag/Symmetry/OriginLocator.h	/^    enum { PositionMatCols= NUMPOS, PositionMatRows=DIM+1};$/;"	e	enum:psimag::OriginLocator::__anon77
+Position	PsimagLite/src/JSON/JSN_Writer.h	/^    typedef enum {First,Middle,Last} Position;$/;"	t	class:dca::JSN	typeref:enum:dca::JSN::__anon119
+PositionMatCols	PartialPsimag/Symmetry/OriginLocator.h	/^    enum { PositionMatCols= NUMPOS, PositionMatRows=DIM+1};$/;"	e	enum:psimag::OriginLocator::__anon65
+PositionMatRows	PartialPsimag/Symmetry/OriginLocator.h	/^    enum { PositionMatCols= NUMPOS, PositionMatRows=DIM+1};$/;"	e	enum:psimag::OriginLocator::__anon65
 PostProcType	PsimagLite/src/ChebyshevSolver.h	/^		typedef ChebyshevSerializer<RealType,TridiagonalMatrixType> PostProcType;$/;"	t	class:PsimagLite::ChebyshevSolver
 PostProcType	PsimagLite/src/LanczosSolver.h	/^		                    PostProcType;$/;"	t	class:PsimagLite::LanczosSolver
 PostProcType	PsimagLite/src/LanczosVectors.h	/^		                    PostProcType;$/;"	t	class:PsimagLite::LanczosVectors
@@ -2003,7 +2003,7 @@ RANDOM48_H	PsimagLite/src/Random48.h	/^#define RANDOM48_H$/;"	d
 RANDOM_FOR_TESTS_H	PsimagLite/src/RandomForTests.h	/^#define RANDOM_FOR_TESTS_H$/;"	d
 RANGE_HEADER_H	PsimagLite/src/Range.h	/^#define RANGE_HEADER_H$/;"	d
 RATIONAL_H	PartialPsimag/Symmetry/rational.h	/^#define RATIONAL_H$/;"	d
-RCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { RCOL= 0, NLROW=Traits::NROW};$/;"	e	enum:psimag::MatMultVecCol::__anon49
+RCOL	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { RCOL= 0, NLROW=Traits::NROW};$/;"	e	enum:psimag::MatMultVecCol::__anon9
 REDUCE	PartialPsimag/Symmetry/Mat/MatReduce.h	/^  class REDUCE {$/;"	c	namespace:psimag
 REDUCE2	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^  class REDUCE2 {$/;"	c	namespace:psimag
 REDUCE2_	PartialPsimag/Symmetry/Mat/MatReduce2.h	/^  class REDUCE2_ {$/;"	c	namespace:psimag
@@ -2053,14 +2053,14 @@ ROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    static const size_t ROW = NROW
 ROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    static const size_t ROW = NROW - ROWS_LEFT;$/;"	m	class:psimag::FOREACH_
 ROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    static const size_t ROW = NROW - 1;$/;"	m	class:psimag::FOREACH2_
 ROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    static const size_t ROW = NROW - ROWS_LEFT;$/;"	m	class:psimag::FOREACH2_
-ROW	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { ROW=0, NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon75
+ROW	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { ROW=0, NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon49
 RPA_CUO_H	rpa_CuO.h	/^#define RPA_CUO_H$/;"	d
 RPA_H	rpa.h	/^#define RPA_H$/;"	d
 RPA_MOMENTUMDOMAIN_H	momentumDomain.h	/^#define RPA_MOMENTUMDOMAIN_H$/;"	d
 RREF	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^      typedef typename RotationTraits_::template REF<RotationType_, ROW_, COL_> RREF;$/;"	t	class:psimag::SeitzMatrixTraits::REF
-RROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecPos::__anon44
-RROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecRow::__anon46
-RROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { RROW=LCOL };$/;"	e	enum:psimag::MatMultVecPos::__anon43
+RROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecPos::__anon4
+RROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { LCOL=0, RROW=LCOL };$/;"	e	enum:psimag::MatMultVecRow::__anon6
+RROW	PartialPsimag/Symmetry/Mat/MatMult.h	/^    enum { RROW=LCOL };$/;"	e	enum:psimag::MatMultVecPos::__anon3
 RUSAGE_H_H	PsimagLite/src/Rusage.h	/^#define RUSAGE_H_H$/;"	d
 Random48	PsimagLite/src/Random48.h	/^		Random48(LongType seed,size_t rank = 0,size_t nprocs = 1)$/;"	f	class:PsimagLite::Random48
 Random48	PsimagLite/src/Random48.h	/^	class  Random48 {$/;"	c	namespace:PsimagLite
@@ -2158,7 +2158,7 @@ RotRetriever	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^      class RotRetriev
 RotationClass	PartialPsimag/Symmetry/CellRotation.h	/^    typedef Mat< Field, DIM, DIM > RotationClass;$/;"	t	class:psimag::CellRotation
 RotationTraits	PartialPsimag/Symmetry/SeitzMatrix.h	/^    typedef typename RotationType::Traits         RotationTraits;$/;"	t	class:psimag::SeitzMatrix
 RotationTraits_	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^      typedef typename SeitzMatrixType::RotationTraits    RotationTraits_;$/;"	t	class:psimag::SeitzMatrixTraits::REF
-RotationType	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	t	class:psimag::CellRotation	typeref:enum:psimag::CellRotation::__anon2
+RotationType	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	t	class:psimag::CellRotation	typeref:enum:psimag::CellRotation::__anon62
 RotationType	PartialPsimag/Symmetry/SeitzMatrix.h	/^    typedef RotationType_                         RotationType;$/;"	t	class:psimag::SeitzMatrix
 RotationType	PartialPsimag/Symmetry/SymmetryOperation.h	/^    typedef typename MatType::RotationType          RotationType;$/;"	t	class:psimag::SymmetryOperation
 RotationType_	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^      typedef typename SeitzMatrixType::RotationType      RotationType_;$/;"	t	class:psimag::SeitzMatrixTraits::REF
@@ -2218,14 +2218,14 @@ ST	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      ST,  \/* strin
 ST	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      ST,  \/* Looking for string characters         *\/$/;"	e	enum:JsonParser::StatesMixin::states
 STATIC_CHECK	PartialPsimag/PSIMAGAssert.h	/^#define STATIC_CHECK(/;"	d
 STATIC_CHECK	PsimagLite/src/JSON/PSIMAGAssert.h	/^#define STATIC_CHECK(/;"	d
-SUBTYPE_X	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {SUBTYPE_X,SUBTYPE_Y};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon119
-SUBTYPE_Y	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {SUBTYPE_X,SUBTYPE_Y};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon119
+SUBTYPE_X	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {SUBTYPE_X,SUBTYPE_Y};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon129
+SUBTYPE_Y	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {SUBTYPE_X,SUBTYPE_Y};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon129
 SUM	PartialPsimag/Symmetry/Mat/MatSum.h	/^  class SUM {$/;"	c	namespace:psimag
 SUPERSUBCLASS	PartialPsimag/Symmetry/TypeManip.h	/^#define SUPERSUBCLASS(/;"	d
 SUPERSUBCLASS_STRICT	PartialPsimag/Symmetry/TypeManip.h	/^#define SUPERSUBCLASS_STRICT(/;"	d
 SUSCEPTIBILITY_H	susceptibility.h	/^#define SUSCEPTIBILITY_H$/;"	d
 SUSINT_H	susInt.h	/^#define SUSINT_H$/;"	d
-SVG	PartialPsimag/XMLHeading.h	/^    typedef enum { XHTML, SVG} DocType;$/;"	e	enum:psimag::XMLHeading::__anon112
+SVG	PartialPsimag/XMLHeading.h	/^    typedef enum { XHTML, SVG} DocType;$/;"	e	enum:psimag::XMLHeading::__anon1
 SYMM	PartialPsimag/BLAS.h	/^inline void SYMM(char c1,char c2,int sX,int sY,const double &a,const double* x,$/;"	f	namespace:psimag::BLAS
 SYMM	PartialPsimag/BLAS.h	/^inline void SYMM(char c1,char c2,int sX,int sY,const float &a,const float* x,$/;"	f	namespace:psimag::BLAS
 SYMM	PartialPsimag/BLAS.h	/^inline void SYMM(char c1,char c2,int sX,int sY,const std::complex<double> &a,$/;"	f	namespace:psimag::BLAS
@@ -2348,23 +2348,23 @@ SpaceGroupData	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^  class SpaceGroupDat
 SpaceGroupData	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^  class SpaceGroupData<Field,2,7,1,Algorithms>   $/;"	c	namespace:psimag
 SpaceGroupData	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^  class SpaceGroupData<Field,2,8,1,Algorithms>   $/;"	c	namespace:psimag
 SpaceGroupData	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^  class SpaceGroupData<Field,2,9,1,Algorithms>   $/;"	c	namespace:psimag
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon88
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon97
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon98
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon99
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon100
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon101
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon102
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon103
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon104
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon89
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon90
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon91
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon93
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon94
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon95
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon92
-SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=1, NumGenerators=1, NumOperations=1};$/;"	e	enum:psimag::SpaceGroupData::__anon82
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=10, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon91
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=11, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon92
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=12, NumGenerators=4, NumOperations=8};$/;"	e	enum:psimag::SpaceGroupData::__anon93
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=13 , NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon94
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=14 , NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon95
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=15, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon96
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=16, NumGenerators=3, NumOperations=6};$/;"	e	enum:psimag::SpaceGroupData::__anon97
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=17, NumGenerators=4, NumOperations=12};$/;"	e	enum:psimag::SpaceGroupData::__anon98
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=2, NumGenerators=2, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon83
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=3, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon84
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=4, NumGenerators=2, NumOperations=3};$/;"	e	enum:psimag::SpaceGroupData::__anon85
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=6, NumGenerators=3, NumOperations=8 };$/;"	e	enum:psimag::SpaceGroupData::__anon87
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=7 , NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon88
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=false, SpaceGroupNumber=8, NumGenerators=3, NumOperations=4};$/;"	e	enum:psimag::SpaceGroupData::__anon89
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=5, NumGenerators=3, NumOperations=5};$/;"	e	enum:psimag::SpaceGroupData::__anon86
+SpaceGroupNumber	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    enum { DIM=2, Centered=true, SpaceGroupNumber=9 , NumGenerators=4, NumOperations=11};$/;"	e	enum:psimag::SpaceGroupData::__anon90
 SpaceGroupType	PartialPsimag/Symmetry/AppliedSymmetryElementIterator.h	/^    typedef SpaceGroup<Field,DIM,Occupant, Algorithms>                        SpaceGroupType;$/;"	t	class:psimag::AppliedSymmetryElementIterator
 SpaceGroupType	PartialPsimag/Symmetry/SpaceGroup2D.h	/^    typedef SpaceGroup<Field,2,Occupant, Algorithms>                          SpaceGroupType;$/;"	t	class:psimag::SpaceGroup
 SpaceGroupType	PartialPsimag/Symmetry/Symmetry.h	/^    typedef SpaceGroup<Field,DIM,Occupant,Algorithms>                     SpaceGroupType;$/;"	t	class:psimag::Symmetry
@@ -2527,8 +2527,8 @@ TBSV	PsimagLite/src/BLAS.h	/^inline void TBSV(char uplo,char trans,char diag,int
 TBSV	PsimagLite/src/BLAS.h	/^inline void TBSV(char uplo,char trans,char diag,int n,int k,const std::complex<float> *a,$/;"	f	namespace:psimag::BLAS
 TEMP_PATTERN_H	PartialPsimag/Symmetry/PatternData.h	/^#define TEMP_PATTERN_H$/;"	d
 TESTPATTERN_H	PartialPsimag/Symmetry/TestPattern.h	/^#define TESTPATTERN_H$/;"	d
-TIMES	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon1
-TIMES	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon129
+TIMES	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	e	enum:psimag::OP::__anon112
+TIMES	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	e	enum:psimag::OP::__anon120
 TOKENIZER_H	PsimagLite/src/Tokenizer.h	/^#define TOKENIZER_H$/;"	d
 TPMV	PartialPsimag/BLAS.h	/^inline void TPMV(char uplo,char trans,char diag,int n,const double *ap,double *x,int incx){$/;"	f	namespace:psimag::BLAS
 TPMV	PartialPsimag/BLAS.h	/^inline void TPMV(char uplo,char trans,char diag,int n,const float *ap,float *x,int incx){$/;"	f	namespace:psimag::BLAS
@@ -2593,8 +2593,8 @@ TYPE	PsimagLite/src/JSON/JsonParser/Whatever.h	/^  template<> class TYPE<std::st
 TYPE	PsimagLite/src/JSON/JsonParser/Whatever.h	/^  template<> class TYPE<std::vector<Whatever> >            { public: Whatever::WhateverType to() {return Whatever::WHATEVER_VECTOR; } };$/;"	c	namespace:JsonParser
 TYPE	PsimagLite/src/JSON/JsonParser/Whatever.h	/^  template<typename T> class TYPE       { public: static Whatever::WhateverType to() {return Whatever::WHATEVER_UNKNOWN;  } };$/;"	c	namespace:JsonParser
 TYPE_C	PsimagLite/src/Geometry/KTwoNiFFour.h	/^			size_t TYPE_C;$/;"	m	struct:PsimagLite::KTwoNiFFour::AdditionalData
-TYPE_C	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {TYPE_O,TYPE_C};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon118
-TYPE_O	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {TYPE_O,TYPE_C};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon118
+TYPE_C	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {TYPE_O,TYPE_C};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon128
+TYPE_O	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		enum {TYPE_O,TYPE_C};$/;"	e	enum:PsimagLite::KTwoNiFFour::__anon128
 TYPE_TO_STRING_H	PsimagLite/src/TypeToString.h	/^#define TYPE_TO_STRING_H$/;"	d
 Tag	PartialPsimag/Tag.h	/^    Tag():                                    name("span")                       {}$/;"	f	class:psimag::Tag
 Tag	PartialPsimag/Tag.h	/^    Tag(char* name_, const ContentType& cont      ):    name(name_)                             { content << " " << cont << " "; }$/;"	f	class:psimag::Tag
@@ -2720,11 +2720,11 @@ TwoFold	PartialPsimag/Symmetry/TwoFold2D.h	/^  class TwoFold<Field,2,Algorithms>
 TwoFoldN	PartialPsimag/Symmetry/SymmetryElement.h	/^  template<typename Field, size_t DIM, typename Algorithms> class TwoFoldN  {};$/;"	c	namespace:psimag
 TwoFoldType	PartialPsimag/Symmetry/SymmetryElements2D.h	/^    typedef TwoFold<Field,DIM,Algorithms>                                  TwoFoldType;$/;"	t	class:psimag::SymmetryElements
 TwoFoldType	PartialPsimag/Symmetry/TwoFold2D.h	/^    typedef TwoFold<Field,DIM,Algorithms>             TwoFoldType;$/;"	t	class:psimag::TwoFold
-Type	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	t	class:psimag::OP	typeref:enum:psimag::OP::__anon1
+Type	PartialPsimag/OperationClosure.h	/^    typedef enum{FourierTransform,PLUS,MINUS,TIMES,DIVIDE,INV} Type;$/;"	t	class:psimag::OP	typeref:enum:psimag::OP::__anon112
 Type	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    typedef T            Type[NROW_*NCOL_];$/;"	t	class:psimag::ColMajorTraits
 Type	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    typedef T            Type[NROW_*NCOL_];$/;"	t	class:psimag::ConstantTraits
 Type	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    typedef T            Type[NROW_*NCOL_];$/;"	t	class:psimag::RowMajorTraits
-Type	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	t	class:psimag::OP	typeref:enum:psimag::OP::__anon129
+Type	PsimagLite/src/JSON/OperationClosure.h	/^    typedef enum{FourierTransform,Integrate,PLUS,MINUS,TIMES,DIVIDE,INV,NORM} Type;$/;"	t	class:psimag::OP	typeref:enum:psimag::OP::__anon120
 Type2Type	PartialPsimag/Symmetry/TypeManip.h	/^    struct Type2Type$/;"	s	namespace:psimag
 TypeComputer	PartialPsimag/Symmetry/SeitzMatrix.h	/^    class TypeComputer {$/;"	c	class:psimag::SeitzMatrix
 TypeComputer	PartialPsimag/Symmetry/SeitzVector.h	/^    template<typename T> class TypeComputer {public: typedef T Result[DIM]; };$/;"	c	class:psimag::SeitzVector
@@ -2771,9 +2771,9 @@ Up	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s
 Up	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
 VA	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      VA,  \/* value    *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 VA	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      VA,  \/* looking for a value    *\/$/;"	e	enum:JsonParser::StatesMixin::states
-VAL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^      enum { VAL=0 }; $/;"	e	enum:psimag::ConstantTraits::Index::__anon70
-VAL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    class Index { public: enum { VAL=COL_*NROW_+ROW_ }; };$/;"	e	enum:psimag::ColMajorTraits::Index::__anon68
-VAL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    class Index {public: enum { VAL=ROW_*NROW_+COL_ }; };$/;"	e	enum:psimag::RowMajorTraits::Index::__anon66
+VAL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^      enum { VAL=0 }; $/;"	e	enum:psimag::ConstantTraits::Index::__anon57
+VAL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    class Index { public: enum { VAL=COL_*NROW_+ROW_ }; };$/;"	e	enum:psimag::ColMajorTraits::Index::__anon55
+VAL	PartialPsimag/Symmetry/Mat/MatTraits.h	/^    class Index {public: enum { VAL=ROW_*NROW_+COL_ }; };$/;"	e	enum:psimag::RowMajorTraits::Index::__anon53
 V_Charge	rpa_CuO.h	/^			ComplexMatrixType V_Charge;$/;"	m	class:rpa::interactionEmery
 V_Charge_coupl	rpa_CuO.h	/^			ComplexMatrixType V_Charge_coupl;$/;"	m	class:rpa::interactionEmery
 V_D	rpa_CuO.h	/^			ComplexMatrixType V_D;$/;"	m	class:rpa::interactionEmery
@@ -2840,28 +2840,28 @@ VectorType	pairing.h	/^		typedef std::vector<Field>      		VectorType;$/;"	t	cla
 VectorType	rpa_CuO.h	/^			typedef std::vector<Field> 				VectorType;$/;"	t	class:rpa::interactionEmery
 VectorType	sepBasis.h	/^			typedef std::vector<Field> 				VectorType;$/;"	t	class:rpa::sepBasis
 VectorType	susceptibility.h	/^			typedef std::vector<Field>      		   VectorType;$/;"	t	class:rpa::susceptibility
-WHATEVER_BOOL	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_BOOL,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_DOUBLE	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_DOUBLE,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_INTEGER	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_INTEGER,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_MAP	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_MAP,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_MAT	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_MAT,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_MATRIX	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_MATRIX,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_NULL	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_NULL,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_STRING	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_STRING,$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_UNKNOWN	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_UNKNOWN$/;"	e	enum:JsonParser::Whatever::__anon128
-WHATEVER_VECTOR	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_VECTOR,$/;"	e	enum:JsonParser::Whatever::__anon128
+WHATEVER_BOOL	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_BOOL,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_DOUBLE	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_DOUBLE,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_INTEGER	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_INTEGER,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_MAP	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_MAP,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_MAT	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_MAT,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_MATRIX	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_MATRIX,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_NULL	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_NULL,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_STRING	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_STRING,$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_UNKNOWN	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_UNKNOWN$/;"	e	enum:JsonParser::Whatever::__anon115
+WHATEVER_VECTOR	PsimagLite/src/JSON/JsonParser/Whatever.h	/^      WHATEVER_VECTOR,$/;"	e	enum:JsonParser::Whatever::__anon115
 WITH_INFO	PsimagLite/src/ChebyshevSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::ChebyshevSolver::__anon114
-WITH_INFO	PsimagLite/src/LanczosSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosSolver::__anon130
-WITH_INFO	PsimagLite/src/LanczosVectors.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosVectors::__anon131
+WITH_INFO	PsimagLite/src/LanczosSolver.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosSolver::__anon122
+WITH_INFO	PsimagLite/src/LanczosVectors.h	/^		enum {WITH_INFO=1,DEBUG=2,ALLOWS_ZERO=4};$/;"	e	enum:PsimagLite::LanczosVectors::__anon113
 WTrafo	parameters.h	/^		MatrixType WTrafo;$/;"	m	class:rpa::parameters
 Whatever	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    Whatever():$/;"	f	class:JsonParser::Whatever
 Whatever	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    Whatever(WhateverType t):$/;"	f	class:JsonParser::Whatever
 Whatever	PsimagLite/src/JSON/JsonParser/Whatever.h	/^  class Whatever {$/;"	c	namespace:JsonParser
 WhateverMap	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    typedef std::map<std::wstring,Whatever> WhateverMap;$/;"	t	class:JsonParser::Whatever
-WhateverType	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    } WhateverType;$/;"	t	class:JsonParser::Whatever	typeref:enum:JsonParser::Whatever::__anon128
+WhateverType	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    } WhateverType;$/;"	t	class:JsonParser::Whatever	typeref:enum:JsonParser::Whatever::__anon115
 WhateverVector	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    typedef std::vector<Whatever>           WhateverVector;$/;"	t	class:JsonParser::Whatever
 WordType	PsimagLite/src/BitManip.h	/^		typedef unsigned int long long WordType;$/;"	t	namespace:PsimagLite::BitManip
-XHTML	PartialPsimag/XMLHeading.h	/^    typedef enum { XHTML, SVG} DocType;$/;"	e	enum:psimag::XMLHeading::__anon112
+XHTML	PartialPsimag/XMLHeading.h	/^    typedef enum { XHTML, SVG} DocType;$/;"	e	enum:psimag::XMLHeading::__anon1
 XMLHeading	PartialPsimag/XMLHeading.h	/^    XMLHeading(DocType docType_=XMLHeading::XHTML):$/;"	f	class:psimag::XMLHeading
 XMLHeading	PartialPsimag/XMLHeading.h	/^  class XMLHeading {$/;"	c	namespace:psimag
 XML_HEADING_H	PartialPsimag/XMLHeading.h	/^#define XML_HEADING_H$/;"	d
@@ -3091,6 +3091,7 @@ calcSus	chi0.h	/^		std::complex<Field> calcSus() const {$/;"	f	class:rpa::susc
 calcValue	PsimagLite/src/Geometry/GeometryTerm.h	/^			RealType calcValue(size_t i1,size_t edof1,size_t i2,size_t edof2) const$/;"	f	class:PsimagLite::GeometryTerm
 calcVkF	ferminator.h	/^	FieldType calcVkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,$/;"	f	class:rpa::ferminator
 calcVkFz	ferminator.h	/^	FieldType calcVkFz(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,$/;"	f	class:rpa::ferminator
+calcgammaB1GkF	ferminator.h	/^	FieldType calcgammaB1GkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,$/;"	f	class:rpa::ferminator
 calculateD	PsimagLite/src/AkimaSpline.h	/^		void calculateD(VectorType& d,const VectorType& x,const VectorType& s) const$/;"	f	class:AkimaSpline
 calculateSprime	PsimagLite/src/AkimaSpline.h	/^		void calculateSprime(VectorType& sprime,const VectorType& x,const VectorType& s) const$/;"	f	class:AkimaSpline
 calculateW	PsimagLite/src/AkimaSpline.h	/^		void calculateW(VectorType& w,const VectorType& d) const$/;"	f	class:AkimaSpline
@@ -3192,7 +3193,7 @@ colind_	PsimagLite/src/SampleCRSMatrix.h	/^		std::vector<size_t> colind_;$/;"	m	
 collectName	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    void collectName(std::wostringstream& nam) const {$/;"	f	class:JsonParser::Whatever
 color	PartialPsimag/Symmetry/Occupant.h	/^    std::string color;$/;"	m	class:psimag::Occupant
 cols_	PsimagLite/src/SparseRow.h	/^		ColumnsType cols_;$/;"	m	class:PsimagLite::SparseRow
-column	PythonScripts/Plot_chiRPA_qxqy.py	/^column = 6$/;"	v
+column	PythonScripts/Plot_chiRPA_qxqy.py	/^column = 4$/;"	v
 combineRows	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    void combineRows(Field a, size_t r1, size_t r2) {$/;"	f	class:psimag::HermiteNormalForm
 comment	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    bool                 comment; $/;"	m	class:JsonParser::JsonParser
 comment_begin_offset	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    size_t               comment_begin_offset;$/;"	m	class:JsonParser::JsonParser
@@ -3294,7 +3295,7 @@ crystHarm	gaps2D.h	/^		FieldType (*crystHarm)(const std::vector<FieldType>&, $/;
 crystHarm	gaps3D.h	/^        FieldType (*crystHarm)(const std::vector<FieldType>&, $/;"	m	class:rpa::gap3D
 crystHarm2	gaps3D.h	/^        FieldType (*crystHarm2)(const std::vector<FieldType>&, $/;"	m	class:rpa::gap3D
 crystal	PartialPsimag/Symmetry/SuperCrystal.h	/^    const CrystalType&             crystal;                       \/**  The Crystal that this is a SuperCrystal of. *\/$/;"	m	class:psimag::SuperCrystal
-cset	PythonScripts/Plot_chiRPA_qxqy.py	/^cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="bilinear")$/;"	v
+cset	PythonScripts/Plot_chiRPA_qxqy.py	/^cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="bilinear",origin='lower',cmap='jet')$/;"	v
 ctx	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    ContextType           ctx;$/;"	m	class:JsonParser::JsonParser
 currentMode	PsimagLite/src/JSON/JsonParser/ModesMixin.h	/^    const ModeType& currentMode() {$/;"	f	class:JsonParser::ModesMixin
 currentObject	PsimagLite/src/JSON/JsonParser/DefaultContext.h	/^    Whatever& currentObject() {$/;"	f	class:JsonParser::DefaultContext
@@ -3331,7 +3332,7 @@ delimiters	PartialPsimag/TagAttributeParser.h	/^    const string     delimiters;
 delta	PsimagLite/src/PlotParams.h	/^	RealType delta;$/;"	m	struct:PsimagLite::PlotParams
 deltaOmega	PsimagLite/src/PlotParams.h	/^	RealType deltaOmega;$/;"	m	struct:PsimagLite::PlotParams
 deltaU	parameters.h	/^		std::vector<Field> deltaU;$/;"	m	class:rpa::parameters
-deltakF	ferminator.h	/^		VectorType deltakF,vkF;$/;"	m	class:rpa::ferminator
+deltakF	ferminator.h	/^		VectorType deltakF,vkF,gammaB1GkF;$/;"	m	class:rpa::ferminator
 deltakF	pairing.h	/^		std::vector<FieldType> deltakF;$/;"	m	class:rpa::pairing
 deltax	parameters.h	/^		Field deltax;$/;"	m	class:rpa::parameters
 deltay	parameters.h	/^		Field deltay;$/;"	m	class:rpa::parameters
@@ -3401,7 +3402,7 @@ dy	bands.h	/^		std::vector<Field> dx,dy,dz,ht;$/;"	m	class:rpa::Bands
 dy	bandstructure.h	/^		VectorType dx,dy,dz,ht;$/;"	m	class:rpa::bandstructure
 dz	bands.h	/^		std::vector<Field> dx,dy,dz,ht;$/;"	m	class:rpa::Bands
 dz	bandstructure.h	/^		VectorType dx,dy,dz,ht;$/;"	m	class:rpa::bandstructure
-eigen	PythonScripts/Plot_Gap_jsn.py	/^def eigen(file = "Gap.jsn"):$/;"	f
+eigen	PythonScripts/Plot_Gap_jsn.py	/^def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0):$/;"	f
 eigen	bandstructure.h	/^		void eigen(VectorType& eigenvals, ComplexMatrixType& matrix) const {$/;"	f	class:rpa::bandstructure
 eigen	pairing.h	/^	void eigen(MatrixType& matrix, VectorType& wr, MatrixType& vr) const {$/;"	f	class:rpa::pairing
 eigs_	PsimagLite/src/ContinuedFraction.h	/^		std::vector<RealType> eigs_;$/;"	m	class:PsimagLite::ContinuedFraction
@@ -3496,6 +3497,7 @@ findRange	PsimagLite/src/AkimaSpline.h	/^		size_t findRange(const RealType& x) c
 findTypeOfSite	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		PairType findTypeOfSite(size_t site) const$/;"	f	class:PsimagLite::KTwoNiFFour
 first	PartialPsimag/Matrix.h	/^    T&             first() { return data[0]; }$/;"	f	class:psimag::Matrix
 first	PartialPsimag/Matrix.h	/^    const T&       first() const {return data[0]; }$/;"	f	class:psimag::Matrix
+fixEvecs	parameters.h	/^		bool fixEvecs;$/;"	m	class:rpa::parameters
 fixdr	bands.h	/^		void fixdr() {$/;"	f	class:rpa::Bands
 fixdr	bandstructure.h	/^		void fixdr() { \/\/ This is to shift position of all orbitals to the same site$/;"	f	class:rpa::bandstructure
 fixedPoint	PartialPsimag/Symmetry/SymmetryOperation.h	/^    SeitzPositionType fixedPoint() {$/;"	f	class:psimag::SymmetryOperation
@@ -3504,8 +3506,8 @@ flatMap	PsimagLite/src/JSON/JsonReader.h	/^    FlatMapType                      
 flattenInto	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    void flattenInto(FlatMapType& flatMap, const std::wstring prefix=L"") const {$/;"	f	class:JsonParser::Whatever
 foo	PsimagLite/src/JSON/JsonParser/CharacterMapper.h	/^    static bool foo() { return false;}$/;"	f	class:JsonParser::CharacterMapper
 found	PsimagLite/src/Minimizer.h	/^		void found(VectorType& minVector,gsl_vector* x,size_t iter)$/;"	f	class:PsimagLite::Minimizer
-fourfold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon2
-fourfoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon2
+fourfold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon62
+fourfoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon62
 fout_	PsimagLite/src/IoSimple.h	/^			std::ofstream* fout_;$/;"	m	class:PsimagLite::IoSimple::Out
 fringe	PsimagLite/src/Geometry/Chain.h	/^			bool fringe(size_t i,size_t smax,size_t emin) const$/;"	f	class:PsimagLite::Chain
 fringe	PsimagLite/src/Geometry/GeometryFactory.h	/^		bool fringe(size_t i,size_t smax,size_t emin) const$/;"	f	class:PsimagLite::GeometryFactory
@@ -3544,6 +3546,7 @@ gAmpl	parameters.h	/^		std::string gAmpl;$/;"	m	class:rpa::parameters
 gMatrix	sepBasis.h	/^			MatrixType gMatrix;$/;"	m	class:rpa::sepBasis
 gamma	PartialPsimag/Symmetry/CellParameters.h	/^    Field gamma;      \/**< The angle between a and b. **\/$/;"	m	class:psimag::CellParameters
 gamma	PartialPsimag/Symmetry/MetricTensor.h	/^    Field  gamma()      const { return acos(cos_gamma())*180.0\/PI; }$/;"	f	class:psimag::MetricTensor
+gammaB1GkF	ferminator.h	/^		VectorType deltakF,vkF,gammaB1GkF;$/;"	m	class:rpa::ferminator
 gammaPP	pairing.h	/^		MatrixType gammaPP;$/;"	m	class:rpa::pairing
 gap	gap.h	/^		gap(const rpa::parameters<Field,MatrixTemplate>& parameters,$/;"	f	class:rpa::gap
 gap	gap.h	/^	class gap {$/;"	c	namespace:rpa
@@ -3715,7 +3718,7 @@ id	PartialPsimag/Symmetry/AppliedSymmetryOperation.h	/^    int                  
 id	PartialPsimag/Symmetry/Occupant.h	/^    std::string id;$/;"	m	class:psimag::Occupant
 id	PartialPsimag/Symmetry/SymmetryElement.h	/^    int                     id;$/;"	m	class:psimag::SymmetryElement
 ident	PartialPsimag/Symmetry/SymmetryOperations2D.h	/^    static SymmetryOperationType ident() {$/;"	f	class:psimag::SymmetryOperations
-identity	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon2
+identity	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon62
 ignore	PartialPsimag/TagAttributeParser.h	/^    const string     ignore;$/;"	m	class:psimag::TagAttributeParser
 ignoreTillSeperator	PartialPsimag/TagAttributeParser.h	/^    bool ignoreTillSeperator() {$/;"	f	class:psimag::TagAttributeParser
 ii	rpa.h	/^			ComplexType ii;$/;"	m	class:rpa::interaction
@@ -3797,7 +3800,7 @@ inverse	PartialPsimag/Symmetry/SeitzMatrix.h	/^    const SeitzMatrix<Field, DIM>
 inverse	PartialPsimag/Symmetry/SeitzMatrix.h	/^    const SeitzMatrix<Field, DIM> inverse() const {$/;"	f	class:psimag::SeitzMatrix
 inverseBasis	PartialPsimag/Symmetry/Lattice.h	/^    MatType                     inverseBasis;     $/;"	m	class:psimag::Lattice
 inverseBasisSet	PartialPsimag/Symmetry/Lattice.h	/^    bool                        inverseBasisSet;  $/;"	m	class:psimag::Lattice
-inversion	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon2
+inversion	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon62
 invert	PartialPsimag/Matrix.h	/^  void invert(psimag::Matrix<T> &A)$/;"	f	namespace:psimag
 involuntaryContextSwitches	PsimagLite/src/Rusage.h	/^		long involuntaryContextSwitches() const { return rusage_.ru_nivcsw; }$/;"	f	class:PsimagLite::Rusage
 iqcalc	pairing.h	/^		size_t iqcalc;$/;"	m	class:rpa::pairing
@@ -5222,8 +5225,8 @@ sinTheta	PartialPsimag/Symmetry/SymmetryOperation.h	/^    Field sinTheta(const S
 sin_alpha	PartialPsimag/Symmetry/CellParameters.h	/^    Field sin_alpha;  \/**< sin(alpha) **\/$/;"	m	class:psimag::CellParameters
 sin_beta	PartialPsimag/Symmetry/CellParameters.h	/^    Field sin_beta;   \/**< sin(beta) **\/$/;"	m	class:psimag::CellParameters
 sin_gamma	PartialPsimag/Symmetry/CellParameters.h	/^    Field sin_gamma;  \/**< sin(gamma) **\/$/;"	m	class:psimag::CellParameters
-sixfold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon2
-sixfoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon2
+sixfold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon62
+sixfoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon62
 size	PartialPsimag/Matrix.h	/^    size_type size() const { return nRow*nCol; }$/;"	f	class:psimag::Matrix
 size	PartialPsimag/MatrixLike.h	/^      size_t size() const {return n_row()*n_col();}$/;"	f	class:psimag::MatrixLike::DoubleVectorWrap
 size	PartialPsimag/MatrixLike.h	/^    void size(const MatrixLikeType& matrix)  {$/;"	f	namespace:psimag::MatrixLike
@@ -5298,6 +5301,8 @@ steps_	PsimagLite/src/LanczosSolver.h	/^		size_t steps_;$/;"	m	class:PsimagLite:
 steps_	PsimagLite/src/LanczosVectors.h	/^		size_t steps_;$/;"	m	class:PsimagLite::LanczosVectors
 storeChi	parameters.h	/^		size_t storeChi;$/;"	m	class:rpa::parameters
 storeChi_	pairing.h	/^		size_t storeChi_;$/;"	m	class:rpa::pairing
+storeGammaOrb	parameters.h	/^		size_t storeGammaOrb;$/;"	m	class:rpa::parameters
+storeGammaOrb_	pairing.h	/^		size_t storeGammaOrb_;$/;"	m	class:rpa::pairing
 str	PsimagLite/src/JSON/JsonParser/ParseBuffer.h	/^    std::wstring str() {$/;"	f	class:JsonParser::ParseBuffer
 stringLists	PsimagLite/src/JSON/JSN_Writer.h	/^    MapType<std::string, std::vector<std::string> >     stringLists;$/;"	m	class:dca::JSN
 stringMarker	PsimagLite/src/ChebyshevSerializer.h	/^		static const std::string& stringMarker() { return stringMarker_; }$/;"	f	class:PsimagLite::ChebyshevSerializer
@@ -5363,8 +5368,8 @@ theCharacters	PsimagLite/src/JSON/JsonParser/ParseBuffer.h	/^    std::vector<wch
 thereSnoGsl	PsimagLite/src/GslWrapper.h	/^		void thereSnoGsl() const$/;"	f	class:PsimagLite::GslWrapper
 threadNum	PsimagLite/src/Pthreads.h	/^	int threadNum;	$/;"	m	struct:PthreadFunctionStruct
 thread_function_wrapper	PsimagLite/src/Pthreads.h	/^void *thread_function_wrapper(void *dummyPtr)$/;"	f
-threefold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon2
-threefoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon2
+threefold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon62
+threefoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon62
 threshold	PartialPsimag/Symmetry/BasicCrystalAlgorithms.h	/^  static double threshold() {$/;"	f	class:psimag::BasicCrystalAlgorithms
 tileInTargetLatticeFor	PartialPsimag/Symmetry/FloodTiler.h	/^    bool tileInTargetLatticeFor(const CartesianTranslationType& trans) {$/;"	f	class:psimag::FloodTiler
 tileLattice	PartialPsimag/Symmetry/FloodTiler.h	/^    const LatticeType&              tileLattice;$/;"	m	class:psimag::FloodTiler
@@ -5465,8 +5470,8 @@ transposeConjugate	PsimagLite/src/CrsMatrix.h	/^	inline void transposeConjugate(
 transposeConjugate	PsimagLite/src/Matrix.h	/^	PsimagLite::Matrix<T> transposeConjugate(const Matrix<T>& A)$/;"	f	namespace:PsimagLite
 transposeConjugate	PsimagLite/src/Matrix.h	/^	void transposeConjugate(Matrix<T>& m2,const Matrix<T>& m)$/;"	f	namespace:PsimagLite
 ttos	PsimagLite/src/TypeToString.h	/^std::string ttos(T t)$/;"	f
-twofold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon2
-twofoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon2
+twofold	PartialPsimag/Symmetry/CellRotation.h	/^		   twofold=2, threefold=3,  fourfold=4, sixfold=6 } RotationType;$/;"	e	enum:psimag::CellRotation::__anon62
+twofoldInv	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-6, fourfoldInv=-4, threefoldInv=-3, twofoldInv=-2, inversion=-1, identity=1, $/;"	e	enum:psimag::CellRotation::__anon62
 type	PartialPsimag/Symmetry/CellRotation.h	/^    RotationType type() {$/;"	f	class:psimag::CellRotation
 type	PartialPsimag/Symmetry/SymmetryElement.h	/^    std::string             type;$/;"	m	class:psimag::SymmetryElement
 type	PartialPsimag/Symmetry/SymmetryOperation.h	/^    typename CellRotation<Field, DIM>::RotationType type() {$/;"	f	class:psimag::SymmetryOperation
@@ -5505,8 +5510,8 @@ validElements	PartialPsimag/Symmetry/SymmetryElements2D.h	/^    validElements(co
 validElements	PartialPsimag/Symmetry/SymmetryElements2D.h	/^    validElements(const LatticeWithPattern<Field,DIM,Occupant,LatticeType,Algorithms>&             latpat,$/;"	f	class:psimag::SymmetryElements
 validPosition	PartialPsimag/Symmetry/AppliedSymmetryElementIterator.h	/^    bool validPosition() { $/;"	f	class:psimag::AppliedSymmetryElementIterator
 value	PartialPsimag/Symmetry/TypeManip.h	/^        static const int value = v;$/;"	m	struct:psimag::Int2Type
-value	PsimagLite/src/JSON/JSN_Writer.h	/^  template<>           class PrintArrayWidth<double> {public: enum {value=13}; };$/;"	e	enum:dca::PrintArrayWidth::__anon125
-value	PsimagLite/src/JSON/JSN_Writer.h	/^  template<typename T> class PrintArrayWidth         {public: enum {value=7 }; };$/;"	e	enum:dca::PrintArrayWidth::__anon124
+value	PsimagLite/src/JSON/JSN_Writer.h	/^  template<>           class PrintArrayWidth<double> {public: enum {value=13}; };$/;"	e	enum:dca::PrintArrayWidth::__anon118
+value	PsimagLite/src/JSON/JSN_Writer.h	/^  template<typename T> class PrintArrayWidth         {public: enum {value=7 }; };$/;"	e	enum:dca::PrintArrayWidth::__anon117
 valueString	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    std::wstring   valueString;$/;"	m	class:JsonParser::Whatever
 value_type	PartialPsimag/IndexedMatrix.h	/^    typedef typename MatrixLikeType::value_type value_type;$/;"	t	class:psimag::IndexedMatrix
 value_type	PartialPsimag/Matrix.h	/^    typedef T            value_type;$/;"	t	class:psimag::Matrix
@@ -5533,7 +5538,7 @@ vectors	PsimagLite/src/JSON/JSN_Writer.h	/^    MapType<std::string, std::vector<
 version	PartialPsimag/XMLHeading.h	/^    std::string version;$/;"	m	class:psimag::XMLHeading
 verticies	PartialPsimag/Symmetry/SpaceGroup2D.h	/^    std::vector<CellPositionType>           verticies;$/;"	m	class:psimag::SpaceGroup
 verticies	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    static const std::vector<CellPositionType> verticies() {$/;"	f	class:psimag::SpaceGroupData
-vkF	ferminator.h	/^		VectorType deltakF,vkF;$/;"	m	class:rpa::ferminator
+vkF	ferminator.h	/^		VectorType deltakF,vkF,gammaB1GkF;$/;"	m	class:rpa::ferminator
 vkF	pairing.h	/^		std::vector<FieldType> vkF;$/;"	m	class:rpa::pairing
 vmPeak	PsimagLite/src/MemoryUsage.h	/^		long vmPeak(bool needsUpdate = true)$/;"	f	class:PsimagLite::MemoryUsage
 vmSize	PsimagLite/src/MemoryUsage.h	/^		long vmSize(bool needsUpdate = true)$/;"	f	class:PsimagLite::MemoryUsage

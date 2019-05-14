@@ -435,7 +435,7 @@ namespace rpa {
 								ComplexMatrixType& ak, ComplexMatrixType& akq) {
 
 		// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
-		// 	           * akq(l1,band1) * conj(akq(l3,band1));
+		// 	           * akq(l1,band1) * conj(akq(l3,band1));  see Kreisel et al., PRB 88, 094522 (2013), Eqs. (4) and (5)
 
 		const FieldType& ar(real(ak(l4,band2)));
 		const FieldType& ai(imag(ak(l4,band2)));

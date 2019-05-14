@@ -143,7 +143,7 @@ namespace rpa {
 			nkInt(64),
 			nkIntz(16),
 			kz2D(0.0),
-			FSnkz(10),
+			FSnkz(1),
 			nOrb(1),
 			mu(-0.1),
 			tbfile(""),

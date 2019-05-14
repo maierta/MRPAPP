@@ -138,7 +138,7 @@ namespace rpa {
 					spinMatrix  (ind1,ind1)   = U;
 					chargeMatrix(ind1,ind1)   = -U;
 				}	
-			} else {
+			} else {  // general multi-orbital model
 				size_t limit(nOrb);
 				if (param.sublattice==1) limit=nOrb<10?nOrb/2:5;
 				std::cout << "In rpa.h: limit=" << limit << "\n";

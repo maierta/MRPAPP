@@ -239,8 +239,6 @@ namespace rpa {
 					                          << " and ik2="<<ik2<<
 					                             " term1=" << term1 << " , " 
 					                          << "chiTerm=" << chiTerm <<
-					                             // "; k1,k2,k2m=" << k1 << " ; " <<
-					                             // k2 <<  " ; " << k2m <<
 					                             "\n";
                  // }
 			}

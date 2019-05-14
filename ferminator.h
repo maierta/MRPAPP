@@ -157,6 +157,24 @@ namespace rpa {
 			size_t nkSearch(128);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
 
+		} else if (Case_ == "2D_5orbit_4Sheets") {
+			// 4 FS sheets total, 2 at (0,0), 1 at (pi,0), one at (0,pi)
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] =  0; FSCenters[0][1] = 0;
+			FSBand   [0]    =  1;
+			FSCenters[1][0] =  0; FSCenters[1][1] = 0;
+			FSBand   [1]    =  2;
+			FSCenters[2][0] = Pi; FSCenters[2][1] = 0;
+			FSBand   [2]    =  3;
+			FSCenters[3][0] = 0; FSCenters[3][1] = Pi;
+			FSBand   [3]    =  3;
+
+			size_t nkSearch(128);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
+
 		} else if (Case_ == "KFeSe_10Orbit_overdoped_2D") {
 			// 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
 			nSheets = 5;
@@ -390,6 +408,7 @@ namespace rpa {
 
 			nSheets = 5;
 			nTotal = nSheets * nkPerSheet * param.FSnkz;
+			std::cout << nTotal << " k-points expected \n"; 
 			resizeContainers();
 
 			FSCenters[0][0] = 0.0; FSCenters[0][1] = 0.0;
@@ -407,10 +426,11 @@ namespace rpa {
 
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
 				if (conc.rank()==0) std::cout << "Sheet nr. " << iSheet << "\n";
-				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
-					FieldType kz(float(ikz)*2.*param.pi_f/float(param.FSnkz)-param.pi_f);
+				// for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
+					// FieldType kz(float(ikz)*2.*param.pi_f/float(param.FSnkz)-param.pi_f);
+					FieldType kz(0.0);
 					calcKF(nkSearch,iSheet,kz,3);
-				}
+				// }
 			}
 		} else if (Case_ == "BaFeAs_5Orbit_4Sheets") {
 			// 4 FS sheets total, two around (0,0), one each around (pi,0) and (0,pi)
@@ -549,6 +569,21 @@ namespace rpa {
 
 			size_t nkSearch(256);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
+		} else if (Case_ == "Raghu") {
+			// 2 bands, 4 FS sheets, 1 around Gamma, 1 around (pi,pi), 1 around X, 1 around Y 
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = 0   ; FSCenters[0][1] = 0   ; FSBand[0]  =  0;
+			FSCenters[1][0] = Pi  ; FSCenters[1][1] = Pi  ; FSBand[1]  =  0;
+			FSCenters[2][0] = Pi  ; FSCenters[2][1] = 0   ; FSBand[2]  =  1;
+			FSCenters[3][0] = 0   ; FSCenters[3][1] = Pi  ; FSBand[3]  =  1;
+
+			size_t nkSearch(256);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
 		} else if (Case_ == "Ba2CuO3") {
 			// 2 bands, 2 FS sheets, 1 around Gamma, 1 around (pi,pi)
 			nSheets = 2;
@@ -678,7 +713,7 @@ namespace rpa {
 		if (conc.rank()==0) std::cout << "Number of kF points: " << nTotal << "\n";
 
 		if (kFx.size() != nTotal) {
-			if (conc.rank()==0) std::cout << "Less kF-points than expected. Perhaps closed FS?\n";
+			if (conc.rank()==0) std::cout << kFx.size() << " kF points instead of " << nTotal << ". Perhaps closed FS?\n";
 			nTotal = kFx.size();
 		}
 	}

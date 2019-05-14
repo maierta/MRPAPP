@@ -46,11 +46,11 @@ namespace rpa {
 	class bandstructure {
 
 	private:
-		typedef MatrixTemplate<Field> 	MatrixType;
+		typedef MatrixTemplate<Field>	MatrixType;
 		typedef std::complex<Field>		ComplexType;
-		typedef MatrixTemplate<ComplexType> 	ComplexMatrixType;
+		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;
 		typedef std::vector<Field>      VectorType;
-		typedef Field 					FieldType;
+		typedef Field					FieldType;
 		typedef momentumDomain<Field,MatrixTemplate,ConcurrencyType> kDomain;
 		typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
@@ -72,8 +72,8 @@ namespace rpa {
 	public:
 
 		bandstructure(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-			          ConcurrencyType& concurrency, const kDomain& kmeshIn,
-			          bool caching):
+				  ConcurrencyType& concurrency, const kDomain& kmeshIn,
+				  bool caching):
 			param(parameters),
 			conc(concurrency),
 			nbands(param.nOrb),
@@ -95,7 +95,7 @@ namespace rpa {
 
 		// Constructor without kmesh input
 		bandstructure(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-			          ConcurrencyType& concurrency):
+				  ConcurrencyType& concurrency):
 			param(parameters),
 			conc(concurrency),
 			nbands(param.nOrb),
@@ -231,21 +231,21 @@ namespace rpa {
 
 			// Then add approximate spin-orbit coupling term L*S (see Kreisel notes in email from Apr. 4 2013)
 			// if (false) {
-			// 	ComplexType strength(0.0,0.5*param.hybStrength*float(spin));
-			// 	ComplexType strengthC(conj(strength));
-			// // 	// std::cout << "Adding hyb term " << strength << "\n";
-			// 	FieldType kd(ks[0]*param.deltax+ks[1]*param.deltay+ks[2]*param.deltaz);
-			// 	ComplexType pf(cos(-kd),sin(-kd));
+			//	ComplexType strength(0.0,0.5*param.hybStrength*float(spin));
+			//	ComplexType strengthC(conj(strength));
+			// //	// std::cout << "Adding hyb term " << strength << "\n";
+			//	FieldType kd(ks[0]*param.deltax+ks[1]*param.deltay+ks[2]*param.deltaz);
+			//	ComplexType pf(cos(-kd),sin(-kd));
 
-			// 	eigenvects(3,4) += 2*strength;
-			// 	eigenvects(8,9) += 2*strength;
-			// 	eigenvects(3,9) += 2.*strength*pf;
-			// 	eigenvects(4,8) += 2.*strengthC*pf;
+			//	eigenvects(3,4) += 2*strength;
+			//	eigenvects(8,9) += 2*strength;
+			//	eigenvects(3,9) += 2.*strength*pf;
+			//	eigenvects(4,8) += 2.*strengthC*pf;
 
-			// 	eigenvects(1,2) += 1*strength;
-			// 	eigenvects(6,7) += 1*strength;
-			// 	eigenvects(1,7) += 1.*strength*pf;
-			// 	eigenvects(2,6) += 1.*strengthC*pf;
+			//	eigenvects(1,2) += 1*strength;
+			//	eigenvects(6,7) += 1*strength;
+			//	eigenvects(1,7) += 1.*strength*pf;
+			//	eigenvects(2,6) += 1.*strengthC*pf;
 			// }
 
 			if (param.LS) {
@@ -290,8 +290,8 @@ namespace rpa {
 					normalize(eigenvects,band);
 
 					// if (band==1) {
-					// 	std::cout << "Normalized EV: ";
-					// 	for (size_t i=0;i<nbands;i++) std::cout << eigenvects(i,band) << "\n";
+					//	std::cout << "Normalized EV: ";
+					//	for (size_t i=0;i<nbands;i++) std::cout << eigenvects(i,band) << "\n";
 					// }
 				}
 				return;
@@ -358,26 +358,34 @@ namespace rpa {
 			size_t nktot(kmesh.nktot);
 			RangeType range(0,nktot,conc);
 			std::vector<std::vector<FieldType> > ek(nktot,VectorType(nbands,0));
+			std::vector<MatrixType> weights(nktot,MatrixType(nbands,nbands));
 			ComplexMatrixType ak(nbands,nbands);
 
 			VectorType occupation(nktot,0);
-				for (;!range.end();range.next()) {
-					size_t ik = range.index();
-					std::vector<FieldType> k(3);
-					kmesh.momenta.getRow(ik,k);
-					getEkAndAk(k,ek[ik],ak);
-					if (printOccupation) {
-						for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[ik][i],1./param.temperature);
-					}
-				}
-				for (size_t ik=0;ik<nktot;ik++) conc.reduce(ek[ik]);
-				if (printOccupation) {
-					conc.reduce(occupation);
-					FieldType occ(0.0);
-					for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
-					occ /= FieldType(nktot);
-					if (conc.rank()==0) std::cout << "\n\t\tFilling = " << 2 * occ  << "\n\n";
-				}
+
+			for (;!range.end();range.next()) {
+				size_t ik = range.index();
+				std::vector<FieldType> k(3);
+				kmesh.momenta.getRow(ik,k);
+				getEkAndAk(k,ek[ik],ak);
+				if (printOccupation) 
+					for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[ik][i],1./param.temperature);
+
+				for (size_t iband=0; iband<nbands; iband++) 
+					for (size_t iorb=0; iorb<nbands; iorb++) weights[ik](iorb,iband)=abs(ak(iorb,iband));
+			}
+
+			for (size_t ik=0;ik<nktot;ik++) {
+				conc.reduce(ek[ik]);
+				conc.reduce(weights[ik]);
+			}
+			if (printOccupation) {
+				conc.reduce(occupation);
+				FieldType occ(0.0);
+				for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
+				occ /= FieldType(nktot);
+				if (conc.rank()==0) std::cout << "\n\t\tFilling = " << 2 * occ  << "\n\n";
+			}
 
 			if (conc.rank()==0) {
 				const char *filename = file.c_str();
@@ -395,6 +403,10 @@ namespace rpa {
 					os << k[2]/param.pi_f;
 					os << std::setw(15);
 					for (size_t i = 0; i < nbands; ++i) os << ek[ik][i] << std::setw(15);
+
+					for (size_t iorb=0; iorb < nbands; iorb++) 
+						for (size_t iband=0; iband < nbands; iband++) os << weights[ik](iorb,iband) << std::setw(15);
+					
 					os << "\n";
 				}
 				os.close();
@@ -437,9 +449,9 @@ namespace rpa {
 					// } else
 					// hti.push_back  (0.0);
 				}
- 			}
- 			nLines = dx.size();
- 			if (conc.rank()==0) std::cout << nLines <<" entries used from tb input file\n";
+			}
+			nLines = dx.size();
+			if (conc.rank()==0) std::cout << nLines <<" entries used from tb input file\n";
 		}
 
 		void fixdr() { // This is to shift position of all orbitals to the same site
@@ -539,7 +551,7 @@ namespace rpa {
 		}
 
 		void diag2x2(const FieldType& eplus, const FieldType& eminus, const FieldType& exy,
-			         VectorType& w, ComplexMatrixType& v) {
+				 VectorType& w, ComplexMatrixType& v) {
 
 			FieldType sign((exy >=0) - (exy < 0));
 			FieldType squareRoot(sqrt(pow(eminus,2)+pow(exy,2)));

@@ -35,16 +35,16 @@ def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0):
     kz0 = abs(kf[:,2]-0.0) < 1.0e-3
     
     f, ((ax1,ax2,ax3,ax4,ax5),(ax6,ax7,ax8,ax9,ax10))=subplots(ncols=5,nrows=2,figsize=(20,8))
-    ax1.scatter(kf[kz0,0],kf[kz0,1],c=evec[0,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax2.scatter(kf[kz0,0],kf[kz0,1],c=evec[1,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax3.scatter(kf[kz0,0],kf[kz0,1],c=evec[2,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax4.scatter(kf[kz0,0],kf[kz0,1],c=evec[3,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax5.scatter(kf[kz0,0],kf[kz0,1],c=evec[4,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax6.scatter(kf[kz0,0],kf[kz0,1],c=evec[5,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax7.scatter(kf[kz0,0],kf[kz0,1],c=evec[6,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax8.scatter(kf[kz0,0],kf[kz0,1],c=evec[7,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax9.scatter(kf[kz0,0],kf[kz0,1],c=evec[8,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
-    ax10.scatter(kf[kz0,0],kf[kz0,1],c=evec[9,kz0],cmap=get_cmap('BrBG'),s=100,lw=0.2)
+    ax1.scatter(kf[kz0,0],kf[kz0,1],c=evec[0,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax2.scatter(kf[kz0,0],kf[kz0,1],c=evec[1,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax3.scatter(kf[kz0,0],kf[kz0,1],c=evec[2,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax4.scatter(kf[kz0,0],kf[kz0,1],c=evec[3,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax5.scatter(kf[kz0,0],kf[kz0,1],c=evec[4,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax6.scatter(kf[kz0,0],kf[kz0,1],c=evec[5,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax7.scatter(kf[kz0,0],kf[kz0,1],c=evec[6,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax8.scatter(kf[kz0,0],kf[kz0,1],c=evec[7,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax9.scatter(kf[kz0,0],kf[kz0,1],c=evec[8,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
+    ax10.scatter(kf[kz0,0],kf[kz0,1],c=evec[9,kz0],cmap=get_cmap('BrBG'),s=50,lw=0.2)
     
     i=0
     for ax in (ax1,ax2,ax3,ax4,ax5,ax6,ax7,ax8,ax9,ax10):

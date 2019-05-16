@@ -156,6 +156,56 @@ namespace rpa {
 
 	};
 
+	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>
+	class BSCCObilayer {
+	private:
+		typedef MatrixTemplate<Field> 		MatrixType;
+		typedef std::complex<Field>			ComplexType;
+		typedef MatrixTemplate<ComplexType> ComplexMatrixType;
+		typedef std::vector<Field>      	VectorType;
+		typedef Field 						FieldType;
+		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		ConcurrencyType& conc;
+		size_t dim;
+		Field t,tp,tpp,tperp,mu;
+
+	public:
+		FieldType nbands;
+
+
+		BSCCObilayer(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
+			param(parameters),
+			conc(concurrency),
+			dim(param.dimension),
+			nbands(param.nOrb)
+		{
+			if      (param.Case == "BSCCObilayer_UD30") {
+			  	t = 0.390; tp = 0.120; tpp=0.045; tperp=0.108; mu = 0.340;
+			}
+			else if (param.Case == "BSCCObilayer_OD") {
+			  	t = 0.360; tp = 0.108; tpp=0.036; tperp=0.108; mu = -param.mu;
+			}
+		}
+
+		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
+
+			FieldType cx,cy,c2x,c2y;
+			cx = cos(k[0]); cy = cos(k[1]); 
+			c2x = cos(2*k[0]); c2y = cos(2*k[1]);
+
+			FieldType ek   = -2*t*(cx + cy) + 4*tp*cx*cy - 2*tpp*(c2x+c2y) + mu;
+			FieldType ekz  = tperp/4. * pow((cx-cy),2);
+
+			eigenvals[0] = ek - ekz;
+			eigenvals[1] = ek + ekz;
+
+			FieldType r1(1./sqrt(2.));
+			eigenvects(0,0) =  r1; eigenvects(0,1) =  r1;
+			eigenvects(1,0) =  r1; eigenvects(1,1) = -r1;
+		}
+
+	};
+
 }
 
 #endif

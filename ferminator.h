@@ -570,6 +570,18 @@ namespace rpa {
 			size_t nkSearch(256);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
 
+		} else if (Case_ == "BSCCObilayer_OD") {
+			// 1-band Hubbard bilayer; 2 bands total. 2 FS sheets, both closed around (pi,pi)
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = Pi  ; FSCenters[0][1] = Pi  ; FSBand[0]  =  0;
+			FSCenters[1][0] = Pi  ; FSCenters[1][1] = Pi  ; FSBand[1]  =  1;
+
+			size_t nkSearch(256);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
 		} else if (Case_ == "Raghu") {
 			// 2 bands, 4 FS sheets, 1 around Gamma, 1 around (pi,pi), 1 around X, 1 around Y 
 			nSheets = 4;

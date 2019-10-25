@@ -75,7 +75,14 @@ namespace rpa {
 				Delta = crystHarm(k,w[band],kz[band],k0[band],band); 
 				FieldType sgnD = (Delta > 0) - (Delta < 0);
 				Delta = sgnD*param.Delta0;
-			} else {
+			} else if (param.gAmpl=="dwave_ladders") { // coupled 2-leg ladders in 2-orbital description
+                if (real(ak(0,band))*real(ak(1,band))>0.0) { // bonding band
+                    return param.Delta0 * (cos(k[0]) - cos(k[1]));
+                } else { // antibonding band
+                    return param.Delta0 * (-cos(k[0]) - cos(k[1]));
+                }
+
+            } else {
 				Delta = crystHarm(k,w[band],kz[band],k0[band],band) * param.Delta0;
 			}
             return ComplexType(Delta,0.0);

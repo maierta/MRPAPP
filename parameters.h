@@ -41,6 +41,7 @@ namespace rpa {
 		size_t nwn;
 		std::string Case;
 		size_t dimension;
+		size_t nkBands;
 		size_t nkInt; 
 		size_t nkIntz; 
 		Field kz2D;
@@ -48,6 +49,7 @@ namespace rpa {
 		size_t nOrb;
 		Field  mu;
 		std::string tbfile;
+		std::string fileID;
 		std::string fsfile;
 		bool readFSFromFile;
 		size_t nkPerSheet;
@@ -85,6 +87,7 @@ namespace rpa {
 		bool calcOnlyDiagonal;
 		bool writeFullChi0;
 		bool fixEvecs;
+		bool calcLambdaZ;
 
 		// size_t nktot;
 
@@ -140,6 +143,7 @@ namespace rpa {
 			nwn(100),
 			Case(""),
 			dimension(2),
+			nkBands(64),
 			nkInt(64),
 			nkIntz(16),
 			kz2D(0.0),
@@ -147,6 +151,7 @@ namespace rpa {
 			nOrb(1),
 			mu(-0.1),
 			tbfile(""),
+			fileID(""),
 			fsfile("FSforPairing.dat"),
 			readFSFromFile(0),
 			nkPerSheet(40),
@@ -183,7 +188,8 @@ namespace rpa {
 			damp(1.0e-3),
 			calcOnlyDiagonal(0),
 			writeFullChi0(0),
-			fixEvecs(0)
+			fixEvecs(0),
+			calcLambdaZ(0)
 
 			// single-band model in 2-sub-lattice formulation
 			// dimension(2),
@@ -277,6 +283,7 @@ namespace rpa {
 		        	nkIntz=1;
 		        	kz2D *= pi_f;
 		        }
+		        if (Case == "BSCCObilayer_OD_1band_onlyA") kz2D *= pi_f;
 			}
 
 			void setParamBasedOnText(std::string& text, std::stringstream& str) {
@@ -285,6 +292,7 @@ namespace rpa {
 		        else if (text.find("numberOfOrbitals")!=std::string::npos) str >> (*this).nOrb; 
 		        else if (text.find("chemicalPotential")!=std::string::npos) str >> (*this).mu; 
 		        else if (text.find("tbParametersFile")!=std::string::npos) str >> (*this).tbfile; 
+		        else if (text.find("fileID")!=std::string::npos) str >> (*this).fileID; 
 		        else if (text.find("complexHopping")!=std::string::npos) str >> (*this).complexHopping; 
 		        else if (text.find("FSforPairingFile")!=std::string::npos) str >> (*this).fsfile; 
 		        else if (text.find("ChiForPairingFile")!=std::string::npos) str >> (*this).chifile; 
@@ -316,6 +324,7 @@ namespace rpa {
 		        else if (text.find("staticUFactor")!=std::string::npos) str >> (*this).staticUFactor; 				
 		        else if (text.find("chargeFactor")!=std::string::npos) str >> (*this).chargeFactor; 				
 		        else if (text.find("spinFactor")!=std::string::npos) str >> (*this).spinFactor; 				
+		        else if (text.find("nkBands")!=std::string::npos) str >> (*this).nkBands; 				
 		        else if (text.find("nkIntegration")!=std::string::npos) str >> (*this).nkInt; 				
 		        else if (text.find("nkzIntegration")!=std::string::npos) str >> (*this).nkIntz; 				
 		        else if (text.find("kz2D")!=std::string::npos) str >> (*this).kz2D; 				
@@ -382,6 +391,7 @@ namespace rpa {
 		        else if (text.find("calcOnlyDiagonal")!=std::string::npos) str >> (*this).calcOnlyDiagonal;
 		        else if (text.find("writeFullChi0")!=std::string::npos) str >> (*this).writeFullChi0;
 		        else if (text.find("fixEvecs")!=std::string::npos) str >> (*this).fixEvecs;
+		        else if (text.find("calcLambdaZ")!=std::string::npos) str >> (*this).calcLambdaZ;
 			}
 
 			void writeParameters(std::ostream& os) {
@@ -391,6 +401,7 @@ namespace rpa {
 				os << "numberOfOrbitals = " << (*this).nOrb << "\n";
 				os << "chemicalPotential = " << (*this).mu << "\n";
 				os << "tbParametersFile = " << (*this).tbfile << "\n";
+				os << "fileID = " << (*this).fileID << "\n";
 				os << "complexHopping = " << (*this).complexHopping << "\n";
 				os << "FSforPairingFile = " << (*this).fsfile << "\n";
 				os << "pairingSpinParity = " << (*this).pairingSpinParity << "\n";
@@ -429,6 +440,7 @@ namespace rpa {
 				os << "staticUFactor = " << (*this).staticUFactor << "\n";
 				os << "chargeFactor = " << (*this).chargeFactor << "\n";
 				os << "spinFactor = " << (*this).spinFactor << "\n";
+				os << "nkBands = " << (*this).nkBands << "\n";
 				os << "nkIntegration = " << (*this).nkInt << "\n";
 				os << "nkzIntegration = " << (*this).nkIntz << "\n";
 				os << "kz2D = " << (*this).kz2D << "\n";
@@ -489,6 +501,7 @@ namespace rpa {
 				os << "calcOnlyDiagonal = " << (*this).calcOnlyDiagonal << "\n";
 				os << "writeFullChi0 = " << (*this).writeFullChi0 << "\n";
 				os << "fixEvecs = " << (*this).fixEvecs << "\n";
+				os << "calcLambdaZ = " << (*this).calcLambdaZ << "\n";
 			}
 
 
@@ -506,6 +519,7 @@ namespace rpa {
 		        conc.broadcast((*this).nOrb); 
 		        conc.broadcast((*this).mu); 
 		        conc.broadcast((*this).tbfile); 
+		        conc.broadcast((*this).fileID); 
 		        conc.broadcast((*this).complexHopping);
 		        conc.broadcast((*this).fsfile); 
 		        conc.broadcast((*this).chifile); 
@@ -537,6 +551,7 @@ namespace rpa {
 		        conc.broadcast((*this).staticUFactor); 				
 		        conc.broadcast((*this).chargeFactor); 				
 		        conc.broadcast((*this).spinFactor); 				
+		        conc.broadcast((*this).nkBands); 				
 		        conc.broadcast((*this).nkInt); 				
 		        conc.broadcast((*this).nkIntz); 				
 		        conc.broadcast((*this).kz2D); 				
@@ -601,6 +616,7 @@ namespace rpa {
 		        conc.broadcast((*this).damp);
 		        conc.broadcast((*this).writeFullChi0);
 		        conc.broadcast((*this).fixEvecs);
+		        conc.broadcast((*this).calcLambdaZ);
 			}
 
 			void setupOrbitalIndices(){

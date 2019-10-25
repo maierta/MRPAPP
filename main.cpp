@@ -28,7 +28,7 @@ typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
 template <typename Field,  template<typename> class MatrixTemplate, typename ConcurrencyType> 
 void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ConcurrencyType& conc) {
-	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
+	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkBands,param.nkIntz,param.dimension);
 	kmesh.set_momenta(false);	
 
 	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands(param,conc,kmesh,false);
@@ -40,13 +40,15 @@ void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& para
 	// std::cout << "w = " << w << "\n";
 	// std::cout << "v(1,6),v(1,7) = " << v(1,6) << " , " << v(1,7) << "\n";
 
-	bands.calcBandStructure("ek.dat",true);
+	std::string filename = "ek_" + param.fileID + ".txt";
+	bands.calcBandStructure(filename,true);
 
 	// Now calculate bands along high-symmetry direction
 	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh2(param,conc,"Path2",1080);
 	// kmesh2.set_momenta_Path2();
 	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands2(param,conc,kmesh2,false);
-	bands2.calcBandStructure("ek_high_sym.dat",false);
+	std::string filename2 = "ek_high_sym_" + param.fileID + ".txt";
+	bands2.calcBandStructure(filename2,false);
 
 }
 
@@ -83,10 +85,11 @@ int main(int argc,char *argv[])
 
 	// if(param.options.find("calcBands")!=std::string::npos) {
 	// 	if (concurrency.rank()==0) std::cout << "Now calculating Bands \n";
-	// 	Bands<FieldType,psimag::Matrix,ConcurrencyType> bands(param,concurrency);
-	// 	FieldType kmin(-0.5*param.pi_f); FieldType kmax(1.5*param.pi_f);
-	// 	FieldType kzmin(-0.5*param.pi_f); FieldType kzmax(1.5*param.pi_f);
-	// 	bands.calcBandsKMesh(65,1,2,kmin,kmax,kmin,kmax,kzmin,kzmax);
+	// 	calcBands(param,concurrency);
+	// // 	Bands<FieldType,psimag::Matrix,ConcurrencyType> bands(param,concurrency);
+	// // 	FieldType kmin(-0.5*param.pi_f); FieldType kmax(1.5*param.pi_f);
+	// // 	FieldType kzmin(-0.5*param.pi_f); FieldType kzmax(1.5*param.pi_f);
+	// // 	bands.calcBandsKMesh(65,1,2,kmin,kmax,kmin,kmax,kzmin,kzmax);
 	// }
 
 	typedef bandstructure<FieldType,psimag::Matrix,ConcurrencyType> BandsType;

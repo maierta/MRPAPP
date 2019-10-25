@@ -336,7 +336,7 @@ namespace rpa {
 					os << "\n";
 				}
 			}
-			std::ofstream os2("chiRPA.txt");
+			std::ofstream os2("chiRPA_" + param.fileID + ".txt");
 			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param);
 			os2.precision(width);
 			os2 << std::fixed;

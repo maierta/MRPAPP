@@ -89,7 +89,7 @@ ArrayType	PartialPsimag/Symmetry/SeitzVector.h	/^    typedef typename TypeComput
 AssembleInverse2	PartialPsimag/Symmetry/Mat/MatInverse.h	/^  class AssembleInverse2$/;"	c	namespace:psimag
 AssembleInverse3	PartialPsimag/Symmetry/Mat/MatInverse.h	/^  class AssembleInverse3$/;"	c	namespace:psimag
 AugmentedStateTranslationTable	PsimagLite/src/JSON/JsonParser/AugmentedStateTransitionTable.h	/^  class AugmentedStateTranslationTable: $/;"	c	namespace:JsonParser
-Axes3D	PythonScripts/Plot_chiRPA_qxqy.py	/^from mpl_toolkits.mplot3d import Axes3D$/;"	i
+Axes3D	PythonScripts/Plot_chiRPA_qxqy.py	/^	from mpl_toolkits.mplot3d import Axes3D$/;"	i
 B	PartialPsimag/Symmetry/MetricTensor.h	/^    Field  B() const { return (*this)(1,1); }$/;"	f	class:psimag::MetricTensor
 BA	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      BA = -5,  \/* Begin Array *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 BAFEAS_5ORB_H	BaFeAs_5orb.h	/^#define BAFEAS_5ORB_H$/;"	d
@@ -102,6 +102,8 @@ BLAS	PsimagLite/src/BLAS.h	/^namespace BLAS {$/;"	n	namespace:psimag
 BO	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      BO = -6,  \/* Begin Object *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 BOTTOM_ROW	PartialPsimag/Symmetry/SeitzMatrixTraits.h	/^      static const bool BOTTOM_ROW = (ROW_ == DIM);$/;"	m	class:psimag::SeitzMatrixTraits::REF
 BS	PsimagLite/src/JSON/JsonParser/StatesMixin.h	/^      BS,  \/* Looking for the begining of a string  *\/$/;"	e	enum:JsonParser::StatesMixin::states
+BSCCObilayer	bilayer.h	/^		BSCCObilayer(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):$/;"	f	class:rpa::BSCCObilayer
+BSCCObilayer	bilayer.h	/^	class BSCCObilayer {$/;"	c	namespace:rpa
 BaFeAs	BaFeAs_5orb.h	/^		BaFeAs(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):$/;"	f	class:rpa::BaFeAs
 BaFeAs	BaFeAs_5orb.h	/^	class BaFeAs {$/;"	c	namespace:rpa
 BackSubstitution	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    BackSubstitution(HermiteNormalForm<Field,NROW,NCOL> hnf,$/;"	f	class:psimag::BackSubstitution
@@ -426,6 +428,7 @@ ComplexMatrixType	KFe2Se2.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatri
 ComplexMatrixType	SrRuO.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::SrRuO
 ComplexMatrixType	bands.h	/^		typedef MatrixTemplate<ComplexType> 	ComplexMatrixType;$/;"	t	class:rpa::Bands
 ComplexMatrixType	bandstructure.h	/^		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;$/;"	t	class:rpa::bandstructure
+ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::BSCCObilayer
 ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::bilayer
 ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::bilayerFESC
 ComplexMatrixType	bilayer.h	/^		typedef MatrixTemplate<ComplexType> ComplexMatrixType;$/;"	t	class:rpa::orthoIIBilayer
@@ -453,6 +456,7 @@ ComplexType	PsimagLite/src/ContinuedFractionCollection.h	/^		typedef typename Co
 ComplexType	SrRuO.h	/^		typedef std::complex<Field>			ComplexType;$/;"	t	class:rpa::SrRuO
 ComplexType	bands.h	/^		typedef std::complex<Field>		ComplexType;$/;"	t	class:rpa::Bands
 ComplexType	bandstructure.h	/^		typedef std::complex<Field>		ComplexType;$/;"	t	class:rpa::bandstructure
+ComplexType	bilayer.h	/^		typedef std::complex<Field>			ComplexType;$/;"	t	class:rpa::BSCCObilayer
 ComplexType	bilayer.h	/^		typedef std::complex<Field>			ComplexType;$/;"	t	class:rpa::bilayer
 ComplexType	bilayer.h	/^		typedef std::complex<Field>			ComplexType;$/;"	t	class:rpa::bilayerFESC
 ComplexType	bilayer.h	/^		typedef std::complex<Field>			ComplexType;$/;"	t	class:rpa::orthoIIBilayer
@@ -844,6 +848,7 @@ FieldType	PsimagLite/src/Sort.h	/^	typedef typename ContainerType::value_type Fi
 FieldType	SrRuO.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::SrRuO
 FieldType	bands.h	/^		typedef Field 					FieldType;$/;"	t	class:rpa::Bands
 FieldType	bandstructure.h	/^		typedef Field					FieldType;$/;"	t	class:rpa::bandstructure
+FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::BSCCObilayer
 FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::bilayer
 FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::bilayerFESC
 FieldType	bilayer.h	/^		typedef Field 						FieldType;$/;"	t	class:rpa::orthoIIBilayer
@@ -1104,6 +1109,7 @@ InverseLatticeTransformationType	PartialPsimag/Symmetry/LatticeTransformation.h	
 IoSimple	PsimagLite/src/IoSimple.h	/^	class IoSimple {$/;"	c	namespace:PsimagLite
 IoSimpleIn	PsimagLite/src/IoSimple.h	/^		IoSimpleIn(const char* fn) : PsimagLite::IoSimple::In(std::string(fn)) { } $/;"	f	class:Spf::IoSimpleIn
 IoSimpleIn	PsimagLite/src/IoSimple.h	/^	class IoSimpleIn : public PsimagLite::IoSimple::In {$/;"	c	namespace:Spf
+J	PythonScripts/plotChiRPAAlongHighSym.py	/^		J  = float(sys.argv[3])$/;"	v
 J	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;$/;"	m	class:rpa::parameters
 J	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
 JACKSON	PsimagLite/src/ChebyshevSerializer.h	/^		enum {JACKSON,LORENTZ,DIRICHLET};$/;"	e	enum:PsimagLite::KernelPolynomialParameters::__anon121
@@ -1123,6 +1129,7 @@ JSON_T_OBJECT_END	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_OBJ
 JSON_T_STRING	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_STRING,$/;"	e	enum:JsonParser::TypesMixin::__anon116
 JSON_T_TRUE	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^      JSON_T_TRUE,$/;"	e	enum:JsonParser::TypesMixin::__anon116
 JUST_NUMBERS	PartialPsimag/Symmetry/Mat/MatPrint.h	/^    static void JUST_NUMBERS(const MatType& m, std::ostream& os, bool flat=false) {$/;"	f	class:psimag::MAT_PRINT
+Jp	PythonScripts/plotChiRPAAlongHighSym.py	/^		Jp = float(sys.argv[4])$/;"	v
 Jp	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;$/;"	m	class:rpa::parameters
 Jp	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
 JsonAccessor	PsimagLite/src/JSON/JsonReader.h	/^    typedef JsonParser::Whatever                       JsonAccessor;$/;"	t	class:dca::JsonReader
@@ -1308,12 +1315,14 @@ LatticeWithPatternType	PartialPsimag/Symmetry/Symmetry.h	/^    typedef LatticeWi
 LatticeWithPatternType	PartialPsimag/Symmetry/SymmetryGroup.h	/^    typedef LatticeWithPattern<Field,DIM,Occupant,LatticeType,Algorithms>     LatticeWithPatternType;$/;"	t	class:psimag::SymmetryGroup
 LatticeWithPatternType	PartialPsimag/Symmetry/TestPattern.h	/^    typedef LatticeWithPattern<Field,DIM,Occupant,LatticeType,Algorithms>       LatticeWithPatternType;$/;"	t	class:psimag::TestPattern
 LimitedType	PartialPsimag/Symmetry/SeitzVector.h	/^    typedef ColMajorTraits<Field,DIM,1>          LimitedType;$/;"	t	class:psimag::SeitzVector
+LineCollection	PythonScripts/Bandstructure_2orb.py	/^from matplotlib.collections import LineCollection$/;"	i
 LineMarker	PsimagLite/src/LineMarker.h	/^		LineMarker(IoInputType& io,const std::string& name,size_t level = 0)$/;"	f	class:PsimagLite::LineMarker
 LineMarker	PsimagLite/src/LineMarker.h	/^		LineMarker(const std::string& name) : name_(name+"=0")$/;"	f	class:PsimagLite::LineMarker
 LineMarker	PsimagLite/src/LineMarker.h	/^	class LineMarker  {$/;"	c	namespace:PsimagLite
 LinearPrediction	PsimagLite/src/LinearPrediction.h	/^		LinearPrediction(const std::vector<FieldType>& y)$/;"	f	class:PsimagLite::LinearPrediction
 LinearPrediction	PsimagLite/src/LinearPrediction.h	/^	class LinearPrediction {$/;"	c	namespace:PsimagLite
 LinearPredictionType	PsimagLite/drivers/linearPrediction.cpp	/^typedef PsimagLite::LinearPrediction<FieldType> LinearPredictionType;$/;"	t	file:
+LinearSegmentedColormap	PythonScripts/Bandstructure_2orb.py	/^	from matplotlib.colors import LinearSegmentedColormap$/;"	i
 Lm	bandstructure.h	/^		ComplexMatrixType Lm;$/;"	m	class:rpa::bandstructure
 LocalType	PartialPsimag/Symmetry/Mat/Mat.h	/^    typedef Field LocalType[LENGTH];$/;"	t	class:psimag::Mat
 LongIntegerType	PsimagLite/src/IoSimple.h	/^				typedef int long long LongIntegerType;$/;"	t	class:PsimagLite::IoSimple::In
@@ -1419,6 +1428,7 @@ MatrixType	PsimagLite/src/LinearPrediction.h	/^		typedef Matrix<FieldType> Matri
 MatrixType	SrRuO.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::SrRuO
 MatrixType	bands.h	/^		typedef MatrixTemplate<Field> 	MatrixType;$/;"	t	class:rpa::Bands
 MatrixType	bandstructure.h	/^		typedef MatrixTemplate<Field>	MatrixType;$/;"	t	class:rpa::bandstructure
+MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::BSCCObilayer
 MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::bilayer
 MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::bilayerFESC
 MatrixType	bilayer.h	/^		typedef MatrixTemplate<Field> 		MatrixType;$/;"	t	class:rpa::orthoIIBilayer
@@ -2054,6 +2064,7 @@ ROW	PartialPsimag/Symmetry/Mat/MatForEach.h	/^    static const size_t ROW = NROW
 ROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    static const size_t ROW = NROW - 1;$/;"	m	class:psimag::FOREACH2_
 ROW	PartialPsimag/Symmetry/Mat/MatForEach2.h	/^    static const size_t ROW = NROW - ROWS_LEFT;$/;"	m	class:psimag::FOREACH2_
 ROW	PartialPsimag/Symmetry/Mat/MatTranspose.h	/^    enum { ROW=0, NCOL = Traits::NCOL };$/;"	e	enum:psimag::TRANSPOSE::__anon49
+RPA	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^class RPA:$/;"	c
 RPA_CUO_H	rpa_CuO.h	/^#define RPA_CUO_H$/;"	d
 RPA_H	rpa.h	/^#define RPA_H$/;"	d
 RPA_MOMENTUMDOMAIN_H	momentumDomain.h	/^#define RPA_MOMENTUMDOMAIN_H$/;"	d
@@ -2730,6 +2741,7 @@ TypeComputer	PartialPsimag/Symmetry/SeitzMatrix.h	/^    class TypeComputer {$/;"
 TypeComputer	PartialPsimag/Symmetry/SeitzVector.h	/^    template<typename T> class TypeComputer {public: typedef T Result[DIM]; };$/;"	c	class:psimag::SeitzVector
 TypeManip_Private	PartialPsimag/Symmetry/TypeManip.h	/^    namespace TypeManip_Private$/;"	n	namespace:psimag
 TypesMixin	PsimagLite/src/JSON/JsonParser/TypesMixin.h	/^  class TypesMixin {$/;"	c	namespace:JsonParser
+U	PythonScripts/plotChiRPAAlongHighSym.py	/^	U  = float(sys.argv[1])$/;"	v
 U	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;$/;"	m	class:rpa::parameters
 U	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
 U1	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      U1,  \/* u1       *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
@@ -2767,6 +2779,7 @@ UnaryOperationClosure	PartialPsimag/OperationClosure.h	/^    UnaryOperationClosu
 UnaryOperationClosure	PartialPsimag/OperationClosure.h	/^  class UnaryOperationClosure {$/;"	c	namespace:psimag
 UnaryOperationClosure	PsimagLite/src/JSON/OperationClosure.h	/^    UnaryOperationClosure(const OperandType& theOperand):$/;"	f	class:psimag::UnaryOperationClosure
 UnaryOperationClosure	PsimagLite/src/JSON/OperationClosure.h	/^  class UnaryOperationClosure {$/;"	c	namespace:psimag
+Up	PythonScripts/plotChiRPAAlongHighSym.py	/^		Up = float(sys.argv[2])$/;"	v
 Up	parameters.h	/^		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;$/;"	m	class:rpa::parameters
 Up	rpa.h	/^			Field U,Up,J,Jp;$/;"	m	class:rpa::interaction
 VA	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      VA,  \/* value    *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
@@ -2823,6 +2836,7 @@ VectorType	PsimagLite/src/SparseRow.h	/^		typedef std::vector<ValueType> VectorT
 VectorType	SrRuO.h	/^		typedef std::vector<Field>      	VectorType;$/;"	t	class:rpa::SrRuO
 VectorType	bands.h	/^		typedef std::vector<Field>      VectorType;$/;"	t	class:rpa::Bands
 VectorType	bandstructure.h	/^		typedef std::vector<Field>      VectorType;$/;"	t	class:rpa::bandstructure
+VectorType	bilayer.h	/^		typedef std::vector<Field>      	VectorType;$/;"	t	class:rpa::BSCCObilayer
 VectorType	bilayer.h	/^		typedef std::vector<Field>      	VectorType;$/;"	t	class:rpa::bilayer
 VectorType	bilayer.h	/^		typedef std::vector<Field>      	VectorType;$/;"	t	class:rpa::bilayerFESC
 VectorType	bilayer.h	/^		typedef std::vector<Field>      	VectorType;$/;"	t	class:rpa::orthoIIBilayer
@@ -2867,11 +2881,13 @@ XMLHeading	PartialPsimag/XMLHeading.h	/^  class XMLHeading {$/;"	c	namespace:psi
 XML_HEADING_H	PartialPsimag/XMLHeading.h	/^#define XML_HEADING_H$/;"	d
 ZE	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      ZE,  \/* zero     *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
 ZX	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      ZX = -19, \/* integer detected by zero *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
+Zofk	pairing.h	/^		VectorType Zofk;$/;"	m	class:rpa::pairing
 _Assert	PartialPsimag/PSIMAGAssert.h	/^void _Assert(const char * filename, int lineno, $/;"	f	namespace:psimag
 _Assert	PartialPsimag/PSIMAGAssert.h	/^void _Assert(const char * filename, int lineno, A assertion, E except)$/;"	f	namespace:psimag
 _Assert	PsimagLite/src/JSON/PSIMAGAssert.h	/^void _Assert(const char * filename, int lineno, $/;"	f	namespace:psimag
 _Assert	PsimagLite/src/JSON/PSIMAGAssert.h	/^void _Assert(const char * filename, int lineno, A assertion, E except)$/;"	f	namespace:psimag
 __	PsimagLite/src/JSON/JsonParser/StatesAndActionsMixin.h	/^      __ = -1,  \/* Error *\/$/;"	e	enum:JsonParser::StatesAndActionsMixin::statesAndActions
+__init__	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def __init__(self,nkIntlin,nklin,nwm,T,doping="OD91",U=2.0,calcV=False):$/;"	m	class:RPA
 _fixed	PartialPsimag/KISS.h	/^    seed_type _fixed; \/\/ this seed can have any value$/;"	m	class:psimag::KISS
 _rank	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    size_t _rank;$/;"	m	class:psimag::HermiteNormalForm
 _setState	PartialPsimag/KISS.h	/^    void _setState(seed_type a, seed_type b, seed_type c)$/;"	f	class:psimag::KISS
@@ -2964,8 +2980,6 @@ atOffset	PartialPsimag/Matrix.h	/^    T& atOffset(size_t offset)$/;"	f	class:psi
 atOffset	PartialPsimag/Matrix.h	/^    const T& atOffset(size_t offset) const $/;"	f	class:psimag::Matrix
 attributes	PartialPsimag/TagAttributeParser.h	/^    map<string,string>& attributes;$/;"	m	class:psimag::TagAttributeParser
 attrs	PartialPsimag/TagAttributes.h	/^    std::map<std::string, std::string> attrs;$/;"	m	class:psimag::TagAttributes
-ax	PythonScripts/Plot_chiRPA_qxqy.py	/^ax=figure().gca(projection='3d')$/;"	v
-ax2	PythonScripts/Plot_chiRPA_qxqy.py	/^ax2=fig2.add_subplot(111)$/;"	v
 axis	PartialPsimag/Symmetry/CellRotation.h	/^    CellDirection<Field, DIM> axis;$/;"	m	class:psimag::CellRotation
 axisOrder	PartialPsimag/Symmetry/MetricTensor.h	/^  Vec<size_t, DIM > axisOrder(MetricTensor<Field,DIM> metric) {$/;"	f	namespace:psimag
 b	PartialPsimag/Symmetry/CellParameters.h	/^    Field b;          \/**< The length of the next shortest translation vector. **\/$/;"	m	class:psimag::CellParameters
@@ -3037,6 +3051,7 @@ buildGroupAction	PartialPsimag/Symmetry/Star.h	/^    void buildGroupAction(const
 buildMultiplicationTable	PartialPsimag/Symmetry/Star.h	/^    void buildMultiplicationTable(const SymmetryType& symmetry) {$/;"	f	class:psimag::Star
 buildPlusIndex	PartialPsimag/Symmetry/Pattern.h	/^    void buildPlusIndex(Matrix<int>& plusIndex) const {$/;"	f	class:psimag::Pattern
 c	PartialPsimag/Symmetry/CellParameters.h	/^    Field c;          \/**< The length of the       longest translation vector. **\/$/;"	m	class:psimag::CellParameters
+c	PythonScripts/plotChiRPAAlongHighSym.py	/^	import calcAndPlotRPAChiQ as c$/;"	i
 c	gap.h	/^		VectorType a,b,c;$/;"	m	class:rpa::gap
 c	gaps2D.h	/^		VectorType a,b,c;$/;"	m	class:rpa::gap2D
 cMatrices	PsimagLite/src/JSON/JSN_Writer.h	/^    MapType<std::string, const psimag::Matrix<std::complex<double> >*> cMatrices;$/;"	m	class:dca::JSN
@@ -3049,8 +3064,10 @@ calcBands	main.cpp	/^void calcBands(const rpa::parameters<Field,MatrixTemplate,C
 calcBandsK	bands.h	/^		inline void calcBandsK(const VectorType& k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::Bands
 calcBandsK1	bands.h	/^		inline void calcBandsK1(const VectorType& k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::Bands
 calcBandsKMesh	bands.h	/^		void calcBandsKMesh(const size_t nk, const size_t nkz, const size_t dim,$/;"	f	class:rpa::Bands
+calcChi0	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def calcChi0(self,q,qz,wm):$/;"	m	class:RPA
 calcChi0Matrix	chi0.h	/^		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,$/;"	f	class:rpa::calcChi0Matrix
 calcChi0Matrix	chi0.h	/^	class calcChi0Matrix {$/;"	c	namespace:rpa
+calcChi0q	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def calcChi0q(self):$/;"	m	class:RPA
 calcChi0q	chi0.h	/^		void calcChi0q() {$/;"	f	class:rpa::chi0q
 calcChiNematicRPA	susceptibility.h	/^		ComplexType calcChiNematicRPA(ComplexMatrixType& chiC) {$/;"	f	class:rpa::susceptibility
 calcChiRPAFromGammaRPA	rpa_CuO.h	/^		void calcChiRPAFromGammaRPA(ComplexMatrixType& Gamma, size_t interactionType, std::vector<Field>& q,$/;"	f	class:rpa::interactionEmery
@@ -3064,6 +3081,7 @@ calcDir	PsimagLite/src/Geometry/Ladder.h	/^		size_t calcDir(size_t i1,size_t i2)
 calcDir	PsimagLite/src/Geometry/LadderBath.h	/^			size_t calcDir(size_t i1,size_t i2) const$/;"	f	class:PsimagLite::LadderBath
 calcDir	PsimagLite/src/Geometry/LadderX.h	/^			size_t calcDir(size_t i1,size_t i2) const$/;"	f	class:PsimagLite::LadderX
 calcDirInCluster	PsimagLite/src/Geometry/LadderBath.h	/^			size_t calcDirInCluster(size_t i1,size_t i2) const$/;"	f	class:PsimagLite::LadderBath
+calcEigen	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def calcEigen(self):$/;"	m	class:RPA
 calcEigenVectors	pairing.h	/^	void calcEigenVectors() {$/;"	f	class:rpa::pairing
 calcElements	susceptibility.h	/^		void calcElements(VectorSuscType& chi0Matrix) {$/;"	f	class:rpa::susceptibility
 calcEmeryChi0	susceptibility.h	/^		void calcEmeryChi0(std::vector<ComplexMatrixType>& chi0,$/;"	f	class:rpa::susceptibility
@@ -3073,24 +3091,29 @@ calcGammaFromChiRPA	rpa_CuO.h	/^		void calcGammaFromChiRPA(ComplexMatrixType& V_
 calcGammaPP	pairing.h	/^		void calcGammaPP() {$/;"	f	class:rpa::pairing
 calcGammaPPBand	pairing.h	/^		void calcGammaPPBand(const ComplexMatrixType& gammaOrb, $/;"	f	class:rpa::pairing
 calcGammaPPEmery	pairing.h	/^		void calcGammaPPEmery(std::vector<FieldType> q, $/;"	f	class:rpa::pairing
-calcGammaPPOrb	pairing.h	/^		void calcGammaPPOrb(const ComplexMatrixType& ms,$/;"	f	class:rpa::pairing
+calcGammaPPOrb	pairing.h	/^		void calcGammaPPOrb(const ComplexMatrixType& usc0us,$/;"	f	class:rpa::pairing
 calcGammaPPOrbEmery	pairing.h	/^		void calcGammaPPOrbEmery(ComplexMatrixType& GammaS, ComplexMatrixType& GammaC, $/;"	f	class:rpa::pairing
 calcGammaPPTerms	pairing.h	/^		void calcGammaPPTerms(size_t ind,std::vector<FieldType> q, $/;"	f	class:rpa::pairing
 calcIndexOfAdd	momentumDomain.h	/^		size_t calcIndexOfAdd(const size_t i1, const size_t i2) {$/;"	f	class:rpa::momentumDomain
 calcInverse	utilities.h	/^inline void calcInverse(MType& matrix) {$/;"	f
 calcKF	ferminator.h	/^	void calcKF(const size_t nkSearch,const size_t iSheet, const FieldType& kz,int dim) {$/;"	f	class:rpa::ferminator
 calcKFOpen2D	ferminator.h	/^	void calcKFOpen2D(const size_t nkSearch, const size_t iSheet, const size_t scanAlongDir) {$/;"	f	class:rpa::ferminator
+calcLambda	PythonScripts/Calc_lambda.py	/^def calcLambda(fileID=""):$/;"	f
+calcLambdaZ	parameters.h	/^		bool calcLambdaZ;$/;"	m	class:rpa::parameters
 calcMatrix	chi0Ofq.h	/^		void calcMatrix(const size_t iq, ComplexMatrixType& matrix) {$/;"	f	class:rpa::chi0ofq
 calcNorm	pairing.h	/^		void calcNorm() {$/;"	f	class:rpa::pairing
 calcOW_	ferminator.h	/^		bool calcOW_;$/;"	m	class:rpa::ferminator
 calcOnlyDiagonal	parameters.h	/^		bool calcOnlyDiagonal;$/;"	m	class:rpa::parameters
 calcOnlyDiagonal_	chi0.h	/^		bool calcOnlyDiagonal_;$/;"	m	class:rpa::calcChi0Matrix
+calcPAofT	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def calcPAofT(self,w0=0.5):$/;"	m	class:RPA
 calcRPAResult	rpa.h	/^		void calcRPAResult(ComplexMatrixType& matrix0, $/;"	f	class:rpa::interaction
 calcRPAResult	rpa_CuO.h	/^		void calcRPAResult(ComplexMatrixType& chi0, $/;"	f	class:rpa::interactionEmery
 calcSus	chi0.h	/^		std::complex<Field> calcSus() const {$/;"	f	class:rpa::susc
 calcValue	PsimagLite/src/Geometry/GeometryTerm.h	/^			RealType calcValue(size_t i1,size_t edof1,size_t i2,size_t edof2) const$/;"	f	class:PsimagLite::GeometryTerm
 calcVkF	ferminator.h	/^	FieldType calcVkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,$/;"	f	class:rpa::ferminator
 calcVkFz	ferminator.h	/^	FieldType calcVkFz(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,$/;"	f	class:rpa::ferminator
+calcVprojected	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def calcVprojected(self,rpa=True):$/;"	m	class:RPA
+calcZofk	pairing.h	/^	void calcZofk() {$/;"	f	class:rpa::pairing
 calcgammaB1GkF	ferminator.h	/^	FieldType calcgammaB1GkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,$/;"	f	class:rpa::ferminator
 calculateD	PsimagLite/src/AkimaSpline.h	/^		void calculateD(VectorType& d,const VectorType& x,const VectorType& s) const$/;"	f	class:AkimaSpline
 calculateSprime	PsimagLite/src/AkimaSpline.h	/^		void calculateSprime(VectorType& sprime,const VectorType& x,const VectorType& s) const$/;"	f	class:AkimaSpline
@@ -3153,12 +3176,14 @@ checkDirection	PartialPsimag/Symmetry/SymmetryElement.h	/^    void checkDirectio
 checkError	PsimagLite/src/ConcurrencyMpi.h	/^		void checkError(int x,const std::string& s)$/;"	f	class:PsimagLite::ConcurrencyMpi
 checkTrailingWhite	PsimagLite/scripts/indentStrict.pl	/^sub checkTrailingWhite$/;"	s
 chi0	pairing.h	/^		SuscType chi0;$/;"	m	class:rpa::pairing
+chi0c	pairing.h	/^		SuscType chi0c;$/;"	m	class:rpa::pairing
 chi0k	chi0.h	/^		VectorType chi0k;$/;"	m	class:rpa::calcChi0Matrix
 chi0matrix	chi0Ofq.h	/^		ComplexMatrixType chi0matrix;$/;"	m	class:rpa::chi0ofq
 chi0ofq	chi0Ofq.h	/^		chi0ofq(const rpa::parameters<Field,MatrixTemplate>& parameters, const rpa::greensFunction<Field,MatrixTemplate,ConcurrencyType>& green, ConcurrencyType& concurrency):$/;"	f	class:rpa::chi0ofq
 chi0ofq	chi0Ofq.h	/^	class chi0ofq$/;"	c	namespace:rpa
 chi0q	chi0.h	/^		chi0q(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,$/;"	f	class:rpa::chi0q
 chi0q	chi0.h	/^	class chi0q:$/;"	c	namespace:rpa
+chi0s	pairing.h	/^		SuscType chi0s;$/;"	m	class:rpa::pairing
 chiRPAc	pairing.h	/^		SuscType chiRPAc;$/;"	m	class:rpa::pairing
 chiRPAs	pairing.h	/^		SuscType chiRPAs;$/;"	m	class:rpa::pairing
 chiStore	pairing.h	/^		std::vector<SuscType> chiStore;$/;"	m	class:rpa::pairing
@@ -3193,7 +3218,6 @@ colind_	PsimagLite/src/SampleCRSMatrix.h	/^		std::vector<size_t> colind_;$/;"	m	
 collectName	PsimagLite/src/JSON/JsonParser/Whatever.h	/^    void collectName(std::wostringstream& nam) const {$/;"	f	class:JsonParser::Whatever
 color	PartialPsimag/Symmetry/Occupant.h	/^    std::string color;$/;"	m	class:psimag::Occupant
 cols_	PsimagLite/src/SparseRow.h	/^		ColumnsType cols_;$/;"	m	class:PsimagLite::SparseRow
-column	PythonScripts/Plot_chiRPA_qxqy.py	/^column = 4$/;"	v
 combineRows	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    void combineRows(Field a, size_t r1, size_t r2) {$/;"	f	class:psimag::HermiteNormalForm
 comment	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    bool                 comment; $/;"	m	class:JsonParser::JsonParser
 comment_begin_offset	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    size_t               comment_begin_offset;$/;"	m	class:JsonParser::JsonParser
@@ -3222,6 +3246,7 @@ conc	KFe2Se2.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::KFe2Se2
 conc	SrRuO.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::SrRuO
 conc	bands.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::Bands
 conc	bandstructure.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::bandstructure
+conc	bilayer.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::BSCCObilayer
 conc	bilayer.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::bilayer
 conc	bilayer.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::bilayerFESC
 conc	bilayer.h	/^		ConcurrencyType& conc;$/;"	m	class:rpa::orthoIIBilayer
@@ -3295,7 +3320,6 @@ crystHarm	gaps2D.h	/^		FieldType (*crystHarm)(const std::vector<FieldType>&, $/;
 crystHarm	gaps3D.h	/^        FieldType (*crystHarm)(const std::vector<FieldType>&, $/;"	m	class:rpa::gap3D
 crystHarm2	gaps3D.h	/^        FieldType (*crystHarm2)(const std::vector<FieldType>&, $/;"	m	class:rpa::gap3D
 crystal	PartialPsimag/Symmetry/SuperCrystal.h	/^    const CrystalType&             crystal;                       \/**  The Crystal that this is a SuperCrystal of. *\/$/;"	m	class:psimag::SuperCrystal
-cset	PythonScripts/Plot_chiRPA_qxqy.py	/^cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="bilinear",origin='lower',cmap='jet')$/;"	v
 ctx	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    ContextType           ctx;$/;"	m	class:JsonParser::JsonParser
 currentMode	PsimagLite/src/JSON/JsonParser/ModesMixin.h	/^    const ModeType& currentMode() {$/;"	f	class:JsonParser::ModesMixin
 currentObject	PsimagLite/src/JSON/JsonParser/DefaultContext.h	/^    Whatever& currentObject() {$/;"	f	class:JsonParser::DefaultContext
@@ -3309,7 +3333,6 @@ d_	PsimagLite/src/LinearPrediction.h	/^		std::vector<FieldType> d_;$/;"	m	class:
 damp	parameters.h	/^		Field damp;$/;"	m	class:rpa::parameters
 data	PartialPsimag/Matrix.h	/^    T* data;$/;"	m	class:psimag::Matrix
 data	Plot_ek_high_sym.dat.py	/^data=loadtxt(".\/ek_high_sym.dat")$/;"	v
-data	PythonScripts/Plot_chiRPA_qxqy.py	/^data=loadtxt(file,delimiter=",")$/;"	v
 dataMatrices_	PsimagLite/src/Geometry/GeometryDirection.h	/^			std::vector<MatrixType> dataMatrices_;$/;"	m	class:PsimagLite::GeometryDirection
 dataNumbers_	PsimagLite/src/Geometry/GeometryDirection.h	/^			std::vector<RealType> dataNumbers_;$/;"	m	class:PsimagLite::GeometryDirection
 dataType_	PsimagLite/src/Geometry/GeometryDirection.h	/^			size_t dataType_;$/;"	m	class:PsimagLite::GeometryDirection
@@ -3361,6 +3384,7 @@ dim	FourOrbital.h	/^		size_t dim;$/;"	m	class:rpa::FourOrbital
 dim	KFe2Se2.h	/^		size_t dim;$/;"	m	class:rpa::KFe2Se2
 dim	SrRuO.h	/^		size_t dim;$/;"	m	class:rpa::SrRuO
 dim	bands.h	/^		size_t dim;$/;"	m	class:rpa::Bands
+dim	bilayer.h	/^		size_t dim;$/;"	m	class:rpa::BSCCObilayer
 dim	bilayer.h	/^		size_t dim;$/;"	m	class:rpa::bilayer
 dim	bilayer.h	/^		size_t dim;$/;"	m	class:rpa::bilayerFESC
 dim	bilayer.h	/^		size_t dim;$/;"	m	class:rpa::orthoIIBilayer
@@ -3371,6 +3395,7 @@ dirId_	PsimagLite/src/Geometry/GeometryDirection.h	/^			size_t dirId_;$/;"	m	cla
 directions_	PsimagLite/src/Geometry/GeometryTerm.h	/^			std::vector<GeometryDirectionType> directions_;$/;"	m	class:PsimagLite::GeometryTerm
 dirs	PsimagLite/src/Geometry/GeometryFactory.h	/^		size_t dirs() const { return dirs_; } \/\/ <-- move elsewhere FIXME$/;"	f	class:PsimagLite::GeometryFactory
 dirs_	PsimagLite/src/Geometry/GeometryFactory.h	/^		size_t dirs_; \/\/ move to object.dirs()$/;"	m	class:PsimagLite::GeometryFactory
+dispersion	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def dispersion(self,k,kz):$/;"	m	class:RPA
 display	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    void display() {$/;"	f	class:psimag::HermiteNormalForm
 distance	PartialPsimag/Symmetry/AppliedSymmetryElement.h	/^    Field                                     distance;$/;"	m	class:psimag::AppliedSymmetryElement
 distance	PartialPsimag/Symmetry/AppliedSymmetryOperation.h	/^    Field                    distance;$/;"	m	class:psimag::AppliedSymmetryElement
@@ -3407,6 +3432,7 @@ eigen	bandstructure.h	/^		void eigen(VectorType& eigenvals, ComplexMatrixType& m
 eigen	pairing.h	/^	void eigen(MatrixType& matrix, VectorType& wr, MatrixType& vr) const {$/;"	f	class:rpa::pairing
 eigs_	PsimagLite/src/ContinuedFraction.h	/^		std::vector<RealType> eigs_;$/;"	m	class:PsimagLite::ContinuedFraction
 ek	PythonScripts/MayaVi_Plot_of_FS.py	/^		ek = bands[:,i].reshape(nkx,nky,nkz,order='F')$/;"	v
+ek_along_high_sym_dir	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def ek_along_high_sym_dir(self):$/;"	m	class:RPA
 element	PartialPsimag/Symmetry/AppliedSymmetryElement.h	/^    SymmetryElement< Field, DIM, Algorithms>  element;$/;"	m	class:psimag::AppliedSymmetryElement
 elements	PartialPsimag/Tag.h	/^    Elements            elements;$/;"	m	class:psimag::Tag
 elements_	PartialPsimag/Symmetry/SymmetryElements2D.h	/^    static std::vector<SymmetryElementType*> elements_() {$/;"	f	class:psimag::SymmetryElements
@@ -3442,6 +3468,8 @@ exists2Way	PartialPsimag/Symmetry/TypeManip.h	/^        static const bool exists
 exists2Way	PartialPsimag/Symmetry/TypeManip.h	/^        static const bool exists2Way = false;$/;"	m	struct:psimag::Conversion
 exists2Way	PartialPsimag/Symmetry/TypeManip.h	/^        static const bool exists2Way = true;$/;"	m	class:psimag::Conversion
 exists2Way	PartialPsimag/Symmetry/TypeManip.h	/^        static const bool exists2Way = true;$/;"	m	struct:psimag::Conversion
+expandChiQtoChiKKP	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def expandChiQtoChiKKP(self):$/;"	m	class:RPA
+expandChiQtoChiKKP_v2	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def expandChiQtoChiKKP_v2(self):$/;"	m	class:RPA
 expectedRotationAngle	PartialPsimag/Symmetry/SymmetryElement.h	/^  Field expectedRotationAngle(const std::string& type) {$/;"	f	namespace:psimag
 expectedSense	PartialPsimag/Symmetry/SymmetryElement.h	/^  int expectedSense(const std::string& type) {$/;"	f	namespace:psimag
 expectedTrace	PartialPsimag/Symmetry/SymmetryElement.h	/^  int expectedTrace(const std::string& type) {$/;"	f	namespace:psimag
@@ -3454,6 +3482,7 @@ externalProduct	PsimagLite/src/CrsMatrix.h	/^	void externalProduct(CrsMatrix<T> 
 externalProduct	PsimagLite/src/CrsMatrix.h	/^	void externalProduct(CrsMatrix<T>  &C,CrsMatrix<T> const &A,CrsMatrix<T> const &B,const std::vector<int>& signs,bool option=false)$/;"	f	namespace:PsimagLite
 family	PartialPsimag/KISS.h	/^    void family(seed_type a, seed_type b)$/;"	f	class:psimag::KISS
 fermi	PsimagLite/src/Fermi.h	/^	FieldType fermi(const FieldType& x)$/;"	f	namespace:PsimagLite
+fermi	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def fermi(self,k,kz):$/;"	m	class:RPA
 fermi	bands.h	/^		inline FieldType fermi(const FieldType& energy, const FieldType& invT) {$/;"	f	class:rpa::Bands
 fermi	bandstructure.h	/^		inline FieldType fermi(const FieldType& energy, const FieldType& invT) {$/;"	f	class:rpa::bandstructure
 fermiPrime	PsimagLite/src/Fermi.h	/^	FieldType fermiPrime(const FieldType& x)$/;"	f	namespace:PsimagLite
@@ -3469,9 +3498,10 @@ fetchMeshGeometry1D	PartialPsimag/Symmetry/fetchGeometry1D.h	/^  void fetchMeshG
 fetchMeshGeometry1D	PartialPsimag/Symmetry/fetchMesh.h	/^  void fetchMeshGeometry1D(int length1d,int numPoints, psimag::Matrix<Field>& sitesKmesh)$/;"	f	namespace:rpa
 fetchMeshGeometry2D	PartialPsimag/Symmetry/fetchGeometry2D.h	/^  void fetchMeshGeometry2D(Field latticeA_length, $/;"	f	namespace:rpa
 fetchMeshGeometry2D	PartialPsimag/Symmetry/fetchMesh.h	/^  void fetchMeshGeometry2D(Field latticeA_length, Field latticeB_length, Field latticeAngle,$/;"	f	namespace:rpa
-fig2	PythonScripts/Plot_chiRPA_qxqy.py	/^fig2 = figure(figsize=(8,6))$/;"	v
-file	PythonScripts/Plot_chiRPA_qxqy.py	/^file = "chiRPA.txt"$/;"	v
+file	PythonScripts/Plot_Gap_jsn.py	/^    file = sys.argv[1]$/;"	v
+file	PythonScripts/Plot_chiRPA_qxqy.py	/^    	file = sys.argv[1]$/;"	v
 file	chi0.h	/^		std::string file;$/;"	m	class:rpa::chi0q
+fileID	parameters.h	/^		std::string fileID;$/;"	m	class:rpa::parameters
 fileName	PsimagLite/src/JSON/JsonReader.h	/^    std::string                          fileName;$/;"	m	class:dca::JsonReader
 filename	PsimagLite/src/IoSimple.h	/^				const char* filename() const $/;"	f	class:PsimagLite::IoSimple::In
 filename	PsimagLite/src/JSON/JsonParser/JsonParser.h	/^    std::string          filename;$/;"	m	class:JsonParser::JsonParser
@@ -3548,6 +3578,7 @@ gamma	PartialPsimag/Symmetry/CellParameters.h	/^    Field gamma;      \/**< The 
 gamma	PartialPsimag/Symmetry/MetricTensor.h	/^    Field  gamma()      const { return acos(cos_gamma())*180.0\/PI; }$/;"	f	class:psimag::MetricTensor
 gammaB1GkF	ferminator.h	/^		VectorType deltakF,vkF,gammaB1GkF;$/;"	m	class:rpa::ferminator
 gammaPP	pairing.h	/^		MatrixType gammaPP;$/;"	m	class:rpa::pairing
+gammaZ	pairing.h	/^		MatrixType gammaZ;$/;"	m	class:rpa::pairing
 gap	gap.h	/^		gap(const rpa::parameters<Field,MatrixTemplate>& parameters,$/;"	f	class:rpa::gap
 gap	gap.h	/^	class gap {$/;"	c	namespace:rpa
 gap2D	gaps2D.h	/^		gap2D() {}$/;"	f	class:rpa::gap2D
@@ -3584,6 +3615,7 @@ getBands	FourOrbital.h	/^		inline void getBands(const VectorType k, ComplexMatri
 getBands	KFe2Se2.h	/^		inline void getBands(const VectorType k, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::KFe2Se2
 getBands	SrRuO.h	/^		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::SrRuO
 getBands	bandstructure.h	/^		inline void getBands(const VectorType& k,$/;"	f	class:rpa::bandstructure
+getBands	bilayer.h	/^		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::BSCCObilayer
 getBands	bilayer.h	/^		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::bilayer
 getBands	bilayer.h	/^		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::bilayerFESC
 getBands	bilayer.h	/^		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::orthoIIBilayer
@@ -3676,6 +3708,7 @@ glueArgs	PsimagLite/scripts/FunctionParsing.pm	/^sub glueArgs$/;"	s
 glueArgs	PsimagLite/scripts/functionSigIndent.pl	/^sub glueArgs$/;"	s
 greensFunction	greensFunction.h	/^	class greensFunction:$/;"	c	namespace:rpa
 greensFunction	greensFunction.h	/^	greensFunction(const rpa::parameters<Field,MatrixTemplate>& parameters):$/;"	f	class:rpa::greensFunction
+gridspec	PythonScripts/Bandstructure_2orb.py	/^import matplotlib.gridspec as gridspec$/;"	i
 ground	PsimagLite/src/LanczosSolver.h	/^		void ground(RealType &s,int n, const TridiagonalMatrixType& ab,std::vector<RealType>& gs)$/;"	f	class:PsimagLite::LanczosSolver
 group	PartialPsimag/Symmetry/GroupMultiplicationTable.h	/^    GroupType                          group;$/;"	m	class:psimag::GroupMultiplicationTable
 group	PartialPsimag/Symmetry/Star.h	/^    GroupType                group;$/;"	m	class:psimag::Star
@@ -3722,8 +3755,13 @@ identity	PartialPsimag/Symmetry/CellRotation.h	/^    typedef enum { sixfoldInv=-
 ignore	PartialPsimag/TagAttributeParser.h	/^    const string     ignore;$/;"	m	class:psimag::TagAttributeParser
 ignoreTillSeperator	PartialPsimag/TagAttributeParser.h	/^    bool ignoreTillSeperator() {$/;"	f	class:psimag::TagAttributeParser
 ii	rpa.h	/^			ComplexType ii;$/;"	m	class:rpa::interaction
+ik_2_ikxiky	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def ik_2_ikxiky(self,ik):$/;"	m	class:RPA
+ikxiky_2_ik	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def ikxiky_2_ik(self,ikx,iky):$/;"	m	class:RPA
 imag	PsimagLite/src/Complex.h	/^	double imag(double t) { return 0.0; }$/;"	f	namespace:std
-imag	PythonScripts/Plot_chiRPA_qxqy.py	/^imag = False # Plot imaginary part of chi; otherwise real part$/;"	v
+imp	PythonScripts/Bandstructure_2orb.py	/^import imp$/;"	i
+imp	PythonScripts/Calc_lambda.py	/^import imp$/;"	i
+imp	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^import imp$/;"	i
+imp	PythonScripts/plotChiRPAAlongHighSym.py	/^import imp$/;"	i
 inOrder	PartialPsimag/Symmetry/Lattice.h	/^    CartesianTranslationType inOrder(size_t i) {$/;"	f	class:psimag::Lattice
 increment	PartialPsimag/MatrixLike.h	/^    MatrixLikeType& increment(MatrixLikeType& matrix,$/;"	f	namespace:psimag::MatrixLike
 increment	PartialPsimag/VectorLike.h	/^    VectorLikeType& increment(VectorLikeType& vector,$/;"	f	namespace:psimag::VectorLike
@@ -3969,6 +4007,12 @@ mat_	PsimagLite/src/ChebyshevSolver.h	/^		MatrixType const& mat_;$/;"	m	class:Ps
 mat_	PsimagLite/src/LanczosSolver.h	/^		MatrixType const& mat_;$/;"	m	class:PsimagLite::LanczosSolver
 mat_	PsimagLite/src/LanczosVectors.h	/^		const MatrixType& mat_;$/;"	m	class:PsimagLite::LanczosVectors
 matplotlib	Plot_ek_high_sym.dat.py	/^import matplotlib.pyplot as plt$/;"	i
+matplotlib	PythonScripts/Bandstructure_2orb.py	/^import matplotlib$/;"	i
+matplotlib	PythonScripts/Bandstructure_2orb.py	/^import matplotlib.gridspec as gridspec$/;"	i
+matplotlib	PythonScripts/Bandstructure_2orb.py	/^import matplotlib.pyplot as plt$/;"	i
+matplotlib	PythonScripts/Calc_lambda.py	/^import matplotlib$/;"	i
+matplotlib	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^import matplotlib$/;"	i
+matplotlib	PythonScripts/plotChiRPAAlongHighSym.py	/^import matplotlib$/;"	i
 matrixRank	PsimagLite/src/Geometry/GeometryFactory.h	/^		size_t matrixRank(size_t linSize,size_t maxEdof) const$/;"	f	class:PsimagLite::GeometryFactory
 matrixRank	PsimagLite/src/Geometry/KTwoNiFFour.h	/^		size_t matrixRank() const$/;"	f	class:PsimagLite::KTwoNiFFour
 matrixVectorProduct	PsimagLite/src/ChebyshevSolver.h	/^			void matrixVectorProduct (VectorType &x,const VectorType &y) const$/;"	f	class:PsimagLite::ChebyshevSolver::InternalMatrix
@@ -4017,6 +4061,7 @@ momentumDomain	momentumDomain.h	/^	class momentumDomain{$/;"	c	namespace:rpa
 momentumDomain1	chi0Ofq.h	/^		const momentumDomain<Field,psimag::Matrix>& momentumDomain1;$/;"	m	class:rpa::chi0ofq
 momentumDomain1	greensFunction.h	/^		momentumDomain<Field,psimag::Matrix> momentumDomain1;$/;"	m	class:rpa::greensFunction
 mpl	Plot_ek_high_sym.dat.py	/^import matplotlib as mpl$/;"	i
+mpl	PythonScripts/Bandstructure_2orb.py	/^import matplotlib as mpl$/;"	i
 msg	PsimagLite/src/JSON/OperationClosure.h	/^    std::string msg;$/;"	m	class:psimag::UnaryOperationClosure
 msize	chi0.h	/^		size_t msize;$/;"	m	class:rpa::calcChi0Matrix
 msize	chi0.h	/^		size_t nOrb, msize;$/;"	m	class:rpa::chi0q
@@ -4026,6 +4071,7 @@ msize	pairing.h	/^		size_t msize;$/;"	m	class:rpa::pairing
 msize	rpa.h	/^			size_t nOrb,msize;$/;"	m	class:rpa::interaction
 msize	rpa_CuO.h	/^			size_t nOrb,msize;$/;"	m	class:rpa::interactionEmery
 msize	susceptibility.h	/^			size_t msize;$/;"	m	class:rpa::susceptibility
+mu	bilayer.h	/^		Field t,tp,tpp,tperp,mu;$/;"	m	class:rpa::BSCCObilayer
 mu	parameters.h	/^		Field  mu;$/;"	m	class:rpa::parameters
 multiplicationTable	PartialPsimag/Symmetry/Star.h	/^    Matrix<int>              multiplicationTable;$/;"	m	class:psimag::Star
 multiplicationTable	PartialPsimag/Symmetry/SymmetryGroup.h	/^    GroupMultiplicationTableType             multiplicationTable;$/;"	m	class:psimag::SymmetryGroup
@@ -4119,6 +4165,7 @@ nbands	PythonScripts/MayaVi_Plot_of_FS.py	/^nbands = bands.shape[1]-3$/;"	v
 nbands	SrRuO.h	/^		FieldType nbands;$/;"	m	class:rpa::SrRuO
 nbands	bands.h	/^		FieldType nbands;$/;"	m	class:rpa::Bands
 nbands	bandstructure.h	/^		size_t nbands;$/;"	m	class:rpa::bandstructure
+nbands	bilayer.h	/^		FieldType nbands;$/;"	m	class:rpa::BSCCObilayer
 nbands	bilayer.h	/^		FieldType nbands;$/;"	m	class:rpa::bilayer
 nbands	bilayer.h	/^		FieldType nbands;$/;"	m	class:rpa::bilayerFESC
 nbands	bilayer.h	/^		FieldType nbands;$/;"	m	class:rpa::orthoIIBilayer
@@ -4142,7 +4189,6 @@ newState	PsimagLite/src/JSON/JsonParser/AugmentedStateTransitionTable.h	/^      
 next	PsimagLite/src/Range.h	/^		void next()$/;"	f	class:PsimagLite::Range
 next_	PsimagLite/src/RandomForTests.h	/^		int next_;$/;"	m	class:PsimagLite::RandomForTests
 nk	Plot_ek_high_sym.dat.py	/^nk = data.shape[0]$/;"	v
-nk	PythonScripts/Plot_chiRPA_qxqy.py	/^nk = unique(data[:,0]).shape[0]$/;"	v
 nk	bands.h	/^		size_t nk;$/;"	m	class:rpa::Bands
 nk	momentumDomain.h	/^		size_t nk;$/;"	m	class:rpa::momentumDomain
 nk	pairing.h	/^		const size_t& nOrb,nk;$/;"	m	class:rpa::pairing
@@ -4158,7 +4204,6 @@ nktot	momentumDomain.h	/^		size_t nktot;$/;"	m	class:rpa::momentumDomain
 nkx	PythonScripts/MayaVi_Plot_of_FS.py	/^nkx = int(sqrt(bands.shape[0]\/nkz))$/;"	v
 nky	PythonScripts/MayaVi_Plot_of_FS.py	/^nky=nkx$/;"	v
 nkz	PythonScripts/MayaVi_Plot_of_FS.py	/^nkz = unique(bands[:,2]).shape[0]$/;"	v
-nkz	PythonScripts/Plot_chiRPA_qxqy.py	/^nkz = unique(data[:,2]).shape[0]$/;"	v
 nkz	momentumDomain.h	/^		size_t nkz;$/;"	m	class:rpa::momentumDomain
 nonZero	PsimagLite/src/CrsMatrix.h	/^		int nonZero() const { return colind_.size(); }		$/;"	f	class:PsimagLite::CrsMatrix
 norm	PsimagLite/src/Complex.h	/^	double norm(double t)$/;"	f	namespace:std
@@ -4226,7 +4271,6 @@ occupants	PartialPsimag/Symmetry/Pattern.h	/^    std::vector<Occupant>   occupan
 occupants	PartialPsimag/Symmetry/PatternData.h	/^    Occupants        occupants;$/;"	m	class:psimag::PatternData
 of	PartialPsimag/Symmetry/Mat/MatDet.h	/^    static T of(const MatType& m) {$/;"	f	class:psimag::DET
 offset	PsimagLite/src/JSON/JSN_Writer.h	/^    mutable int  offset;$/;"	m	class:dca::JSN
-omega	PythonScripts/Plot_chiRPA_qxqy.py	/^omega = data[0,3]$/;"	v
 omega	susceptibility.h	/^			VectorType omega;$/;"	m	class:rpa::susceptibility
 omega1	PsimagLite/src/PlotParams.h	/^	RealType omega1;$/;"	m	struct:PsimagLite::PlotParams
 omega2	PsimagLite/src/PlotParams.h	/^	RealType omega2;$/;"	m	struct:PsimagLite::PlotParams
@@ -4654,6 +4698,9 @@ origin	PartialPsimag/Symmetry/SpaceGroupData2D.h	/^    static const std::string 
 origional	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    BaseType origional;$/;"	m	class:psimag::HermiteNormalForm
 orthoIIBilayer	bilayer.h	/^		orthoIIBilayer(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):$/;"	f	class:rpa::orthoIIBilayer
 orthoIIBilayer	bilayer.h	/^	class orthoIIBilayer {$/;"	c	namespace:rpa
+os	PythonScripts/Calc_lambda.py	/^import os$/;"	i
+os	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^import os$/;"	i
+os	PythonScripts/plotChiRPAAlongHighSym.py	/^import os$/;"	i
 otherIndex	PartialPsimag/Symmetry/MetricTensor.h	/^    size_t otherIndex(size_t i, size_t j) {$/;"	f	class:psimag::MetricTensor
 owner	PartialPsimag/Matrix.h	/^    bool owner;$/;"	m	class:psimag::Matrix
 pageFaults	PsimagLite/src/Rusage.h	/^		long pageFaults() const { return rusage_.ru_majflt; }$/;"	f	class:PsimagLite::Rusage
@@ -4670,6 +4717,7 @@ param	KFe2Se2.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>&
 param	SrRuO.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;$/;"	m	class:rpa::SrRuO
 param	bands.h	/^		const rpa::parameters<Field,MatrixTemplate>& param;$/;"	m	class:rpa::Bands
 param	bandstructure.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;$/;"	m	class:rpa::bandstructure
+param	bilayer.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;$/;"	m	class:rpa::BSCCObilayer
 param	bilayer.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;$/;"	m	class:rpa::bilayer
 param	bilayer.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;$/;"	m	class:rpa::bilayerFESC
 param	bilayer.h	/^		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;$/;"	m	class:rpa::orthoIIBilayer
@@ -4716,6 +4764,7 @@ permuteInverse	PsimagLite/src/CrsMatrix.h	/^	void permuteInverse(CrsMatrix<S> &A
 pfh	PsimagLite/src/Pthreads.h	/^	PthreadFunctionHolderType* pfh;$/;"	m	struct:PthreadFunctionStruct
 phaseFactor	bandstructure.h	/^		inline void phaseFactor(const VectorType& kOrg, ComplexMatrixType& eigenvects) {$/;"	f	class:rpa::bandstructure
 pi_f	parameters.h	/^		const Field pi_f;$/;"	m	class:rpa::parameters
+pickle	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^import _pickle as pickle$/;"	i
 pivotColumn	PartialPsimag/Symmetry/Mat/HermiteNormalForm.h	/^    size_t pivotColumn(size_t row) const {$/;"	f	class:psimag::HermiteNormalForm
 pivots	PartialPsimag/Matrix.h	/^    std::vector<int> pivots;$/;"	m	class:psimag::GESV
 pivots	PartialPsimag/Matrix.h	/^    std::vector<int> pivots;$/;"	m	class:psimag::INVERT
@@ -4728,9 +4777,14 @@ plot	PsimagLite/src/ChebyshevSerializer.h	/^		void plot(PlotDataType& result,$/;
 plot	PsimagLite/src/ContinuedFraction.h	/^		void plot(PlotDataType& result,const PlotParamsType& params) const$/;"	f	class:PsimagLite::ContinuedFraction
 plot	PsimagLite/src/ContinuedFractionCollection.h	/^		void plot($/;"	f	class:PsimagLite::ContinuedFractionCollection
 plotAll	PsimagLite/drivers/continuedFractionCollection.cpp	/^void plotAll(const ContinuedFractionCollectionType& cfCollection,$/;"	f
+plotBandstructure	PythonScripts/Bandstructure_2orb.py	/^def plotBandstructure(fileID = ""):$/;"	f
 plotOne	PsimagLite/src/ContinuedFractionCollection.h	/^		void plotOne($/;"	f	class:PsimagLite::ContinuedFractionCollection
 plotOneByOne	PsimagLite/drivers/continuedFractionCollection.cpp	/^void plotOneByOne(const ContinuedFractionCollectionType& cfCollection,$/;"	f
+plot_colourline	PythonScripts/Bandstructure_2orb.py	/^	def plot_colourline(x,y,c,ax):$/;"	f	function:plotBandstructure
+plotchi	PythonScripts/Plot_chiRPA_qxqy.py	/^def plotchi(file="chiRPA.txt"):$/;"	f
+plotchi	PythonScripts/plotChiRPAAlongHighSym.py	/^def plotchi(U,Up,J,Jp):$/;"	f
 plt	Plot_ek_high_sym.dat.py	/^import matplotlib.pyplot as plt$/;"	i
+plt	PythonScripts/Bandstructure_2orb.py	/^import matplotlib.pyplot as plt$/;"	i
 plusOrigin	PartialPsimag/Symmetry/CartesianTranslation.h	/^    CartesianPositionType plusOrigin() const {$/;"	f	class:psimag::CartesianTranslation
 pointGroup	PartialPsimag/Symmetry/Symmetry.h	/^    SymmetryGroupType            pointGroup;$/;"	m	class:psimag::Symmetry
 pointGroupAppliedElements	PartialPsimag/Symmetry/SymmetryGroup.h	/^    AppliedSymmetryElementsPtrType pointGroupAppliedElements() const {$/;"	f	class:psimag::SymmetryGroup
@@ -5113,6 +5167,7 @@ save	PsimagLite/src/ContinuedFractionCollection.h	/^		void save(IoOutputType& io
 save	PsimagLite/src/LineMarker.h	/^		void save(IoOutputType& io) const$/;"	f	class:PsimagLite::LineMarker
 save	PsimagLite/src/SampleCRSMatrix.h	/^		void save(SomeIoOutputType& io) const$/;"	f	class:PsimagLite::SampleCRSMatrix
 save	PsimagLite/src/TridiagonalMatrix.h	/^		void save(IoOutputType& io) const$/;"	f	class:PsimagLite::TridiagonalMatrix
+saveObj	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def saveObj(self,dirname=""):$/;"	m	class:RPA
 saveVector	PsimagLite/src/SampleCRSMatrix.h	/^		void saveVector(SomeIoOutputType& io,const std::vector<SomeFieldType>& v) const$/;"	f	class:PsimagLite::SampleCRSMatrix
 scState	parameters.h	/^		size_t scState;$/;"	m	class:rpa::parameters
 scalarProd	momentumDomain.h	/^		FieldType scalarProd(const VectorType& a, const VectorType& b) const {$/;"	f	class:rpa::momentumDomain
@@ -5207,9 +5262,11 @@ setupExchangeMatrix	rpa_CuO.h	/^		void setupExchangeMatrix() {$/;"	f	class:rpa::
 setupGMatrix	sepBasis.h	/^		void setupGMatrix() {$/;"	f	class:rpa::sepBasis
 setupInteractionMatrix	rpa.h	/^		void setupInteractionMatrix() {$/;"	f	class:rpa::interaction
 setupLMatrix	bandstructure.h	/^		void setupLMatrix() {$/;"	f	class:rpa::bandstructure
+setupMomentumTables	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def setupMomentumTables(self):$/;"	m	class:RPA
 setupOrbitalIndices	parameters.h	/^			void setupOrbitalIndices(){$/;"	f	class:rpa::parameters
 setupQandOmegaMesh	susceptibility.h	/^		void setupQandOmegaMesh(size_t nq1, size_t nq2, size_t nq3, $/;"	f	class:rpa::susceptibility
 setupVBare	rpa_CuO.h	/^		void setupVBare(std::vector<Field>& q) {$/;"	f	class:rpa::interactionEmery
+setup_kgrid	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^	def setup_kgrid(self):$/;"	m	class:RPA
 sharedMemory	PsimagLite/src/Rusage.h	/^		long sharedMemory() const { return rusage_.ru_ixrss; }$/;"	f	class:PsimagLite::Rusage
 shift	momentumDomain.h	/^		VectorType shift;$/;"	m	class:rpa::momentumDomain
 shiftPattern	PartialPsimag/Symmetry/Pattern.h	/^    void shiftPattern(const CartesianTranslationType&  originShift) {$/;"	f	class:psimag::Pattern
@@ -5351,7 +5408,12 @@ symmetryOperation	PartialPsimag/Symmetry/SymmetryOperation.h	/^  SymmetryOperati
 symmetryOperation	PartialPsimag/Symmetry/SymmetryOperation.h	/^  SymmetryOperation<Field,2,Algorithms> symmetryOperation(IN_TYPE x1, IN_TYPE x2,$/;"	f	namespace:psimag
 symmetryOperation	PartialPsimag/Symmetry/SymmetryOperation.h	/^  SymmetryOperation<Field,3,Algorithms> symmetryOperation(IN_TYPE x1, IN_TYPE x2, IN_TYPE x3,$/;"	f	namespace:psimag
 sys	Plot_ek_high_sym.dat.py	/^import sys$/;"	i
+sys	PythonScripts/Bandstructure_2orb.py	/^import sys$/;"	i
+sys	PythonScripts/Calc_lambda.py	/^import sys$/;"	i
+sys	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^import sys$/;"	i
 sys	PythonScripts/Plot_chiRPA_qxqy.py	/^import sys$/;"	i
+sys	PythonScripts/plotChiRPAAlongHighSym.py	/^import sys$/;"	i
+t	bilayer.h	/^		Field t,tp,tpp,tperp,mu;$/;"	m	class:rpa::BSCCObilayer
 tagAttributes	PartialPsimag/TagAttributes.h	/^    std::map<std::string, std::string>& tagAttributes;$/;"	m	class:psimag::TagAttributesClosure
 targetLattice	PartialPsimag/Symmetry/FloodTiler.h	/^    LatticeType                     targetLattice;$/;"	m	class:psimag::FloodTiler
 tbfile	parameters.h	/^		std::string tbfile;$/;"	m	class:rpa::parameters
@@ -5376,6 +5438,9 @@ tileLattice	PartialPsimag/Symmetry/FloodTiler.h	/^    const LatticeType&        
 tilePattern	PartialPsimag/Symmetry/FloodTiler.h	/^    const PatternType&              tilePattern;$/;"	m	class:psimag::FloodTiler
 tiledPatternData	PartialPsimag/Symmetry/FloodTiler.h	/^    PatternDataType                 tiledPatternData;$/;"	m	class:psimag::FloodTiler
 time	PsimagLite/src/Rusage.h	/^		std::pair<size_t,size_t> time(size_t userOrSystem = USER_TIME) const$/;"	f	class:PsimagLite::Rusage
+time	PythonScripts/Calc_lambda.py	/^import time$/;"	i
+time	PythonScripts/Calc_lambda_bilayer_fullBZ.py	/^import time$/;"	i
+time	PythonScripts/plotChiRPAAlongHighSym.py	/^import time$/;"	i
 times	PartialPsimag/MatrixLike.h	/^    MatrixLikeType& times(MatrixLikeType& matrix,$/;"	f	namespace:psimag::MatrixLike
 times	PartialPsimag/VectorLike.h	/^    VectorLikeType& times(VectorLikeType& vector,$/;"	f	namespace:psimag::VectorLike
 times	PsimagLite/src/JSON/MatrixLike.h	/^    MatrixLikeType& times(MatrixLikeType& matrix,$/;"	f	namespace:psimag::MatrixLike
@@ -5442,6 +5507,9 @@ tolerance	PsimagLite/src/ParametersForSolver.h	/^		RealType tolerance;$/;"	m	str
 total_	PsimagLite/src/ConcurrencySerial.h	/^		size_t total_;$/;"	m	class:PsimagLite::ConcurrencySerial
 total_	PsimagLite/src/Range.h	/^		size_t total_; \/\/ total number of indices total_(total),$/;"	m	class:PsimagLite::Range
 total_	PsimagLite/src/Range.h	/^		size_t total_; \/\/ total number of indices$/;"	m	class:PsimagLite::Range
+tp	bilayer.h	/^		Field t,tp,tpp,tperp,mu;$/;"	m	class:rpa::BSCCObilayer
+tperp	bilayer.h	/^		Field t,tp,tpp,tperp,mu;$/;"	m	class:rpa::BSCCObilayer
+tpp	bilayer.h	/^		Field t,tp,tpp,tperp,mu;$/;"	m	class:rpa::BSCCObilayer
 trace	PartialPsimag/Symmetry/SymmetryElement.h	/^    Field                   trace;$/;"	m	class:psimag::SymmetryElement
 trace	PartialPsimag/Symmetry/SymmetryOperation.h	/^    Field trace() const {$/;"	f	class:psimag::SymmetryOperation
 trace	PsimagLite/src/JSON/JsonParser/DefaultContext.h	/^    bool                      trace;$/;"	m	class:JsonParser::DefaultContext
@@ -5577,18 +5645,14 @@ writeVTK	PartialPsimag/VectorLike.h	/^    void writeVTK(const VectorLikeType& ve
 writeVTK	PsimagLite/src/JSON/MatrixLike.h	/^    void writeVTK(const MatrixLikeType& matrix,$/;"	f	namespace:psimag::MatrixLike
 writer	PsimagLite/src/JSON/JSN_Writer.h	/^      JSN& writer;$/;"	m	class:dca::JSN::KeyReference
 writers	PsimagLite/src/JSON/JSN_Writer.h	/^    MapType<std::string, ThisType>                   writers;$/;"	m	class:dca::JSN
-x	PythonScripts/Plot_chiRPA_qxqy.py	/^x = data[:,0].reshape(nk,nk)\/pi$/;"	v
 x0	PsimagLite/src/AkimaSpline.h	/^		RealType x0,x1,a0,a1,a2,a3;$/;"	m	struct:AkimaSpline::AkimaStruct
 x1	PsimagLite/src/AkimaSpline.h	/^		RealType x0,x1,a0,a1,a2,a3;$/;"	m	struct:AkimaSpline::AkimaStruct
 xIntercept	PartialPsimag/Symmetry/SeitzPosition.h	/^  SeitzPosition<Field,2> xIntercept(const SeitzPosition<Field,2>& position1, $/;"	f	namespace:psimag
 x_	PsimagLite/src/Sort.h	/^			const std::vector<PairType>& x_;$/;"	m	class:Sort::Compare
-y	PythonScripts/Plot_chiRPA_qxqy.py	/^y = data[:,1].reshape(nk,nk)\/pi$/;"	v
 yIntercept	PartialPsimag/Symmetry/SeitzPosition.h	/^  SeitzPosition<Field,2> yIntercept(const SeitzPosition<Field,2>& position1, $/;"	f	namespace:psimag
 y_	PsimagLite/src/ChebyshevSolver.h	/^			mutable VectorType y_;$/;"	m	class:PsimagLite::ChebyshevSolver::InternalMatrix
 y_	PsimagLite/src/LinearPrediction.h	/^		std::vector<FieldType> y_;$/;"	m	class:PsimagLite::LinearPrediction
-z	PythonScripts/Plot_chiRPA_qxqy.py	/^z=data[:,column]$/;"	v
 z_	PsimagLite/src/LanczosVectors.h	/^		VectorType z_;$/;"	m	class:PsimagLite::LanczosVectors
-zmax	PythonScripts/Plot_chiRPA_qxqy.py	/^zmax=ax.get_zlim()[1]$/;"	v
 ~CartesianRotation	PartialPsimag/Symmetry/CartesianRotation.h	/^    ~CartesianRotation() {$/;"	f	class:psimag::CartesianRotation
 ~CellRotation	PartialPsimag/Symmetry/CellRotation.h	/^    ~CellRotation() {$/;"	f	class:psimag::CellRotation
 ~ConcurrencyMpi	PsimagLite/src/ConcurrencyMpi.h	/^		~ConcurrencyMpi()$/;"	f	class:PsimagLite::ConcurrencyMpi

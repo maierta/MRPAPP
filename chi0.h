@@ -178,6 +178,7 @@ namespace rpa {
 						gap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off
 						r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);
 
+
 						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
 							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
 							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
@@ -189,6 +190,10 @@ namespace rpa {
 							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
 
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
+
+							// std::cout << "k,r1===== " << k << "," <<r1 <<  "\n";
+
+
 							chi0matrix(i,j) += c1*r1 ;
 
 							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += imag(c1*r1);
@@ -345,17 +350,20 @@ namespace rpa {
 					                       // * akq(l1,band1) * conj(akq(l3,band1));
 
 							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
-							// if (l1==0 && l2==0 && l3==3 && l4==3 && band1==band2 && abs(r1)>=1.0) std::cout << "band1,band2,c1: " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<","<<c1<<","<<r1 << ","<<ekq[band1]<<","<<ek[band2]<<"\n";
+							// if (l1==0 && l2==0 && l3==0 && l4==0 && band1==band2) std::cout << "band1,band2,c1: " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<","<<c1<<","<<r1 << ","<<ekq[band1]<<","<<ek[band2]<<"\n";
+							// if (l1==l2 && l3==l4) std::cout << "l1,l2,l3,l4,band1,band2,c1: " << l1 << " , " << l2 << " , " << l3 << " , " << l4 << " , " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<"," << r1 << " , " <<c1<<"," <<ekq[band1]<<","<<ek[band2]<<"\n";
 
 							chi0matrix(i,j) += r1*c1 ;
 							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += real(c1*r1);
-
+							// if (i==0 && j==0) std::cout << "chi0matrix " << chi0matrix(i,j) << "\n";
 						}
 					}
 				}
 			}
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
 					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+					// std::cout << i <<","<<j<<","<<chi0matrix(i,j);
+				}
 			chi0matrix.setLowerTriangle();
 			if (kMap_) printChi0k(q);
 
@@ -634,7 +642,7 @@ namespace rpa {
 			for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) {
 				os << imag(chiField[iq](l1,l2))<< " , ";
 			}
-			os << chiField[iq].calcSus();
+			os << real(chiField[iq].calcSus());
 			os << "\n";
 		}
 	}

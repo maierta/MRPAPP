@@ -481,6 +481,44 @@ namespace rpa {
 					calcKF(nkSearch,iSheet,kz,3);
 				}
 			}
+		} else if (Case_ == "BSCCObilayer_OD_1band") {
+			// 1 FS sheets total with two different kz, one around (pi,pi,0), one around (pi,pi,pi)
+
+			nSheets = 1;
+			nTotal = nSheets * nkPerSheet * param.FSnkz;
+			resizeContainers();
+
+			FSCenters[0][0] =  Pi; FSCenters[0][1] = Pi;
+			FSBand   [0]    =   0;
+
+			size_t nkSearch(256);
+
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
+				if (conc.rank()==0) std::cout << "Sheet nr. " << iSheet << "\n";
+				for (size_t ikz=0;ikz<param.FSnkz;ikz++) {
+					FieldType kz(param.kz2D);
+					if (param.FSnkz > 1) kz = float(ikz)*2.*param.pi_f/float(param.FSnkz)-param.pi_f;
+					calcKF(nkSearch,iSheet,kz,3);
+				}
+			}
+		} else if (Case_ == "BSCCObilayer_OD_1band_onlyA") {
+			// 1 FS sheets total with only one kz given by param.kz2D
+
+			nSheets = 1;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] =  Pi; FSCenters[0][1] = Pi;
+			FSBand   [0]    =   0;
+
+			size_t nkSearch(256);
+
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
+				if (conc.rank()==0) std::cout << "Sheet nr. " << iSheet << "\n";
+				FieldType kz(param.kz2D);
+				if (conc.rank()==0) std::cout << "FS for kz = " << kz << "\n";
+				calcKF(nkSearch,iSheet,kz,3);
+			}
 		} else if (Case_ == "KFeAs_10Orbit_2D") {
 			// 3 FS sheets total around (0,0), neglecting tiny electron pockets near (pi,pi)
 			nSheets = 3;
@@ -582,6 +620,20 @@ namespace rpa {
 			size_t nkSearch(256);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
 
+		} else if (Case_ == "BSCCObilayer_beyOD") {
+			// beyond overdoped --> 
+			// 1-band Hubbard bilayer; 2 bands total. 2 FS sheets, 1 closed around (pi,pi)
+			// 1 closed around Gamma
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = Pi  ; FSCenters[0][1] = Pi  ; FSBand[0]  =  0;
+			FSCenters[1][0] = 0   ; FSCenters[1][1] = 0   ; FSBand[1]  =  1;
+
+			size_t nkSearch(256);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
 		} else if (Case_ == "Raghu") {
 			// 2 bands, 4 FS sheets, 1 around Gamma, 1 around (pi,pi), 1 around X, 1 around Y 
 			nSheets = 4;
@@ -619,13 +671,23 @@ namespace rpa {
 			size_t nkSearch(256);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
 
-		} else if (Case_ == "1band") {
+		} else if (Case_ == "1band_M") {
 			// 2D 1-band Hubbard; 1 band, 1 FS sheet. Here we assume that it is closed around (pi,pi)
 			nSheets = 1;
 			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
 			FSCenters[0][0] = Pi  ; FSCenters[0][1] = Pi  ; FSBand[0]  =  0;
+
+			size_t nkSearch(256);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+		} else if (Case_ == "1band_Gamma") {
+			// 2D 1-band Hubbard; 1 band, 1 FS sheet. Here we assume that it is closed around (0,0)
+			nSheets = 1;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = 0  ; FSCenters[0][1] = 0  ; FSBand[0]  =  0;
 
 			size_t nkSearch(256);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
@@ -988,7 +1050,8 @@ namespace rpa {
 	}
 
 	void writeKF() {
-		std::ofstream os("FSpoints.txt");
+		std::string filename = "FSpoints_" + param.fileID + ".txt";
+		std::ofstream os(filename);
 		int width(8);
 		os.precision(width);
 		os << std::fixed;

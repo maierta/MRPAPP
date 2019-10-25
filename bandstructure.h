@@ -189,6 +189,9 @@ namespace rpa {
 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
 			s.getBands(k,eigenvals,eigenvects);
+#elif USE_BILAYER_1BAND
+			bilayer<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
+			s.getBands(k,eigenvals,eigenvects);
 #elif USE_BSCCObilayer
 			BSCCObilayer<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
 			s.getBands(k,eigenvals,eigenvects);

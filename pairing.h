@@ -88,12 +88,16 @@ namespace rpa {
 		interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa;
 		SuscType chiRPAs;
 		SuscType chiRPAc;
+		SuscType chi0s;
+		SuscType chi0c;
 		ComplexMatrixType temps;
 		ComplexMatrixType tempc;
 	
 		MatrixType gammaPP;
+		MatrixType gammaZ;
 		FieldType paritySign;
 		VectorType normalization;
+		VectorType Zofk;
 
 		size_t nTotal;
 		std::vector<SuscType> chiStore;
@@ -127,11 +131,15 @@ namespace rpa {
 			rpa(param),
 			chiRPAs(param,conc),
 			chiRPAc(param,conc),
+			chi0s(param,conc),
+			chi0c(param,conc),
 			temps(msize,msize),
 			tempc(msize,msize),
 			gammaPP(0,0),
+			gammaZ(0,0),
 			paritySign(param.pairingSpinParity?-1.0:1.0), // 1=triplet,0=singlet
 			normalization(0,0),
+			Zofk(0,0),
 			nTotal(0),
 			chiStore(0,SuscType(param,conc)),
 			qStore(0,VectorType(3)),
@@ -145,13 +153,21 @@ namespace rpa {
 			nTotal = (nkF * nkF + nkF) / 2;
 			// nTotal = nkF * nkF;
 			gammaPP.resize(nkF,nkF);
+			
+			gammaZ.resize(nkF,nkF);
+
 			normalization.resize(nkF);
+			Zofk.resize(nkF);
 			// if (param.Case=="Emery") {
 			// 	std::cout << "Setting parameters to zero!!!!!!!!!\n";
 			// 	interpolateChi_ = 0;
 			// 	storeChi_ = 0 ;
 			// 	readChi_ = 0;
 			// }
+			std::ostringstream ss;
+			ss << param.temperature;
+			std::string tempStr(ss.str());
+			std::string filenameChiPP("chiPairing_" + param.fileID + "_T_" + tempStr + ".txt");
 			if (interpolateChi_==0)	{
 				kMesh.set_momenta(false); // for chi claculation
 				if (storeChi_==1 || readChi_==1) {
@@ -159,7 +175,7 @@ namespace rpa {
 					qStore.resize(nTotal,VectorType(3));
 				}
 				if (readChi_ == 1) {
-					if (conc.rank()==0) readChiqTxt2(qStore,chiStore,param.chifile);
+					if (conc.rank()==0) readChiqTxt2(qStore,chiStore,filenameChiPP);
 					std::cout << "ChiFile was read in \n";
 					for (size_t iq=0;iq<qStore.size();iq++) {
 						conc.broadcast(qStore[iq]);
@@ -176,11 +192,12 @@ namespace rpa {
 				for (size_t iq=0; iq<nTotal; iq++) chiStore[iq].allReduce();
 			}
 			if (conc.rank()==0) {
+				calcZofk();
 				writeGammaPPAndNorm();
 				calcEigenVectors();
 				writeMatrixElementsOnFs();
 				if (interpolateChi_==0 && storeChi_==1 && readChi_==0) {
-					writeChiqTxt2(qStore,chiStore,"chiTest.txt");
+					writeChiqTxt2(qStore,chiStore,filenameChiPP);
 				}
 			}
 		}
@@ -202,16 +219,19 @@ namespace rpa {
 			typedef PsimagLite::Range<ConcurrencyType> RangeType;
 			RangeType range(0,nTotal,conc);
 			VectorType Container(nTotal);
+			VectorType ContainerZ(nTotal);
 			VectorType Container2(nTotal);
 
 			std::vector<FieldType> k1(3);
 			std::vector<FieldType> k2(3);
 			std::vector<FieldType> q(3);
-			FieldType term1(0.0);
+			FieldType GammaPPkkp(0.0);
+			FieldType GammaZkkp(0.0);
 			FieldType chiTerm(0.0);
 			// FieldType term2(0.0);
 
-			std::ofstream os("GammaPPOrb.txt");
+			std::string filename = "GammaPPOrb_" + param.fileID + ".txt";
+			std::ofstream os(filename);
 			os << "#i\t j\t l1\t l2\t l3\t l4\t Gammma_{l1,l2,l3,l4}(k_i,k_j)\n";
 
 			for (;!range.end();range.next()) {
@@ -228,22 +248,25 @@ namespace rpa {
 				// q = kF1-kF2
 				for (int l=0;l<3;l++) q[l] = k1[l]-k2[l];
 				// for (int l=0;l<3;l++) q[l] = k2[l]-k1[l];
-				if (param.Case == "Emery") calcGammaPPEmery(q,k1,k2,ik1,ik2,band1,band2,term1,os);
+				if (param.Case == "Emery") calcGammaPPEmery(q,k1,k2,ik1,ik2,band1,band2,GammaPPkkp,os);
 				
-				else calcGammaPPTerms(ind,q,k1,k2,ik1,ik2,band1,band2,term1,chiTerm,os);
-				Container[ind] = term1;
+				else calcGammaPPTerms(ind,q,k1,k2,ik1,ik2,band1,band2,GammaPPkkp,GammaZkkp,chiTerm,os);
+				Container[ind] = GammaPPkkp;
+				ContainerZ[ind] = GammaZkkp;
 				Container2[ind] = chiTerm;
 				if (conc.rank()==0) std::cout << "now calculating " << ind 
 					                          << " of " << nTotal << 
 					                             " terms with ik1=" << ik1 
 					                          << " and ik2="<<ik2<<
-					                             " term1=" << term1 << " , " 
+					                             " GammaPPkkp=" << GammaPPkkp << " , " 
+					                             " GammaZkkp=" << GammaZkkp << " , " 
 					                          << "chiTerm=" << chiTerm <<
 					                             "\n";
                  // }
 			}
 
 			conc.reduce(Container);
+			conc.reduce(ContainerZ);
 			conc.reduce(Container2);
 			os.close();
 			if (conc.rank()==0) {
@@ -252,6 +275,8 @@ namespace rpa {
 					size_t j = indToj[ind];
 					gammaPP(i,j) = Container[ind];
 					gammaPP(j,i) = gammaPP(i,j);
+					gammaZ(i,j)  = ContainerZ[ind];
+					gammaZ(j,i)  = gammaZ(i,j);
 					chikk(i,j) = Container2[ind];
 					chikk(j,i) = chikk(i,j);
 				}
@@ -271,6 +296,7 @@ namespace rpa {
 			ComplexMatrixType chi0(3,3); //not needed (dummy)
 			ComplexMatrixType chi0_g(19,3); //not needed (dummy)
 			
+			FieldType dummy(0.0); // dummy float for Gamma_Z, which is not calculated for Emery model 
 			
 			calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
      	           calcChi0(param,kMesh,bands,q,conc,chi0,chi0_g,chi0_gg);
@@ -302,7 +328,7 @@ namespace rpa {
 
 			calcGammaPPOrbEmery(GammaS,GammaC,bareSpin,bareCharge,k1,k2,temps);
 
-			calcGammaPPBand(temps,ik1,ik2,k1,k2,band1,band2,result,os);
+			calcGammaPPBand(temps,temps,ik1,ik2,k1,k2,band1,band2,result,dummy,os);
 		}
 
 		void calcGammaPPOrbEmery(ComplexMatrixType& GammaS, ComplexMatrixType& GammaC, 
@@ -344,7 +370,8 @@ namespace rpa {
 		void calcGammaPPTerms(size_t ind,std::vector<FieldType> q, 
 							  VectorType& k1, VectorType& k2, size_t ik1,size_t ik2,
 							  size_t band1, size_t band2, 
-							  FieldType& result,
+							  FieldType& resultPP,
+							  FieldType& resultZ,
 							  FieldType& chiTerm,
 							  std::ofstream& os) {
 			// SuscType* chiq;
@@ -374,13 +401,21 @@ namespace rpa {
 			// if (ik1==0 && ik2==24) std::cout << "in calcGammaPPTerms: chiRPAs=" << chiRPAs.calcSus() << "\n";
 			rpa.calcRPAResult(chiq,rpa.chargeMatrix,chiRPAc,q);
 			// if (conc.rank()==0) std::cout << "in calcGammaPPTerms: chiRPAc=" << chiRPAc.calcSus() << "\n";
+			
 			matMul(chiRPAs,rpa.spinMatrix,temps);
-			matMul(chiRPAc,rpa.chargeMatrix,tempc);
 			matMul(rpa.spinMatrix,temps,chiRPAs);
+			matMul(chiRPAc,rpa.chargeMatrix,tempc);
 			matMul(rpa.chargeMatrix,tempc,chiRPAc);
+			
+			if (param.calcLambdaZ) {
+				matMul(chiq,rpa.spinMatrix,temps);
+				matMul(rpa.spinMatrix,temps,chi0s);
+				matMul(chiq,rpa.chargeMatrix,tempc);
+				matMul(rpa.chargeMatrix,tempc,chi0c);
+			}
 			// std::vector<std::complex<double> > chiRow(25,0);
 			// if (ik1==0&&ik2==24) std::cout << "in calcGammaPPTerms chiRPAs=" << chiRPAs.calcSus() << "\n";
-			calcGammaPPOrb(rpa.spinMatrix,chiRPAs,rpa.chargeMatrix,chiRPAc,temps);
+			calcGammaPPOrb(chi0s,chi0c,rpa.spinMatrix,chiRPAs,rpa.chargeMatrix,chiRPAc,temps,tempc);
 
 			// if (storeGammaOrb_)	{
 			// 	for (size_t i=0; i < msize; i++) for (size_t j=0; j < msize; j++) {
@@ -392,15 +427,18 @@ namespace rpa {
 			// 	}
 			// }
 
-			calcGammaPPBand(temps,ik1,ik2,k1,k2,band1,band2,result,os);
+			calcGammaPPBand(temps,tempc,ik1,ik2,k1,k2,band1,band2,resultPP,resultZ,os);
 			// if (ik1==0&&ik2==40) std::cout << "in calcGammaPPTerms result=" << result << "\n";
 		}
 
-		void calcGammaPPOrb(const ComplexMatrixType& ms,
+		void calcGammaPPOrb(const ComplexMatrixType& usc0us,
+							const ComplexMatrixType& ucc0uc,
+							const ComplexMatrixType& ms,
      						const ComplexMatrixType& ucsu, 
      						const ComplexMatrixType& mc,
      						const ComplexMatrixType& uccu,
-     						      ComplexMatrixType& result) {
+     						      ComplexMatrixType& resultPP,
+     						      ComplexMatrixType& resultZ) {
 										  	
 			for (size_t l1=0; l1<nOrb; l1++) {
 				for (size_t l2=0; l2<nOrb; l2++) {
@@ -411,12 +449,17 @@ namespace rpa {
 							size_t ind3 = ind1;
 							size_t ind4 = ind2;
 							if (param.pairingSpinParity==0) { // Singlet vertex
-								result(ind1,ind2) = 0.5*(ms(ind3,ind4)-mc(ind3,ind4))*param.staticUFactor 
+								resultPP(ind1,ind2) = 0.5*(ms(ind3,ind4)-mc(ind3,ind4))*param.staticUFactor 
 							                      - 0.5*uccu(ind3,ind4)*param.chargeFactor
 							                      + 3./2.*ucsu(ind3,ind4)*param.spinFactor;
 		                    } else if (param.pairingSpinParity==1) { // Triplet vertex
-								result(ind1,ind2) =  -0.5*uccu(ind3,ind4) - 0.5*ucsu(ind3,ind4);
+								resultPP(ind1,ind2) =  -0.5*uccu(ind3,ind4) - 0.5*ucsu(ind3,ind4);
 							}
+							if (param.calcLambdaZ) {
+								resultZ = 0.5*uccu(ind3,ind4)*param.chargeFactor 
+									    + 1.5*ucsu(ind3,ind4)*param.spinFactor
+									    - 0.5*(usc0us(ind3,ind4) + ucc0uc(ind3,ind4));
+								}
 						}
 					}
 				}
@@ -424,12 +467,14 @@ namespace rpa {
 		}
 
 		void calcGammaPPBand(const ComplexMatrixType& gammaOrb, 
+							 const ComplexMatrixType& gammaOrbZ, 
 							 size_t ik1, size_t ik2,
 							 VectorType& k1, 
 							 VectorType& k2, 
 							 size_t band1,
 							 size_t band2,
-							 FieldType& result,
+							 FieldType& resultPP,
+							 FieldType& resultZ,
 							 std::ofstream& os) {
 
 			VectorType ek1(nOrb,0);
@@ -449,8 +494,10 @@ namespace rpa {
 			bands.getEkAndAk(km,ek2,ak2m,-1);
 
 
-			result = FieldType(0.0);
+			resultPP = FieldType(0.0);
+			resultZ  = FieldType(0.0);
 			ComplexType c2(0.0,0.0);
+			ComplexType c4(0.0,0.0);
 			for (size_t l1=0; l1<nOrb; l1++) for (size_t l2=0; l2<nOrb; l2++) {
 			for (size_t l3=0; l3<nOrb; l3++) for (size_t l4=0; l4<nOrb; l4++) {
 				size_t ind1 = l2+l1*nOrb;	
@@ -468,8 +515,13 @@ namespace rpa {
 				
 				ComplexType c1 = ak2(l2,band2) * ak2m(l3,band2)*     // works for Emery model and general case!!!
                                  conj(ak1(l1,band1)) * conj(ak1m(l4,band1)); // as in Kreisel et al. PRB 88, 094522
-
                 c2 += c1*gammaOrb(ind1,ind2);
+
+				if (param.calcLambdaZ) {
+					ComplexType c3 = ak2(l2,band2) * conj(ak2(l4,band2))*     // for Gamma_Z
+	                                 conj(ak1(l1,band1)) * ak1(l3,band1); 
+	                c4 += c3*gammaOrb(ind1,ind2);
+	            }
                 
 
 				if (storeGammaOrb_)	{
@@ -484,7 +536,9 @@ namespace rpa {
 		        // result += real(c1*gammaOrb(ind1,ind2));
 			}
 			}
-			result = real(c2);
+
+			resultPP = real(c2);
+			resultZ = real(c4);
 			// if (conc.rank()==0) std::cout << "c2 = " << c2 << "\n";
 						 	
 		 }
@@ -520,7 +574,8 @@ namespace rpa {
 			// std::cout << "kFx1,kFy1" << kFx[0] << "," << kFy[0];
 			// First in a format suitable for reading into R using the script in gammapp_diag.R
 			size_t nkF(FSpoints.nTotal);
-			std::ofstream os("Gammakkp.txt");
+			std::string filename = "Gammakkp_" + param.fileID + ".txt";
+			std::ofstream os(filename);
 			os << "nkF:\n" << nkF << "\n";
 			os << "kFx:\n" << FSpoints.kFx << "\n";
 			os << "kFy:\n" << FSpoints.kFy << "\n";
@@ -528,12 +583,17 @@ namespace rpa {
 			os << "U,U',J,J':\n" << param.U << " , " << param.Up << " , " << param.J << " , " << param.Jp << "\n\n";
 			os << "Gamma(k,k'): \n";
 			os << gammaPP << "\n\n";
+			os << "GammaZ(k,k'): \n";
+			os << gammaZ << "\n\n";
 			os << "Normalization: \n";
 			os << normalization << "\n\n";
+			os << "Zofk: \n";
+			os << Zofk << "\n\n";
 			os.close();
 
 			// Now write in jsn format for post-processing with python/matplotlib
-			std::ofstream os2("Gammakkp.jsn");
+			std::string filename2 = "Gammakkp_" + param.fileID + ".jsn";
+			std::ofstream os2(filename2);
 			int width(13);
 			os2.precision(width);
 			os2 << std::fixed; // scientific;
@@ -543,6 +603,8 @@ namespace rpa {
 			os2 << "\"J\": "  << param.J  << ",\n";
 			os2 << "\"Jp\": " << param.Jp << ",\n";
 			os2 << " \"numberKfPoints\": " << nkF << ",\n";
+			os2 << " \"nSheets\": " << FSpoints.nSheets << ",\n";
+
 			os2 << " \"kfPoints\": [\n";
 			for (size_t ik=0;ik<nkF;ik++) {
 				os2 << "[" << FSpoints.kFx[ik] << " ," << FSpoints.kFy[ik] << " ," << FSpoints.kFz[ik] << "] ";
@@ -560,6 +622,7 @@ namespace rpa {
 				if (ik<nkF-1) os2 << ",\n";
 			}
 			os2 << "],\n";
+
 			os2 << " \"Measure\": [\n";
 			os2 << "[";
 			for(size_t ik=0;ik<nkF;ik++) {
@@ -567,6 +630,7 @@ namespace rpa {
 				if (ik<nkF-1) os2 << ", ";
 			}
 			os2 << "]],\n";
+
 			os2 << " \"Velocity\": [\n";
 			os2 << "[";
 			for(size_t ik=0;ik<nkF;ik++) {
@@ -574,6 +638,15 @@ namespace rpa {
 				if (ik<nkF-1) os2 << ", ";
 			}
 			os2 << "]],\n";
+
+			os2 << " \"Zofk\": [\n";
+			os2 << "[";
+			for(size_t ik=0;ik<nkF;ik++) {
+				os2 << Zofk[ik];
+				if (ik<nkF-1) os2 << ", ";
+			}
+			os2 << "]],\n";
+
 			os2 << " \"gammaB1G\": [\n";
 			os2 << "[";
 			for(size_t ik=0;ik<nkF;ik++) {
@@ -612,19 +685,36 @@ namespace rpa {
 		}
 	}
 
+	void calcZofk() {
+
+		for (size_t ik=0; ik<nkF; ik++) Zofk[ik] = 1.0;
+		if (param.calcLambdaZ) {
+			// Calculate Z(k) = 1 + int dk'/2pi 1/2pivF(k') GammaZ(k,k')
+			for (size_t ik1=0; ik1<nkF; ik1++)	
+				for (size_t ik2=0; ik2<nkF; ik2++)
+					Zofk[ik1] += gammaZ(ik1,ik2) * normalization[ik2];	
+		}
+
+	}
+
 	void calcEigenVectors() {
+
 		std::cout << "Now calculating the eigenvalues and -vectors of BSE\n";
+
 		MatrixType matrix(gammaPP);
 		MatrixType eigenvects(gammaPP);
 		for (size_t ik1=0;ik1<nkF;ik1++) {
 			for (size_t ik2=0;ik2<nkF;ik2++) {
-				matrix(ik1,ik2) = -gammaPP(ik1,ik2) * normalization[ik2];
+				matrix(ik1,ik2) = -gammaPP(ik1,ik2) / Zofk[ik2] * normalization[ik2];
 			}
 		}
+
+
 		VectorType eigenvals(nkF);
 		eigen(matrix,eigenvals,eigenvects);
 		// Now print out eigenvalues and -vectors
-		std::ofstream os2("Gap.jsn");
+		std::string filename = "Gap_" + param.fileID + ".jsn";
+		std::ofstream os2(filename);
 		int width(13);
 		os2.precision(width);
 		os2 << std::fixed; // scientific;
@@ -634,6 +724,7 @@ namespace rpa {
 		os2 << "\"J\": "  << param.J  << ",\n";
 		os2 << "\"Jp\": " << param.Jp << ",\n";
 		os2 << " \"numberKfPoints\": " << nkF << ",\n";
+		os2 << " \"nSheets\": " << FSpoints.nSheets << ",\n";
 
 		os2 << " \"kfPoints\": [\n";
 		for (size_t ik=0;ik<nkF;ik++) {
@@ -652,8 +743,20 @@ namespace rpa {
 			os2 << "]\n";
 			if (ikp<nkF-1) os2 << ",\n";
 		}
-
 		os2 << "],\n";
+
+		os2 << " \"Gap\": [\n";
+		for(size_t ikp=0;ikp<nkF;ikp++) {
+			os2 << "[";
+			for(size_t ik=0;ik<nkF;ik++) {
+				os2 << eigenvects(ik,ikp) / Zofk[ik];
+				if (ik<nkF-1) os2 << ", ";
+			}
+			os2 << "]\n";
+			if (ikp<nkF-1) os2 << ",\n";
+		}
+		os2 << "],\n";
+
 		os2 << " \"Eigenvalues\": [\n";
 		os2 << "[";
 		for(size_t ik=0;ik<nkF;ik++) {
@@ -667,7 +770,8 @@ namespace rpa {
 	}
 
 	void writeMatrixElementsOnFs(){
-		std::ofstream os("akOnFS.txt");
+		std::string filename = "akOnFS_" + param.fileID + ".txt";
+		std::ofstream os(filename);
 		os << "nkF: \n";
 		os << nkF << "\n";
 

@@ -123,7 +123,7 @@ namespace rpa {
 				|| param.Case == "trilayer"
 				|| param.Case == "Checkerboard"
 				|| param.Case == "bilayer_Harr_Seb"
-				|| param.Case == "BSCCObilayer_OD0"
+				|| param.Case == "BSCCObilayer_OD"
 						) {
 				// Only diagonal terms
 				for (size_t l1 = 0; l1 < nOrb; ++l1) {

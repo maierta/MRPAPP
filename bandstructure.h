@@ -378,7 +378,7 @@ namespace rpa {
 					for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[ik][i],1./param.temperature);
 
 				for (size_t iband=0; iband<nbands; iband++) 
-					for (size_t iorb=0; iorb<nbands; iorb++) weights[ik](iorb,iband)=abs(ak(iorb,iband));
+					for (size_t iorb=0; iorb<nbands; iorb++) weights[ik](iorb,iband)=pow(abs(ak(iorb,iband)),2);
 			}
 
 			for (size_t ik=0;ik<nktot;ik++) {
@@ -401,17 +401,22 @@ namespace rpa {
 				for (size_t ik=0; ik<nktot; ik++) {
 					std::vector<FieldType> k(3);
 					kmesh.momenta.getRow(ik,k);
-					os << std::setw(15);
-					os << k[0]/param.pi_f;
-					os << std::setw(15);
-					os << k[1]/param.pi_f;
-					os << std::setw(15);
-					os << k[2]/param.pi_f;
-					os << std::setw(15);
-					for (size_t i = 0; i < nbands; ++i) os << ek[ik][i] << std::setw(15);
+					os << k[0]/param.pi_f << "," << k[1]/param.pi_f << "," << k[2]/param.pi_f ;
+					for (size_t i = 0; i < nbands; ++i) os << "," << ek[ik][i];
 
 					for (size_t iorb=0; iorb < nbands; iorb++) 
-						for (size_t iband=0; iband < nbands; iband++) os << weights[ik](iorb,iband) << std::setw(15);
+						for (size_t iband=0; iband < nbands; iband++) os << "," << weights[ik](iorb,iband);
+					// os << std::setw(15);
+					// os << k[0]/param.pi_f;
+					// os << std::setw(15);
+					// os << k[1]/param.pi_f;
+					// os << std::setw(15);
+					// os << k[2]/param.pi_f;
+					// os << std::setw(15);
+					// for (size_t i = 0; i < nbands; ++i) os << ek[ik][i] << std::setw(15);
+
+					// for (size_t iorb=0; iorb < nbands; iorb++) 
+					// 	for (size_t iband=0; iband < nbands; iband++) os << weights[ik](iorb,iband) << std::setw(15);
 					
 					os << "\n";
 				}

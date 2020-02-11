@@ -78,7 +78,7 @@ namespace rpa {
 			} else if (param.gAmpl=="dwave_ladders") { // coupled 2-leg ladders in 2-orbital description
                 if (real(ak(0,band))*real(ak(1,band))>0.0) { // bonding band
                     return param.Delta0 * (cos(k[0]) - cos(k[1]));
-                } else { // antibonding band
+                } else { // antibonding band (shift kx by pi)
                     return param.Delta0 * (-cos(k[0]) - cos(k[1]));
                 }
 
@@ -92,7 +92,7 @@ namespace rpa {
 // in terms of amplitudes a,b,c for the s- or d-wave crystal harmonics
 
         void setParams3D() {
-			if (param.gAmpl == "dwave") { // simple coskx-cosky for all bands
+			if (param.gAmpl == "dwave" || param.gAmpl == "dwave_ladders") { // simple coskx-cosky for all bands
                 crystHarm = &dwave;
 
                 w.resize(param.nOrb,MatrixType(3,1));

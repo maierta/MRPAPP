@@ -24,6 +24,7 @@ namespace rpa {
 		Field temperature;
 		const Field pi_f;
 		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;
+		Field lambda_SO;
 		Field staticUFactor,chargeFactor,spinFactor;
 		std::vector<Field> deltaU;
 		std::vector<Field> a1,a2,a3;
@@ -112,6 +113,7 @@ namespace rpa {
 			U_p_coupl(0.0),
 			U_pd_coupl(0.0),
 			U_pp_coupl(0.0),
+			lambda_SO(0.0),
 			staticUFactor(1.0),
 			chargeFactor(1.0),
 			spinFactor(1.0),
@@ -315,6 +317,7 @@ namespace rpa {
 		        else if (text.find("Coulomb14U_p_coupl")!=std::string::npos) str >> (*this).U_p_coupl; 
 		        else if (text.find("Coulomb15U_pd_coupl")!=std::string::npos) str >> (*this).U_pd_coupl; 
 		        else if (text.find("Coulomb16U_pp_coupl")!=std::string::npos) str >> (*this).U_pp_coupl; 
+		        else if (text.find("Lambda_SO")!=std::string::npos) str >> (*this).lambda_SO; 
 		        else if (text.find("sublattice")!=std::string::npos) str >> (*this).sublattice; 
 		        else if (text.find("deltaU0")!=std::string::npos) str >> (*this).deltaU[0]; 
 		        else if (text.find("deltaU1")!=std::string::npos) str >> (*this).deltaU[1]; 
@@ -431,6 +434,7 @@ namespace rpa {
 				os << "Coulomb14U_p_coupl = " << (*this).U_p_coupl << "\n";
 				os << "Coulomb15U_pd_coupl = " << (*this).U_pd_coupl << "\n";
 				os << "Coulomb16U_pp_coupl = " << (*this).U_pp_coupl << "\n";
+				os << "Lambda_SO = " << (*this).lambda_SO << "\n";
 				os << "sublattice = " << (*this).sublattice << "\n";
 				os << "deltaU0 = " << (*this).deltaU[0] << "\n";
 				os << "deltaU1 = " << (*this).deltaU[1] << "\n";
@@ -542,6 +546,7 @@ namespace rpa {
 		        conc.broadcast((*this).U_p_coupl); 
 		        conc.broadcast((*this).U_pd_coupl); 
 		        conc.broadcast((*this).U_pp_coupl); 
+		        conc.broadcast((*this).lambda_SO); 
 		        conc.broadcast((*this).sublattice); 
 		        conc.broadcast((*this).deltaU[0]); 
 		        conc.broadcast((*this).deltaU[1]); 

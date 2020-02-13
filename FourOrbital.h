@@ -44,7 +44,7 @@ namespace rpa {
 			}
 		}
 		
-		inline void getBands(const VectorType k, ComplexMatrixType& eigenvects) {
+		inline void getBands(const VectorType k,  VectorType& eigenvals, ComplexMatrixType& eigenvects) {
 
 			FieldType cx,cy,sx,sy;
 			cx = cos(k[0]); 
@@ -80,6 +80,8 @@ namespace rpa {
 		    eigenvects(1,3) =  4.*ii*t10*sx;
 		    eigenvects(2,3) =  0.0;
 
+		    for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
+		    eigen(eigenvals,eigenvects);
 		}
 
 	};

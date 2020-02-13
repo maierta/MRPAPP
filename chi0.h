@@ -76,8 +76,6 @@ namespace rpa {
 				for (size_t l2 = 0; l2 < nOrb; ++l2){
 					size_t ind1(l1+l1*nOrb);
 					size_t ind2(l2+l2*nOrb);
-					// chiPhys += 0.5*real((*this)(ind1,ind2));
-					// std::cout << "in calcSus: " << ind1 << "," << ind2 << "," << (*this)(ind1,ind2) << "\n";
 					chiPhys += 0.5*(*this)(ind1,ind2);
 				}
 			}

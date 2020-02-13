@@ -126,7 +126,10 @@ namespace rpa {
 			// Setup k-mesh for chi0 calculation
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,conc,kmesh,false); // false = no Caching
+			BandsType bands(param,conc,kmesh,false); // false = no Caching // note that caching has been removed alltogether because of insignificant benefit
+
+			// Pre-calculate band energies for k-mesh
+
 			RangeType range(0,numberOfQ,conc);
 			// SuscType chi0QW(param,conc);
 			for (;!range.end();range.next()) {
@@ -139,15 +142,15 @@ namespace rpa {
 					GapType Delta(param,conc);
 					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 				               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],Delta,QVec[iQ][3],0);
-	           } else {
+				   } else {
 	           			if (wmin_==0.0 && wmax_ == 0.0) {
-	           				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+					   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 				               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],false,param.calcOnlyDiagonal);
 	           			} else {
 		           				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 					               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],QVec[iQ][3],0);
 					           }
-	           }
+				   }
 
 				if (conc.rank()==0) {
 					std::cout.precision(7);

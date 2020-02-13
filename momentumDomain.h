@@ -380,7 +380,7 @@ namespace rpa {
 			std::vector<size_t> nki(3,0); nki[0] = (*this).nk; nki[1] = (*this).nk; nki[2] = (*this).nkz;
 			residue = 0.0;
 			if (map1BZ) mapTo1BZ(k);
-			for (size_t l=0; l<3; l++) {
+			for (size_t l=0; l<(*this).dim; l++) {
 				fki[l] = dGInverse(l,0) * k[0] + dGInverse(l,1) * k[1] + dGInverse(l,2) * k[2] - shift[l] * nki[l];	
 				iki[l] = size_t(fki[l] + 1.0e-5);
 				residue += fabs(fki[l]-float(iki[l]));

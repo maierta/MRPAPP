@@ -5,6 +5,28 @@
 #include "Matrix.h"
 #include <vector>
 
+
+extern "C" void 
+#ifdef glyph
+	zheev_
+#else
+	zheev
+#endif
+	(char *,char *,int *,std::complex<double> *,int *,double *,std::complex<double> *,int *,double *,int *);
+	
+inline void GEEV(char jobvl,char jobvr,int n,psimag::Matrix<std::complex<double> > &A, int lda,
+				 std::vector<double>  &w,std::vector<std::complex<double> > &work,
+				 int lwork,std::vector<double> &rwork,int *info)
+				 {
+#ifdef glyph
+						zheev_
+#else
+						zheev
+#endif
+						(&jobvl,&jobvr,&n,&(A(0,0)),&lda,
+						      &(w[0]),&(work[0]),&lwork,&(rwork[0]),info);
+						}
+
 extern "C" void 
 #ifdef glyph
 	zgemm_
@@ -222,6 +244,21 @@ std::istream& operator>>(std::istream& is, std::vector<MatrixTemplate<std::compl
 		}
 	}
 	return is;
+}
+
+
+template<typename FieldType, template<typename> class MatrixTemplate>
+void eigen(std::vector<FieldType>& eigenvals, MatrixTemplate<std::complex<FieldType> >& matrix) {
+	int n = matrix.n_row();
+	int lwork = 2*n-1;
+	std::vector<std::complex<FieldType> > work(lwork);
+	std::vector<FieldType> rwork(3*n-2);
+	int info;
+
+	GEEV('V','U',n,matrix,n,eigenvals,work,lwork,rwork,&info);
+	if (info!=0) {
+		throw std::runtime_error("zheev: failed\n");
+	}
 }
 
 #endif

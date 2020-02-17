@@ -128,7 +128,7 @@ namespace rpa {
 			bands(param,conc,kMesh,false),
 			chi0(param,conc),
 			susq(param,qMesh,param.chifile,conc),
-			rpa(param),
+			rpa(param,conc),
 			chiRPAs(param,conc),
 			chiRPAc(param,conc),
 			chi0s(param,conc),
@@ -396,26 +396,26 @@ namespace rpa {
 					chiq = chiStore[ind];
 			}
 			
-			rpa.calcRPAResult(chiq,rpa.spinMatrix,chiRPAs,q);
+			rpa.calcRPAResult(chiq,rpa.model.spinMatrix,chiRPAs,q);
 			chiTerm = real(chiRPAs.calcSus());
 			// if (ik1==0 && ik2==24) std::cout << "in calcGammaPPTerms: chiRPAs=" << chiRPAs.calcSus() << "\n";
-			rpa.calcRPAResult(chiq,rpa.chargeMatrix,chiRPAc,q);
+			rpa.calcRPAResult(chiq,rpa.model.chargeMatrix,chiRPAc,q);
 			// if (conc.rank()==0) std::cout << "in calcGammaPPTerms: chiRPAc=" << chiRPAc.calcSus() << "\n";
 			
-			matMul(chiRPAs,rpa.spinMatrix,temps);
-			matMul(rpa.spinMatrix,temps,chiRPAs);
-			matMul(chiRPAc,rpa.chargeMatrix,tempc);
-			matMul(rpa.chargeMatrix,tempc,chiRPAc);
+			matMul(chiRPAs,rpa.model.spinMatrix,temps);
+			matMul(rpa.model.spinMatrix,temps,chiRPAs);
+			matMul(chiRPAc,rpa.model.chargeMatrix,tempc);
+			matMul(rpa.model.chargeMatrix,tempc,chiRPAc);
 			
 			if (param.calcLambdaZ) {
-				matMul(chiq,rpa.spinMatrix,temps);
-				matMul(rpa.spinMatrix,temps,chi0s);
-				matMul(chiq,rpa.chargeMatrix,tempc);
-				matMul(rpa.chargeMatrix,tempc,chi0c);
+				matMul(chiq,rpa.model.spinMatrix,temps);
+				matMul(rpa.model.spinMatrix,temps,chi0s);
+				matMul(chiq,rpa.model.chargeMatrix,tempc);
+				matMul(rpa.model.chargeMatrix,tempc,chi0c);
 			}
 			// std::vector<std::complex<double> > chiRow(25,0);
 			// if (ik1==0&&ik2==24) std::cout << "in calcGammaPPTerms chiRPAs=" << chiRPAs.calcSus() << "\n";
-			calcGammaPPOrb(chi0s,chi0c,rpa.spinMatrix,chiRPAs,rpa.chargeMatrix,chiRPAc,temps,tempc);
+			calcGammaPPOrb(chi0s,chi0c,rpa.model.spinMatrix,chiRPAs,rpa.model.chargeMatrix,chiRPAc,temps,tempc);
 
 			// if (storeGammaOrb_)	{
 			// 	for (size_t i=0; i < msize; i++) for (size_t j=0; j < msize; j++) {

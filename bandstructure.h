@@ -45,9 +45,15 @@ namespace rpa {
 		const kDomain& kmesh;
 		bool caching_;
 		std::vector<bool> cachedK;
-		std::vector<VectorType> ev;
-		std::vector<ComplexMatrixType> ak;
 		ComplexMatrixType Lm;
+
+	public:
+		std::vector<VectorType> ek;
+		std::vector<ComplexMatrixType> ak;
+		std::vector<ComplexMatrixType> Mk;
+		std::vector<VectorType> ekq;
+		std::vector<ComplexMatrixType> akq;
+		std::vector<ComplexMatrixType> Mkq;
 
 #ifdef USE_SRRUO
 			SrRuO<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
@@ -83,9 +89,13 @@ namespace rpa {
 			// caching_((kmesh.nktot<=2e6)?caching:false),
 			caching_(caching),
 			cachedK(kmesh.nktot,false),
-			ev(caching_?kmesh.nktot:0,VectorType(nbands)),
-			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Lm(2*nbands,2*nbands),
+			ek(caching_?kmesh.nktot:0,VectorType(nbands)),
+			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
+			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
+			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
+			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
+			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
@@ -105,9 +115,13 @@ namespace rpa {
 			kmesh(kmesh_),
 			caching_(true),
 			cachedK(0),
-			ev(0),
-			ak(0,ComplexMatrixType(0,0)),
 			Lm(2*nbands,2*nbands),
+			ek(caching_?kmesh.nktot:0,VectorType(nbands)),
+			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
+			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
+			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
+			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
+			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
@@ -165,6 +179,38 @@ namespace rpa {
 			return;
 		}
 
+
+		void precalculate_ekak() {
+			size_t nktot(kmesh.nktot);
+			for (size_t ik = 0; ik < nktot; ik++) {
+				std::vector<FieldType> k(3);
+				kmesh.momenta.getRow(ik,k);
+				getEkAndAk(k,ek[ik],ak[ik]);
+				for (size_t i=0; i < nbands*nbands; i++) {
+					size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+					for (size_t b=0; b < nbands; b++) {
+						Mk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));
+					}
+				}
+			}
+		}
+
+		void precalculate_ekqakq(const VectorType& q) {
+			size_t nktot(kmesh.nktot);
+			for (size_t ik = 0; ik < nktot; ik++) {
+				std::vector<FieldType> k(3);
+				kmesh.momenta.getRow(ik,k);
+				std::vector<FieldType> kq(3);
+				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+				getEkAndAk(kq,ekq[ik],akq[ik]);
+				for (size_t i=0; i < nbands*nbands; i++) {
+					size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+					for (size_t b=0; b < nbands; b++) {
+						Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
+					}
+				}
+			}
+		}
 
 		void calcBandStructure(std::string file,bool printOccupation) {
 			size_t nktot(kmesh.nktot);

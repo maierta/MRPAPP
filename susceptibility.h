@@ -59,6 +59,7 @@ namespace rpa {
 			std::vector<size_t> indexToiw;
 			FieldType wmin_,wmax_;
 			bool writeFullChi0;
+			bool kMap;
 
 		public:
 			// typedef std::vector<SuscType> BaseType;
@@ -86,7 +87,8 @@ namespace rpa {
 						indexToiw(numberOfQ,0),
 						wmin_(wmin),
 						wmax_(wmax),
-						writeFullChi0(param.writeFullChi0)
+						writeFullChi0(param.writeFullChi0),
+						kMap(0)
 
 
 		{
@@ -126,30 +128,57 @@ namespace rpa {
 			// Setup k-mesh for chi0 calculation
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,conc,kmesh,false); // false = no Caching // note that caching has been removed alltogether because of insignificant benefit
+			BandsType bands(param,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
 
-			// Pre-calculate band energies for k-mesh
+			std::vector<FieldType> q(3);
+			bool single_q = false;
+
+			if (param.cacheBands) {
+				// Pre-calculate band energies for k-mesh
+				if (conc.rank()==0) std::cout << "Pre-calculating e(k) \n";
+				bands.precalculate_ekak(); // sets ek and ak
+				if (nq1*nq2*nq3==1) { // only 1 q-vector --> Pre-calculate ekq,akq
+					single_q = true;
+					if (conc.rank()==0) std::cout << "Pre-calculating e(k+q) \n";
+					q[0]=QVec[0][0]; q[1]=QVec[0][1]; q[2]=QVec[0][2];
+					bands.precalculate_ekqakq(q);
+				}
+			}
 
 			RangeType range(0,numberOfQ,conc);
 			// SuscType chi0QW(param,conc);
 			for (;!range.end();range.next()) {
 				
 				size_t iQ = range.index();
-				std::vector<FieldType> q(3);
 				q[0]=QVec[iQ][0]; q[1]=QVec[iQ][1]; q[2]=QVec[iQ][2];
+				if (!single_q && param.cacheBands) {
+					bands.precalculate_ekqakq(q); // sets ekq and akq
+				}
 
-				if (param.scState==1) {
+				if (param.scState==1) { // RPA/BCS calculation with SC gap
 					GapType Delta(param,conc);
 					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 				               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],Delta,QVec[iQ][3],0);
-				   } else {
-	           			if (wmin_==0.0 && wmax_ == 0.0) {
-					   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-				               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],false,param.calcOnlyDiagonal);
-	           			} else {
-		           				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-					               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],QVec[iQ][3],0);
-					           }
+				   } else { // Normal state RPA
+	           			if (wmin_==0.0 && wmax_ == 0.0) { // only for zero frequency
+					   if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
+						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+						       calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ]);
+					   } else {// Band energies and eigenvectors are calculated on the fly
+						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+						       calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],wmin_,kMap);
+					   }
+
+	           			} else { // Finite frequency calculation
+					   if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
+						calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+					          calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ],QVec[iQ][3]); // Constructor for pre-calculated bands
+					   } else { // Band energies and eigenvectors are calculated on the fly
+						calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+					          calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],QVec[iQ][3],0); // Constructor for on the fly band diagonalization
+					   }
+
+					}
 				   }
 
 				if (conc.rank()==0) {
@@ -159,7 +188,7 @@ namespace rpa {
 	                          << " total. ChiPhys=" << chi0Matrix[iQ].calcSus()
 	                          // << "chi0_{1133}" << chi0Matrix[iQ](0,18)
 	                          << "\n";
-                }
+				}
 			}
 			
 			for (size_t iq=0;iq<numberOfQ;iq++) chi0Matrix[iq].allReduce();
@@ -340,13 +369,13 @@ namespace rpa {
 				}
 			}
 			std::ofstream os2("chiRPA_" + param.fileID + ".txt");
-			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param);
+			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param,conc);
 			os2.precision(width);
 			os2 << std::fixed;
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
-     			rpa.calcRPAResult(chi0Matrix[iq],rpa.spinMatrix,chiRPA,q);
+     			rpa.calcRPAResult(chi0Matrix[iq],rpa.model.spinMatrix,chiRPA,q);
      			ComplexType susR(chiRPA.calcSus());
      			ComplexType sus1(chi0Matrix[iq].calcSus());
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";

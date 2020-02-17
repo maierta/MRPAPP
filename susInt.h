@@ -10,7 +10,7 @@ namespace rpa {
 	// General Function needed in suscept. calculation
 	template<typename FieldType>
 	inline FieldType susInt(const FieldType& e1, const FieldType& e2, 
-							const FieldType& invT) {
+						const FieldType& invT) {
 		FieldType sus(0);
 		if (e1!=e2)
 		{

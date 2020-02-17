@@ -28,17 +28,11 @@ typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
 template <typename Field,  template<typename> class MatrixTemplate, typename ConcurrencyType> 
 void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ConcurrencyType& conc) {
+
 	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkBands,param.nkIntz,param.dimension);
 	kmesh.set_momenta(false);	
 
 	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands(param,conc,kmesh,false);
-	// std::vector<FieldType> w(10);
-	// ComplexMatrixType v(10,10);
-	// std::vector<FieldType> k(3,0.0); k[0] = 3.90704907; k[1] = param.pi_f;
-	// bands.getBands(k,w,v);
-	// std::cout << "k = " << k << "\n";
-	// std::cout << "w = " << w << "\n";
-	// std::cout << "v(1,6),v(1,7) = " << v(1,6) << " , " << v(1,7) << "\n";
 
 	std::string filename = "ek_" + param.fileID + ".txt";
 	bands.calcBandStructure(filename,true);

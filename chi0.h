@@ -17,6 +17,7 @@
 #include "gaps2D.h"
 #include "gaps3D.h"
 #include "sepBasis.h"
+#include "utilities.h"
 
 namespace rpa {
 
@@ -117,8 +118,9 @@ namespace rpa {
 		typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
-        const momentumDomain<Field,MatrixTemplate,ConcurrencyType>& kmesh;
-        BandsType& bands;
+		const momentumDomain<Field,MatrixTemplate,ConcurrencyType>& kmesh;
+		size_t nktot;
+		BandsType& bands;
 
 		ConcurrencyType& conc;
 		size_t nOrb;
@@ -131,7 +133,7 @@ namespace rpa {
 
 	public:
 
-		// Generator for fininte w, finite Delta calculation
+		// Constructor for fininte w, finite Delta calculation, band diagonalization on the fly ek,ak 
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 			BandsType& bandsIn,
@@ -225,7 +227,7 @@ namespace rpa {
 			}
 		}
 
-		// Generator for finite w, Delta=0 calculation
+		// Constructor for finite w, Delta=0 calculation, band diagonalization on the fly
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 			BandsType& bandsIn,
@@ -298,7 +300,7 @@ namespace rpa {
 		}
 
 
-		// Generator for w=0, Delta=0 calculation
+		// Constructor for w=0, Delta=0 calculation, band diagonalization on the fly
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 			BandsType& bandsIn,
@@ -368,9 +370,169 @@ namespace rpa {
 		}
 
 
+		// Constructor for w=0, Delta=0 calculation with pre-calculated band energies and eigenstates contained in bandsIn
+		// does not receive kmesh
+		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+			BandsType& bandsIn,
+			ConcurrencyType& concurrency,
+			SuscType& chi0matrix):
 
+		param(parameters),
+		kmesh(kmeshIn),
+		nktot(kmesh.nktot),
+		bands(bandsIn),
+		conc(concurrency),
+		nOrb(param.nOrb),
+		msize(nOrb*nOrb),
+		invT(1./param.temperature)
 
-		// Generator for w=0  calculation for Emery problem with k,k',q-dependent interactions
+		{
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
+					chi0matrix(i,j) = ComplexType(0.0,0.0);
+
+			for (size_t ik = 0; ik < nktot; ++ik)	{
+				for (size_t band1 = 0; band1 < nOrb; ++band1)	{
+					for (size_t band2 = 0; band2 < nOrb; ++band2)	{
+						ComplexType r1 = ComplexType(susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT),0);
+
+						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+
+							// Check if l1,l2 and l3,l4 are on the same site
+							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
+
+							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,bands.ak[ik],bands.akq[ik]);
+
+							chi0matrix(i,j) += r1*c1 ;
+						}
+					}
+				}
+			}
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+					// std::cout << i <<","<<j<<","<<chi0matrix(i,j);
+				}
+			chi0matrix.setLowerTriangle();
+
+		}
+
+		// Constructor for finite w, Delta=0 calculation, pre- band diagonalization
+		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+			BandsType& bandsIn,
+			ConcurrencyType& concurrency,
+			SuscType& chi0matrix,
+			const FieldType& omega
+			):
+
+		param(parameters),
+		kmesh(kmeshIn),
+		nktot(kmesh.nktot),
+		bands(bandsIn),
+		conc(concurrency),
+		nOrb(param.nOrb),
+		msize(nOrb*nOrb),
+		invT(1./param.temperature)
+
+		{
+			// if (conc.rank()==0) std::cout << "Bands are already pre-calculated \n";
+
+			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
+					chi0matrix(i,j) = ComplexType(0.0,0.0);
+
+			ComplexMatrixType Sm(nOrb,nOrb);
+			for (size_t ik = 0; ik < nktot; ++ik)	{
+				// First build S-matrix
+				for (size_t band1 = 0; band1 < nOrb; ++band1){
+					for (size_t band2 = 0; band2 < nOrb; ++band2){
+						Sm(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);
+					}
+				}
+
+				// Now build Mkq(l1,l3,b1) * Sm(b1,b2) * Mk(l4,l2,b2)
+				ComplexMatrixType c0(bands.Mkq[ik].n_row(),Sm.n_col());
+				matMul(bands.Mkq[ik],Sm,c0);
+				ComplexMatrixType c1(c0.n_row(),bands.Mk[ik].n_col());
+				matMul(c0,bands.Mk[ik],c1);
+
+				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+					size_t l1 = param.indexToOrb(i,1); size_t l3 = param.indexToOrb(i,0);
+					size_t l4 = param.indexToOrb(j,1); size_t l2 = param.indexToOrb(j,0);
+					size_t ind1=l2+l1*nOrb;
+					size_t ind2=l4+l3*nOrb;
+					chi0matrix(ind1,ind2) += c1(i,j);
+				}
+
+			}
+			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+					// std::cout << chi0matrix(i,j) << "\n";
+				}
+
+		}
+		// // Constructor for finite w, Delta=0 calculation, pre- band diagonalization
+		// calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+		// 	const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+		// 	BandsType& bandsIn,
+		// 	ConcurrencyType& concurrency,
+		// 	SuscType& chi0matrix,
+		// 	const FieldType& omega
+		// 	):
+                //
+		// param(parameters),
+		// kmesh(kmeshIn),
+		// nktot(kmesh.nktot),
+		// bands(bandsIn),
+		// conc(concurrency),
+		// nOrb(param.nOrb),
+		// msize(nOrb*nOrb),
+		// invT(1./param.temperature)
+                //
+		// {
+		// 	if (conc.rank()==0) std::cout << "Bands are already pre-calculated \n";
+                //
+		// 	for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
+		// 			chi0matrix(i,j) = ComplexType(0.0,0.0);
+                //
+		// 	for (size_t ik = 0; ik < nktot; ++ik)	{
+		// 		if (conc.rank()==0) std::cout << "ik="<<ik<<"\n";
+		// 		for (size_t band1 = 0; band1 < nOrb; ++band1){
+		// 			for (size_t band2 = 0; band2 < nOrb; ++band2){
+		// 				if (conc.rank()==0) std::cout << "band1,band2="<<band1<<","<<band2<<"\n";
+		// 				ComplexType r1(0.0);
+		// 				r1 = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);
+                //
+		// 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+		// 					if (conc.rank()==0) std::cout << "i,j="<<i<<","<<j<<"\n";
+		// 					size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+		// 					size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+                //
+		// 					// Check if l1,l2 and l3,l4 are on the same site
+		// 					if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
+                //
+		// 					ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,bands.ak[ik],bands.akq[ik]);
+                //
+		// 					chi0matrix(i,j) += c1*r1 ;
+		// 					// chi0matrix(i,j) += r1 ;
+		// 					if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += imag(c1*r1);
+                //
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+		// 	for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+		// 			chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+		// 			// std::cout << chi0matrix(i,j) << "\n";
+		// 		}
+		// 	// chi0matrix.setLowerTriangle(); // For finite omega there is a damping term w + ii*damp which breaks this symmetry
+                //
+		// }
+
+		// Constructor for w=0  calculation for Emery problem with k,k',q-dependent interactions
+		// band diagonalization on the fly
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 			BandsType& bandsIn,
@@ -460,7 +622,6 @@ namespace rpa {
 		ComplexType c1(t1r*t2r-t1i*t2i,t1r*t2i+t1i*t2r);
 
 		return c1;
-
 	}
 
 	};
@@ -565,7 +726,7 @@ namespace rpa {
 		void writeChiqTxt() {
 			std::ofstream os("susOfQFull.txt");
 			std::ofstream os2("susRPA.txt");
-			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param);
+			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param,conc);
 			int width(10);
 			os.precision(width);
 			os2.precision(width);
@@ -586,7 +747,7 @@ namespace rpa {
 				os << real(sus0) << " , " << imag(sus0);
 				os << "\n";
 				SuscType chiRPA(param,conc);
-     			rpa.calcRPAResult((*this)[iq],rpa.spinMatrix,chiRPA,q);
+     			rpa.calcRPAResult((*this)[iq],rpa.model.spinMatrix,chiRPA,q);
      			ComplexType susR(chiRPA.calcSus());
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , ";
      			os2 << real(susR) << ","  << imag(susR) << "\n";

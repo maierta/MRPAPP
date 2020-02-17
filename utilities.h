@@ -124,8 +124,8 @@ typedef psimag::Matrix<double>  MatrixType;
 
 inline void matMul(ComplexMatrixType& matrix0, ComplexMatrixType& matrix1, ComplexMatrixType& matrix2) {
 
-	int n = matrix0.n_row();
-	int m = matrix1.n_col();
+	int m = matrix0.n_row();
+	int n = matrix1.n_col();
 	int k = matrix0.n_col();
 	std::complex<double> alpha(1.0);
 	std::complex<double> beta(0.0);
@@ -138,7 +138,7 @@ inline void matMul(ComplexMatrixType& matrix0, ComplexMatrixType& matrix1, Compl
 	zgemm
 #endif
 		(&transa,&transb,&m,&n,&k,&alpha,&(matrix0(0,0)),
-	  	 &n,&(matrix1(0,0)),&n,&beta,&(matrix2(0,0)),&n);
+	  	 &m,&(matrix1(0,0)),&k,&beta,&(matrix2(0,0)),&m);
 }
 
 template<typename MType>

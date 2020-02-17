@@ -8,6 +8,7 @@
 #include <fstream>
 #include "Matrix.h"
 #include "parameters.h"
+#include "tbFromFile.h"
 
 
 namespace rpa {
@@ -85,22 +86,46 @@ namespace rpa {
 	class interaction {
 
 		private:
-			typedef std::complex<Field>				ComplexType;
+			typedef Field					FieldType;
+			typedef std::complex<Field>			ComplexType;
 			typedef MatrixTemplate<Field> 			MatrixType;
-			typedef MatrixTemplate<ComplexType> 	ComplexMatrixType;
+			typedef MatrixTemplate<ComplexType> 		ComplexMatrixType;
 			const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+			ConcurrencyType& conc;
 			Field U,Up,J,Jp;
 			size_t nOrb,msize;
 			// std::vector<std::vector<Field> >  orbPos;
 			ComplexType ii;
 
 		public:
-			ComplexMatrixType spinMatrix;
-			ComplexMatrixType chargeMatrix;
+			// Model specific needed for charge and spin matrices
+#ifdef USE_SRRUO
+			SrRuO<FieldType,MatrixTemplate,ConcurrencyType> model(param,conc);
+#elif USE_BILAYER
+			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> model;
+			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
+#elif USE_BILAYER_1BAND
+			bilayer<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_BSCCObilayer
+			BSCCObilayer<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_BILAYER_FESC
+			bilayerFESC<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_BAFEAS
+			BaFeAs<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_KFE2SE2
+			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_FOURORBITAL
+			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_TBFILE
+			tbFromFile<FieldType,MatrixTemplate,ConcurrencyType> model;
+#endif
+			// ComplexMatrixType spinMatrix;
+			// ComplexMatrixType chargeMatrix;
 
 
-		interaction(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters):
+		interaction(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
 			param(parameters),
+			conc(concurrency),
 			U(param.U),
 			Up(param.Up),
 			J(param.J),
@@ -109,108 +134,107 @@ namespace rpa {
 			msize(size_t(nOrb*nOrb)),
 			// orbPos(nOrb,std::vector<Field>(3,0.0)),
 			ii(1.0,0.0),
-			spinMatrix(msize,msize),
-			chargeMatrix(msize,msize)
+			model(param,conc)
 		{
-			setupInteractionMatrix();
+			model.setupInteractionMatrix();
 		}
 
 
-		void setupInteractionMatrix() {
-			if (param.Case== "YBCO_orthoII_perpStripes" 
-				|| param.Case == "1band" 
-				|| param.Case == "bilayer"
-				|| param.Case == "trilayer"
-				|| param.Case == "Checkerboard"
-				|| param.Case == "bilayer_Harr_Seb"
-				|| param.Case == "BSCCObilayer_OD"
-						) {
-				// Only diagonal terms
-				for (size_t l1 = 0; l1 < nOrb; ++l1) {
-					size_t ind1(l1+l1*nOrb);
-					spinMatrix  (ind1,ind1)   = U;
-					chargeMatrix(ind1,ind1)   = -U;
-				}	
-
-			} else if (param.Case=="EmeryOnlyUd") {
-				// Only diagonal 11 terms
-				for (size_t l1 = 0; l1 < 1; ++l1) {
-					size_t ind1(l1+l1*nOrb);
-					spinMatrix  (ind1,ind1)   = U;
-					chargeMatrix(ind1,ind1)   = -U;
-				}	
-			} else {  // general multi-orbital model
-				size_t limit(nOrb);
-				if (param.sublattice==1) limit=nOrb<10?nOrb/2:5;
-				std::cout << "In rpa.h: limit=" << limit << "\n";
-
-				
-				ComplexMatrixType spinSubMatrix(limit*limit,limit*limit);
-				ComplexMatrixType chargeSubMatrix(limit*limit,limit*limit);
-					
-					// First the diagonal terms
-					for (size_t l1 = 0; l1 < limit; ++l1) {
-							for (size_t l2 = 0; l2 < limit; ++l2) {
-								size_t ind1 = l2+l1*limit;
-								if (l1==l2) {
-									spinSubMatrix(ind1,ind1)   = U+param.deltaU[l1];
-									chargeSubMatrix(ind1,ind1) = -U-param.deltaU[l1];;
-									} else {
-									spinSubMatrix(ind1,ind1)   = Up;
-									chargeSubMatrix(ind1,ind1) = Up-2*J;
-									}
-							}
-						}	
-					// Off-diagonal terms
-					for (size_t l1=0; l1 < limit; l1++) {
-						size_t ind1 = l1+l1*limit;
-						for (size_t l2=0; l2 < limit; l2++) {
-							size_t ind2 = l2+l2*limit;
-							if (l2!=l1) {
-								spinSubMatrix(ind1,ind2)   = J;
-								chargeSubMatrix(ind1,ind2) = -2.*Up+J;
-							}
-						}
-					}
-					// Finally the pair hopping terms
-					for (size_t l1=0; l1 < limit; l1++) {
-						for (size_t l2=0; l2 < limit; l2++) {
-							size_t ind1 = l2+l1*limit;
-							size_t ind2 = l1+l2*limit;
-							if (l2!=l1) {
-								spinSubMatrix(ind1,ind2)   = Jp;
-								chargeSubMatrix(ind1,ind2) = -Jp;
-							}
-						}
-					}
-				if (param.sublattice==0) {
-					for (size_t i=0; i<msize; i++) for (size_t j=0; j<msize; j++) {
-						spinMatrix(i,j) = spinSubMatrix(i,j);
-						chargeMatrix(i,j) = chargeSubMatrix(i,j);
-					}
-					} else {
-						for(size_t l1=0; l1<limit; l1++) for (size_t l2=0; l2<limit; l2++) {
-						for(size_t l3=0; l3<limit; l3++) for (size_t l4=0; l4<limit; l4++) {
-							
-							size_t ind1=l2+l1*limit;
-							size_t ind2=l4+l3*limit;
-		
-							size_t ind3=l2+l1*nOrb;
-							size_t ind4=l4+l3*nOrb;
-
-							spinMatrix(ind3,ind4) = spinSubMatrix(ind1,ind2);
-							chargeMatrix(ind3,ind4) = chargeSubMatrix(ind1,ind2);
-
-							ind3=l2+limit+(l1+limit)*nOrb; // position of 2. Fe d-orbitals is shifted by limit wrt 1. Fe d-orbs.
-							ind4=l4+limit+(l3+limit)*nOrb; // position of 2. Fe d-orbitals is shifted by limit wrt 1. Fe d-orbs.
-
-							spinMatrix(ind3,ind4) = spinSubMatrix(ind1,ind2);
-							chargeMatrix(ind3,ind4) = chargeSubMatrix(ind1,ind2);
-						}
-						}	
-					}					
-				}
-		}
+		// void setupInteractionMatrix() {
+		// 	if (param.Case== "YBCO_orthoII_perpStripes" 
+		// 		|| param.Case == "1band" 
+		// 		|| param.Case == "bilayer"
+		// 		|| param.Case == "trilayer"
+		// 		|| param.Case == "Checkerboard"
+		// 		|| param.Case == "bilayer_Harr_Seb"
+		// 		|| param.Case == "BSCCObilayer_OD"
+		// 				) {
+		// 		// Only diagonal terms
+		// 		for (size_t l1 = 0; l1 < nOrb; ++l1) {
+		// 			size_t ind1(l1+l1*nOrb);
+		// 			spinMatrix  (ind1,ind1)   = U;
+		// 			chargeMatrix(ind1,ind1)   = -U;
+		// 		}	
+                //
+		// 	} else if (param.Case=="EmeryOnlyUd") {
+		// 		// Only diagonal 11 terms
+		// 		for (size_t l1 = 0; l1 < 1; ++l1) {
+		// 			size_t ind1(l1+l1*nOrb);
+		// 			spinMatrix  (ind1,ind1)   = U;
+		// 			chargeMatrix(ind1,ind1)   = -U;
+		// 		}	
+		// 	} else {  // general multi-orbital model
+		// 		size_t limit(nOrb);
+		// 		if (param.sublattice==1) limit=nOrb<10?nOrb/2:5;
+		// 		std::cout << "In rpa.h: limit=" << limit << "\n";
+                //
+		// 		
+		// 		ComplexMatrixType spinSubMatrix(limit*limit,limit*limit);
+		// 		ComplexMatrixType chargeSubMatrix(limit*limit,limit*limit);
+		// 			
+		// 			// First the diagonal terms
+		// 			for (size_t l1 = 0; l1 < limit; ++l1) {
+		// 					for (size_t l2 = 0; l2 < limit; ++l2) {
+		// 						size_t ind1 = l2+l1*limit;
+		// 						if (l1==l2) {
+		// 							spinSubMatrix(ind1,ind1)   = U+param.deltaU[l1];
+		// 							chargeSubMatrix(ind1,ind1) = -U-param.deltaU[l1];;
+		// 							} else {
+		// 							spinSubMatrix(ind1,ind1)   = Up;
+		// 							chargeSubMatrix(ind1,ind1) = Up-2*J;
+		// 							}
+		// 					}
+		// 				}	
+		// 			// Off-diagonal terms
+		// 			for (size_t l1=0; l1 < limit; l1++) {
+		// 				size_t ind1 = l1+l1*limit;
+		// 				for (size_t l2=0; l2 < limit; l2++) {
+		// 					size_t ind2 = l2+l2*limit;
+		// 					if (l2!=l1) {
+		// 						spinSubMatrix(ind1,ind2)   = J;
+		// 						chargeSubMatrix(ind1,ind2) = -2.*Up+J;
+		// 					}
+		// 				}
+		// 			}
+		// 			// Finally the pair hopping terms
+		// 			for (size_t l1=0; l1 < limit; l1++) {
+		// 				for (size_t l2=0; l2 < limit; l2++) {
+		// 					size_t ind1 = l2+l1*limit;
+		// 					size_t ind2 = l1+l2*limit;
+		// 					if (l2!=l1) {
+		// 						spinSubMatrix(ind1,ind2)   = Jp;
+		// 						chargeSubMatrix(ind1,ind2) = -Jp;
+		// 					}
+		// 				}
+		// 			}
+		// 		if (param.sublattice==0) {
+		// 			for (size_t i=0; i<msize; i++) for (size_t j=0; j<msize; j++) {
+		// 				spinMatrix(i,j) = spinSubMatrix(i,j);
+		// 				chargeMatrix(i,j) = chargeSubMatrix(i,j);
+		// 			}
+		// 			} else {
+		// 				for(size_t l1=0; l1<limit; l1++) for (size_t l2=0; l2<limit; l2++) {
+		// 				for(size_t l3=0; l3<limit; l3++) for (size_t l4=0; l4<limit; l4++) {
+		// 					
+		// 					size_t ind1=l2+l1*limit;
+		// 					size_t ind2=l4+l3*limit;
+		//
+		// 					size_t ind3=l2+l1*nOrb;
+		// 					size_t ind4=l4+l3*nOrb;
+                //
+		// 					spinMatrix(ind3,ind4) = spinSubMatrix(ind1,ind2);
+		// 					chargeMatrix(ind3,ind4) = chargeSubMatrix(ind1,ind2);
+                //
+		// 					ind3=l2+limit+(l1+limit)*nOrb; // position of 2. Fe d-orbitals is shifted by limit wrt 1. Fe d-orbs.
+		// 					ind4=l4+limit+(l3+limit)*nOrb; // position of 2. Fe d-orbitals is shifted by limit wrt 1. Fe d-orbs.
+                //
+		// 					spinMatrix(ind3,ind4) = spinSubMatrix(ind1,ind2);
+		// 					chargeMatrix(ind3,ind4) = chargeSubMatrix(ind1,ind2);
+		// 				}
+		// 				}	
+		// 			}					
+		// 		}
+		// }
 
 		void calcRPAResult(ComplexMatrixType& matrix0, 
 						   ComplexMatrixType& interactionMatrix, 

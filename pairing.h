@@ -125,7 +125,7 @@ namespace rpa {
 			nk(parameters.nkInt),
 			msize(param.nOrb*param.nOrb),
 			kMesh(param,conc,param.nkInt,param.nkIntz,param.dimension),
-			bands(param,conc,kMesh,false),
+			bands(param,conc,kMesh,param.cacheBands),
 			chi0(param,conc),
 			susq(param,qMesh,param.chifile,conc),
 			rpa(param,conc),
@@ -170,6 +170,9 @@ namespace rpa {
 			std::string filenameChiPP("chiPairing_" + param.fileID + "_T_" + tempStr + ".txt");
 			if (interpolateChi_==0)	{
 				kMesh.set_momenta(false); // for chi claculation
+				std::cout << "OK0 \n";
+				if (param.cacheBands) bands.precalculate_ekak();
+				std::cout << "OK1 \n";
 				if (storeChi_==1 || readChi_==1) {
 					chiStore.resize(nTotal,SuscType(param,conc));
 					qStore.resize(nTotal,VectorType(3));
@@ -383,8 +386,14 @@ namespace rpa {
 			} else if (interpolateChi_==0 && readChi_==0) {
 				// std::cout << "Calculating chi for q=" << q << "\n";
 				
-				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+				if (param.cacheBands) {
+					bands.precalculate_ekqakq(q);
+					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+					   calcChi0(param,kMesh,bands,conc,chi0);
+				} else {
+					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 				          calcChi0(param,kMesh,bands,q,conc,chi0);
+				}
 				// for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) chi0(i,j) = calcChi0(i,j);
 				// chi0.setLowerTriangle();
 				chiq = chi0;

@@ -152,7 +152,7 @@ namespace rpa {
 				size_t iQ = range.index();
 				q[0]=QVec[iQ][0]; q[1]=QVec[iQ][1]; q[2]=QVec[iQ][2];
 				if (!single_q && param.cacheBands) {
-					bands.precalculate_ekqakq(q); // sets ekq and akq
+					bands.precalculate_ekqakq(q); // resets ekq and akq for changing q vector
 				}
 
 				if (param.scState==1) { // RPA/BCS calculation with SC gap
@@ -185,6 +185,7 @@ namespace rpa {
 					std::cout.precision(7);
 					std::cout << "iQ = " << iQ << " q= " << q << " w = " << QVec[iQ][3]    
 					          << "  of " << numberOfQ
+	                          // << " total. ChiPhys=" << chi0Matrix[iQ].calcSus()
 	                          << " total. ChiPhys=" << chi0Matrix[iQ].calcSus()
 	                          // << "chi0_{1133}" << chi0Matrix[iQ](0,18)
 	                          << "\n";
@@ -376,8 +377,9 @@ namespace rpa {
 			for (size_t iq=0;iq<numberOfQ;iq++) {
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
      			rpa.calcRPAResult(chi0Matrix[iq],rpa.model.spinMatrix,chiRPA,q);
-     			ComplexType susR(chiRPA.calcSus());
-     			ComplexType sus1(chi0Matrix[iq].calcSus());
+     			ComplexType susR(rpa.model.calcSus(chiRPA));
+     			// ComplexType sus1(chi0Matrix[iq].calcSus());
+     			ComplexType sus1(rpa.model.calcSus(chi0Matrix[iq]));
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
      			os2 << real(susR) << ","  << imag(susR) << " ," << real(sus1) << " , " << imag(sus1) << "\n";
 			}

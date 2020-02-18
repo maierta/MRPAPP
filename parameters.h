@@ -20,6 +20,8 @@ namespace rpa {
 	public:
 		typedef MatrixTemplate<Field> 			MatrixType;
 		typedef MatrixTemplate<size_t> 			IntMatrixType;
+		typedef std::complex<Field>			ComplexType;
+		typedef MatrixTemplate<ComplexType> 		ComplexMatrixType;
 
 		Field temperature;
 		const Field pi_f;
@@ -33,6 +35,7 @@ namespace rpa {
 		Field qxmin,qxmax,qymin,qymax,qzmin,qzmax;
 		size_t nw;
 		Field wmin,wmax;
+		bool cacheBands;
 		size_t scState;
 		size_t printGap;
 		std::string gAmpl;
@@ -90,6 +93,7 @@ namespace rpa {
 		bool fixEvecs;
 		bool calcLambdaZ;
 
+			
 		// size_t nktot;
 
 
@@ -136,6 +140,7 @@ namespace rpa {
 			nw(1),
 			wmin(0.0),
 			wmax(0.0),
+			cacheBands(0),
 			scState(0),
 			printGap(0),
 			gAmpl("LaOFeAs_s_1"),
@@ -286,6 +291,7 @@ namespace rpa {
 		        	kz2D *= pi_f;
 		        }
 		        if (Case == "BSCCObilayer_OD_1band_onlyA") kz2D *= pi_f;
+
 			}
 
 			void setParamBasedOnText(std::string& text, std::stringstream& str) {
@@ -361,6 +367,7 @@ namespace rpa {
 		        else if (text.find("nw")!=std::string::npos) str >> (*this).nw; 				
 		        else if (text.find("wmin")!=std::string::npos) str >> (*this).wmin; 				
 		        else if (text.find("wmax")!=std::string::npos) str >> (*this).wmax; 				
+		        else if (text.find("cacheBands")!=std::string::npos) str >> (*this).cacheBands;
 		        else if (text.find("scState")!=std::string::npos) str >> (*this).scState; 				
 		        else if (text.find("printGap")!=std::string::npos) str >> (*this).printGap; 				
 		        else if (text.find("gAmpl")!=std::string::npos) str >> (*this).gAmpl; 				
@@ -478,6 +485,7 @@ namespace rpa {
 				os << "nw = " << (*this).nw << "\n";
 				os << "wmin = " << (*this).wmin << "\n";
 				os << "wmax = " << (*this).wmax << "\n";
+				os << "cacheBands = " << (*this).cacheBands << "\n";
 				os << "scState = " << (*this).scState << "\n";
 				os << "printGap = " << (*this).printGap << "\n";
 				os << "gAmpl = " << (*this).gAmpl << "\n";
@@ -590,6 +598,7 @@ namespace rpa {
 		        conc.broadcast((*this).nw); 				
 		        conc.broadcast((*this).wmin); 				
 		        conc.broadcast((*this).wmax); 				
+		        conc.broadcast((*this).cacheBands); 				
 		        conc.broadcast((*this).scState); 				
 		        conc.broadcast((*this).printGap); 				
 		        conc.broadcast((*this).gAmpl); 				

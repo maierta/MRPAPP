@@ -371,7 +371,6 @@ namespace rpa {
 
 
 		// Constructor for w=0, Delta=0 calculation with pre-calculated band energies and eigenstates contained in bandsIn
-		// does not receive kmesh
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 			BandsType& bandsIn,
@@ -391,31 +390,34 @@ namespace rpa {
 			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 					chi0matrix(i,j) = ComplexType(0.0,0.0);
 
+			ComplexMatrixType Sm(nOrb,nOrb);
 			for (size_t ik = 0; ik < nktot; ++ik)	{
-				for (size_t band1 = 0; band1 < nOrb; ++band1)	{
-					for (size_t band2 = 0; band2 < nOrb; ++band2)	{
-						ComplexType r1 = ComplexType(susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT),0);
-
-						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
-							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
-
-							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
-
-							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,bands.ak[ik],bands.akq[ik]);
-
-							chi0matrix(i,j) += r1*c1 ;
-						}
+				// First build S-matrix
+				for (size_t band1 = 0; band1 < nOrb; ++band1){
+					for (size_t band2 = 0; band2 < nOrb; ++band2){
+						Sm(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT);
 					}
 				}
-			}
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
-					// std::cout << i <<","<<j<<","<<chi0matrix(i,j);
-				}
-			chi0matrix.setLowerTriangle();
 
+				// Now build Mkq(l1,l3,b1) * Sm(b1,b2) * Mk(l4,l2,b2)
+				ComplexMatrixType c0(bands.Mkq[ik].n_row(),Sm.n_col());
+				matMul(bands.Mkq[ik],Sm,c0);
+				ComplexMatrixType c1(c0.n_row(),bands.Mk[ik].n_col());
+				matMul(c0,bands.Mk[ik],c1);
+
+				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+					size_t l1 = param.indexToOrb(i,1); size_t l3 = param.indexToOrb(i,0);
+					size_t l4 = param.indexToOrb(j,1); size_t l2 = param.indexToOrb(j,0);
+					size_t ind1=l2+l1*nOrb;
+					size_t ind2=l4+l3*nOrb;
+					chi0matrix(ind1,ind2) += c1(i,j);
+				}
+
+			}
+			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+					// std::cout << chi0matrix(i,j) << "\n";
+				}
 		}
 
 		// Constructor for finite w, Delta=0 calculation, pre- band diagonalization

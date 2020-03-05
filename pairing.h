@@ -353,8 +353,8 @@ namespace rpa {
 
 			for (size_t l1=0; l1<nOrb; l1++) for (size_t l2=0; l2<nOrb; l2++) {
 			for (size_t l3=0; l3<nOrb; l3++) for (size_t l4=0; l4<nOrb; l4++) {
-				size_t ind1 = l2+l1*nOrb;	
-				size_t ind2 = l4+l3*nOrb;	
+				size_t ind1 = param.OrbsToIndex(l1,l2);	
+				size_t ind2 = param.OrbsToIndex(l3,l4);	
 				result(ind1,ind2) = ComplexType(0.0,0.0);
 				for (size_t i=0;i<19;++i) for (size_t j=0;j<19;++j) {
 					result(ind1,ind2) += basisLeft(i,l1,l2) * basisRight(j,l3,l4) * 0.5 *
@@ -453,8 +453,8 @@ namespace rpa {
 				for (size_t l2=0; l2<nOrb; l2++) {
 					for (size_t l3=0; l3<nOrb; l3++) {
 						for (size_t l4=0; l4<nOrb; l4++) {
-							size_t ind1 = l2+l1*nOrb;	
-							size_t ind2 = l4+l3*nOrb;	
+							size_t ind1 = param.OrbsToIndex(l1,l2);	
+							size_t ind2 = param.OrbsToIndex(l3,l4);	
 							size_t ind3 = ind1;
 							size_t ind4 = ind2;
 							if (param.pairingSpinParity==0) { // Singlet vertex
@@ -509,8 +509,8 @@ namespace rpa {
 			ComplexType c4(0.0,0.0);
 			for (size_t l1=0; l1<nOrb; l1++) for (size_t l2=0; l2<nOrb; l2++) {
 			for (size_t l3=0; l3<nOrb; l3++) for (size_t l4=0; l4<nOrb; l4++) {
-				size_t ind1 = l2+l1*nOrb;	
-				size_t ind2 = l4+l3*nOrb;	
+				size_t ind1 = param.OrbsToIndex(l1,l2);	
+				size_t ind2 = param.OrbsToIndex(l3,l4);	
 
 
 				// std::cout << "l1,l2,l3,l4,band1,band2,aks: " << l1<<","<<l2<<","<<l3<<","<<l4<<","<<

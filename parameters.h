@@ -78,6 +78,7 @@ namespace rpa {
 		std::string subOptions;
 		MatrixType WTrafo;
 		IntMatrixType indexToOrb;
+		IntMatrixType OrbsToIndex;
 		std::vector<int> orbToSite;
 		bool hyb;
 		bool LS;
@@ -183,6 +184,7 @@ namespace rpa {
 			subOptions(""),
 			WTrafo(3,3),
 			indexToOrb(0,0),
+			OrbsToIndex(0,0),
 			orbToSite(0),
 			hyb(0),
 			LS(0),
@@ -635,9 +637,11 @@ namespace rpa {
 
 			void setupOrbitalIndices(){
 				indexToOrb.resize(nOrb*nOrb,2);
+				OrbsToIndex.resize(nOrb,nOrb);
 				for (size_t l1 = 0; l1 < nOrb; ++l1){
 					for (size_t l2 = 0; l2 < nOrb; ++l2){
 						size_t ind=l2+l1*nOrb;
+						OrbsToIndex(l1,l2) = ind;
 						indexToOrb(ind,0) = l1;
 						indexToOrb(ind,1) = l2;
 					}

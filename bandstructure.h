@@ -187,7 +187,7 @@ namespace rpa {
 				kmesh.momenta.getRow(ik,k);
 				getEkAndAk(k,ek[ik],ak[ik]);
 				for (size_t i=0; i < nbands*nbands; i++) {
-					size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
 					for (size_t b=0; b < nbands; b++) {
 						Mk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));
 					}
@@ -204,7 +204,7 @@ namespace rpa {
 				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
 				getEkAndAk(kq,ekq[ik],akq[ik]);
 				for (size_t i=0; i < nbands*nbands; i++) {
-					size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
+					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
 					for (size_t b=0; b < nbands; b++) {
 						Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
 					}

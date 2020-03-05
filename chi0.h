@@ -180,8 +180,8 @@ namespace rpa {
 
 
 						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
-							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+							size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+							size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
 
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 							// 	           * akq(l1,band1) * conj(akq(l3,band1));
@@ -269,8 +269,8 @@ namespace rpa {
 
 						// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
 						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
-							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+							size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+							size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
 
 							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
 							// 	           * akq(l1,band1) * conj(akq(l3,band1));
@@ -340,8 +340,8 @@ namespace rpa {
 						// r1 = susInt(ekq[band1],ek[band2],invT,FieldType(0.0),param.damp);
 
 						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
-							size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+							size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+							size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
 
 							// Check if l1,l2 and l3,l4 are on the same site
 							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
@@ -406,10 +406,10 @@ namespace rpa {
 				matMul(c0,bands.Mk[ik],c1);
 
 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-					size_t l1 = param.indexToOrb(i,1); size_t l3 = param.indexToOrb(i,0);
-					size_t l4 = param.indexToOrb(j,1); size_t l2 = param.indexToOrb(j,0);
-					size_t ind1=l2+l1*nOrb;
-					size_t ind2=l4+l3*nOrb;
+					size_t l1 = param.indexToOrb(i,0); size_t l3 = param.indexToOrb(i,1);
+					size_t l4 = param.indexToOrb(j,0); size_t l2 = param.indexToOrb(j,1);
+					size_t ind1(param.OrbsToIndex(l1,l2));
+					size_t ind2(param.OrbsToIndex(l3,l4));
 					chi0matrix(ind1,ind2) += c1(i,j);
 				}
 
@@ -460,10 +460,10 @@ namespace rpa {
 				matMul(c0,bands.Mk[ik],c1);
 
 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-					size_t l1 = param.indexToOrb(i,1); size_t l3 = param.indexToOrb(i,0);
-					size_t l4 = param.indexToOrb(j,1); size_t l2 = param.indexToOrb(j,0);
-					size_t ind1=l2+l1*nOrb;
-					size_t ind2=l4+l3*nOrb;
+					size_t l1 = param.indexToOrb(i,0); size_t l3 = param.indexToOrb(i,1);
+					size_t l4 = param.indexToOrb(j,0); size_t l2 = param.indexToOrb(j,1);
+					size_t ind1 = param.OrbsToIndex(l1,l2);
+					size_t ind2 = param.OrbsToIndex(l3,l4);
 					chi0matrix(ind1,ind2) += c1(i,j);
 				}
 
@@ -572,8 +572,8 @@ namespace rpa {
 				for (size_t band1=0; band1<nOrb; ++band1) for (size_t band2=0; band2<nOrb; ++band2)  { // loop over band indices
 					ComplexType r1 = ComplexType(susInt(ekq[band1],ek[band2],invT),0); // f(e_k+q-f_ek/(ek+q-ek))
 					for (size_t i=0; i<msize; i++) for (size_t j=0; j<msize; j++)  { // loop over orbital indices
-						size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
-						size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+						size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+						size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
 						ComplexType me = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
 						ComplexType integrand = r1*me;
 

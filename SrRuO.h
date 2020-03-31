@@ -42,7 +42,7 @@ namespace rpa {
 		
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
 		    FieldType tXYx,tXYy,tXZx,tXZy,tYZx,tYZy,tXYp,tXZp,tYZp,muXY,muXZ,muYZ,tperp;
-		    tXYx = 0.44; tXZx = 0.31 ; tYZx = 0.045;
+			tXYx = 0.44; tXZx = 0.31 ; tYZx = 0.045;
 			tXYy = 0.44; tXZy = 0.045; tYZy = 0.31;
 			tXYp =-0.14; tXZp = 0.01 ; tYZp = 0.01;
 			muXY = 0.50; muXZ = 0.24 ; muYZ = 0.24;

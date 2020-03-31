@@ -9,6 +9,7 @@
 #include "Matrix.h"
 #include "parameters.h"
 #include "tbFromFile.h"
+#include "SrRuO_SO.h"
 
 
 namespace rpa {
@@ -100,7 +101,7 @@ namespace rpa {
 		public:
 			// Model specific needed for charge and spin matrices
 #ifdef USE_SRRUO
-			SrRuO<FieldType,MatrixTemplate,ConcurrencyType> model(param,conc);
+			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> model;
 #elif USE_BILAYER
 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> model;
 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;

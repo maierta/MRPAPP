@@ -166,7 +166,8 @@ namespace rpa {
 						       calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ]);
 					   } else {// Band energies and eigenvectors are calculated on the fly
 						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-						       calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],wmin_,kMap);
+						       // calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],wmin_,kMap);
+						       calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],kMap);
 					   }
 
 	           			} else { // Finite frequency calculation

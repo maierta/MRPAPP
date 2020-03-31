@@ -9,9 +9,10 @@ def plotchi(file="chiRPA.txt"):
 
 	print("Plotting file",file)
 	imag = False # Plot imaginary part of chi; otherwise real part
-	# column = 4
-	column = 6
+	column = 4
+	# column = 6
 	if imag: column=5
+
 	# file = "chiRPA_U1.0_Up0.5_J0.25_Jp0.25.txt"
 	# file = "chiRPA.txt"
 
@@ -33,7 +34,7 @@ def plotchi(file="chiRPA.txt"):
 	ax.set_zlim(0,zmax)
 	ax.contour(x,y,z.reshape(nk,nk),zdir='z',offset=0,cmap='jet')
 
-	ax.set_aspect(0.75)
+	# ax.set_aspect(0.75)
 
 	ax.set_xlabel(r"$q_x/\pi$",fontsize=13,labelpad=10)
 	ax.set_ylabel(r"$q_y/\pi$",fontsize=13,labelpad=10)

@@ -15,6 +15,7 @@
 #include "Range.h"
 #include "tbFromFile.h"
 #include "SrRuO.h"
+#include "SrRuO_SO.h"
 #include "BaFeAs_5orb.h"
 #include "KFe2Se2.h"
 #include "FourOrbital.h"
@@ -56,7 +57,7 @@ namespace rpa {
 		std::vector<ComplexMatrixType> Mkq;
 
 #ifdef USE_SRRUO
-			SrRuO<FieldType,MatrixTemplate,ConcurrencyType> s(param,conc);
+			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;
 #elif USE_BILAYER
 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;

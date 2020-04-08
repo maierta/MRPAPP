@@ -133,6 +133,7 @@ namespace rpa {
 
 	public:
 
+
 		// Constructor for fininte w, finite Delta calculation, band diagonalization on the fly ek,ak 
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
@@ -420,7 +421,7 @@ namespace rpa {
 				}
 		}
 
-		// Constructor for finite w, Delta=0 calculation, pre- band diagonalization
+		// Constructor for finite w calculation, pre- band diagonalization
 		calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 			BandsType& bandsIn,
@@ -449,7 +450,11 @@ namespace rpa {
 				// First build S-matrix
 				for (size_t band1 = 0; band1 < nOrb; ++band1){
 					for (size_t band2 = 0; band2 < nOrb; ++band2){
-						Sm(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);
+						if (!param.scState) {
+							Sm(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);
+						} else {
+							Sm(band1,band2) = susIntBCS(bands.ekq[ik][band1],bands.ek[ik][band2],bands.gapkq[ik][band1],bands.gapk[ik][band2],invT,omega,param.damp,param.signF);
+						}
 					}
 				}
 

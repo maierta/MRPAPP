@@ -83,7 +83,7 @@ namespace rpa {
                 }
 
             } else {
-				Delta = crystHarm(k,w[band],kz[band],k0[band],band) * param.Delta0;
+			Delta = crystHarm(k,w[band],kz[band],k0[band],band) * param.Delta0;
 			}
             return ComplexType(Delta,0.0);
         }
@@ -122,7 +122,95 @@ namespace rpa {
                 w[3](0,0) =  -1.0;
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
-			} else if (param.gAmpl == "LiFeAs_s_1") { // Yan's parametrization of 3D RPA gap for LiFeAs DFT model
+            } else if (param.gAmpl == "SrRuO_dwave") { // Parametrization of Astrid's d-wave for Sr2RuO4 with SO coupling 
+		//  gk ~ A1 * (cos(kFx) - cos(kFy)) + A2 * (cos(2 * kFx) - cos(2 * kFy)) 
+		//  band 1,2: A1 = 12.329, A2 = 3.268
+		//  band 3,4: A1 = 0.383 , A2 = 0.475
+		//  band 5,6: A1 = 0.261 , A2 = 0.314
+
+                crystHarm = &dwave;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](0,0) =  12.329;
+                w[1](0,0) =  12.329;
+                w[0](1,0) =  3.268;
+                w[1](1,0) =  3.268;
+
+                w[2](0,0) =  0.383;
+                w[3](0,0) =  0.383;
+                w[2](1,0) =  0.475;
+                w[3](1,0) =  0.475;
+
+                w[4](0,0) =  0.261;
+                w[5](0,0) =  0.261;
+                w[4](1,0) =  0.314;
+                w[5](1,0) =  0.314;
+
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+            } else if (param.gAmpl == "SrRuO_swave") { // Parametrization of Astrid's s-wave for Sr2RuO4 with SO coupling 
+		//  gk ~ gk ~ A1 + A2 * (cos(kFx) + cos(kFy)) + A3 * cos(kFx) * cos(kFy)
+		//  band 1,2: A1 = 6.155 , A2 = 7.821 , A3 = 9.823
+		//  band 3,4: A1 = -3.277, A2 = -3.814, A3 = -4.874
+		//  band 5,6: A1 = 0.1247, A2 = 1.781 , A3 = -0.168
+
+                crystHarm = &swave;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](0,0) =  6.155;
+                w[1](0,0) =  6.155;
+                w[0](1,0) =  7.821;
+                w[1](1,0) =  7.821;
+                w[0](2,0) =  9.823;
+                w[1](2,0) =  9.823;
+
+                w[2](0,0) =  -3.277;
+                w[3](0,0) =  -3.277;
+                w[2](1,0) =  -3.814;
+                w[3](1,0) =  -3.814;
+                w[2](2,0) =  -4.874;
+                w[3](2,0) =  -4.874;
+
+                w[4](0,0) =  0.1247;
+                w[5](0,0) =  0.1247;
+                w[4](1,0) =  1.781;
+                w[5](1,0) =  1.781;
+                w[4](2,0) =  -0.168;
+                w[5](2,0) =  -0.168;
+
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+	    } else if (param.gAmpl == "LiFeAs_s_1") { // Yan's parametrization of 3D RPA gap for LiFeAs DFT model
+                crystHarm = &swaveRPALiFeAs;
+
+                w.resize(10,MatrixType(6,3));
+
+                // beta_1^out (#1 in Yan's notation)
+                w[6](0,0)=0.0164188716876;  w[6](0,1)=0.0205463228788;      w[6](0,2)=-0.000695636205009;
+                w[6](1,0)=-0.0246717789076; w[6](1,1)=-0.0670007120592;     w[6](1,2)=0.00133341588286;
+                w[6](2,0)=0.0291220104904;  w[6](2,1)=0.0565291453398;      w[6](2,2)=0.00427785462515;
+                w[6](3,0)=-0.00708733403803;w[6](3,1)=0.00530496565299;     w[6](3,2)=-0.008279722707;
+                w[6](4,0)=-0.00207173475993;w[6](4,1)=-0.00611523851534;    w[6](4,2)=0.00293178285281;
+                w[6](5,0)=0.0147530260819;  w[6](5,1)=0.00955704309504;     w[6](5,2)=-0.00112472531463;
+                
+                // beta_1^in (#2 in Yan's notation)
+                w[7](0,0)=0.00978761990877; w[7](0,1)=0.00363839310632;     w[7](0,2)=-0.00469193933527;
+                w[7](1,0)=-0.00575725168811;w[7](1,1)=-0.0230025895224;     w[7](1,2)=0.0137676318191;
+                w[7](2,0)=0.00370733772768; w[7](2,1)=-0.0176469302143;     w[7](2,2)=-0.00798590782462;
+                w[7](3,0)=0.0108625157363;  w[7](3,1)=0.0630149051892;      w[7](3,2)=-0.0036242924301;
+                w[7](4,0)=-0.00680517796442;w[7](4,1)=-0.0191650356472;     w[7](4,2)=0.00202674681228;
+                w[7](5,0)=0.0150163953251;  w[7](5,1)=0.00764310716167;     w[7](5,2)=-0.000497278711838;
+                
+                // gamma^00 (#3 in Yan's notation)
+                w[5](0,0)=0.00657796389308; w[5](0,1)=-0.00126703842849;    w[5](0,2)=0.000651263699903;
+                w[5](1,0)=-0.00104849040636;w[5](1,1)=-0.000237020049388;   w[5](1,2)=-7.36207111786e-005;
+                w[5](2,0)=0.00102196177054; w[5](2,1)=6.965951275e-005;     w[5](2,2)=-8.23913495473e-005;
+                w[5](3,0)=0.000343614546984;w[5](3,1)=-0.00171290028559;    w[5](3,2)=0.000530338327369;
+                w[5](4,0)=-0.00187202342238;w[5](4,1)=-0.00181313122651;    w[5](4,2)=0.000475275095703;
+                w[5](5,0)=0.0080066663732;  w[5](5,1)=0.00290330559656;     w[5](5,2)=-0.000529553457368;
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+	    } else if (param.gAmpl == "LiFeAs_s_1") { // Yan's parametrization of 3D RPA gap for LiFeAs DFT model
                 crystHarm = &swaveRPALiFeAs;
 
                 w.resize(10,MatrixType(6,3));

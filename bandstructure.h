@@ -20,6 +20,7 @@
 #include "KFe2Se2.h"
 #include "FourOrbital.h"
 #include "bilayer.h"
+#include "gaps3D.h"
 
 namespace rpa {
 
@@ -27,11 +28,12 @@ namespace rpa {
 	class bandstructure {
 
 	private:
-		typedef MatrixTemplate<Field>	MatrixType;
+		typedef MatrixTemplate<Field>		MatrixType;
 		typedef std::complex<Field>		ComplexType;
 		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;
-		typedef std::vector<Field>      VectorType;
-		typedef Field					FieldType;
+		typedef std::vector<Field>  		VectorType;
+		typedef std::vector<ComplexType>  	ComplexVectorType;
+		typedef Field				FieldType;
 		typedef momentumDomain<Field,MatrixTemplate,ConcurrencyType> kDomain;
 		typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
@@ -50,9 +52,11 @@ namespace rpa {
 
 	public:
 		std::vector<VectorType> ek;
+		std::vector<std::vector<ComplexType> > gapk;
 		std::vector<ComplexMatrixType> ak;
 		std::vector<ComplexMatrixType> Mk;
 		std::vector<VectorType> ekq;
+		std::vector<std::vector<ComplexType> > gapkq;
 		std::vector<ComplexMatrixType> akq;
 		std::vector<ComplexMatrixType> Mkq;
 
@@ -92,9 +96,11 @@ namespace rpa {
 			cachedK(kmesh.nktot,false),
 			Lm(2*nbands,2*nbands),
 			ek(caching_?kmesh.nktot:0,VectorType(nbands)),
+			gapk(caching_?kmesh.nktot:0,ComplexVectorType(nbands)),
 			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
 			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
+			gapkq(caching_?kmesh.nktot:0,ComplexVectorType(nbands)),
 			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
@@ -181,7 +187,7 @@ namespace rpa {
 		}
 
 
-		void precalculate_ekak() {
+		void precalculate_ekak(bool calcGap=0) {
 			size_t nktot(kmesh.nktot);
 			for (size_t ik = 0; ik < nktot; ik++) {
 				std::vector<FieldType> k(3);
@@ -193,10 +199,17 @@ namespace rpa {
 						Mk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));
 					}
 				}
+				if (calcGap) {
+			                gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
+					for (size_t i=0; i < nbands; i++) {
+						gapk[ik][i] = Delta(k,i,ak[ik]);
+						gapk[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ek[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off
+					}
+				}
 			}
 		}
 
-		void precalculate_ekqakq(const VectorType& q) {
+		void precalculate_ekqakq(const VectorType& q, bool calcGap=0) {
 			size_t nktot(kmesh.nktot);
 			for (size_t ik = 0; ik < nktot; ik++) {
 				std::vector<FieldType> k(3);
@@ -208,6 +221,14 @@ namespace rpa {
 					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
 					for (size_t b=0; b < nbands; b++) {
 						Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
+					}
+				}
+				if (calcGap) {
+					kmesh.mapTo1BZ(kq); // make sure kq is in 1. BZ because gap may not be periodic in kz
+			        gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
+					for (size_t i=0; i < nbands; i++) {
+						gapkq[ik][i] = Delta(kq,i,akq[ik]);
+						gapkq[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ekq[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off
 					}
 				}
 			}

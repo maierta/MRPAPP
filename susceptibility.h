@@ -136,12 +136,12 @@ namespace rpa {
 			if (param.cacheBands) {
 				// Pre-calculate band energies for k-mesh
 				if (conc.rank()==0) std::cout << "Pre-calculating e(k) \n";
-				bands.precalculate_ekak(); // sets ek and ak
+				bands.precalculate_ekak(param.scState); // sets ek and ak
 				if (nq1*nq2*nq3==1) { // only 1 q-vector --> Pre-calculate ekq,akq
 					single_q = true;
 					if (conc.rank()==0) std::cout << "Pre-calculating e(k+q) \n";
 					q[0]=QVec[0][0]; q[1]=QVec[0][1]; q[2]=QVec[0][2];
-					bands.precalculate_ekqakq(q);
+					bands.precalculate_ekqakq(q,param.scState);
 				}
 			}
 
@@ -155,12 +155,12 @@ namespace rpa {
 					bands.precalculate_ekqakq(q); // resets ekq and akq for changing q vector
 				}
 
-				if (param.scState==1) { // RPA/BCS calculation with SC gap
+				if (param.scState==1 && !param.cacheBands) { // RPA/BCS calculation with SC gap, band calculation on the fly
 					GapType Delta(param,conc);
 					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 				               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],Delta,QVec[iQ][3],0);
-				   } else { // Normal state RPA
-	           			if (wmin_==0.0 && wmax_ == 0.0) { // only for zero frequency
+		         	} else { 
+					if (wmin_==0.0 && wmax_ == 0.0) { // only for zero frequency
 					   if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
 						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
 						       calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ]);
@@ -378,11 +378,12 @@ namespace rpa {
 			for (size_t iq=0;iq<numberOfQ;iq++) {
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
      			rpa.calcRPAResult(chi0Matrix[iq],rpa.model.spinMatrix,chiRPA,q);
-     			ComplexType susR(rpa.model.calcSus(chiRPA));
+     			ComplexType susRzz(rpa.model.calcSus(chiRPA,"zz"));
+     			ComplexType susRpm(rpa.model.calcSus(chiRPA,"+-"));
      			// ComplexType sus1(chi0Matrix[iq].calcSus());
      			ComplexType sus1(rpa.model.calcSus(chi0Matrix[iq]));
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
-     			os2 << real(susR) << ","  << imag(susR) << " ," << real(sus1) << " , " << imag(sus1) << "\n";
+     			os2 << real(susRzz) << ","  << imag(susRzz) << " ," << real(susRpm) << ","  << imag(susRpm) << " ," << real(sus1) << " , " << imag(sus1) << "\n";
 			}
 		}
 

@@ -81,11 +81,11 @@ namespace rpa {
 
 	template<typename FieldType>
 	inline std::complex<FieldType> susIntBCS(const FieldType& e1, const FieldType& e2,
-										     const std::complex<FieldType>& gap1, 
-										     const std::complex<FieldType>& gap2, 
-						                	 const FieldType& invT, const FieldType& omega,
-					                	     const FieldType& damp=FieldType(1.0e-3),
-					                	     const FieldType& signF = -1) {
+						 const std::complex<FieldType>& gap1, 
+					         const std::complex<FieldType>& gap2, 
+					         const FieldType& invT, const FieldType& omega,
+					         const FieldType& damp=FieldType(1.0e-3),
+					         const FieldType& signF = -1) {
 		std::complex<FieldType> sus(0);
 		FieldType uk1(0),vk1(0),uk2(0),vk2(0),r1(0),r2(0);
 		FieldType Delta1s(std::norm(gap1));

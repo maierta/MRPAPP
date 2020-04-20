@@ -10,6 +10,7 @@
 #include "parameters.h"
 #include "tbFromFile.h"
 #include "SrRuO_SO.h"
+#include "1band_wSpin.h"
 
 
 namespace rpa {
@@ -102,6 +103,8 @@ namespace rpa {
 			// Model specific needed for charge and spin matrices
 #ifdef USE_SRRUO
 			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_1BANDWSPIN
+			SingleBand_wSpin<FieldType,MatrixTemplate,ConcurrencyType> model;
 #elif USE_BILAYER
 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> model;
 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;

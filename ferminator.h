@@ -31,7 +31,7 @@ namespace rpa {
 		typedef std::vector<ComplexType>      	ComplexVectorType;
 
 
-		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		FieldType Pi;
 		std::string Case_;
@@ -49,7 +49,7 @@ namespace rpa {
 		std::vector<std::vector<ComplexType> > weights2;
 
 
-	ferminator(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+	ferminator(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			   ConcurrencyType& concurrency,bool calcOW=0):
 		param(parameters),
 		conc(concurrency),

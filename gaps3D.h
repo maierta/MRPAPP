@@ -27,7 +27,7 @@ namespace rpa {
         typedef std::vector<Field>      VectorType;
         typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
-        const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+        rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
         ConcurrencyType& conc;
         size_t nbands;
         std::vector<MatrixType> w;
@@ -50,7 +50,7 @@ namespace rpa {
     public:
         gap3D() {}
         
-        gap3D(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+        gap3D(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, // not const because param.parity will be set according to gap symmetry
               ConcurrencyType& concurrency):
             param(parameters),
             conc(concurrency),
@@ -122,61 +122,95 @@ namespace rpa {
                 w[3](0,0) =  -1.0;
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
-            } else if (param.gAmpl == "SrRuO_dwave") { // Parametrization of Astrid's d-wave for Sr2RuO4 with SO coupling 
+            
+            } else if (param.gAmpl == "1bandWSpin_dwave") { // d-wave for 1band model with explicit treatment of spin degree of freedom
+        //  gk  = cos(kFx) - cos(kFy)
+
+                crystHarm = &dwave;
+        		param.parity = 1;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](0,0) =  +1.0; // Spin up
+                w[1](0,0) =  -1.0; // Spin down, negative sign for spin singlet since Delta_{up,down} = -Delta_{down,up}
+
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+
+            } else if (param.gAmpl == "SrRuO_dwave_Astrid") { // Parametrization of Astrid's d-wave for Sr2RuO4 with SO coupling 
 		//  gk ~ A1 * (cos(kFx) - cos(kFy)) + A2 * (cos(2 * kFx) - cos(2 * kFy)) 
 		//  band 1,2: A1 = 12.329, A2 = 3.268
 		//  band 3,4: A1 = 0.383 , A2 = 0.475
 		//  band 5,6: A1 = 0.261 , A2 = 0.314
 
                 crystHarm = &dwave;
+        		param.parity = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
-                w[0](0,0) =  12.329;
-                w[1](0,0) =  12.329;
-                w[0](1,0) =  3.268;
-                w[1](1,0) =  3.268;
+                w[0](0,0) =   12.329; // Pseudospin up
+                w[3](0,0) =  -12.329; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[0](1,0) =   3.268;
+                w[3](1,0) =  -3.268;
 
-                w[2](0,0) =  0.383;
-                w[3](0,0) =  0.383;
-                w[2](1,0) =  0.475;
-                w[3](1,0) =  0.475;
+                w[1](0,0) =   0.383;
+                w[4](0,0) =  -0.383;
+                w[1](1,0) =   0.475;
+                w[4](1,0) =  -0.475;
 
-                w[4](0,0) =  0.261;
-                w[5](0,0) =  0.261;
-                w[4](1,0) =  0.314;
-                w[5](1,0) =  0.314;
+                w[2](0,0) =   0.261;
+                w[5](0,0) =  -0.261;
+                w[2](1,0) =   0.314;
+                w[5](1,0) =  -0.314;
 
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
-            } else if (param.gAmpl == "SrRuO_swave") { // Parametrization of Astrid's s-wave for Sr2RuO4 with SO coupling 
+            } else if (param.gAmpl == "SrRuO_dwave") { // Simple d-wave for Sr2RuO4 with SO coupling 
+            //  gk ~ A1 * (cos(kFx) - cos(kFy)) + A2 * (cos(2 * kFx) - cos(2 * kFy)) 
+            //  band 1,2: A1 = 12.329, A2 = 3.268
+            //  band 3,4: A1 = 0.383 , A2 = 0.475
+            //  band 5,6: A1 = 0.261 , A2 = 0.314
+
+                crystHarm = &dwave;
+                param.parity = 1;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](0,0) =   12.329; // Pseudospin up
+                w[3](0,0) =  -12.329; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[0](1,0) =   3.268;
+                w[3](1,0) =  -3.268;
+
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+            } else if (param.gAmpl == "SrRuO_swave_Astrid") { // Parametrization of Astrid's s-wave for Sr2RuO4 with SO coupling 
 		//  gk ~ gk ~ A1 + A2 * (cos(kFx) + cos(kFy)) + A3 * cos(kFx) * cos(kFy)
 		//  band 1,2: A1 = 6.155 , A2 = 7.821 , A3 = 9.823
 		//  band 3,4: A1 = -3.277, A2 = -3.814, A3 = -4.874
 		//  band 5,6: A1 = 0.1247, A2 = 1.781 , A3 = -0.168
 
+
                 crystHarm = &swave;
+		param.parity = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
                 w[0](0,0) =  6.155;
-                w[1](0,0) =  6.155;
+                w[3](0,0) =  -6.155;
                 w[0](1,0) =  7.821;
-                w[1](1,0) =  7.821;
+                w[3](1,0) =  -7.821;
                 w[0](2,0) =  9.823;
-                w[1](2,0) =  9.823;
+                w[3](2,0) =  -9.823;
 
-                w[2](0,0) =  -3.277;
-                w[3](0,0) =  -3.277;
-                w[2](1,0) =  -3.814;
-                w[3](1,0) =  -3.814;
-                w[2](2,0) =  -4.874;
-                w[3](2,0) =  -4.874;
+                w[1](0,0) =  -3.277;
+                w[4](0,0) =  3.277;
+                w[1](1,0) =  -3.814;
+                w[4](1,0) =  3.814;
+                w[1](2,0) =  -4.874;
+                w[4](2,0) =  4.874;
 
-                w[4](0,0) =  0.1247;
-                w[5](0,0) =  0.1247;
-                w[4](1,0) =  1.781;
-                w[5](1,0) =  1.781;
-                w[4](2,0) =  -0.168;
-                w[5](2,0) =  -0.168;
+                w[2](0,0) =  0.1247;
+                w[5](0,0) =  -0.1247;
+                w[2](1,0) =  1.781;
+                w[5](1,0) =  -1.781;
+                w[2](2,0) =  -0.168;
+                w[5](2,0) =  0.168;
 
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));

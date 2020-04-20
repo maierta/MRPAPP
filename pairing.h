@@ -60,7 +60,7 @@ namespace rpa {
 		typedef std::vector<Field>      		VectorType;
 		typedef std::vector<ComplexType>      	ComplexVectorType;
 
-		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		const size_t& dim;
 		ConcurrencyType& conc;
 		size_t interpolateChi_;
@@ -109,7 +109,7 @@ namespace rpa {
 
 	public:
 
-		pairing(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, 
+		pairing(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, 
 				ConcurrencyType& concurrency, 
 				const size_t interpolateChi,
 				momentumDomain<FieldType,psimag::Matrix,ConcurrencyType>& qMeshIn):

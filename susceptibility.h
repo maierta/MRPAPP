@@ -44,7 +44,7 @@ namespace rpa {
 			typedef rpa::gap2D<FieldType,psimag::Matrix,ConcurrencyType> GapType;
 #endif
 
-			const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+			rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 			ConcurrencyType& conc;
 			// momentumDomain<Field,psimag::Matrix> qMesh;
 			size_t numberOfQ;
@@ -65,7 +65,7 @@ namespace rpa {
 			// typedef std::vector<SuscType> BaseType;
 
 
-		susceptibility(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+		susceptibility(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 					   ConcurrencyType& concurrency,
 					   const FieldType& qxmin, const FieldType& qxmax, const size_t nq1In,
 					   const FieldType& qymin, const FieldType& qymax, const size_t nq2In, 
@@ -381,9 +381,10 @@ namespace rpa {
      			ComplexType susRzz(rpa.model.calcSus(chiRPA,"zz"));
      			ComplexType susRpm(rpa.model.calcSus(chiRPA,"+-"));
      			// ComplexType sus1(chi0Matrix[iq].calcSus());
-     			ComplexType sus1(rpa.model.calcSus(chi0Matrix[iq]));
+     			ComplexType sus1(rpa.model.calcSus(chi0Matrix[iq],"zz"));
+     			ComplexType sus2(rpa.model.calcSus(chi0Matrix[iq],"+-"));
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
-     			os2 << real(susRzz) << ","  << imag(susRzz) << " ," << real(susRpm) << ","  << imag(susRpm) << " ," << real(sus1) << " , " << imag(sus1) << "\n";
+     			os2 << real(susRzz) << ","  << imag(susRzz) << " ," << real(susRpm) << ","  << imag(susRpm) << " ," << real(sus1) << " , " << imag(sus1) << " , " << real(sus2) << " , " << imag(sus2) << "\n";
 			}
 		}
 

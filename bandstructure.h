@@ -16,6 +16,7 @@
 #include "tbFromFile.h"
 #include "SrRuO.h"
 #include "SrRuO_SO.h"
+#include "1band_wSpin.h"
 #include "BaFeAs_5orb.h"
 #include "KFe2Se2.h"
 #include "FourOrbital.h"
@@ -37,7 +38,7 @@ namespace rpa {
 		typedef momentumDomain<Field,MatrixTemplate,ConcurrencyType> kDomain;
 		typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
-		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t nbands;
 		int nLines;
@@ -55,13 +56,17 @@ namespace rpa {
 		std::vector<std::vector<ComplexType> > gapk;
 		std::vector<ComplexMatrixType> ak;
 		std::vector<ComplexMatrixType> Mk;
+		std::vector<ComplexMatrixType> MkFF;
 		std::vector<VectorType> ekq;
 		std::vector<std::vector<ComplexType> > gapkq;
 		std::vector<ComplexMatrixType> akq;
 		std::vector<ComplexMatrixType> Mkq;
+		std::vector<ComplexMatrixType> MkqFF;
 
 #ifdef USE_SRRUO
 			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;
+#elif USE_1BANDWSPIN
+			SingleBand_wSpin<FieldType,MatrixTemplate,ConcurrencyType> s;
 #elif USE_BILAYER
 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
@@ -77,13 +82,13 @@ namespace rpa {
 			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> s;
 #elif USE_FOURORBITAL
 			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_TBFILE
+#else
 			tbFromFile<FieldType,MatrixTemplate,ConcurrencyType> s;
 #endif
 
 	public:
 
-		bandstructure(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+		bandstructure(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 				  ConcurrencyType& concurrency, const kDomain& kmeshIn,
 				  bool caching):
 			param(parameters),
@@ -99,10 +104,12 @@ namespace rpa {
 			gapk(caching_?kmesh.nktot:0,ComplexVectorType(nbands)),
 			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
+			MkFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
 			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
 			gapkq(caching_?kmesh.nktot:0,ComplexVectorType(nbands)),
 			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
+			MkqFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
@@ -113,7 +120,7 @@ namespace rpa {
 		}
 
 		// Constructor without kmesh input
-		bandstructure(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+		bandstructure(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 				  ConcurrencyType& concurrency):
 			param(parameters),
 			conc(concurrency),
@@ -126,9 +133,11 @@ namespace rpa {
 			ek(caching_?kmesh.nktot:0,VectorType(nbands)),
 			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
+			MkFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
 			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
 			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
+			MkqFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
@@ -141,7 +150,7 @@ namespace rpa {
 
 		void getEkAndAk(VectorType& kvec, VectorType& eigenvals, ComplexMatrixType& eigenvects, int spin=1)  {
 			// if(!caching_) {
-				getBands(kvec,eigenvals,eigenvects,spin); // Now included in getBands routine
+			 	getBands(kvec,eigenvals,eigenvects,spin); // Now included in getBands routine
 				// phaseFactor(kvec,eigenvects); // Now included in getBands routine
 				return;
 			// } else {
@@ -197,6 +206,13 @@ namespace rpa {
 					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
 					for (size_t b=0; b < nbands; b++) {
 						Mk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));
+						if (calcGap) {
+							if (param.explicitSpin && param.parity == 1) { // spin explicitely taken into account and singlet gap
+								MkFF[ik](b,i) = conj(ak[ik](l1,b)) * conj(ak[ik](l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
+							} else {
+								MkFF[ik](b,i) = conj(ak[ik](l1,b)) * conj(ak[ik](l2,b));
+							}
+						}
 					}
 				}
 				if (calcGap) {
@@ -221,6 +237,14 @@ namespace rpa {
 					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
 					for (size_t b=0; b < nbands; b++) {
 						Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
+						// if (ik==0) std::cout << i << "," << b << "," <<  Mkq[ik](i,b) << "\n";
+						if (calcGap) {
+							if (param.explicitSpin) {
+								MkqFF[ik](i,b) = akq[ik](l1,b) * akq[ik](l2,(b+int(nbands/2))%nbands); // Pseudospin up-down pairing
+							} else {
+								MkqFF[ik](i,b) = akq[ik](l1,b) * akq[ik](l2,b);
+							}
+						}
 					}
 				}
 				if (calcGap) {

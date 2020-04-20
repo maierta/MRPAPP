@@ -27,7 +27,7 @@ typedef double FieldType;
 typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
 template <typename Field,  template<typename> class MatrixTemplate, typename ConcurrencyType> 
-void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ConcurrencyType& conc) {
+void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ConcurrencyType& conc) {
 
 	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkBands,param.nkIntz,param.dimension);
 	kmesh.set_momenta(false);	
@@ -35,6 +35,7 @@ void calcBands(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& para
 	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands(param,conc,kmesh,false);
 
 	std::string filename = "ek_" + param.fileID + ".txt";
+
 	bands.calcBandStructure(filename,true);
 
 	// Now calculate bands along high-symmetry direction

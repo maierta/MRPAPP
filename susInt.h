@@ -112,8 +112,8 @@ namespace rpa {
 
 		} else {
 
-			FieldType Delta1s(std::norm(gap1));
-			FieldType Delta2s(std::norm(gap2));
+			// FieldType Delta1s(std::norm(gap1));
+			// FieldType Delta2s(std::norm(gap2));
 			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
 			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
 			r1 = e1 / EnergyBCS1; r2 = e2 / EnergyBCS2;
@@ -133,6 +133,99 @@ namespace rpa {
 				+ susInt(-EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq4;
 
 			return sus;
+
+		}
+
+	}
+
+	template<typename FieldType>
+	inline std::complex<FieldType> susIntBCSGG(const FieldType& e1, const FieldType& e2,
+											   const std::complex<FieldType>& gap1, 
+											   const std::complex<FieldType>& gap2, 
+											   const FieldType& invT, const FieldType& omega,
+											   const FieldType& damp=FieldType(1.0e-3),
+											   const FieldType& signF = -1) {
+		
+		std::complex<FieldType> sus(0);
+		FieldType uk1(0),vk1(0),uk2(0),vk2(0),r1(0),r2(0);
+		FieldType Delta1s(std::norm(gap1));
+		FieldType Delta2s(std::norm(gap2));
+
+
+		if (Delta1s == 0 && Delta2s == 0) {
+
+			return susInt(e1,e2,invT,omega,damp);
+
+		} else if (Delta1s == 0 && Delta2s != 0) {
+	
+			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
+			r2 = e2 / EnergyBCS2;
+			uk2 = 0.5*(1.0+r2); vk2 = 0.5*(1.0-r2);
+			return susInt(e1,EnergyBCS2,invT,omega,damp) * uk2 + susInt(e1,-EnergyBCS2,invT,omega,damp) * vk2;
+
+		} else if (Delta1s != 0 && Delta2s == 0) {
+	
+			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
+			r1 = e1 / EnergyBCS1;
+			uk1 = 0.5*(1.0+r1); vk1 = 0.5*(1.0-r1);
+			return susInt(EnergyBCS1,e2,invT,omega,damp) * uk1 + susInt(-EnergyBCS1,e2,invT,omega,damp) * vk1;
+
+		} else {
+
+			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
+			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
+			r1 = e1 / EnergyBCS1; r2 = e2 / EnergyBCS2;
+			uk1 = 0.5*(1.0+r1); vk1 = 0.5*(1.0-r1);
+			uk2 = 0.5*(1.0+r2); vk2 = 0.5*(1.0-r2);
+
+			FieldType skq1(uk1*uk2);
+			FieldType skq2(vk1*vk2);
+			FieldType skq3(uk1*vk2);
+			FieldType skq4(vk1*uk2);
+
+			sus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq1 
+				+ susInt(-EnergyBCS1,-EnergyBCS2,invT,omega,damp) * skq2
+				+ susInt(+EnergyBCS1,-EnergyBCS2,invT,omega,damp) * skq3
+				+ susInt(-EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq4;
+
+			return sus;
+
+		}
+
+	}
+
+
+	template<typename FieldType>
+	inline std::complex<FieldType> susIntBCSFF(const FieldType& e1, const FieldType& e2,
+						     				   const std::complex<FieldType>& gap1, 
+					         				   const std::complex<FieldType>& gap2, 
+					         				   const FieldType& invT, const FieldType& omega,
+					         				   const FieldType& damp=FieldType(1.0e-3),
+					         				   const FieldType& signF = -1) {
+		
+		std::complex<FieldType> sus(0);
+		FieldType r1(0);
+		FieldType Delta1s(std::norm(gap1));
+		FieldType Delta2s(std::norm(gap2));
+
+
+		if (Delta1s == 0 || Delta2s == 0) {
+
+			return std::complex<FieldType>(0.0,0.0);
+
+
+		} else {
+
+			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
+			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
+			r1 = -signF * 0.25 * real(conj(gap1)*gap2)/(EnergyBCS1*EnergyBCS2);
+
+			sus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) 
+				+ susInt(-EnergyBCS1,-EnergyBCS2,invT,omega,damp)
+				- susInt(+EnergyBCS1,-EnergyBCS2,invT,omega,damp)
+				- susInt(-EnergyBCS1,+EnergyBCS2,invT,omega,damp);
+
+			return sus * r1;
 
 		}
 

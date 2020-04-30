@@ -137,11 +137,13 @@ namespace rpa {
 				// Pre-calculate band energies for k-mesh
 				if (conc.rank()==0) std::cout << "Pre-calculating e(k) \n";
 				bands.precalculate_ekak(param.scState); // sets ek and ak
+				bands.writeGap();
 				if (nq1*nq2*nq3==1) { // only 1 q-vector --> Pre-calculate ekq,akq
 					single_q = true;
 					if (conc.rank()==0) std::cout << "Pre-calculating e(k+q) \n";
 					q[0]=QVec[0][0]; q[1]=QVec[0][1]; q[2]=QVec[0][2];
 					bands.precalculate_ekqakq(q,param.scState);
+
 				}
 			}
 
@@ -152,35 +154,38 @@ namespace rpa {
 				size_t iQ = range.index();
 				q[0]=QVec[iQ][0]; q[1]=QVec[iQ][1]; q[2]=QVec[iQ][2];
 				if (!single_q && param.cacheBands) {
-					bands.precalculate_ekqakq(q); // resets ekq and akq for changing q vector
+					bands.precalculate_ekqakq(q,param.scState); // resets ekq and akq for changing q vector
 				}
 
-				if (param.scState==1 && !param.cacheBands) { // RPA/BCS calculation with SC gap, band calculation on the fly
-					GapType Delta(param,conc);
-					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-				               calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],Delta,QVec[iQ][3],0);
-		         	} else { 
+				// if (param.scState==1 && !param.cacheBands) { // RPA/BCS calculation with SC gap, band calculation on the fly
+				// 	GapType Delta(param,conc);
+				// 	calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+				//                calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],Delta,QVec[iQ][3],0);
+		         	// } else { 
 					if (wmin_==0.0 && wmax_ == 0.0) { // only for zero frequency
-					   if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
-						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-						       calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ]);
-					   } else {// Band energies and eigenvectors are calculated on the fly
-						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-						       // calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],wmin_,kMap);
-						       calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],kMap);
-					   }
+					   // if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
+						//    calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+						//        calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ]);
+					   // } else {// Band energies and eigenvectors are calculated on the fly
+						//    calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+						//        // calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],wmin_,kMap);
+						//        calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],kMap);
+					   // }
+
+					   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+					       calcChi0(param,kmesh,q,bands,conc,chi0Matrix[iQ],param.cacheBands);
 
 	           			} else { // Finite frequency calculation
-					   if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
+					   // if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
 						calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-					          calcChi0(param,kmesh,bands,conc,chi0Matrix[iQ],QVec[iQ][3]); // Constructor for pre-calculated bands
-					   } else { // Band energies and eigenvectors are calculated on the fly
-						calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-					          calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],QVec[iQ][3],0); // Constructor for on the fly band diagonalization
-					   }
+					          calcChi0(param,kmesh,q,bands,conc,chi0Matrix[iQ],QVec[iQ][3],param.cacheBands); // Constructor for pre-calculated bands
+					   // } else { // Band energies and eigenvectors are calculated on the fly
+						// calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+					   //        calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],QVec[iQ][3],0); // Constructor for on the fly band diagonalization
+					   // }
 
 					}
-				   }
+				   // }
 
 				if (conc.rank()==0) {
 					std::cout.precision(7);

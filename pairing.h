@@ -388,12 +388,15 @@ namespace rpa {
 				
 				if (param.cacheBands) {
 					bands.precalculate_ekqakq(q);
-					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-					   calcChi0(param,kMesh,bands,conc,chi0);
-				} else {
-					calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-				          calcChi0(param,kMesh,bands,q,conc,chi0);
 				}
+				// 	calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+				// 	   calcChi0(param,kMesh,bands,conc,chi0);
+				// } else {
+				// 	calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+				//           calcChi0(param,kMesh,bands,q,conc,chi0);
+				// }
+				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+				   calcChi0(param,kMesh,q,bands,conc,chi0,param.cacheBands);
 				// for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) chi0(i,j) = calcChi0(i,j);
 				// chi0.setLowerTriangle();
 				chiq = chi0;

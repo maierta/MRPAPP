@@ -112,8 +112,6 @@ namespace rpa {
 
 		} else {
 
-			// FieldType Delta1s(std::norm(gap1));
-			// FieldType Delta2s(std::norm(gap2));
 			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
 			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
 			r1 = e1 / EnergyBCS1; r2 = e2 / EnergyBCS2;

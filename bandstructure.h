@@ -100,16 +100,16 @@ namespace rpa {
 			caching_(caching),
 			cachedK(kmesh.nktot,false),
 			Lm(2*nbands,2*nbands),
-			ek(caching_?kmesh.nktot:0,VectorType(nbands)),
-			gapk(caching_?kmesh.nktot:0,ComplexVectorType(nbands)),
-			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
-			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
-			MkFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
-			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
-			gapkq(caching_?kmesh.nktot:0,ComplexVectorType(nbands)),
-			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
-			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
-			MkqFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
+			ek(caching_?kmesh.nktot:1,VectorType(nbands)),
+			gapk(caching_?kmesh.nktot:1,ComplexVectorType(nbands)),
+			ak(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
+			Mk(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands*nbands)),
+			MkFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands*nbands)),
+			ekq(caching_?kmesh.nktot:1,VectorType(nbands)),
+			gapkq(caching_?kmesh.nktot:1,ComplexVectorType(nbands)),
+			akq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
+			Mkq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
+			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
@@ -130,14 +130,16 @@ namespace rpa {
 			caching_(true),
 			cachedK(0),
 			Lm(2*nbands,2*nbands),
-			ek(caching_?kmesh.nktot:0,VectorType(nbands)),
-			ak(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
-			Mk(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
-			MkFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands*nbands)),
-			ekq(caching_?kmesh.nktot:0,VectorType(nbands)),
-			akq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands,nbands)),
-			Mkq(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
-			MkqFF(caching_?kmesh.nktot:0,ComplexMatrixType(nbands*nbands,nbands)),
+			ek(caching_?kmesh.nktot:1,VectorType(nbands)),
+			gapk(caching_?kmesh.nktot:1,ComplexVectorType(nbands)),
+			ak(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
+			Mk(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands*nbands)),
+			MkFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands*nbands)),
+			ekq(caching_?kmesh.nktot:1,VectorType(nbands)),
+			gapkq(caching_?kmesh.nktot:1,ComplexVectorType(nbands)),
+			akq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
+			Mkq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
+			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
 			s(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
@@ -195,68 +197,118 @@ namespace rpa {
 			return;
 		}
 
-
 		void precalculate_ekak(bool calcGap=0) {
 			size_t nktot(kmesh.nktot);
+			std::vector<FieldType> k(3);
 			for (size_t ik = 0; ik < nktot; ik++) {
-				std::vector<FieldType> k(3);
 				kmesh.momenta.getRow(ik,k);
-				getEkAndAk(k,ek[ik],ak[ik]);
-				for (size_t i=0; i < nbands*nbands; i++) {
-					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
-					for (size_t b=0; b < nbands; b++) {
-						Mk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));
-						if (calcGap) {
-							if (param.explicitSpin && param.parity == 1) { // spin explicitely taken into account and singlet gap
-								MkFF[ik](b,i) = conj(ak[ik](l1,b)) * conj(ak[ik](l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
-							} else {
-								MkFF[ik](b,i) = conj(ak[ik](l1,b)) * conj(ak[ik](l2,b));
-							}
-						}
-					}
-				}
-				if (calcGap) {
-			                gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
-					for (size_t i=0; i < nbands; i++) {
-						gapk[ik][i] = Delta(k,i,ak[ik]);
-						gapk[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ek[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off
-					}
-				}
+				calculateBandTensors(k, ek[ik], ak[ik], Mk[ik], gapk[ik], MkFF[ik], calcGap, 0);
 			}
 		}
 
 		void precalculate_ekqakq(const VectorType& q, bool calcGap=0) {
 			size_t nktot(kmesh.nktot);
+			std::vector<FieldType> k(3);
+			std::vector<FieldType> kq(3);
 			for (size_t ik = 0; ik < nktot; ik++) {
-				std::vector<FieldType> k(3);
 				kmesh.momenta.getRow(ik,k);
-				std::vector<FieldType> kq(3);
 				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				getEkAndAk(kq,ekq[ik],akq[ik]);
-				for (size_t i=0; i < nbands*nbands; i++) {
-					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
-					for (size_t b=0; b < nbands; b++) {
-						Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
-						// if (ik==0) std::cout << i << "," << b << "," <<  Mkq[ik](i,b) << "\n";
-						if (calcGap) {
-							if (param.explicitSpin) {
-								MkqFF[ik](i,b) = akq[ik](l1,b) * akq[ik](l2,(b+int(nbands/2))%nbands); // Pseudospin up-down pairing
-							} else {
-								MkqFF[ik](i,b) = akq[ik](l1,b) * akq[ik](l2,b);
-							}
+				calculateBandTensors(kq, ekq[ik], akq[ik], Mkq[ik], gapkq[ik], MkqFF[ik], calcGap, 1);
+			}
+		}
+
+		void calculateBandTensors(VectorType& k_, 
+					  VectorType& ek_, 
+					  ComplexMatrixType& ak_,
+					  ComplexMatrixType& MGG, 
+					  std::vector<ComplexType>& gap,
+					  ComplexMatrixType& MFF, 
+					  bool calcGap=0,
+					  bool qshift=0) {
+
+			getEkAndAk(k_,ek_,ak_);
+			for (size_t i=0; i < nbands*nbands; i++) {
+				size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+				for (size_t b=0; b < nbands; b++) {
+					if (qshift) MGG(i,b) = ak_(l1,b) * conj(ak_(l2,b));
+					else MGG(b,i) = ak_(l1,b) * conj(ak_(l2,b));
+					if (calcGap) {
+						if (param.explicitSpin && param.parity == 1) { // spin explicitely taken into account and singlet gap
+							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
+							else MFF(i,b) = ak_(l1,b) * ak_(l2,(b+int(nbands/2))%nbands);
+						} else {
+							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,b));
+							else MFF(i,b) = ak_(l1,b) * ak_(l2,b);
 						}
 					}
 				}
-				if (calcGap) {
-					kmesh.mapTo1BZ(kq); // make sure kq is in 1. BZ because gap may not be periodic in kz
-			        gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
-					for (size_t i=0; i < nbands; i++) {
-						gapkq[ik][i] = Delta(kq,i,akq[ik]);
-						gapkq[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ekq[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off
-					}
+			}
+			if (calcGap) {
+				kmesh.mapTo1BZ(k_); // make sure k is in 1. BZ because gap may not be periodic in k
+				gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
+				for (size_t i=0; i < nbands; i++) {
+					gap[i] = Delta(k_,i,ak_);
+					// gap[i] *= std::pow(param.Omega0,2)/(std::pow(ek_[i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off
+					gap[i] *= exp(-std::pow(ek_[i],2) / std::pow(param.Omega0,2)); // Gaussian cut-off
 				}
 			}
 		}
+
+		void writeGap() {
+			if (!caching_) return;
+
+			size_t nktot(kmesh.nktot);
+			std::vector<FieldType> k(3);
+
+			std::string filename = "gap_" + param.fileID + ".txt";
+			if (conc.rank()==0) {
+				// const char *filename = file.c_str();
+				std::ofstream os(filename);
+				int precision=5;
+				os.precision(precision);
+				for (size_t ik=0; ik<nktot; ik++) {
+					std::vector<FieldType> k(3);
+					kmesh.momenta.getRow(ik,k);
+					os << k[0]/param.pi_f << "," << k[1]/param.pi_f << "," << k[2]/param.pi_f ;
+					for (size_t i = 0; i < nbands; ++i) os << "," << real(gapk[ik][i]);				
+					os <<  "\n";
+				}
+				os.close();
+			}
+		}
+
+		// void precalculate_ekqakq(const VectorType& q, bool calcGap=0) {
+		// 	size_t nktot(kmesh.nktot);
+		// 	for (size_t ik = 0; ik < nktot; ik++) {
+		// 		std::vector<FieldType> k(3);
+		// 		kmesh.momenta.getRow(ik,k);
+		// 		std::vector<FieldType> kq(3);
+		// 		for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+		// 		getEkAndAk(kq,ekq[ik],akq[ik]);
+		// 		for (size_t i=0; i < nbands*nbands; i++) {
+		// 			size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+		// 			for (size_t b=0; b < nbands; b++) {
+		// 				Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
+		// 				// if (ik==0) std::cout << i << "," << b << "," <<  Mkq[ik](i,b) << "\n";
+		// 				if (calcGap) {
+		// 					if (param.explicitSpin) {
+		// 						MkqFF[ik](i,b) = akq[ik](l1,b) * akq[ik](l2,(b+int(nbands/2))%nbands); // Pseudospin up-down pairing
+		// 					} else {
+		// 						MkqFF[ik](i,b) = akq[ik](l1,b) * akq[ik](l2,b);
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 		if (calcGap) {
+		// 			kmesh.mapTo1BZ(kq); // make sure kq is in 1. BZ because gap may not be periodic in kz
+		// 	        gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
+		// 			for (size_t i=0; i < nbands; i++) {
+		// 				gapkq[ik][i] = Delta(kq,i,akq[ik]);
+		// 				gapkq[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ekq[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		void calcBandStructure(std::string file,bool printOccupation) {
 			size_t nktot(kmesh.nktot);

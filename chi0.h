@@ -134,80 +134,6 @@ namespace rpa {
 	public:
 
 
-		// Constructor for fininte w, finite Delta calculation, band diagonalization on the fly ek,ak 
-		calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
-			BandsType& bandsIn,
-			const std::vector<Field>& q,
-			ConcurrencyType& concurrency,
-			SuscType& chi0matrix,
-			GapType& DeltaIn,
-			const FieldType& omega=FieldType(0.0),
-			const bool kMap=0):
-		param(parameters),
-		kmesh(kmeshIn),
-		bands(bandsIn),
-		conc(concurrency),
-		nOrb(param.nOrb),
-		msize(nOrb*nOrb),
-		invT(1./param.temperature),
-		kMap_(kMap),
-		chi0k(kMap?kmeshIn.nktot:0,0.0)
-
-		{
-			GapType& Delta(DeltaIn);
-			VectorType k(3),kq(3);
-			VectorType ek(nOrb,0),ekq(nOrb,0);
-			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
-
-
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
-					chi0matrix(i,j) = ComplexType(0.0,0.0);
-
-			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
-				kmesh.momenta.getRow(ik,k);
-				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);
-				bands.getEkAndAk(kq,ekq,akq);
-				kmesh.mapTo1BZ(kq); // make sure kq is in 1. BZ because gap may not be periodic in kz
-				for (size_t band1 = 0; band1 < nOrb; ++band1){
-					ComplexType gap1 = Delta(kq,band1,akq);
-					gap1 *= pow(param.Omega0,2)/(pow(ekq[band1],2)+pow(param.Omega0,2)); // Lorentzian cut-off
-					for (size_t band2 = 0; band2 < nOrb; ++band2){
-						ComplexType r1(0.0);
-						ComplexType gap2 = Delta(k,band2,ak);
-						gap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off
-						r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);
-
-
-						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
-							size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
-
-							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
-							// 	           * akq(l1,band1) * conj(akq(l3,band1));
-
-							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
-
-							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
-
-							// std::cout << "k,r1===== " << k << "," <<r1 <<  "\n";
-
-
-							chi0matrix(i,j) += c1*r1 ;
-
-							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += imag(c1*r1);
-						}
-					}
-				}
-			}
-			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++)
-					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
-			// chi0matrix.setLowerTriangle();
-
-			if (kMap_) printChi0k(q);
-		}
 
 		void printChi0k(const VectorType& q) {
 			std::ofstream os("chi0k.txt");
@@ -228,155 +154,16 @@ namespace rpa {
 			}
 		}
 
-		// Constructor for finite w, Delta=0 calculation, band diagonalization on the fly
+
+
+		// Constructor for w=0, Delta=0 calculation
 		calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+			const VectorType& q,
 			BandsType& bandsIn,
-			const std::vector<Field>& q,
 			ConcurrencyType& concurrency,
 			SuscType& chi0matrix,
-			const FieldType& omega,
-			const bool kMap=0):
-		param(parameters),
-		kmesh(kmeshIn),
-		bands(bandsIn),
-		conc(concurrency),
-		nOrb(param.nOrb),
-		msize(nOrb*nOrb),
-		invT(1./param.temperature),
-		kMap_(kMap),
-		chi0k(kMap?kmeshIn.nktot:0,0.0)
-
-		{
-			VectorType k(3),kq(3);
-			VectorType ek(nOrb,0),ekq(nOrb,0);
-			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
-
-
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
-					chi0matrix(i,j) = ComplexType(0.0,0.0);
-
-			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
-				kmesh.momenta.getRow(ik,k);
-				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);
-				bands.getEkAndAk(kq,ekq,akq);
-				for (size_t band1 = 0; band1 < nOrb; ++band1){
-					for (size_t band2 = 0; band2 < nOrb; ++band2){
-						ComplexType r1(0.0);
-						r1 = susInt(ekq[band1],ek[band2],invT,omega,param.damp);
-
-						// if (imag(r1)>=1.e-5) std::cout << band1 << "," << band2 << "," << ekq[band1]<<","<<ek[band2]<<","<<imag(r1) << "\n";
-
-						// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-						for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
-							size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
-
-							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
-							// 	           * akq(l1,band1) * conj(akq(l3,band1));
-
-							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
-
-							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
-
-							chi0matrix(i,j) += c1*r1 ;
-							// chi0matrix(i,j) += r1 ;
-							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += imag(c1*r1);
-
-						}
-					}
-				}
-			}
-			// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
-					// std::cout << chi0matrix(i,j) << "\n";
-				}
-			// chi0matrix.print();
-			// chi0matrix.setLowerTriangle(); // For finite omega there is a damping term w + ii*damp which breaks this symmetry
-			if (kMap_) printChi0k(q);
-
-		}
-
-
-		// Constructor for w=0, Delta=0 calculation, band diagonalization on the fly
-		calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
-			BandsType& bandsIn,
-			const std::vector<Field>& q,
-			ConcurrencyType& concurrency,
-			SuscType& chi0matrix,
-			const bool kMap=0,
-			const bool calcOnlyDiagonal=0):
-
-		param(parameters),
-		kmesh(kmeshIn),
-		bands(bandsIn),
-		conc(concurrency),
-		nOrb(param.nOrb),
-		msize(nOrb*nOrb),
-		invT(1./param.temperature),
-		kMap_(kMap),
-		calcOnlyDiagonal_(calcOnlyDiagonal),
-		chi0k(kMap?kmeshIn.nktot:0,0.0)
-
-		{
-			VectorType k(3),kq(3);
-			VectorType ek(nOrb,0),ekq(nOrb,0);
-			ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
-
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
-					chi0matrix(i,j) = ComplexType(0.0,0.0);
-
-			for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
-				kmesh.momenta.getRow(ik,k);
-				for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
-				bands.getEkAndAk(k,ek,ak);
-				bands.getEkAndAk(kq,ekq,akq);
-				for (size_t band1 = 0; band1 < nOrb; ++band1){
-					for (size_t band2 = 0; band2 < nOrb; ++band2){
-						ComplexType r1 = ComplexType(susInt(ekq[band1],ek[band2],invT),0);
-						// r1 = susInt(ekq[band1],ek[band2],invT,FieldType(0.0),param.damp);
-
-						for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-							size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
-							size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
-
-							// Check if l1,l2 and l3,l4 are on the same site
-							if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
-							if (calcOnlyDiagonal && ((l1!=l2) || (l3!=l4))) continue;
-							// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
-					                       // * akq(l1,band1) * conj(akq(l3,band1));
-
-							ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
-							// if (l1==0 && l2==0 && l3==0 && l4==0 && band1==band2) std::cout << "band1,band2,c1: " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<","<<c1<<","<<r1 << ","<<ekq[band1]<<","<<ek[band2]<<"\n";
-							// if (l1==l2 && l3==l4) std::cout << "l1,l2,l3,l4,band1,band2,c1: " << l1 << " , " << l2 << " , " << l3 << " , " << l4 << " , " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<"," << r1 << " , " <<c1<<"," <<ekq[band1]<<","<<ek[band2]<<"\n";
-
-							chi0matrix(i,j) += r1*c1 ;
-							if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += real(c1*r1);
-							// if (i==0 && j==0) std::cout << "chi0matrix " << chi0matrix(i,j) << "\n";
-						}
-					}
-				}
-			}
-			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
-					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
-					// std::cout << i <<","<<j<<","<<chi0matrix(i,j);
-				}
-			chi0matrix.setLowerTriangle();
-			if (kMap_) printChi0k(q);
-
-		}
-
-
-		// Constructor for w=0, Delta=0 calculation with pre-calculated band energies and eigenstates contained in bandsIn
-		calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
-			BandsType& bandsIn,
-			ConcurrencyType& concurrency,
-			SuscType& chi0matrix):
+			const bool& cacheB=0):
 
 		param(parameters),
 		kmesh(kmeshIn),
@@ -392,19 +179,35 @@ namespace rpa {
 					chi0matrix(i,j) = ComplexType(0.0,0.0);
 
 			ComplexMatrixType Sm(nOrb,nOrb);
+			VectorType *ekq(&bands.ekq[0]);
+			VectorType *ek(&bands.ek[0]);
+			ComplexMatrixType *Mkq(&bands.Mkq[0]);
+			ComplexMatrixType *Mk(&bands.Mk[0]);
+
 			for (size_t ik = 0; ik < nktot; ++ik)	{
-				// First build S-matrix
+				if (cacheB) {
+					ekq = &bands.ekq[ik]; ek = &bands.ek[ik];
+					Mkq = &bands.Mkq[ik]; Mk = &bands.Mk[ik];
+				} else { // Need to calculate band tensors first
+					std::vector<FieldType> k(3);
+					std::vector<FieldType> kq(3);
+					kmesh.momenta.getRow(ik,k);
+					for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+					bands.calculateBandTensors(k, bands.ek[0], bands.ak[0], bands.Mk[0], bands.gapk[0], bands.MkFF[0], param.scState, 0);
+					bands.calculateBandTensors(kq, bands.ekq[0], bands.akq[0], bands.Mkq[0], bands.gapkq[0], bands.MkqFF[0], param.scState, 1);
+				}
+				// Now build S-matrix
 				for (size_t band1 = 0; band1 < nOrb; ++band1){
 					for (size_t band2 = 0; band2 < nOrb; ++band2){
-						Sm(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT);
+						Sm(band1,band2) = susInt((*ekq)[band1],(*ek)[band2],invT);
 					}
 				}
 
 				// Now build Mkq(l1,l3,b1) * Sm(b1,b2) * Mk(l4,l2,b2)
-				ComplexMatrixType c0(bands.Mkq[ik].n_row(),Sm.n_col());
-				matMul(bands.Mkq[ik],Sm,c0);
-				ComplexMatrixType c1(c0.n_row(),bands.Mk[ik].n_col());
-				matMul(c0,bands.Mk[ik],c1);
+				ComplexMatrixType c0(Mkq->n_row(),Sm.n_col());
+				ComplexMatrixType c1(c0.n_row(),Mk->n_col());
+				matMul((*Mkq),Sm,c0);
+				matMul(c0,(*Mk),c1);
 
 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
 					size_t l1 = param.indexToOrb(i,0); size_t l3 = param.indexToOrb(i,1);
@@ -424,11 +227,12 @@ namespace rpa {
 		// Constructor for finite w calculation, pre- band diagonalization
 		calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 			const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+			const VectorType& q,
 			BandsType& bandsIn,
 			ConcurrencyType& concurrency,
 			SuscType& chi0matrix,
-			const FieldType& omega
-			):
+			const FieldType& omega,
+			const bool& cacheB=0):
 
 		param(parameters),
 		kmesh(kmeshIn),
@@ -440,40 +244,62 @@ namespace rpa {
 		invT(1./param.temperature)
 
 		{
-			// if (conc.rank()==0) std::cout << "Bands are already pre-calculated \n";
-
 			for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 					chi0matrix(i,j) = ComplexType(0.0,0.0);
 
 			ComplexMatrixType SmGG(nOrb,nOrb);
 			ComplexMatrixType SmFF(nOrb,nOrb);
+			VectorType *ekq, *ek;
+			ComplexVectorType *gapkq, *gapk;
+			ComplexMatrixType *Mkq, *Mk, *MkqFF, *MkFF;
+
+			ekq = &bands.ekq[0]; ek = &bands.ek[0];
+			gapkq = &bands.gapkq[0]; gapk = &bands.gapk[0];
+			Mkq = &bands.Mkq[0]; Mk = &bands.Mk[0];
+			MkqFF = &bands.MkqFF[0]; MkFF = &bands.MkFF[0];
+
 			for (size_t ik = 0; ik < nktot; ++ik)	{
+
+				if (cacheB) { // Band tensors are already pre-calculated and we just need to point to it
+					ekq = &bands.ekq[ik]; ek = &bands.ek[ik];
+					gapkq = &bands.gapkq[ik]; gapk = &bands.gapk[ik];
+					Mkq = &bands.Mkq[ik]; Mk = &bands.Mk[ik];
+					MkqFF = &bands.MkqFF[ik]; MkFF = &bands.MkFF[ik];
+				} else { // Need to calculate band tensors first
+					std::vector<FieldType> k(3);
+					std::vector<FieldType> kq(3);
+					kmesh.momenta.getRow(ik,k);
+					for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+					bands.calculateBandTensors(k, bands.ek[0], bands.ak[0], bands.Mk[0], bands.gapk[0], bands.MkFF[0], param.scState, 0);
+					bands.calculateBandTensors(kq, bands.ekq[0], bands.akq[0], bands.Mkq[0], bands.gapkq[0], bands.MkqFF[0], param.scState, 1);
+				}
+
 				// First build S-matrix
 				for (size_t band1 = 0; band1 < nOrb; ++band1){
 					for (size_t band2 = 0; band2 < nOrb; ++band2){
 						if (!param.scState) {
-							SmGG(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);
+							SmGG(band1,band2) = susInt((*ekq)[band1],(*ek)[band2],invT,omega,param.damp);
 						} else {
-							SmGG(band1,band2) = susIntBCSGG(bands.ekq[ik][band1],bands.ek[ik][band2],bands.gapkq[ik][band1],bands.gapk[ik][band2],invT,omega,param.damp,param.signF);
-							SmFF(band1,band2) = susIntBCSFF(bands.ekq[ik][band1],bands.ek[ik][band2],bands.gapkq[ik][band1],bands.gapk[ik][band2],invT,omega,param.damp,param.signF);
-
-							// std::cout << "SmFF : " << bands.gapkq[ik][band2] * bands.gapk[ik][band1] << "\n";
-
+							SmGG(band1,band2) = susIntBCSGG((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.signF);
+							SmFF(band1,band2) = susIntBCSFF((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.signF);
+							// SmGG(band1,band2) = susIntBCS((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.signF);
 						}
 					}
 				}
 
-
 				// Now build Mkq(l1,l3,b1) * SmGG(b1,b2) * Mk(l4,l2,b2)
-				ComplexMatrixType c0(bands.Mkq[ik].n_row(),SmGG.n_col());
-				ComplexMatrixType c1(c0.n_row(),bands.Mk[ik].n_col());
-				ComplexMatrixType c2(c0.n_row(),bands.Mk[ik].n_col());
-				matMul(bands.Mkq[ik],SmGG,c0);
-				matMul(c0,bands.Mk[ik],c1);
+				ComplexMatrixType c0(Mkq->n_row(),SmGG.n_col());
+				ComplexMatrixType c1(c0.n_row(),Mk->n_col());
+				ComplexMatrixType c2(c0.n_row(),Mk->n_col());
+				matMul((*Mkq),SmGG,c0);
+				matMul(c0,(*Mk),c1);
+
 				if (param.scState) {
 					// Now build MkqFF(l1,l3,b1) * SmFF(b1,b2) * MkFF(l4,l2,b2)
-					matMul(bands.MkqFF[ik],SmFF,c0);
-					matMul(c0,bands.MkFF[ik],c2);
+					matMul((*MkqFF),SmFF,c0);
+					matMul(c0,(*MkFF),c2);
+					// matMul((*Mkq),SmFF,c0);
+					// matMul(c0,(*Mk),c2);
 				}
 
 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
@@ -482,10 +308,8 @@ namespace rpa {
 					size_t ind1 = param.OrbsToIndex(l1,l2);
 					size_t ind2 = param.OrbsToIndex(l3,l4);
 					chi0matrix(ind1,ind2) += c1(i,j);
+					// if (param.scState) chi0matrix(ind1,ind2) += c2(i,j);
 
-					// if (ind1==0 && ind2==3) std::cout << "i,j=" << bands.Mkq[ik](i,0) << "," << bands.Mkq[ik](i,1) << "\n";
-					// if (ind1==0 && ind2==3) std::cout << "i,j=" << c1(i,j) << "\n";
-					// if (ind1==0 && ind2==3) std::cout << "i,j=" << chi0matrix(ind1,ind2) << "\n";
 					if (param.scState) { // Add FF term
 						l4 = param.indexToOrb(i,0); l1 = param.indexToOrb(i,1);
 						l2 = param.indexToOrb(j,0); l3 = param.indexToOrb(j,1);
@@ -502,47 +326,206 @@ namespace rpa {
 				}
 
 		}
-		// // Constructor for finite w, Delta=0 calculation, pre- band diagonalization
-		// calcChi0Matrix(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+
+		// Constructor for w=0, Delta=0 calculation, band diagonalization on the fly
+		// calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
 		// 	const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
 		// 	BandsType& bandsIn,
+		// 	const std::vector<Field>& q,
 		// 	ConcurrencyType& concurrency,
 		// 	SuscType& chi0matrix,
-		// 	const FieldType& omega
-		// 	):
+		// 	const bool kMap=0,
+		// 	const bool calcOnlyDiagonal=0):
                 //
 		// param(parameters),
 		// kmesh(kmeshIn),
-		// nktot(kmesh.nktot),
 		// bands(bandsIn),
 		// conc(concurrency),
 		// nOrb(param.nOrb),
 		// msize(nOrb*nOrb),
-		// invT(1./param.temperature)
+		// invT(1./param.temperature),
+		// kMap_(kMap),
+		// calcOnlyDiagonal_(calcOnlyDiagonal),
+		// chi0k(kMap?kmeshIn.nktot:0,0.0)
                 //
 		// {
-		// 	if (conc.rank()==0) std::cout << "Bands are already pre-calculated \n";
+		// 	VectorType k(3),kq(3);
+		// 	VectorType ek(nOrb,0),ekq(nOrb,0);
+		// 	ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
                 //
 		// 	for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
 		// 			chi0matrix(i,j) = ComplexType(0.0,0.0);
                 //
-		// 	for (size_t ik = 0; ik < nktot; ++ik)	{
-		// 		if (conc.rank()==0) std::cout << "ik="<<ik<<"\n";
+		// 	for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
+		// 		kmesh.momenta.getRow(ik,k);
+		// 		for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+		// 		bands.getEkAndAk(k,ek,ak);
+		// 		bands.getEkAndAk(kq,ekq,akq);
 		// 		for (size_t band1 = 0; band1 < nOrb; ++band1){
 		// 			for (size_t band2 = 0; band2 < nOrb; ++band2){
-		// 				if (conc.rank()==0) std::cout << "band1,band2="<<band1<<","<<band2<<"\n";
+		// 				ComplexType r1 = ComplexType(susInt(ekq[band1],ek[band2],invT),0);
+		// 				// r1 = susInt(ekq[band1],ek[band2],invT,FieldType(0.0),param.damp);
+                //
+		// 				for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+		// 					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+		// 					size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
+                //
+		// 					// Check if l1,l2 and l3,l4 are on the same site
+		// 					if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
+		// 					if (calcOnlyDiagonal && ((l1!=l2) || (l3!=l4))) continue;
+		// 					// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
+		// 			                       // * akq(l1,band1) * conj(akq(l3,band1));
+                //
+		// 					ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
+		// 					// if (l1==0 && l2==0 && l3==0 && l4==0 && band1==band2) std::cout << "band1,band2,c1: " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<","<<c1<<","<<r1 << ","<<ekq[band1]<<","<<ek[band2]<<"\n";
+		// 					// if (l1==l2 && l3==l4) std::cout << "l1,l2,l3,l4,band1,band2,c1: " << l1 << " , " << l2 << " , " << l3 << " , " << l4 << " , " << k[0]<<","<<k[1]<<","<<band1<<","<<band2<<"," << r1 << " , " <<c1<<"," <<ekq[band1]<<","<<ek[band2]<<"\n";
+                //
+		// 					chi0matrix(i,j) += r1*c1 ;
+		// 					if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += real(c1*r1);
+		// 					// if (i==0 && j==0) std::cout << "chi0matrix " << chi0matrix(i,j) << "\n";
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+		// 			chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+		// 			// std::cout << i <<","<<j<<","<<chi0matrix(i,j);
+		// 		}
+		// 	chi0matrix.setLowerTriangle();
+		// 	if (kMap_) printChi0k(q);
+                //
+		// }
+
+
+		// Constructor for fininte w, finite Delta calculation, band diagonalization on the fly ek,ak 
+		// calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+		// 	const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+		// 	BandsType& bandsIn,
+		// 	const std::vector<Field>& q,
+		// 	ConcurrencyType& concurrency,
+		// 	SuscType& chi0matrix,
+		// 	GapType& DeltaIn,
+		// 	const FieldType& omega=FieldType(0.0),
+		// 	const bool kMap=0):
+		// param(parameters),
+		// kmesh(kmeshIn),
+		// bands(bandsIn),
+		// conc(concurrency),
+		// nOrb(param.nOrb),
+		// msize(nOrb*nOrb),
+		// invT(1./param.temperature),
+		// kMap_(kMap),
+		// chi0k(kMap?kmeshIn.nktot:0,0.0)
+                //
+		// {
+		// 	GapType& Delta(DeltaIn);
+		// 	VectorType k(3),kq(3);
+		// 	VectorType ek(nOrb,0),ekq(nOrb,0);
+		// 	ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
+                //
+                //
+		// 	for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
+		// 			chi0matrix(i,j) = ComplexType(0.0,0.0);
+                //
+		// 	for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
+		// 		kmesh.momenta.getRow(ik,k);
+		// 		for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+		// 		bands.getEkAndAk(k,ek,ak);
+		// 		bands.getEkAndAk(kq,ekq,akq);
+		// 		kmesh.mapTo1BZ(kq); // make sure kq is in 1. BZ because gap may not be periodic in kz
+		// 		for (size_t band1 = 0; band1 < nOrb; ++band1){
+		// 			ComplexType gap1 = Delta(kq,band1,akq);
+		// 			// gap1 *= pow(param.Omega0,2)/(pow(ekq[band1],2)+pow(param.Omega0,2)); // Lorentzian cut-off
+		// 			gap1 *= exp(-std::pow(ekq[band1],2) / std::pow(param.Omega0,2)); // Gaussian cut-off
+		// 			for (size_t band2 = 0; band2 < nOrb; ++band2){
 		// 				ComplexType r1(0.0);
-		// 				r1 = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);
+		// 				ComplexType gap2 = Delta(k,band2,ak);
+		// 				// gap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off
+		// 				gap2 *= exp(-std::pow(ek[band2],2) / std::pow(param.Omega0,2)); // Gaussian cut-off
+		// 				r1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);
+                //
                 //
 		// 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
-		// 					if (conc.rank()==0) std::cout << "i,j="<<i<<","<<j<<"\n";
-		// 					size_t l1 = param.indexToOrb(i,1); size_t l2 = param.indexToOrb(i,0);
-		// 					size_t l3 = param.indexToOrb(j,1); size_t l4 = param.indexToOrb(j,0);
+		// 					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+		// 					size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
+                //
+		// 					// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
+		// 					// 	           * akq(l1,band1) * conj(akq(l3,band1));
                 //
 		// 					// Check if l1,l2 and l3,l4 are on the same site
 		// 					if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
                 //
-		// 					ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,bands.ak[ik],bands.akq[ik]);
+		// 					ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
+                //
+		// 					// std::cout << "k,r1===== " << k << "," <<r1 <<  "\n";
+                //
+                //
+		// 					chi0matrix(i,j) += c1*r1 ;
+                //
+		// 					if (kMap_ && l1==l2 && l3==l4) chi0k[ik] += imag(c1*r1);
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++)
+		// 			chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
+		// 	// chi0matrix.setLowerTriangle();
+                //
+		// 	if (kMap_) printChi0k(q);
+		// }
+
+		// // Constructor for finite w, Delta=0 calculation, band diagonalization on the fly
+		// calcChi0Matrix(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+		// 	const momentumDomain<Field,psimag::Matrix,ConcurrencyType>& kmeshIn,
+		// 	BandsType& bandsIn,
+		// 	const std::vector<Field>& q,
+		// 	ConcurrencyType& concurrency,
+		// 	SuscType& chi0matrix,
+		// 	const FieldType& omega,
+		// 	const bool kMap=0):
+		// param(parameters),
+		// kmesh(kmeshIn),
+		// bands(bandsIn),
+		// conc(concurrency),
+		// nOrb(param.nOrb),
+		// msize(nOrb*nOrb),
+		// invT(1./param.temperature),
+		// kMap_(kMap),
+		// chi0k(kMap?kmeshIn.nktot:0,0.0)
+                //
+		// {
+		// 	VectorType k(3),kq(3);
+		// 	VectorType ek(nOrb,0),ekq(nOrb,0);
+		// 	ComplexMatrixType ak(nOrb,nOrb), akq(nOrb,nOrb), susTerm(nOrb,nOrb);
+                //
+                //
+		// 	for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++)
+		// 			chi0matrix(i,j) = ComplexType(0.0,0.0);
+                //
+		// 	for (size_t ik = 0; ik < kmesh.nktot; ++ik)	{
+		// 		kmesh.momenta.getRow(ik,k);
+		// 		for (size_t i = 0; i < 3; ++i) kq[i] = k[i] + q[i];
+		// 		bands.getEkAndAk(k,ek,ak);
+		// 		bands.getEkAndAk(kq,ekq,akq);
+		// 		for (size_t band1 = 0; band1 < nOrb; ++band1){
+		// 			for (size_t band2 = 0; band2 < nOrb; ++band2){
+		// 				ComplexType r1(0.0);
+		// 				r1 = susInt(ekq[band1],ek[band2],invT,omega,param.damp);
+                //
+		// 				// if (imag(r1)>=1.e-5) std::cout << band1 << "," << band2 << "," << ekq[band1]<<","<<ek[band2]<<","<<imag(r1) << "\n";
+                //
+		// 				// for (size_t i=0;i<msize;i++) for (size_t j=i;j<msize;j++) {
+		// 				for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
+		// 					size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
+		// 					size_t l3 = param.indexToOrb(j,0); size_t l4 = param.indexToOrb(j,1);
+                //
+		// 					// ComplexType c1 = ak(l4,band2)  * conj(ak(l2,band2))
+		// 					// 	           * akq(l1,band1) * conj(akq(l3,band1));
+                //
+		// 					// Check if l1,l2 and l3,l4 are on the same site
+		// 					if ((param.orbToSite[l1]!=param.orbToSite[l2]) || (param.orbToSite[l3]!=param.orbToSite[l4])) continue;
+                //
+		// 					ComplexType c1 = computeM(l1,l2,l3,l4,band1,band2,ak,akq);
                 //
 		// 					chi0matrix(i,j) += c1*r1 ;
 		// 					// chi0matrix(i,j) += r1 ;
@@ -557,9 +540,17 @@ namespace rpa {
 		// 			chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
 		// 			// std::cout << chi0matrix(i,j) << "\n";
 		// 		}
+		// 	// chi0matrix.print();
 		// 	// chi0matrix.setLowerTriangle(); // For finite omega there is a damping term w + ii*damp which breaks this symmetry
+		// 	if (kMap_) printChi0k(q);
                 //
 		// }
+
+
+
+
+		// Emery (3-band) d-p-p model
+
 
 		// Constructor for w=0  calculation for Emery problem with k,k',q-dependent interactions
 		// band diagonalization on the fly
@@ -733,7 +724,7 @@ namespace rpa {
 				qMesh.momenta.getRow(iq,q);
 
 				calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType>
-				             calcChi0(param,kmesh,bands,q,conc,(*this)[iq]);
+				             calcChi0(param,kmesh,q,bands,conc,(*this)[iq],param.cacheBands);
 
 				// for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) (*this)[iq](i,j) = calcChi0(i,j);
 				// (*this)[iq].setLowerTriangle();

@@ -143,7 +143,7 @@ namespace rpa {
 		//  band 5,6: A1 = 0.261 , A2 = 0.314
 
                 crystHarm = &dwave;
-        		param.parity = 1;
+        	param.parity = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
                 w[0](0,0) =   12.329; // Pseudospin up
@@ -165,18 +165,17 @@ namespace rpa {
                 k0.resize(param.nOrb,FieldType(0.0));
             } else if (param.gAmpl == "SrRuO_dwave") { // Simple d-wave for Sr2RuO4 with SO coupling 
             //  gk ~ A1 * (cos(kFx) - cos(kFy)) + A2 * (cos(2 * kFx) - cos(2 * kFy)) 
-            //  band 1,2: A1 = 12.329, A2 = 3.268
-            //  band 3,4: A1 = 0.383 , A2 = 0.475
-            //  band 5,6: A1 = 0.261 , A2 = 0.314
 
                 crystHarm = &dwave;
                 param.parity = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
-                w[0](0,0) =   12.329; // Pseudospin up
-                w[3](0,0) =  -12.329; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
-                w[0](1,0) =   3.268;
-                w[3](1,0) =  -3.268;
+                w[0](0,0) =   0.5; // Pseudospin up
+                w[3](0,0) =  -0.5; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[1](0,0) =   0.5; // Pseudospin up
+                w[4](0,0) =  -0.5; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[2](0,0) =   0.5; // Pseudospin up
+                w[5](0,0) =  -0.5; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
 
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));

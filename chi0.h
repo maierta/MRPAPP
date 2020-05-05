@@ -280,8 +280,8 @@ namespace rpa {
 						if (!param.scState) {
 							SmGG(band1,band2) = susInt((*ekq)[band1],(*ek)[band2],invT,omega,param.damp);
 						} else {
-							SmGG(band1,band2) = susIntBCSGG((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.signF);
-							SmFF(band1,band2) = susIntBCSFF((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.signF);
+							SmGG(band1,band2) = susIntBCSGG((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp);
+							SmFF(band1,band2) = susIntBCSFF((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.parity);
 							// SmGG(band1,band2) = susIntBCS((*ekq)[band1],(*ek)[band2],(*gapkq)[band1],(*gapk)[band2],invT,omega,param.damp,param.signF);
 						}
 					}

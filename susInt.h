@@ -85,7 +85,7 @@ namespace rpa {
 					         const std::complex<FieldType>& gap2, 
 					         const FieldType& invT, const FieldType& omega,
 					         const FieldType& damp=FieldType(1.0e-3),
-					         const FieldType& signF = -1) {
+					         const FieldType& signF = 1) {
 		std::complex<FieldType> sus(0);
 		FieldType uk1(0),vk1(0),uk2(0),vk2(0),r1(0),r2(0);
 		FieldType Delta1s(std::norm(gap1));
@@ -118,7 +118,7 @@ namespace rpa {
 			uk1 = 0.5*(1.0+r1); vk1 = 0.5*(1.0-r1);
 			uk2 = 0.5*(1.0+r2); vk2 = 0.5*(1.0-r2);
 
-			r1 = -signF * 0.25 * real(gap1*conj(gap2))/(EnergyBCS1*EnergyBCS2);
+			r1 = signF * 0.25 * real(gap1*conj(gap2))/(EnergyBCS1*EnergyBCS2);
 
 			FieldType skq1(uk1*uk2+r1);
 			FieldType skq2(vk1*vk2+r1);
@@ -141,8 +141,7 @@ namespace rpa {
 											   const std::complex<FieldType>& gap1, 
 											   const std::complex<FieldType>& gap2, 
 											   const FieldType& invT, const FieldType& omega,
-											   const FieldType& damp=FieldType(1.0e-3),
-											   const FieldType& signF = -1) {
+											   const FieldType& damp=FieldType(1.0e-3)) {
 		
 		std::complex<FieldType> sus(0);
 		FieldType uk1(0),vk1(0),uk2(0),vk2(0),r1(0),r2(0);
@@ -199,10 +198,10 @@ namespace rpa {
 					         				   const std::complex<FieldType>& gap2, 
 					         				   const FieldType& invT, const FieldType& omega,
 					         				   const FieldType& damp=FieldType(1.0e-3),
-					         				   const FieldType& signF = -1) {
+					         				   const FieldType& signF = 1) {
 		
 		std::complex<FieldType> sus(0);
-		FieldType r1(0);
+		std::complex<FieldType> r1(0);
 		FieldType Delta1s(std::norm(gap1));
 		FieldType Delta2s(std::norm(gap2));
 
@@ -216,7 +215,10 @@ namespace rpa {
 
 			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
 			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
-			r1 = -signF * 0.25 * real(conj(gap1)*gap2)/(EnergyBCS1*EnergyBCS2);
+			// std::cout << "signF " << signF << "\n";
+			r1 = signF * 0.25 * conj(gap1)*gap2/(EnergyBCS1*EnergyBCS2);
+			// r1 = signF * 0.25 * real(conj(gap1)*gap2)/(EnergyBCS1*EnergyBCS2);
+			// std::cout << "gap1="<<gap1<<"\n";
 
 			sus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) 
 				+ susInt(-EnergyBCS1,-EnergyBCS2,invT,omega,damp)

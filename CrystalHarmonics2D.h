@@ -103,6 +103,17 @@ namespace rpa {
 		}
 
 	template<typename FieldType, template<typename> class MatrixTemplate>
+	std::complex<FieldType> pwave(const std::vector<FieldType>& kvector, 
+     	 		  const MatrixTemplate<FieldType>& w,
+			  const size_t band)
+			{
+				std::complex<FieldType> ii = std::complex<FieldType>(0.0,1.0);
+				return 	   w(0,0) * ( sin(kvector[0]) - ii * sin(kvector[1]))
+					 + w(1,0) * (-sin(kvector[0]) - ii * sin(kvector[1]))
+					 + w(2,0) * ( sin(kvector[0]) + ii * sin(kvector[1]));
+			}
+
+	template<typename FieldType, template<typename> class MatrixTemplate>
 	FieldType swaveRPALiFeAs(const std::vector<FieldType>& kvector, 
 						     const  MatrixTemplate<FieldType>& w,
 						     const  std::vector<FieldType>& kz,

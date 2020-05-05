@@ -233,7 +233,7 @@ namespace rpa {
 					if (qshift) MGG(i,b) = ak_(l1,b) * conj(ak_(l2,b));
 					else MGG(b,i) = ak_(l1,b) * conj(ak_(l2,b));
 					if (calcGap) {
-						if (param.explicitSpin && param.parity == 1) { // spin explicitely taken into account and singlet gap
+						if (param.explicitSpin && param.oppositeSpinPairing == 1) { // spin explicitely taken into account and up-down gap
 							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
 							else MFF(i,b) = ak_(l1,b) * ak_(l2,(b+int(nbands/2))%nbands);
 						} else {

@@ -94,6 +94,7 @@ namespace rpa {
 		bool fixEvecs;
 		bool calcLambdaZ;
 		Field parity;
+		bool oppositeSpinPairing;
 		bool explicitSpin;
 
 			
@@ -202,6 +203,7 @@ namespace rpa {
 			fixEvecs(0),
 			calcLambdaZ(0),
 			parity(1), // spin singlet, even parity gap for BCS chi0 calculation
+			oppositeSpinPairing(1),
 			explicitSpin(0)
 
 			// single-band model in 2-sub-lattice formulation
@@ -270,7 +272,7 @@ namespace rpa {
 				        std::getline(str,text,'=');
 				        setParamBasedOnText(text,str);
 
-				        fixParameters();
+				        // fixParameters();
 					}
 				}
 
@@ -410,6 +412,7 @@ namespace rpa {
 		        else if (text.find("writeFullChi0")!=std::string::npos) str >> (*this).writeFullChi0;
 		        else if (text.find("fixEvecs")!=std::string::npos) str >> (*this).fixEvecs;
 		        else if (text.find("calcLambdaZ")!=std::string::npos) str >> (*this).calcLambdaZ;
+		        else if (text.find("oppositeSpinPairing")!=std::string::npos) str >> (*this).oppositeSpinPairing;
 		        else if (text.find("explicitSpin")!=std::string::npos) str >> (*this).explicitSpin;
 			}
 
@@ -523,6 +526,7 @@ namespace rpa {
 				os << "writeFullChi0 = " << (*this).writeFullChi0 << "\n";
 				os << "fixEvecs = " << (*this).fixEvecs << "\n";
 				os << "calcLambdaZ = " << (*this).calcLambdaZ << "\n";
+				os << "oppositeSpinPairing = " << (*this).oppositeSpinPairing << "\n";
 				os << "explicitSpin = " << (*this).explicitSpin << "\n";
 			}
 
@@ -641,12 +645,13 @@ namespace rpa {
 		        conc.broadcast((*this).writeFullChi0);
 		        conc.broadcast((*this).fixEvecs);
 		        conc.broadcast((*this).calcLambdaZ);
+		        conc.broadcast((*this).oppositeSpinPairing);
 		        conc.broadcast((*this).explicitSpin);
 			}
 
-			void fixParameters() {
-				if (explicitSpin) signF = -1; // if spin degree of freedom is explicitely considered, signF = -1 will make the FF term in chi0 positive
-			}
+			// void fixParameters() {
+				// if (explicitSpin) signF = -1; // if spin degree of freedom is explicitely considered, signF = -1 will make the FF term in chi0 positive
+			// }
 
 			void setupOrbitalIndices(){
 				indexToOrb.resize(nOrb*nOrb,2);

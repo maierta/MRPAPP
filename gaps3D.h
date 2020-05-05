@@ -46,6 +46,9 @@ namespace rpa {
         FieldType (*crystHarm2)(const std::vector<FieldType>&, 
                                const ComplexMatrixType&,
                                const size_t);
+	std::complex<FieldType> (*complexCrystHarm)(const std::vector<FieldType>&, 
+                               const MatrixType&,
+                               const size_t);
 
     public:
         gap3D() {}
@@ -67,25 +70,26 @@ namespace rpa {
         }
 
         ComplexType operator()(VectorType& k, size_t band,ComplexMatrixType& ak) {
-            FieldType Delta(0.0);
-			if (param.gAmpl=="KFeSe_overdoped_PhenD" ||
-                param.gAmpl=="KFe2Se2_underdoped_PhenD") { // take the sign(Delta)
-				// bands.getEkAndAk(k,ek,ak);	
-	            // Delta = crystHarm2(k,ak,band) * param.Delta0;
-				Delta = crystHarm(k,w[band],kz[band],k0[band],band); 
-				FieldType sgnD = (Delta > 0) - (Delta < 0);
-				Delta = sgnD*param.Delta0;
-			} else if (param.gAmpl=="dwave_ladders") { // coupled 2-leg ladders in 2-orbital description
-                if (real(ak(0,band))*real(ak(1,band))>0.0) { // bonding band
-                    return param.Delta0 * (cos(k[0]) - cos(k[1]));
-                } else { // antibonding band (shift kx by pi)
-                    return param.Delta0 * (-cos(k[0]) - cos(k[1]));
-                }
-
-            } else {
-			Delta = crystHarm(k,w[band],kz[band],k0[band],band) * param.Delta0;
+            ComplexType Delta(0.0);
+		if (param.gAmpl=="KFeSe_overdoped_PhenD" ||
+		    param.gAmpl=="KFe2Se2_underdoped_PhenD") { // take the sign(Delta)
+			// bands.getEkAndAk(k,ek,ak);	
+	    // Delta = crystHarm2(k,ak,band) * param.Delta0;
+			Delta = crystHarm(k,w[band],kz[band],k0[band],band); 
+			FieldType sgnD = (real(Delta) > 0) - (real(Delta) < 0);
+			Delta = sgnD*param.Delta0;
+		} else if (param.gAmpl=="dwave_ladders") { // coupled 2-leg ladders in 2-orbital description
+			if (real(ak(0,band))*real(ak(1,band))>0.0) { // bonding band
+			    return param.Delta0 * (cos(k[0]) - cos(k[1]));
+			} else { // antibonding band (shift kx by pi)
+			    return param.Delta0 * (-cos(k[0]) - cos(k[1]));
 			}
-            return ComplexType(Delta,0.0);
+		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral") {
+			Delta = complexCrystHarm(k,w[band],band) * param.Delta0;
+		} else {
+			Delta = crystHarm(k,w[band],kz[band],k0[band],band) * param.Delta0;
+		}
+		    return Delta;
         }
     
 // This is the place where different gaps are hardcoded 
@@ -179,6 +183,39 @@ namespace rpa {
 
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
+
+            } else if (param.gAmpl == "SrRuO_chiral") { // Simple chiral gap sin kx + i sin ky for Sr2RuO4 with SO coupling 
+
+                complexCrystHarm = &pwave;
+                param.parity = -1;
+                param.oppositeSpinPairing = 1;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+                w[3](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+                w[1](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+                w[4](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+                w[2](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+                w[5](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+
+                // kz.resize(param.nOrb,VectorType(0,0.0));
+                // k0.resize(param.nOrb,FieldType(0.0));
+            } else if (param.gAmpl == "SrRuO_helical") { // Simple helical gap delta(k)=(sin kx, sin ky, 0) for Sr2RuO4 with SO coupling 
+
+                complexCrystHarm = &pwave;
+                param.parity = -1;
+                param.oppositeSpinPairing = 0;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](1,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+                w[3](0,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+                w[1](1,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+                w[4](0,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+                w[2](1,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+                w[5](0,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+
+                // kz.resize(param.nOrb,VectorType(0,0.0));
+                // k0.resize(param.nOrb,FieldType(0.0));
             } else if (param.gAmpl == "SrRuO_swave_Astrid") { // Parametrization of Astrid's s-wave for Sr2RuO4 with SO coupling 
 		//  gk ~ gk ~ A1 + A2 * (cos(kFx) + cos(kFy)) + A3 * cos(kFx) * cos(kFy)
 		//  band 1,2: A1 = 6.155 , A2 = 7.821 , A3 = 9.823

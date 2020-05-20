@@ -31,6 +31,7 @@ namespace rpa {
         ConcurrencyType& conc;
         size_t nbands;
         std::vector<MatrixType> w;
+        std::vector<MatrixType> wIm;
         std::vector<std::vector<FieldType> > kz;
         std::vector<FieldType> k0;
 		// momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh;
@@ -43,12 +44,23 @@ namespace rpa {
                                const std::vector<FieldType>&,
                                const FieldType&,
                                const size_t);
-        FieldType (*crystHarm2)(const std::vector<FieldType>&, 
-                               const ComplexMatrixType&,
+        FieldType (*crystHarmIm)(const std::vector<FieldType>&, 
+                               const MatrixType&,
+                               const std::vector<FieldType>&,
+                               const FieldType&,
                                const size_t);
-	std::complex<FieldType> (*complexCrystHarm)(const std::vector<FieldType>&, 
+        FieldType (*crystHarm2D)(const std::vector<FieldType>&, 
                                const MatrixType&,
                                const size_t);
+        FieldType (*crystHarmIm2D)(const std::vector<FieldType>&, 
+                               const MatrixType&,
+                               const size_t);
+        // FieldType (*crystHarm2)(const std::vector<FieldType>&, 
+                               // const ComplexMatrixType&,
+                               // const size_t);
+	    // FieldType (*complexCrystHarm)(const std::vector<FieldType>&, 
+                               // const MatrixType&,
+                               // const size_t);
 
     public:
         gap3D() {}
@@ -71,6 +83,9 @@ namespace rpa {
 
         ComplexType operator()(VectorType& k, size_t band,ComplexMatrixType& ak) {
             ComplexType Delta(0.0);
+
+        const ComplexType ii = ComplexType(0.0,1.0);
+
 		if (param.gAmpl=="KFeSe_overdoped_PhenD" ||
 		    param.gAmpl=="KFe2Se2_underdoped_PhenD") { // take the sign(Delta)
 			// bands.getEkAndAk(k,ek,ak);	
@@ -79,13 +94,14 @@ namespace rpa {
 			FieldType sgnD = (real(Delta) > 0) - (real(Delta) < 0);
 			Delta = sgnD*param.Delta0;
 		} else if (param.gAmpl=="dwave_ladders") { // coupled 2-leg ladders in 2-orbital description
+			param.parity = 1.0; // even parity (d-wave) gap
 			if (real(ak(0,band))*real(ak(1,band))>0.0) { // bonding band
 			    return param.Delta0 * (cos(k[0]) - cos(k[1]));
 			} else { // antibonding band (shift kx by pi)
 			    return param.Delta0 * (-cos(k[0]) - cos(k[1]));
 			}
-		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral") {
-			Delta = complexCrystHarm(k,w[band],band) * param.Delta0;
+		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral" || param.gAmpl == "SrRuO_helical_Astrid") {
+			Delta = param.Delta0 * (crystHarm2D(k,w[band],band) + ii*crystHarmIm2D(k,wIm[band],band)) ;
 		} else {
 			Delta = crystHarm(k,w[band],kz[band],k0[band],band) * param.Delta0;
 		}
@@ -147,7 +163,8 @@ namespace rpa {
 		//  band 5,6: A1 = 0.261 , A2 = 0.314
 
                 crystHarm = &dwave;
-        	param.parity = 1;
+            	param.parity = 1;
+                param.oppositeSpinPairing = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
                 w[0](0,0) =   12.329; // Pseudospin up
@@ -172,6 +189,7 @@ namespace rpa {
 
                 crystHarm = &dwave;
                 param.parity = 1;
+                param.oppositeSpinPairing = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
                 w[0](0,0) =   0.5; // Pseudospin up
@@ -184,35 +202,85 @@ namespace rpa {
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
 
-            } else if (param.gAmpl == "SrRuO_chiral") { // Simple chiral gap sin kx + i sin ky for Sr2RuO4 with SO coupling 
-
-                complexCrystHarm = &pwave;
-                param.parity = -1;
+            } else if (param.gAmpl == "SrRuO_swave") { // Simple s-wave for Sr2RuO4 with SO coupling 
+            //  gk = 1 for all bands
+ 
+                crystHarm = &swave;
+                param.parity = 1;
                 param.oppositeSpinPairing = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
-                w[0](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
-                w[3](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
-                w[1](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
-                w[4](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
-                w[2](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
-                w[5](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+                w[0](0,0) =   1.0; // Pseudospin up
+                w[3](0,0) =  -1.0; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[1](0,0) =   1.0; // Pseudospin up
+                w[4](0,0) =  -1.0; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[2](0,0) =   1.0; // Pseudospin up
+                w[5](0,0) =  -1.0; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+
+            } else if (param.gAmpl == "SrRuO_chiral") { // Simple chiral gap sin kx + i sin ky for Sr2RuO4 with SO coupling 
+
+                crystHarm2D   = &pxwave;
+                crystHarmIm2D = &pywave;
+
+                param.parity = -1;
+                param.oppositeSpinPairing = 1;
+
+                w.resize(param.nOrb,MatrixType(4,1));
+                wIm.resize(param.nOrb,MatrixType(4,1));
+
+// -                w[0](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+// -                w[3](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+// -                w[1](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+// -                w[4](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+// -                w[2](2,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
+// -                w[5](2,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+
+
+                w[0](0,0)   =  1.0; // Pseudospin up ~ sinkx+isinky
+                wIm[0](0,0) =  1.0; 
+                w[3](0,0)   =  1.0;  // Pseudospin down ~ sinkx+isinky
+                wIm[3](0,0) =  1.0; 
+                
+                w[1](0,0)   =  1.0; 
+                wIm[1](0,0) =  1.0; 
+                w[4](0,0)   =  1.0; 
+                wIm[4](0,0) =  1.0; 
+                
+                w[2](0,0)   =  1.0; 
+                wIm[2](0,0) =  1.0; 
+                w[5](0,0)   =  1.0; 
+                wIm[5](0,0) =  1.0; 
 
                 // kz.resize(param.nOrb,VectorType(0,0.0));
                 // k0.resize(param.nOrb,FieldType(0.0));
             } else if (param.gAmpl == "SrRuO_helical") { // Simple helical gap delta(k)=(sin kx, sin ky, 0) for Sr2RuO4 with SO coupling 
-
-                complexCrystHarm = &pwave;
+                // pxwave(kx,ky) = w[0,0]*sinkx +w[1,0]*sin2kx +w[2,0]*sinkx*cosky +w[3,0]*sin2kx*cosky)
+                crystHarm2D   = &pxwave;
+                crystHarmIm2D = &pywave;
+               
                 param.parity = -1;
                 param.oppositeSpinPairing = 0;
 
-                w.resize(param.nOrb,MatrixType(3,1));
-                w[0](1,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
-                w[3](0,0) =   1.0; // Pseudospin down ~sinkx-isinky 
-                w[1](1,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
-                w[4](0,0) =   1.0; // Pseudospin down ~sinkx-isinky 
-                w[2](1,0) =   1.0; // Pseudospin up ~ -sinkx-isinky
-                w[5](0,0) =   1.0; // Pseudospin down ~sinkx-isinky 
+                w.resize(param.nOrb,MatrixType(4,1));
+                wIm.resize(param.nOrb,MatrixType(4,1));
+ 
+                w[0](0,0)   =  -1.0; // Pseudospin up ~ -sinkx-isinky
+                wIm[0](0,0) =  -1.0; // Pseudospin up ~ -sinkx-isinky
+                w[3](0,0)   =   1.0; // Pseudospin down ~sinkx-isinky 
+                wIm[3](0,0) =  -1.0; // Pseudospin down ~sinkx-isinky 
+
+                w[1](0,0)   =  -1.0; // Pseudospin up ~ -sinkx-isinky
+                wIm[1](0,0) =  -1.0; // Pseudospin up ~ -sinkx-isinky
+                w[4](0,0)   =   1.0; // Pseudospin down ~sinkx-isinky 
+                wIm[4](0,0) =  -1.0; // Pseudospin down ~sinkx-isinky 
+
+                w[2](0,0)   =  -1.0; // Pseudospin up ~ -sinkx-isinky
+                wIm[2](0,0) =  -1.0; // Pseudospin up ~ -sinkx-isinky
+                w[5](0,0)   =   1.0; // Pseudospin down ~sinkx-isinky 
+                wIm[5](0,0) =  -1.0; // Pseudospin down ~sinkx-isinky 
 
                 // kz.resize(param.nOrb,VectorType(0,0.0));
                 // k0.resize(param.nOrb,FieldType(0.0));
@@ -224,7 +292,8 @@ namespace rpa {
 
 
                 crystHarm = &swave;
-		param.parity = 1;
+        		param.parity = 1;
+                param.oppositeSpinPairing = 1;
 
                 w.resize(param.nOrb,MatrixType(3,1));
                 w[0](0,0) =  6.155;
@@ -250,7 +319,56 @@ namespace rpa {
 
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
-	    } else if (param.gAmpl == "LiFeAs_s_1") { // Yan's parametrization of 3D RPA gap for LiFeAs DFT model
+	    
+        }  else if (param.gAmpl == "SrRuO_helical_Astrid") { // Parametrization of Astrid's helical state for Sr2RuO4 with SO coupling 
+        //  gkxx ~ A1*sin(kFx) + A2*sin(2kFx) + A3*sin(kFx)*cos(kFy) + A4*sin(2kFx)*cos(kFy)
+        //  gkyy ~ A1*sin(kFy) + A2*sin(2kFy) + A3*sin(kFy)*cos(kFx) + A4*sin(2kFy)*cos(kFx)
+
+        //  band 0,3: A1 = -0.7471 , A2 = -3.1495 , A3 = -2.0274 , A4 = 5.2946
+        //  band 1,4: A1 = 0.09    , A2 =  0.48   , A3 = 0.9     , A4 = 0
+        //  band 2,5: A1 = -0.1025 , A2 = -0.5676 , A3 = -0.3993 , A4 = -0.7595
+
+        //  NOTE: Addtional signs from
+        //  band 0,1,2 (pseudospin up) ~ -gkxx - i*gkyy
+        //  band 3,4,5 (pseudospin dn) ~  gkxx - i*gkyy
+
+                crystHarm2D = &pxwave;
+                crystHarmIm2D = &pywave;
+
+                param.parity = -1;
+                param.oppositeSpinPairing = 0;
+
+                w.resize(param.nOrb,MatrixType(4,1));
+                wIm.resize(param.nOrb,MatrixType(4,1));
+
+                // band 0 (pseudospin up) ~ -gkxx - i*gkyy
+                w  [0](0,0) =   0.7471;
+                w  [0](1,0) =   3.1495;
+                w  [0](2,0) =   2.0274;
+                w  [0](3,0) =   5.2946;
+
+                // band 1 (pseudospin up) ~ -gkxx - i*gkyy
+                w  [1](0,0) =   -0.09;
+                w  [1](1,0) =   -0.48;
+                w  [1](2,0) =   -0.9;
+                w  [1](3,0) =    0;
+
+                // band 2 (pseudospin up) ~ -gkxx - i*gkyy
+                w  [2](0,0) =    0.1025;
+                w  [2](1,0) =    0.5676;
+                w  [2](2,0) =    0.3993;
+                w  [2](3,0) =    0.7595;
+
+                for (size_t ib=0; ib<3; ib++) for (size_t i=0; i<4; i++) wIm[ib](i,0) = w[ib](i,0);
+
+                //  band 3,4,5 (pseudospin dn) ~  gkxx - i*gkyy
+                for (size_t ib=3; ib<6; ib++) for (size_t i=0; i<4; i++) {
+                    w[ib](i,0)   = -w[ib-3](i,0);
+                    wIm[ib](i,0) =  w[ib-3](i,0);
+                }
+
+
+        } else if (param.gAmpl == "LiFeAs_s_1") { // Yan's parametrization of 3D RPA gap for LiFeAs DFT model
                 crystHarm = &swaveRPALiFeAs;
 
                 w.resize(10,MatrixType(6,3));

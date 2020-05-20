@@ -149,6 +149,7 @@ namespace rpa {
 		{			
 			// determineKF(file);
 
+			if (conc.rank() == 0) std::cout << "nkF = " << nkF << "\n";
 			// size_t nkF(FSpoints.nTotal);
 			nTotal = (nkF * nkF + nkF) / 2;
 			// nTotal = nkF * nkF;
@@ -170,9 +171,7 @@ namespace rpa {
 			std::string filenameChiPP("chiPairing_" + param.fileID + "_T_" + tempStr + ".txt");
 			if (interpolateChi_==0)	{
 				kMesh.set_momenta(false); // for chi claculation
-				std::cout << "OK0 \n";
 				if (param.cacheBands) bands.precalculate_ekak();
-				std::cout << "OK1 \n";
 				if (storeChi_==1 || readChi_==1) {
 					chiStore.resize(nTotal,SuscType(param,conc));
 					qStore.resize(nTotal,VectorType(3));
@@ -254,6 +253,7 @@ namespace rpa {
 				if (param.Case == "Emery") calcGammaPPEmery(q,k1,k2,ik1,ik2,band1,band2,GammaPPkkp,os);
 				
 				else calcGammaPPTerms(ind,q,k1,k2,ik1,ik2,band1,band2,GammaPPkkp,GammaZkkp,chiTerm,os);
+
 				Container[ind] = GammaPPkkp;
 				ContainerZ[ind] = GammaZkkp;
 				Container2[ind] = chiTerm;
@@ -288,6 +288,7 @@ namespace rpa {
 				// 	gammaPP(i,j) = -0.5*(gammaPPFull(i,j)+paritySign*gammaPPFull(i,negKF[j]));
 				// }
 			}
+
 		}
 
 		void calcGammaPPEmery(std::vector<FieldType> q, 
@@ -642,6 +643,7 @@ namespace rpa {
 				if (ik<nkF-1) os2 << ", ";
 			}
 			os2 << "]],\n";
+
 
 			os2 << " \"Velocity\": [\n";
 			os2 << "[";

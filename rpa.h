@@ -11,6 +11,7 @@
 #include "tbFromFile.h"
 #include "SrRuO_SO.h"
 #include "1band_wSpin.h"
+#include "coupledLadders.h"
 
 
 namespace rpa {
@@ -122,6 +123,8 @@ namespace rpa {
 			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> model;
 #elif USE_TBFILE
 			tbFromFile<FieldType,MatrixTemplate,ConcurrencyType> model;
+#elif USE_COUPLEDLADDERS
+			coupledLadders<FieldType,MatrixTemplate,ConcurrencyType> model;
 #endif
 			// ComplexMatrixType spinMatrix;
 			// ComplexMatrixType chargeMatrix;

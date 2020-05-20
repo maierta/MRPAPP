@@ -21,6 +21,7 @@
 #include "KFe2Se2.h"
 #include "FourOrbital.h"
 #include "bilayer.h"
+#include "coupledLadders.h"
 #include "gaps3D.h"
 
 namespace rpa {
@@ -82,6 +83,8 @@ namespace rpa {
 			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> s;
 #elif USE_FOURORBITAL
 			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> s;
+#elif USE_COUPLEDLADDERS
+			coupledLadders<FieldType,MatrixTemplate,ConcurrencyType> s;
 #else
 			tbFromFile<FieldType,MatrixTemplate,ConcurrencyType> s;
 #endif

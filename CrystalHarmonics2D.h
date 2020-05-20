@@ -103,15 +103,37 @@ namespace rpa {
 		}
 
 	template<typename FieldType, template<typename> class MatrixTemplate>
-	std::complex<FieldType> pwave(const std::vector<FieldType>& kvector, 
-     	 		  const MatrixTemplate<FieldType>& w,
-			  const size_t band)
+	FieldType pxwave(const std::vector<FieldType>& kvector, 
+     	 		     const MatrixTemplate<FieldType>& w,
+			  		 const size_t band)
 			{
-				std::complex<FieldType> ii = std::complex<FieldType>(0.0,1.0);
-				return 	   w(0,0) * ( sin(kvector[0]) - ii * sin(kvector[1]))
-					 + w(1,0) * (-sin(kvector[0]) - ii * sin(kvector[1]))
-					 + w(2,0) * ( sin(kvector[0]) + ii * sin(kvector[1]));
+				return 	   w(0,0) * sin(kvector[0])
+					 	 + w(1,0) * sin(2.*kvector[0])
+						 + w(2,0) * sin(kvector[0]) * cos(kvector[1])
+						 + w(3,0) * sin(2.*kvector[0]) * cos(kvector[1]);
 			}
+
+	template<typename FieldType, template<typename> class MatrixTemplate>
+	FieldType pywave(const std::vector<FieldType>& kvector, 
+     	 		     const MatrixTemplate<FieldType>& w,
+			  		 const size_t band)
+			{
+				return 	   w(0,0) * sin(kvector[1])
+					 	 + w(1,0) * sin(2.*kvector[1])
+						 + w(2,0) * sin(kvector[1]) * cos(kvector[0])
+						 + w(3,0) * sin(2.*kvector[1]) * cos(kvector[0]);
+			}
+
+	// template<typename FieldType, template<typename> class MatrixTemplate>
+	// std::complex<FieldType> pwave(const std::vector<FieldType>& kvector, 
+ //     	 		  const MatrixTemplate<FieldType>& w,
+	// 		  const size_t band)
+	// 		{
+	// 			std::complex<FieldType> ii = std::complex<FieldType>(0.0,1.0);
+	// 			return 	   w(0,0) * ( sin(kvector[0]) - ii * sin(kvector[1]))
+	// 				 + w(1,0) * (-sin(kvector[0]) - ii * sin(kvector[1]))
+	// 				 + w(2,0) * ( sin(kvector[0]) + ii * sin(kvector[1]));
+	// 		}
 
 	template<typename FieldType, template<typename> class MatrixTemplate>
 	FieldType swaveRPALiFeAs(const std::vector<FieldType>& kvector, 

@@ -96,6 +96,7 @@ namespace rpa {
 		Field parity;
 		bool oppositeSpinPairing;
 		bool explicitSpin;
+		Field couplingRatio;
 
 			
 		// size_t nktot;
@@ -202,9 +203,10 @@ namespace rpa {
 			writeFullChi0(0),
 			fixEvecs(0),
 			calcLambdaZ(0),
-			parity(1), // spin singlet, even parity gap for BCS chi0 calculation
-			oppositeSpinPairing(1),
-			explicitSpin(0)
+			parity(1), // even parity gap for BCS chi0 calculation
+			oppositeSpinPairing(1), // pairing between up/down electrons
+			explicitSpin(0),
+			couplingRatio(1.0)
 
 			// single-band model in 2-sub-lattice formulation
 			// dimension(2),
@@ -414,6 +416,8 @@ namespace rpa {
 		        else if (text.find("calcLambdaZ")!=std::string::npos) str >> (*this).calcLambdaZ;
 		        else if (text.find("oppositeSpinPairing")!=std::string::npos) str >> (*this).oppositeSpinPairing;
 		        else if (text.find("explicitSpin")!=std::string::npos) str >> (*this).explicitSpin;
+		        else if (text.find("couplingRatio")!=std::string::npos) str >> (*this).couplingRatio;
+		        else if (text.find("readFSFromFile")!=std::string::npos) str >> (*this).readFSFromFile;
 			}
 
 			void writeParameters(std::ostream& os) {
@@ -528,6 +532,8 @@ namespace rpa {
 				os << "calcLambdaZ = " << (*this).calcLambdaZ << "\n";
 				os << "oppositeSpinPairing = " << (*this).oppositeSpinPairing << "\n";
 				os << "explicitSpin = " << (*this).explicitSpin << "\n";
+				os << "couplingRatio = " << (*this).couplingRatio << "\n";
+				os << "readFSFromFile = " << (*this).readFSFromFile << "\n";
 			}
 
 
@@ -647,6 +653,8 @@ namespace rpa {
 		        conc.broadcast((*this).calcLambdaZ);
 		        conc.broadcast((*this).oppositeSpinPairing);
 		        conc.broadcast((*this).explicitSpin);
+		        conc.broadcast((*this).couplingRatio);
+		        conc.broadcast((*this).readFSFromFile);
 			}
 
 			// void fixParameters() {

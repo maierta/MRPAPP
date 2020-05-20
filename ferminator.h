@@ -74,9 +74,12 @@ namespace rpa {
 
 
 		{
-			if (param.readFSFromFile) readFromFile();
-			else {
-				if (conc.rank()==0) std::cout << "Now setting up Fermi surface \n";
+			// if (param.readFSFromFile) readFromFile(); // if data has additional columns for deltakf and vkf
+			if (param.readFSFromFile) {
+				readFromFile2();// if data only has kFx, kFy, kFz, band
+				if (conc.rank()==0) writeKF();
+			} else {
+				if (conc.rank()==0) std::cout << "Now setting up Fermi surface for case " << Case_ << "\n";
 				setFSValues();
 				if (conc.rank()==0) writeKF();
 				if (conc.rank()==0) std::cout << "Done setting up Fermi surface \n";
@@ -781,6 +784,34 @@ namespace rpa {
 				vkF.push_back(vkF[ind0+ikF]);
 			}
 
+		} else if (Case_ == "coupled_ladders") {
+			// 1-band model, coupled ladders along x
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = -Pi/2.  ; FSCenters[0][1] = Pi  ; FSBand[0]  =  0;
+			FSCenters[1][0] =  Pi/2.  ; FSCenters[1][1] = Pi  ; FSBand[1]  =  0;
+			FSCenters[2][0] =  -Pi    ; FSCenters[2][1] = 0.  ; FSBand[2]  =  1;
+
+			size_t nkSearch(10000);
+			for (size_t iSheet=0;iSheet<2;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+			for (size_t iSheet=2;iSheet<3;iSheet++) calcKFOpen2D(nkSearch,iSheet,1);
+			// // Now copy isheet = 2 to isheet=3 but with -kFy to preserve symmetry
+			size_t ind0(kFx.size()-nkPerSheet);
+			for (size_t ikF=0; ikF<nkPerSheet; ikF++) {
+				kFx.push_back(kFx[ind0+ikF]);
+				kFy.push_back(-kFy[ind0+ikF]);
+				kFz.push_back(kFz[ind0+ikF]);
+				kFtoBand.push_back(kFtoBand[ind0+ikF]);
+				deltakF.push_back(deltakF[ind0+ikF]);
+				vkF.push_back(vkF[ind0+ikF]);
+				if (calcOW_) {
+					size_t ic(kFx.size()-1);
+					weights[ic]  = weights[ind0+ikF];
+					weights2[ic] = weights2[ind0+ikF];
+				}
+			}
 		}
 
 
@@ -840,28 +871,31 @@ namespace rpa {
 					deltakF.push_back(calcDeltaKF(kFx[ic],kFy[ic],kFz[ic],iSheet,dim));
 					vkF.push_back(calcVkF(kFx[ic],kFy[ic],kFz[ic],FSBand[iSheet],dim));
 					gammaB1GkF.push_back(calcgammaB1GkF(kFx[ic],kFy[ic],kFz[ic],FSBand[iSheet],dim));
-					if (calcOW_) {
-						VectorType mk(3,0);
-						ComplexMatrixType mv(param.nOrb,param.nOrb);
-						k[0] = kx ; k[1] = ky ; k[2] = kz;
-						mk[0] =-kx; mk[1] =-ky; mk[2] =-kz;
-						bands.getBands(k,w,v);
-						bands.getBands(mk,w,mv);
-						for (size_t iorb=0;iorb<param.nOrb;iorb++) {
-							FieldType re(real(v(iorb,FSBand[iSheet])));
-							FieldType im(imag(v(iorb,FSBand[iSheet])));
-							FieldType re2(real(mv(iorb,FSBand[iSheet])));
-							FieldType im2(imag(mv(iorb,FSBand[iSheet])));
-							// weights[ic][iorb] =  sqrt(pow(re,2)+pow(im,2));
-							// std::cout <<  "Orbital weight for " << iorb << ": " <<  sqrt(pow(re,2)+pow(im,2)) << "\n";
-							weights[ic][iorb] =   ComplexType(re,im);
-							weights2[ic][iorb] =  ComplexType(re2,im2);
-						}
-					}
+					if (calcOW_) calcWeights(ic);
 				}
 
 			}
 		// }
+	}
+
+	void calcWeights(const size_t ic) {
+			VectorType k(3,0);
+			VectorType mk(3,0);
+			VectorType w(param.nOrb);
+			ComplexMatrixType v(param.nOrb,param.nOrb);
+			ComplexMatrixType mv(param.nOrb,param.nOrb);
+			k[0] = kFx[ic] ; k[1] = kFy[ic] ; k[2] = kFz[ic];
+			mk[0] =-kFx[ic]; mk[1] =-kFy[ic]; mk[2] =-kFz[ic];
+			bands.getBands(k,w,v);
+			bands.getBands(mk,w,mv);
+			for (size_t iorb=0;iorb<param.nOrb;iorb++) {
+				FieldType re(real(v(iorb,kFtoBand[ic])));
+				FieldType im(imag(v(iorb,kFtoBand[ic])));
+				FieldType re2(real(mv(iorb,kFtoBand[ic])));
+				FieldType im2(imag(mv(iorb,kFtoBand[ic])));
+				weights[ic][iorb] =   ComplexType(re,im);
+				weights2[ic][iorb] =  ComplexType(re2,im2);
+			}
 	}
 
 	void calcKFOpen2D(const size_t nkSearch, const size_t iSheet, const size_t scanAlongDir) {
@@ -898,6 +932,7 @@ namespace rpa {
 				kFtoBand.push_back(FSBand[iSheet]);
 				size_t ic(kFx.size()-1);
 				vkF.push_back(calcVkF(kFx[ic],kFy[ic],kFz[ic],FSBand[iSheet],2));
+				if (calcOW_) calcWeights(ic);
 			}
 		}
 		// Now calc. deltakF
@@ -938,10 +973,45 @@ namespace rpa {
 		for (size_t ik = 0; ik < nk-1; ++ik)
 		{
 			deltakF[ik] = sqrt(pow(kFx[ik+1]-kFx[ik],2)+pow(kFy[ik+1]-kFy[ik],2));
-			// std::cout << "kFx1,kFx2,deltakF=" << kFx[ik+1] << " , " << kFy[ik+1] << " , " << kFx[ik] << " , " << kFy[ik] << " , "<< deltakF[ik] << "\n";
 		}
 		deltakF[nk-1] = sqrt(pow(kFx[0]-kFx[nk-1],2)+pow(kFy[0]-kFy[nk-1],2));
 	}
+
+	void calcDeltaKF2D() {
+		size_t nk(kFx.size());
+		FieldType length, vecx,vecy;
+		for (size_t ik = 0; ik < nk-1; ++ik)
+		{
+			vecx = kFx[ik+1]-kFx[ik]; 
+			vecy = kFy[ik+1]-kFy[ik];
+			length = sqrt(pow(vecx,2)+pow(vecy,2));
+			if (length > 0.25*Pi) {
+				if (conc.rank()==0) std::cout << "FS segment larger than pi/4. FS points not ordered? \n";
+				exit(0);
+			}
+			deltakF[ik] = length;
+		}
+		vecx = kFx[0]-kFx[nk-1]; 
+		vecy = kFy[0]-kFy[nk-1]; 
+		// deltakF[nk-1] = sqrt(pow(vecx,2)+pow(vecy,2));
+		deltakF[nk-1] = 0.0; // for open Fermi surface
+	
+	}
+	// void calcDeltaKF2D() {
+	// 	size_t nk(kFx.size());
+	// 	FieldType length, vecx,vecy;
+	// 	for (size_t ik = 1; ik < nk-1; ++ik)
+	// 	{
+	// 		vecx = 0.5*(kFx[ik+1]-kFx[ik-1]); 
+	// 		vecy = 0.5*(kFy[ik+1]-kFy[ik-1]);
+	// 		length = sqrt(pow(vecx,2)+pow(vecy,2));
+	// 		deltakF[ik] = length;
+	// 	}
+	// 	vecx = kFx[1]-kFx[0]; 
+	// 	deltakF[0] = sqrt(pow(vecx,2)+pow(vecy,2));
+	// 	vecx = kFx[nk-1]-kFx[nk-2]; 
+	// 	deltakF[nk-1] = sqrt(pow(vecx,2)+pow(vecy,2));
+	// }
 
 	FieldType calcVkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,
 		              const size_t iband, size_t dim) {
@@ -1049,6 +1119,55 @@ namespace rpa {
 		conc.broadcast(vkF);
 	}
 
+	void readFromFile2() {
+		if (conc.rank()==0) {
+			std::string file(param.fsfile);
+			VectorType data;
+			loadVector(data,file);
+			// We assume that each line has the format kFx,kFy,kFz,band, dk, vF
+			size_t step=6;
+			std::cout << "File="<<file<<"\n";
+			nTotal=data.size()/step;
+			std::cout << "nTotal=" << nTotal << "\n";
+			for (size_t i = 0; i < nTotal; i++)
+			{
+				FieldType kx(data[i*step]);
+				FieldType ky(data[i*step+1]);
+				FieldType kz(data[i*step+2]);
+				size_t band(data[i*step+3]);
+				if (band+1 > param.nOrb) {
+					if (conc.rank() == 0) std::cout << "Too many bands! Exiting ... \n";
+					exit(0);
+				}
+				kFx.push_back(kx);
+				kFy.push_back(ky);
+				kFz.push_back(kz);
+				kFtoBand.push_back(band);
+				vkF.push_back(calcVkF(kx,ky,kz,band,param.dimension));
+			}
+			deltakF.resize(nTotal);
+			gammaB1GkF.resize(nTotal);
+			calcDeltaKF2D();
+		}
+		conc.broadcast(nTotal);
+		if (conc.rank()!=0) {
+			kFx.resize(nTotal);
+			kFy.resize(nTotal);
+			kFz.resize(nTotal);
+			kFtoBand.resize(nTotal);
+			deltakF.resize(nTotal);
+			vkF.resize(nTotal);
+		}
+		conc.broadcast(kFx);
+		conc.broadcast(kFy);
+		conc.broadcast(kFz);
+		conc.broadcast(kFtoBand);
+		conc.broadcast(deltakF);
+		conc.broadcast(vkF);
+
+		std::cout << "Done reading in the FSfile\n";
+	}
+
 	void writeKF() {
 		std::string filename = "FSpoints_" + param.fileID + ".txt";
 		std::ofstream os(filename);
@@ -1059,8 +1178,8 @@ namespace rpa {
 			os << kFx[i] << " , " << kFy[i] << " , " << kFz[i] << " , ";
 			os << kFtoBand[i] << " , " << deltakF[i] << " , " << vkF [i] ; // << "\n";
 			if (calcOW_) {
-				for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << abs(weights[i][iorb]) ;
-				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights[i][iorb])<< " , " << imag(weights[i][iorb]);
+				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << abs(weights[i][iorb]) ;
+				for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights[i][iorb])<< " , " << imag(weights[i][iorb]);
 				// for (size_t iorb=0;iorb<param.nOrb;iorb++) os << " , " << real(weights2[i][iorb])<< " , " << imag(weights2[i][iorb]);
 			}
 

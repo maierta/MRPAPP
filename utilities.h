@@ -261,4 +261,40 @@ void eigen(std::vector<FieldType>& eigenvals, MatrixTemplate<std::complex<FieldT
 	}
 }
 
+template<typename FieldType, template<typename> class MatrixTemplate>
+void calcRPAResult(MatrixTemplate<std::complex<FieldType> >& matrix0, 
+				   MatrixTemplate<std::complex<FieldType> >& interactionMatrix, 
+				   MatrixTemplate<std::complex<FieldType> >& matrix1, 
+				   std::vector<FieldType> q=std::vector<FieldType>(3,0.0)) {
+	int n = interactionMatrix.n_row();
+	// int m = matrix0.n_col();
+	// int k = spinMatrix.n_col();
+	std::complex<FieldType> alpha(1.0);
+	std::complex<FieldType> beta(0.0);
+	std::vector<int> ipiv(n);
+	int info;
+	MatrixTemplate<std::complex<FieldType> > work(n,n);
+	MatrixTemplate<std::complex<FieldType> > c(n,n);
+	int lwork(n);
+
+	// std::cout << "spinMatrix: " << "\n" << spinMatrix;
+
+	// GEMM('N','N',m,n,k,alpha,spinMatrix,n,matrix0,m,beta,c,n);
+	matMul(interactionMatrix,matrix0,c);
+	// Result of matrix multiplication is in c
+	// std::cout << "matrix0: " << "\n" << matrix0;
+	for (size_t i = 0; i < c.n_row(); ++i) for (size_t j = 0; j < c.n_col(); ++j) c(i,j) = -c(i,j);
+	for (size_t i = 0; i < c.n_row(); ++i) c(i,i) = 1.+c(i,i);
+	// Now invert
+	GETRF(n,n,c,n,ipiv,&info);
+	if (info!=0) throw std::runtime_error("GETRF: failed\n");
+	GETRI(n,c,n,ipiv,work,lwork,&info);
+	if (info!=0) throw std::runtime_error("GETRI: failed\n");
+	// Now multiply result with matrix0
+	// std::cout << "inv(c): " << "\n" << c;
+	// GEMM('N','N',m,n,k,alpha,matrix0,m,c,n,beta,matrix1,n);
+	matMul(matrix0,c,matrix1);
+	// std::cout << "matrix1: " << "\n" << matrix1;
+
+}
 #endif

@@ -18,7 +18,7 @@
 namespace rpa {
 
 	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>
-	class SrRuO_SO {
+	class model {
 	private:
 		typedef MatrixTemplate<Field> 		MatrixType;
 		typedef std::complex<Field>		    ComplexType;
@@ -39,7 +39,7 @@ namespace rpa {
 		std::vector<size_t> orbOfEll;
 
 
-		SrRuO_SO(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
+		model(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
 			param(parameters),
 			conc(concurrency),
 			dim(param.dimension),

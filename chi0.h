@@ -6,18 +6,17 @@
 #include <string>
 #include <vector>
 #include <fstream>
-// #include "math.h"
 #include "Matrix.h"
 #include "parameters.h"
 #include "momentumDomain.h"
 #include "Fermi.h"
-#include "rpa.h"
 #include "bandstructure.h"
 #include "susInt.h"
 #include "gaps2D.h"
 #include "gaps3D.h"
 #include "sepBasis.h"
 #include "utilities.h"
+#include "model.h"
 
 namespace rpa {
 
@@ -668,6 +667,8 @@ namespace rpa {
 		std::string file;
 		size_t nOrb, msize;
 
+		model<FieldType, MatrixTemplate, ConcurrencyType> model;
+
 	public:
  		typedef std::vector<SuscType> BaseType;
 
@@ -680,7 +681,8 @@ namespace rpa {
 			qMesh(qMeshIn),
 			file("none"),
 			nOrb(param.nOrb),
-			msize(nOrb*nOrb)
+			msize(nOrb*nOrb),
+			model(param,conc)
 		{
 			calcChi0q();
 		}
@@ -695,7 +697,8 @@ namespace rpa {
 			qMesh(qMeshIn),
 			file(fileIn),
 			nOrb(param.nOrb),
-			msize(nOrb*nOrb)
+			msize(nOrb*nOrb),
+			model(param,conc)
 		{
 			if (qMesh.nktot > 0) {
 				// if (file=="none") calcChi0q();
@@ -747,7 +750,6 @@ namespace rpa {
 		void writeChiqTxt() {
 			std::ofstream os("susOfQFull.txt");
 			std::ofstream os2("susRPA.txt");
-			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param,conc);
 			int width(10);
 			os.precision(width);
 			os2.precision(width);
@@ -768,7 +770,7 @@ namespace rpa {
 				os << real(sus0) << " , " << imag(sus0);
 				os << "\n";
 				SuscType chiRPA(param,conc);
-     			rpa.calcRPAResult((*this)[iq],rpa.model.spinMatrix,chiRPA,q);
+     			calcRPAResult((*this)[iq],model.spinMatrix,chiRPA,q);
      			ComplexType susR(chiRPA.calcSus());
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , ";
      			os2 << real(susR) << ","  << imag(susR) << "\n";

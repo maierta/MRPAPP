@@ -6,18 +6,18 @@
 #include <string>
 #include <vector>
 #include <fstream>
-// #include "math.h"
 #include "Matrix.h"
 #include "parameters.h"
 #include "momentumDomain.h"
 #include "Fermi.h"
-#include "rpa.h"
 #include "bandstructure.h"
 #include "chi0.h"
 #include "gaps2D.h"
 #include "gaps3D.h"
 #include "ferminator.h"
 #include "rpa_CuO.h"
+#include "model.h"
+#include "utilities.h"
 
 
 namespace rpa {
@@ -61,6 +61,8 @@ namespace rpa {
 			bool writeFullChi0;
 			bool kMap;
 
+			model<FieldType, MatrixTemplate, ConcurrencyType> model;
+
 		public:
 			// typedef std::vector<SuscType> BaseType;
 
@@ -88,7 +90,8 @@ namespace rpa {
 						wmin_(wmin),
 						wmax_(wmax),
 						writeFullChi0(param.writeFullChi0),
-						kMap(0)
+						kMap(0),
+						model(param,conc)
 
 
 		{
@@ -376,18 +379,18 @@ namespace rpa {
 				}
 			}
 			std::ofstream os2("chiRPA_" + param.fileID + ".txt");
-			interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param,conc);
+			// interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param,conc);
 			os2.precision(width);
 			os2 << std::fixed;
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
-     			rpa.calcRPAResult(chi0Matrix[iq],rpa.model.spinMatrix,chiRPA,q);
-     			ComplexType susRzz(rpa.model.calcSus(chiRPA,"zz"));
-     			ComplexType susRpm(rpa.model.calcSus(chiRPA,"+-"));
+     			calcRPAResult(chi0Matrix[iq],model.spinMatrix,chiRPA,q);
+     			ComplexType susRzz(model.calcSus(chiRPA,"zz"));
+     			ComplexType susRpm(model.calcSus(chiRPA,"+-"));
      			// ComplexType sus1(chi0Matrix[iq].calcSus());
-     			ComplexType sus1(rpa.model.calcSus(chi0Matrix[iq],"zz"));
-     			ComplexType sus2(rpa.model.calcSus(chi0Matrix[iq],"+-"));
+     			ComplexType sus1(model.calcSus(chi0Matrix[iq],"zz"));
+     			ComplexType sus2(model.calcSus(chi0Matrix[iq],"+-"));
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
      			os2 << real(susRzz) << ","  << imag(susRzz) << " ," << real(susRpm) << ","  << imag(susRpm) << " ," << real(sus1) << " , " << imag(sus1) << " , " << real(sus2) << " , " << imag(sus2) << "\n";
 			}

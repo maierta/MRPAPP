@@ -9,15 +9,14 @@
 #include "Matrix.h"
 #include "parameters.h"
 #include "momentumDomain.h"
-#include "rpa.h"
 #include "rpa_CuO.h"
 #include "sepBasis.h"
 #include "utilities.h"
-// #include "bands.h"
 #include "bandstructure.h"
 #include "chi0.h"
 #include "interpolation.h"
 #include "ferminator.h"
+#include "model.h"
 
 
 
@@ -77,15 +76,9 @@ namespace rpa {
 		std::vector<int> kFtoBand;
 		std::vector<FieldType> deltakF;
 		std::vector<FieldType> vkF;
-		// std::vector<int> negKF;
 		SuscType chi0;
 		chi0q<FieldType,SuscType,BandsType,GapType,psimag::Matrix,ConcurrencyType> susq;
 
-		// IntMatrixType kF1kF2ToQMinus;
-		// IntMatrixType kF1kF2ToQPlus;
-
-		// susceptibility<FieldType,psimag::Matrix,ConcurrencyType> chi0;
-		interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa;
 		SuscType chiRPAs;
 		SuscType chiRPAc;
 		SuscType chi0s;
@@ -105,6 +98,8 @@ namespace rpa {
 		ferminator<FieldType,BandsType,MatrixTemplate,ConcurrencyType> FSpoints;
 		size_t nkF;
 		MatrixType chikk;
+
+		model<FieldType, MatrixTemplate, ConcurrencyType> model;
 
 
 	public:
@@ -128,7 +123,6 @@ namespace rpa {
 			bands(param,conc,kMesh,param.cacheBands),
 			chi0(param,conc),
 			susq(param,qMesh,param.chifile,conc),
-			rpa(param,conc),
 			chiRPAs(param,conc),
 			chiRPAc(param,conc),
 			chi0s(param,conc),
@@ -145,7 +139,8 @@ namespace rpa {
 			qStore(0,VectorType(3)),
 			FSpoints(param,conc),
 			nkF(FSpoints.nTotal),
-			chikk(nkF,nkF)
+			chikk(nkF,nkF),
+			model(param,conc)
 		{			
 			// determineKF(file);
 
@@ -409,26 +404,26 @@ namespace rpa {
 					chiq = chiStore[ind];
 			}
 			
-			rpa.calcRPAResult(chiq,rpa.model.spinMatrix,chiRPAs,q);
+			calcRPAResult(chiq,model.spinMatrix,chiRPAs,q);
 			chiTerm = real(chiRPAs.calcSus());
-			// if (ik1==0 && ik2==24) std::cout << "in calcGammaPPTerms: chiRPAs=" << chiRPAs.calcSus() << "\n";
-			rpa.calcRPAResult(chiq,rpa.model.chargeMatrix,chiRPAc,q);
+			// std::cout << "in calcGammaPPTerms: chiRPAs=" << chiRPAs.calcSus() << "\n";
+			calcRPAResult(chiq,model.chargeMatrix,chiRPAc,q);
 			// if (conc.rank()==0) std::cout << "in calcGammaPPTerms: chiRPAc=" << chiRPAc.calcSus() << "\n";
 			
-			matMul(chiRPAs,rpa.model.spinMatrix,temps);
-			matMul(rpa.model.spinMatrix,temps,chiRPAs);
-			matMul(chiRPAc,rpa.model.chargeMatrix,tempc);
-			matMul(rpa.model.chargeMatrix,tempc,chiRPAc);
+			matMul(chiRPAs,model.spinMatrix,temps);
+			matMul(model.spinMatrix,temps,chiRPAs);
+			matMul(chiRPAc,model.chargeMatrix,tempc);
+			matMul(model.chargeMatrix,tempc,chiRPAc);
 			
 			if (param.calcLambdaZ) {
-				matMul(chiq,rpa.model.spinMatrix,temps);
-				matMul(rpa.model.spinMatrix,temps,chi0s);
-				matMul(chiq,rpa.model.chargeMatrix,tempc);
-				matMul(rpa.model.chargeMatrix,tempc,chi0c);
+				matMul(chiq,model.spinMatrix,temps);
+				matMul(model.spinMatrix,temps,chi0s);
+				matMul(chiq,model.chargeMatrix,tempc);
+				matMul(model.chargeMatrix,tempc,chi0c);
 			}
 			// std::vector<std::complex<double> > chiRow(25,0);
 			// if (ik1==0&&ik2==24) std::cout << "in calcGammaPPTerms chiRPAs=" << chiRPAs.calcSus() << "\n";
-			calcGammaPPOrb(chi0s,chi0c,rpa.model.spinMatrix,chiRPAs,rpa.model.chargeMatrix,chiRPAc,temps,tempc);
+			calcGammaPPOrb(chi0s,chi0c,model.spinMatrix,chiRPAs,model.chargeMatrix,chiRPAc,temps,tempc);
 
 			// if (storeGammaOrb_)	{
 			// 	for (size_t i=0; i < msize; i++) for (size_t j=0; j < msize; j++) {
@@ -528,7 +523,7 @@ namespace rpa {
 				
 				ComplexType c1 = ak2(l2,band2) * ak2m(l3,band2)*     // works for Emery model and general case!!!
                                  conj(ak1(l1,band1)) * conj(ak1m(l4,band1)); // as in Kreisel et al. PRB 88, 094522
-                c2 += c1*gammaOrb(ind1,ind2);
+			c2 += c1*gammaOrb(ind1,ind2);
 
 				if (param.calcLambdaZ) {
 					ComplexType c3 = ak2(l2,band2) * conj(ak2(l4,band2))*     // for Gamma_Z

@@ -13,16 +13,17 @@
 #include "momentumDomain.h"
 #include "utilities.h"
 #include "Range.h"
-#include "tbFromFile.h"
-#include "SrRuO.h"
-#include "SrRuO_SO.h"
-#include "1band_wSpin.h"
-#include "BaFeAs_5orb.h"
-#include "KFe2Se2.h"
-#include "FourOrbital.h"
-#include "bilayer.h"
-#include "coupledLadders.h"
+// #include "tbFromFile.h"
+// #include "SrRuO.h"
+// #include "SrRuO_SO.h"
+// #include "1band_wSpin.h"
+// #include "BaFeAs_5orb.h"
+// #include "KFe2Se2.h"
+// #include "FourOrbital.h"
+// #include "bilayer.h"
+// #include "coupledLadders.h"
 #include "gaps3D.h"
+#include "model.h"
 
 namespace rpa {
 
@@ -64,30 +65,32 @@ namespace rpa {
 		std::vector<ComplexMatrixType> Mkq;
 		std::vector<ComplexMatrixType> MkqFF;
 
-#ifdef USE_SRRUO
-			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_1BANDWSPIN
-			SingleBand_wSpin<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_BILAYER
-			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
-			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_BILAYER_1BAND
-			bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_BSCCObilayer
-			BSCCObilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_BILAYER_FESC
-			bilayerFESC<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_BAFEAS
-			BaFeAs<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_KFE2SE2
-			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_FOURORBITAL
-			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> s;
-#elif USE_COUPLEDLADDERS
-			coupledLadders<FieldType,MatrixTemplate,ConcurrencyType> s;
-#else
-			tbFromFile<FieldType,MatrixTemplate,ConcurrencyType> s;
-#endif
+		model<FieldType, MatrixTemplate, ConcurrencyType> model;
+
+// #ifdef USE_SRRUO
+// 			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_1BANDWSPIN
+// 			SingleBand_wSpin<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_BILAYER
+// 			orthoIIBilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
+// 			// bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_BILAYER_1BAND
+// 			bilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_BSCCObilayer
+// 			BSCCObilayer<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_BILAYER_FESC
+// 			bilayerFESC<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_BAFEAS
+// 			BaFeAs<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_KFE2SE2
+// 			KFe2Se2<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_FOURORBITAL
+// 			FourOrbital<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #elif USE_COUPLEDLADDERS
+// 			coupledLadders<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #else
+// 			tbFromFile<FieldType,MatrixTemplate,ConcurrencyType> s;
+// #endif
 
 	public:
 
@@ -113,7 +116,7 @@ namespace rpa {
 			akq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
 			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
-			s(param,conc)
+			model(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
 			// if (param.tbfile!="") readCSVFile();
@@ -143,7 +146,7 @@ namespace rpa {
 			akq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
 			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
-			s(param,conc)
+			model(param,conc)
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
 			// if (param.tbfile!="") readCSVFile();
@@ -196,7 +199,7 @@ namespace rpa {
 		inline void getBands(const VectorType& k,VectorType& eigenvals,ComplexMatrixType& eigenvects,
 								   int spin=1)  {
 
-			s.getBands(k,eigenvals,eigenvects);
+			model.getBands(k,eigenvals,eigenvects);
 			return;
 		}
 

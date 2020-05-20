@@ -18,7 +18,7 @@
 namespace rpa {
 
 	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>
-	class tbFromFile {
+	class model {
 	private:
 		typedef MatrixTemplate<Field> 		MatrixType;
 		typedef std::complex<Field>		ComplexType;
@@ -38,7 +38,7 @@ namespace rpa {
 		ComplexMatrixType spinMatrix;
 		ComplexMatrixType chargeMatrix;
 
-		tbFromFile(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
+		model(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
 			param(parameters),
 			conc(concurrency),
 			dim(param.dimension),

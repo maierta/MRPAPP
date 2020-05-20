@@ -1,6 +1,6 @@
-#ifndef BILAYER_H
-#define BILAYER_H
-
+// Model file for coupled ladders, 2 bands total
+#ifndef COUPLEDLADDERS_H
+#define COUPLEDLADDERS_H
 
 #include <string>
 #include <iostream>
@@ -20,14 +20,16 @@ namespace rpa {
 	class model {
 	private:
 		typedef MatrixTemplate<Field> 		MatrixType;
-		typedef std::complex<Field>			ComplexType;
-		typedef MatrixTemplate<ComplexType> ComplexMatrixType;
+		typedef std::complex<Field>		    ComplexType;
+		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;
 		typedef std::vector<Field>      	VectorType;
-		typedef Field 						FieldType;
+		typedef Field 				        FieldType;
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
-
+		
+	private:
+		size_t msize;
 	public:
 		FieldType nbands;
 		ComplexMatrixType spinMatrix;
@@ -45,33 +47,48 @@ namespace rpa {
 			if (nbands != 2) 
 				std::cerr<<"Number of orbitals should be 2! Exiting ...\n";
 
+			msize = 4;
 			setupInteractionMatrix();
 
 		}
-
+		
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
-		  	FieldType t,tp,tpp,tperp,mu;
+		    	FieldType t, tl, tp, tlp, cy, cx, c2x, lambdak;
+			ComplexType hABk, ekx, emkx;
+			const ComplexType ii = ComplexType(0.0,1.0);
 
-			// if (param.Case == "BSCCObilayer_OD_1band") {
-			  	t = 0.360; tp = 0.108; tpp=0.036; tperp=0.108; mu = -param.mu;
-			// } else {
-			  	// t = 0.360; tp = 0.3*t; tpp = 0.15*t; tperp = 0.135;
-			  	// t = 0.360; tp = 0.3*t; tpp = 0.0*t; tperp = 0.135/4;
-			  	// t = 0.180; tp = 0.3*t; tpp = 0.15*t; tperp = 0.026;
-			  	// t = 0.180; tp = 0.2*t; tpp = 0.0*t; tperp = 0.026;
-			  	// t = 1.0; tp = 0.0; tpp = 0.0; tperp = 0.10*t; mu = -param.mu;
-			// }
+			t = 1.0; tp = -0.3; 
+			tl  = t  * param.couplingRatio;
+			tlp = tp * param.couplingRatio;
 
-			// std::cout << "param.mu="<<mu<<"\n";
-			FieldType cx,cy,cz,c2x,c2y;
-			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]);
-			c2x = cos(2*k[0]); c2y = cos(2*k[1]);
+			cx = cos(k[0]); cy = cos(k[1]); c2x = cos(2.0*k[0]);
+			ekx = exp(ii*k[0]); emkx = conj(ekx);
 
-			FieldType ek   = -2*t*(cx + cy) + 4*tp*cx*cy - 2*tpp*(c2x+c2y) + mu;
-			FieldType ekz  = tperp/4. * pow((cx-cy),2)*cz;
+			hABk     = -t*ekx - tl*emkx - 2.*cy*(tp*ekx + tlp*emkx);
+			lambdak  = pow(t,2) + pow(tl,2) + 2.*t*tl*c2x;
+			lambdak += 4.*cy*(t*tp + tl*tlp+(t*tlp+tp*tl)*c2x);
+			lambdak += 4.*pow(cy,2)*(pow(tp,2)+pow(tlp,2)+2.*tp*tlp*c2x);
+			lambdak = sqrt(lambdak);
 
-			eigenvals[0] = ek - ekz;
-			eigenvects(0,0) =  1.0;
+			// eigen(evals,temp);
+			eigenvals[0] = -2*t*cy - lambdak - param.mu; 
+			eigenvals[1] = -2*t*cy + lambdak - param.mu; 
+
+			ComplexType v2(conj(hABk)/lambdak);
+			if (lambdak!=0.0) {
+				eigenvects(0,1) = 1.0; 
+				eigenvects(1,1) = v2; 
+				eigenvects(0,0) = 1.0; 
+				eigenvects(1,0) = -v2; 
+				// Normalize
+				FieldType normal(sqrt(1.+norm(v2)));
+				for (size_t b=0; b<nbands; b++) for (size_t iorb=0; iorb<nbands; iorb++) eigenvects(iorb,b) /= normal;
+			} else { // Hamiltonian matrix is diagonal and diagonal elements -2*t*cosky are degenerate
+				eigenvects(0,1) = 1.0/sqrt(2.0); 
+				eigenvects(1,1) = 1.0/sqrt(2.0); 
+				eigenvects(0,0) = 1.0/sqrt(2.0); 
+				eigenvects(1,0) = -1.0/sqrt(2.0);
+			}
 		}
 
 		void setupInteractionMatrix() {
@@ -99,10 +116,6 @@ namespace rpa {
 		}
 
 	};
-
-
-
-
 }
 
 #endif

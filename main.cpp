@@ -18,9 +18,6 @@ typedef double FieldType;
 
 
 #include <vector>
-#include "rpa.h"
-// #include "greensFunction.h"
-// #include "chi0Ofq.h"
 #include "chi0.h"
 #include "pairing.h"
 

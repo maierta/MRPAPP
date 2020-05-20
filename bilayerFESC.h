@@ -1,5 +1,6 @@
-#ifndef BILAYER_H
-#define BILAYER_H
+
+#ifndef BILAYERFESC_H
+#define BILAYERFESC_H
 
 
 #include <string>
@@ -50,27 +51,19 @@ namespace rpa {
 		}
 
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
-		  	FieldType t,tp,tpp,tperp,mu;
+		  	FieldType t,tp,tpp,tperp,tperpp,tperppp;
 
-			// if (param.Case == "BSCCObilayer_OD_1band") {
-			  	t = 0.360; tp = 0.108; tpp=0.036; tperp=0.108; mu = -param.mu;
-			// } else {
-			  	// t = 0.360; tp = 0.3*t; tpp = 0.15*t; tperp = 0.135;
-			  	// t = 0.360; tp = 0.3*t; tpp = 0.0*t; tperp = 0.135/4;
-			  	// t = 0.180; tp = 0.3*t; tpp = 0.15*t; tperp = 0.026;
-			  	// t = 0.180; tp = 0.2*t; tpp = 0.0*t; tperp = 0.026;
-			  	// t = 1.0; tp = 0.0; tpp = 0.0; tperp = 0.10*t; mu = -param.mu;
-			// }
+		  	t = -1.0; tp = -1.0; tpp = 0.0; tperp = 6.0; tperpp = -0.5; tperppp = 1.0;
 
-			// std::cout << "param.mu="<<mu<<"\n";
 			FieldType cx,cy,cz,c2x,c2y;
 			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]);
 			c2x = cos(2*k[0]); c2y = cos(2*k[1]);
 
-			FieldType ek   = -2*t*(cx + cy) + 4*tp*cx*cy - 2*tpp*(c2x+c2y) + mu;
-			FieldType ekz  = tperp/4. * pow((cx-cy),2)*cz;
+			FieldType ek   = -2*t*(cx+cy) - 4*tp*cx*cy - 2*tpp*(c2x+c2y) - param.mu;
+			FieldType ekz  = (tperp+tperpp*(cx+cy)+tperppp*cx*cy)*cz;
 
-			eigenvals[0] = ek - ekz;
+			eigenvals[0] = ek + ekz;
+
 			eigenvects(0,0) =  1.0;
 		}
 
@@ -97,12 +90,8 @@ namespace rpa {
 			}
 			return chiPhys;
 		}
-
 	};
-
-
-
-
 }
 
 #endif
+

@@ -219,6 +219,7 @@ namespace rpa {
 			r1 = signF * 0.25 * conj(gap1)*gap2/(EnergyBCS1*EnergyBCS2);
 			// r1 = signF * 0.25 * real(conj(gap1)*gap2)/(EnergyBCS1*EnergyBCS2);
 			// std::cout << "gap1="<<gap1<<"\n";
+			// r1 = 1;
 
 			sus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) 
 				+ susInt(-EnergyBCS1,-EnergyBCS2,invT,omega,damp)

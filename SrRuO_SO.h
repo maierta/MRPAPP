@@ -63,6 +63,8 @@ namespace rpa {
 			spinOfEll[4] = -1; orbOfEll[4] = 1; 
 			spinOfEll[5] = +1; orbOfEll[5] = 2; 
 
+			setupInteractionMatrix();
+
 		}
 		
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
@@ -206,6 +208,10 @@ namespace rpa {
 			}
 			return 0.25*chiPhys;
 
+		}
+
+		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
+			return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now
 		}
 
 	};

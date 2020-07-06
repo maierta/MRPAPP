@@ -11,11 +11,12 @@
 #include "Matrix.h"
 #include "parameters.h"
 #include "CrystalHarmonics2D.h"
+// #include "model.h"
 
 namespace rpa {
 
     template<typename Field, template<typename> class MatrixTemplate,
-			 // typename BandsType,
+			 typename ModelType,
              typename ConcurrencyType>
     class gap3D {    // simple s+- for 5-orbital 1111 model 2D
 
@@ -28,6 +29,7 @@ namespace rpa {
         typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
         rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+        ModelType& model;
         ConcurrencyType& conc;
         size_t nbands;
         std::vector<MatrixType> w;
@@ -38,6 +40,7 @@ namespace rpa {
 		// BandsType bands; // to get orbital weights
 		// VectorType ek;
 		// ComplexMatrixType ak;
+
 
         FieldType (*crystHarm)(const std::vector<FieldType>&, 
                                const MatrixType&,
@@ -61,18 +64,21 @@ namespace rpa {
 	    // FieldType (*complexCrystHarm)(const std::vector<FieldType>&, 
                                // const MatrixType&,
                                // const size_t);
+        // model<FieldType, MatrixTemplate, ConcurrencyType> model;
 
     public:
         gap3D() {}
         
         gap3D(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, // not const because param.parity will be set according to gap symmetry
-              ConcurrencyType& concurrency):
+              ModelType& modelIn, ConcurrencyType& concurrency):
             param(parameters),
+            model(modelIn),
             conc(concurrency),
             nbands(param.nOrb),
             w(0),
             kz(0),
-            k0(0)  //,
+            k0(0)
+
 			// kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension),
 			// bands(param,conc,kmesh,false),
 			// ek(param.nOrb,0),
@@ -93,13 +99,15 @@ namespace rpa {
 			Delta = crystHarm(k,w[band],kz[band],k0[band],band); 
 			FieldType sgnD = (real(Delta) > 0) - (real(Delta) < 0);
 			Delta = sgnD*param.Delta0;
-		} else if (param.gAmpl=="dwave_ladders") { // coupled 2-leg ladders in 2-orbital description
+		} else if (param.gAmpl=="dwave_ladders_band") { // coupled 2-leg ladders in 2-orbital description
 			param.parity = 1.0; // even parity (d-wave) gap
-			if (real(ak(0,band))*real(ak(1,band))>0.0) { // bonding band
-			    return param.Delta0 * (cos(k[0]) - cos(k[1]));
+            if (band==0) { // bonding band
+			    return param.Delta0 * (abs(cos(k[0])) - cos(k[1]));
 			} else { // antibonding band (shift kx by pi)
-			    return param.Delta0 * (-cos(k[0]) - cos(k[1]));
+			    return param.Delta0 * (-abs(cos(k[0])) - cos(k[1]));
 			}
+        } else if (param.gAmpl=="dwave_ladders_orbital") {
+            return model.calcSCGap(k, band, ak);
 		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral" || param.gAmpl == "SrRuO_helical_Astrid") {
 			Delta = param.Delta0 * (crystHarm2D(k,w[band],band) + ii*crystHarmIm2D(k,wIm[band],band)) ;
 		} else {
@@ -112,7 +120,7 @@ namespace rpa {
 // in terms of amplitudes a,b,c for the s- or d-wave crystal harmonics
 
         void setParams3D() {
-			if (param.gAmpl == "dwave" || param.gAmpl == "dwave_ladders") { // simple coskx-cosky for all bands
+			if (param.gAmpl == "dwave" || param.gAmpl == "dwave_ladders_band" || param.gAmpl == "dwave_ladders_orbital") { // simple coskx-cosky for all bands
                 crystHarm = &dwave;
 
                 w.resize(param.nOrb,MatrixType(3,1));
@@ -221,6 +229,7 @@ namespace rpa {
                 k0.resize(param.nOrb,FieldType(0.0));
 
             } else if (param.gAmpl == "SrRuO_chiral") { // Simple chiral gap sin kx + i sin ky for Sr2RuO4 with SO coupling 
+
 
                 crystHarm2D   = &pxwave;
                 crystHarmIm2D = &pywave;

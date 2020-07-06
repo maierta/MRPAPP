@@ -717,7 +717,7 @@ namespace rpa {
 		void calcChi0q() {
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,conc,kmesh,true);
+			BandsType bands(param,model,conc,kmesh,true);
 			RangeType range(0,qMesh.nktot,conc);
 			for (;!range.end();range.next()) {
 

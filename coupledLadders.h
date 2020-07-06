@@ -30,6 +30,8 @@ namespace rpa {
 		
 	private:
 		size_t msize;
+		const ComplexType ii;
+
 	public:
 		FieldType nbands;
 		ComplexMatrixType spinMatrix;
@@ -40,6 +42,7 @@ namespace rpa {
 			param(parameters),
 			conc(concurrency),
 			dim(param.dimension),
+			ii(ComplexType(0.0,1.0)),
 			nbands(param.nOrb),
 			spinMatrix(nbands*nbands,nbands*nbands),
 			chargeMatrix(nbands*nbands,nbands*nbands)
@@ -53,18 +56,24 @@ namespace rpa {
 		}
 		
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
-		    	FieldType t, tl, tp, tlp, cy, cx, c2x, lambdak;
-			ComplexType hABk, ekx, emkx;
-			const ComplexType ii = ComplexType(0.0,1.0);
+	    	FieldType t, tl, tp, tlp, cy, cx, c2x, lambdak;
+			ComplexType hABk;
+			ComplexType ekx, emkx;
+			// ComplexType e2kx, em2kx;
+			// const ComplexType ii = ComplexType(0.0,1.0);
 
-			t = 1.0; tp = -0.3; 
+			t = 1.0; tp = -0.25; 
+			// t = 1.0; tp = 0.0; 
 			tl  = t  * param.couplingRatio;
 			tlp = tp * param.couplingRatio;
 
 			cx = cos(k[0]); cy = cos(k[1]); c2x = cos(2.0*k[0]);
 			ekx = exp(ii*k[0]); emkx = conj(ekx);
+			// e2kx = exp(ii*2.*k[0]); em2kx = conj(e2kx);
 
 			hABk     = -t*ekx - tl*emkx - 2.*cy*(tp*ekx + tlp*emkx);
+			// hABk     = -t - tl*em2kx - 2.*cy*(tp + tlp*em2kx);
+
 			lambdak  = pow(t,2) + pow(tl,2) + 2.*t*tl*c2x;
 			lambdak += 4.*cy*(t*tp + tl*tlp+(t*tlp+tp*tl)*c2x);
 			lambdak += 4.*pow(cy,2)*(pow(tp,2)+pow(tlp,2)+2.*tp*tlp*c2x);
@@ -85,9 +94,9 @@ namespace rpa {
 				for (size_t b=0; b<nbands; b++) for (size_t iorb=0; iorb<nbands; iorb++) eigenvects(iorb,b) /= normal;
 			} else { // Hamiltonian matrix is diagonal and diagonal elements -2*t*cosky are degenerate
 				eigenvects(0,1) = 1.0/sqrt(2.0); 
-				eigenvects(1,1) = 1.0/sqrt(2.0); 
+				eigenvects(1,1) = -1.0/sqrt(2.0); 
 				eigenvects(0,0) = 1.0/sqrt(2.0); 
-				eigenvects(1,0) = -1.0/sqrt(2.0);
+				eigenvects(1,0) = 1.0/sqrt(2.0);
 			}
 		}
 
@@ -113,6 +122,56 @@ namespace rpa {
 				}
 			}
 			return chiPhys;
+		}
+
+		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
+			ComplexMatrixType Ukinv(Uk);
+			ComplexMatrixType dummy(2,2);
+			ComplexMatrixType bandGap(2,2);
+			ComplexMatrixType orbitalGap(2,2);
+			calcInverse(Ukinv);
+			
+			// std::cout << "kx: " << k[0] << " ky: " << k[1] << " , " << "Uk   :" << Uk(0,0) << "," << Uk(0,1) << ","<<Uk(1,0)<<","<<Uk(1,1)<<"\n";
+			// std::cout << "Ukinv:" << Ukinv(0,0) << "," << Ukinv(0,1) << ","<<Ukinv(1,0)<<","<<Ukinv(1,1)<<"\n";
+
+			FieldType kx(k[0]);
+			// while (kx > 0.5*param.pi_f) kx -= param.pi_f; // Map to red. BZ
+			// while (kx < 0.5*param.pi_f) kx += param.pi_f; 
+
+			// std::cout << "kxOrg, kx: " << kx << " , " << k[0] << " , " << cos(kx) << " , " << cos(k[0]) << "\n";
+
+			ComplexType Delta00(param.Delta0 * cos(k[1]));
+			ComplexType Delta01(-0.5*param.Delta0 * exp(ii*kx) - 0.5*param.couplingRatio*param.Delta0*exp(-ii*kx));
+			// ComplexType Delta01(-0.5*param.Delta0 * exp(ii*kx));
+			
+			orbitalGap(0,0) = Delta00;
+			orbitalGap(1,1) = Delta00;
+			orbitalGap(0,1) = Delta01;
+			orbitalGap(1,0) = conj(Delta01);
+
+			matMul(Ukinv, orbitalGap, dummy);
+			matMul(dummy, Uk, bandGap);
+
+			// std::cout << k[0] <<","<<k[1]<<" ; " << orbitalGap << "  ;;;;  " << bandGap << "\n";
+
+
+			// bool bz = (abs(k[0]) <= 0.5*param.pi_f);
+			bool bb = (band == 0);
+			if (bb) return real(bandGap(0,0));
+			else return real(bandGap(1,1));
+
+
+   //          if (band==0) { // bonding band
+			//     return param.Delta0;
+			// } else { // antibonding band (shift kx by pi)
+			//     return param.Delta0;
+			// }
+   //          if (band==0) { // bonding band
+			//     return param.Delta0 * (abs(cos(k[0])) - cos(k[1]));
+			// } else { // antibonding band (shift kx by pi)
+			//     return param.Delta0 * (-abs(cos(k[0])) - cos(k[1]));
+			// }
+
 		}
 
 	};

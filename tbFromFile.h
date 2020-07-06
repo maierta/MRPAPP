@@ -50,6 +50,7 @@ namespace rpa {
 			readCSVFile();
 			// setupInteractionMatrix();
 			// if (param.sublattice==1) fixdr();
+			setupInteractionMatrix();
 		}
 		
 		void readCSVFile() {
@@ -306,7 +307,7 @@ namespace rpa {
 			FieldType Jp(param.Jp);
 
 			if (param.sublattice==1) limit=nOrb<10?nOrb/2:5;
-			std::cout << "In rpa.h: limit=" << limit << "\n";
+			// std::cout << "In rpa.h: limit=" << limit << "\n";
 
 			
 			ComplexMatrixType spinSubMatrix(limit*limit,limit*limit);
@@ -414,6 +415,9 @@ namespace rpa {
 
 		}
 
+		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) { // dummy function; handled by gaps3g.h directly
+			return ComplexType(0.,0.); 
+		}
 	};
 }
 

@@ -5,6 +5,7 @@
 #include "parameters.h"
 #include "momentumDomain.h"
 #include "utilities.h"
+#include "model.h"
 #include "Range.h"
 #ifndef USE_MPI
 #include "ConcurrencySerial.h"
@@ -13,7 +14,7 @@ typedef PsimagLite::ConcurrencySerial<double> ConcurrencyType;
 #include "ConcurrencyMpi.h"
 typedef PsimagLite::ConcurrencyMpi<double> ConcurrencyType;
 #endif
-typedef double FieldType;
+
 
 
 
@@ -21,15 +22,18 @@ typedef double FieldType;
 #include "chi0.h"
 #include "pairing.h"
 
+typedef double FieldType;
 typedef PsimagLite::Range<ConcurrencyType> RangeType;
+typedef rpa::model<FieldType, psimag::Matrix, ConcurrencyType> ModelType;
 
-template <typename Field,  template<typename> class MatrixTemplate, typename ConcurrencyType> 
-void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ConcurrencyType& conc) {
+
+template <typename Field,  template<typename> class MatrixTemplate, typename ModelType, typename ConcurrencyType> 
+void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, ModelType& model, ConcurrencyType& conc) {
 
 	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkBands,param.nkIntz,param.dimension);
 	kmesh.set_momenta(false);	
 
-	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands(param,conc,kmesh,false);
+	rpa::bandstructure<Field,psimag::Matrix, ModelType, ConcurrencyType> bands(param,model,conc,kmesh,false);
 
 	std::string filename = "ek_" + param.fileID + ".txt";
 
@@ -38,7 +42,7 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Con
 	// Now calculate bands along high-symmetry direction
 	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh2(param,conc,"Path2",1080);
 	// kmesh2.set_momenta_Path2();
-	rpa::bandstructure<Field,psimag::Matrix,ConcurrencyType> bands2(param,conc,kmesh2,false);
+	rpa::bandstructure<Field,psimag::Matrix,ModelType,ConcurrencyType> bands2(param,model,conc,kmesh2,false);
 	std::string filename2 = "ek_high_sym_" + param.fileID + ".txt";
 	bands2.calcBandStructure(filename2,false);
 
@@ -72,8 +76,8 @@ int main(int argc,char *argv[])
 	if (concurrency.rank()==0) param.writeParameters(std::cout);
 	param.setupOrbitalIndices();
 
-
-	calcBands(param,concurrency);
+	ModelType model(param, concurrency);
+	calcBands(param,model,concurrency);
 
 	// if(param.options.find("calcBands")!=std::string::npos) {
 	// 	if (concurrency.rank()==0) std::cout << "Now calculating Bands \n";
@@ -84,9 +88,9 @@ int main(int argc,char *argv[])
 	// // 	bands.calcBandsKMesh(65,1,2,kmin,kmax,kmin,kmax,kzmin,kzmax);
 	// }
 
-	typedef bandstructure<FieldType,psimag::Matrix,ConcurrencyType> BandsType;
+	typedef bandstructure<FieldType,psimag::Matrix,ModelType,ConcurrencyType> BandsType;
 	if (param.options.find("calcFS")!=std::string::npos) {
-		ferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,concurrency,1);
+		ferminator<FieldType,BandsType,psimag::Matrix,ModelType,ConcurrencyType> FSpoints(param,model,concurrency,1);
 	}
 
 	if (param.options.find("calcSus")!=std::string::npos) {
@@ -94,14 +98,13 @@ int main(int argc,char *argv[])
 		if (concurrency.rank()==0) std::cout << "qxmin,qxmax,qymin,qymax="
 											<<param.qxmin <<","<<param.qxmax<<","<<param.qymin<<","<<param.qymax<<"\n";
 
-
 		// size_t nq=8;
 		// momentumDomain<FieldType,psimag::Matrix> qMesh(param,nq,1,2,param.chia1,param.chia2,param.chia3);
 		// qMesh.set_momenta(false);
 		typedef susc<FieldType,psimag::Matrix,ConcurrencyType> SuscType;
 		// chi0q<FieldType,SuscType,BandsType,psimag::Matrix,ConcurrencyType> susq(param,qMesh,concurrency);
-		susceptibility<FieldType,SuscType,BandsType,psimag::Matrix,ConcurrencyType> 
-					   susq(param,concurrency,
+		susceptibility<FieldType,SuscType,BandsType,psimag::Matrix,ModelType,ConcurrencyType> 
+						   susq(param,model,concurrency,
 					   	    param.qxmin,param.qxmax,param.nqx,
 					   	    param.qymin,param.qymax,param.nqy,
 					   	    param.qzmin,param.qzmax,param.nqz,
@@ -113,7 +116,7 @@ int main(int argc,char *argv[])
 
 	if(param.options.find("calcPairing")!=std::string::npos) {
 		if (concurrency.rank()==0) std::cout << "Now calculating Pairing \n";
-		typedef bandstructure<FieldType,psimag::Matrix,ConcurrencyType> BandsType;
+		typedef bandstructure<FieldType,psimag::Matrix,ModelType,ConcurrencyType> BandsType;
 		typedef susc<FieldType,psimag::Matrix,ConcurrencyType> SuscType;
 		size_t nq(0),nqz(0);
 		if (param.interpolateChi==1) {
@@ -130,7 +133,7 @@ int main(int argc,char *argv[])
 		momentumDomain<FieldType,psimag::Matrix,ConcurrencyType> qMesh(param,concurrency,nq,nqz,param.dimension,param.chia1,param.chia2,param.chia3);
 		qMesh.set_momenta(false);
 		typedef rpa::gap2D<FieldType,psimag::Matrix,ConcurrencyType> GapType; // this is not really needed
-		pairing<FieldType,BandsType,SuscType,GapType,psimag::Matrix,ConcurrencyType> pairing(param,concurrency,param.interpolateChi,qMesh);
+		pairing<FieldType,BandsType,SuscType,GapType,psimag::Matrix,ModelType,ConcurrencyType> pairing(param,model,concurrency,param.interpolateChi,qMesh);
 	}
 
 

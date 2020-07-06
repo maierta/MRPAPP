@@ -24,6 +24,7 @@ namespace rpa {
 
 	template<typename Field, typename SuscType, typename BandsType,
 	         template<typename> class MatrixTemplate,
+			 typename ModelType,
 	         typename ConcurrencyType>
 	class susceptibility {
 		private: 
@@ -39,12 +40,13 @@ namespace rpa {
 			typedef rpa::gap2D<FieldType,psimag::Matrix,ConcurrencyType> GapType;
 #elif  USE_SCGAP3D
 			// typedef rpa::gap3D<FieldType,psimag::Matrix,BandsType,ConcurrencyType> GapType;
-			typedef rpa::gap3D<FieldType,psimag::Matrix,ConcurrencyType> GapType;
+			typedef rpa::gap3D<FieldType,psimag::Matrix, ModelType, ConcurrencyType> GapType;
 #else
 			typedef rpa::gap2D<FieldType,psimag::Matrix,ConcurrencyType> GapType;
 #endif
 
 			rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+			rpa::model<Field,MatrixTemplate,ConcurrencyType>& model;
 			ConcurrencyType& conc;
 			// momentumDomain<Field,psimag::Matrix> qMesh;
 			size_t numberOfQ;
@@ -61,13 +63,12 @@ namespace rpa {
 			bool writeFullChi0;
 			bool kMap;
 
-			model<FieldType, MatrixTemplate, ConcurrencyType> model;
-
 		public:
 			// typedef std::vector<SuscType> BaseType;
 
 
 		susceptibility(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
+					   ModelType& modelIn,
 					   ConcurrencyType& concurrency,
 					   const FieldType& qxmin, const FieldType& qxmax, const size_t nq1In,
 					   const FieldType& qymin, const FieldType& qymax, const size_t nq2In, 
@@ -75,6 +76,7 @@ namespace rpa {
 					   const FieldType& wmin,  const FieldType& wmax,  const size_t nwIn
 					   ):
 						param(parameters),
+						model(modelIn),
 						conc(concurrency),
 						// qMesh(param,nqxIn,nqzIn,3),
 						numberOfQ(nq1In*nq2In*nq3In*nwIn),
@@ -90,10 +92,7 @@ namespace rpa {
 						wmin_(wmin),
 						wmax_(wmax),
 						writeFullChi0(param.writeFullChi0),
-						kMap(0),
-						model(param,conc)
-
-
+						kMap(0)
 		{
 
 			if (conc.rank()==0) std::cout << "numberOfQ: " << numberOfQ << "\n";
@@ -131,7 +130,7 @@ namespace rpa {
 			// Setup k-mesh for chi0 calculation
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
+			BandsType bands(param,model,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
 
 			std::vector<FieldType> q(3);
 			bool single_q = false;
@@ -210,7 +209,7 @@ namespace rpa {
 			// Setup k-mesh for chi0 calculation
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,conc,kmesh,false); // false = no Caching
+			BandsType bands(param,model,conc,kmesh,false); // false = no Caching
 			RangeType range(0,numberOfQ,conc);
 
 			for (;!range.end();range.next()) {
@@ -566,10 +565,10 @@ namespace rpa {
 		}
 
 		void printGap2() {
-			GapType Delta(param,conc);
+			GapType Delta(param,model,conc);
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,conc,kmesh,true);
+			BandsType bands(param,model,conc,kmesh,true);
 			VectorType ek(param.nOrb,0), k(3);
 			ComplexMatrixType ak(param.nOrb,param.nOrb);
 			std::ofstream os("gapAll.txt");
@@ -583,16 +582,17 @@ namespace rpa {
 				for (size_t iband=0;iband<param.nOrb;iband++) {	
 					gap1[iband] = Delta(k,iband,ak);
 					gap1[iband] *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off
+					// gap1[iband] *= exp(-std::pow(ek[iband],2) / std::pow(param.Omega0,2)); // Gaussian cut-off
 				}
 
 				os << k[0] << "  " << k[1] << "  " << k[2] << "  " ;
-				for (size_t ib=0;ib<param.nOrb;ib++) os	 << real(gap1[ib]) << " ";
+				for (size_t ib=0;ib<param.nOrb;ib++) os	 << real(gap1[ib]) << " " << imag(gap1[ib]) << " ";
 				os << "\n";
 			}
 		}
 
 		void printGap3() {
-			ferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);
+			ferminator<FieldType,BandsType,psimag::Matrix,ModelType,ConcurrencyType> FSpoints(param,model,conc,1);
 			size_t nk(FSpoints.nTotal);
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			BandsType bands(param,conc,kmesh,true);

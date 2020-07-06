@@ -17,6 +17,7 @@ namespace rpa {
 
 	template<typename Field, typename BandsType,
 	         template<typename> class MatrixTemplate,
+			 typename ModelType,
 	         typename ConcurrencyType>
 	class ferminator {
 
@@ -50,7 +51,7 @@ namespace rpa {
 
 
 	ferminator(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-			   ConcurrencyType& concurrency,bool calcOW=0):
+			   ModelType& model, ConcurrencyType& concurrency,bool calcOW=0):
 		param(parameters),
 		conc(concurrency),
 		Pi(param.pi_f),
@@ -67,7 +68,7 @@ namespace rpa {
 		gammaB1GkF(0,0),
 		FSCenters(0),
 		FSBand(0),
-		bands(param,conc),
+		bands(param,model,conc),
 		calcOW_(calcOW),
 		weights(0),
 		weights2(0)
@@ -794,26 +795,64 @@ namespace rpa {
 			FSCenters[1][0] =  Pi/2.  ; FSCenters[1][1] = Pi  ; FSBand[1]  =  0;
 			FSCenters[2][0] =  -Pi    ; FSCenters[2][1] = 0.  ; FSBand[2]  =  1;
 
-			size_t nkSearch(10000);
+			size_t nkSearch(1000000);
 			for (size_t iSheet=0;iSheet<2;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
 			for (size_t iSheet=2;iSheet<3;iSheet++) calcKFOpen2D(nkSearch,iSheet,1);
-			// // Now copy isheet = 2 to isheet=3 but with -kFy to preserve symmetry
-			size_t ind0(kFx.size()-nkPerSheet);
-			for (size_t ikF=0; ikF<nkPerSheet; ikF++) {
-				kFx.push_back(kFx[ind0+ikF]);
-				kFy.push_back(-kFy[ind0+ikF]);
-				kFz.push_back(kFz[ind0+ikF]);
-				kFtoBand.push_back(kFtoBand[ind0+ikF]);
-				deltakF.push_back(deltakF[ind0+ikF]);
-				vkF.push_back(vkF[ind0+ikF]);
-				if (calcOW_) {
-					size_t ic(kFx.size()-1);
-					weights[ic]  = weights[ind0+ikF];
-					weights2[ic] = weights2[ind0+ikF];
-				}
-			}
-		}
 
+			calcDeltaKFOpen2D();
+			mirrorSheet();
+			// // Now calc. deltakF
+			// size_t ind0(kFx.size()-nkPerSheet);
+			// // Special treatment for first point
+			// FieldType rx(0.5*(kFx[ind0+1]-kFx[ind0]));
+			// FieldType ry(0.5*(kFy[ind0+1]-kFy[ind0]));
+			// FieldType dkF(sqrt(pow(rx,2)+pow(ry,2)));
+			// deltakF.push_back(dkF);
+			// // Now the middle points
+			// for (size_t ikF = 1; ikF < nkPerSheet-1; ++ikF) {
+			// 	rx = 0.5*(kFx[ind0+ikF+1]-kFx[ind0+ikF-1]);
+			// 	ry = 0.5*(kFy[ind0+ikF+1]-kFy[ind0+ikF-1]);
+			// 	dkF = sqrt(pow(rx,2)+pow(ry,2));
+			// 	deltakF.push_back(dkF);
+			// }
+			// // Special treatment for last point
+			// rx = 0.5*(kFx[ind0+nkPerSheet-1]-kFx[ind0+nkPerSheet-2]);
+			// ry = 0.5*(kFy[ind0+nkPerSheet-1]-kFy[ind0+nkPerSheet-2]);
+			// dkF = sqrt(pow(rx,2)+pow(ry,2));
+			// deltakF.push_back(dkF);
+
+			// // Now copy isheet = 2 to isheet=3 but with -kFy to preserve symmetry
+			// for (size_t ikF=0; ikF<nkPerSheet; ikF++) {
+			// 	kFx.push_back(kFx[ind0+ikF]);
+			// 	kFy.push_back(-kFy[ind0+ikF]);
+			// 	kFz.push_back(kFz[ind0+ikF]);
+			// 	kFtoBand.push_back(kFtoBand[ind0+ikF]);
+			// 	deltakF.push_back(deltakF[ind0+ikF]);
+			// 	vkF.push_back(vkF[ind0+ikF]);
+			// 	if (calcOW_) {
+			// 		size_t ic(kFx.size()-1);
+			// 		weights[ic]  = weights[ind0+ikF];
+			// 		weights2[ic] = weights2[ind0+ikF];
+			// 	}
+			// }
+		} else if (Case_ == "coupled_ladders_open") {
+			// 1-band model, coupled ladders along x, both FS are open along x 
+			nSheets = 4;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = -0.5*Pi  ; FSCenters[0][1] = 0  ; FSBand[0]  =  0;
+			FSCenters[1][0] = -0.5*Pi  ; FSCenters[1][1] = 0   ; FSBand[1]  =  1;
+
+			size_t nkSearch(100000);
+			for (size_t iSheet=0;iSheet<1;iSheet++) calcKFOpen2D(nkSearch,iSheet,1);
+			calcDeltaKFOpen2D();
+			mirrorSheet();
+			for (size_t iSheet=1;iSheet<2;iSheet++) calcKFOpen2D(nkSearch,iSheet,1);
+			calcDeltaKFOpen2D();
+			mirrorSheet();
+
+		}
 
 		if (conc.rank()==0) std::cout << "Number of kF points: " << nTotal << "\n";
 
@@ -831,6 +870,47 @@ namespace rpa {
 				weights2.resize(nTotal,std::vector<ComplexType>(param.nOrb,0));
 			}
 	}
+
+	void mirrorSheet() {
+		// Now copy isheet = 2 to isheet=3 but with -kFy to preserve symmetry
+		size_t ind0(kFx.size()-nkPerSheet);
+		for (size_t ikF=0; ikF<nkPerSheet; ikF++) {
+			kFx.push_back(kFx[ind0+ikF]);
+			kFy.push_back(-kFy[ind0+ikF]);
+			kFz.push_back(kFz[ind0+ikF]);
+			kFtoBand.push_back(kFtoBand[ind0+ikF]);
+			deltakF.push_back(deltakF[ind0+ikF]);
+			vkF.push_back(vkF[ind0+ikF]);
+			if (calcOW_) {
+				size_t ic(kFx.size()-1);
+				weights[ic]  = weights[ind0+ikF];
+				weights2[ic] = weights2[ind0+ikF];
+			}
+		}
+	}
+
+	void calcDeltaKFOpen2D() {
+		// Now calc. deltakF
+		size_t ind0(kFx.size()-nkPerSheet);
+		// Special treatment for first point
+		FieldType rx(0.5*(kFx[ind0+1]-kFx[ind0]));
+		FieldType ry(0.5*(kFy[ind0+1]-kFy[ind0]));
+		FieldType dkF(sqrt(pow(rx,2)+pow(ry,2)));
+		deltakF.push_back(dkF);
+		// Now the middle points
+		for (size_t ikF = 1; ikF < nkPerSheet-1; ++ikF) {
+			rx = 0.5*(kFx[ind0+ikF+1]-kFx[ind0+ikF-1]);
+			ry = 0.5*(kFy[ind0+ikF+1]-kFy[ind0+ikF-1]);
+			dkF = sqrt(pow(rx,2)+pow(ry,2));
+			deltakF.push_back(dkF);
+		}
+		// Special treatment for last point
+		rx = 0.5*(kFx[ind0+nkPerSheet-1]-kFx[ind0+nkPerSheet-2]);
+		ry = 0.5*(kFy[ind0+nkPerSheet-1]-kFy[ind0+nkPerSheet-2]);
+		dkF = sqrt(pow(rx,2)+pow(ry,2));
+		deltakF.push_back(dkF);
+	}
+
 
 	void calcKF(const size_t nkSearch,const size_t iSheet, const FieldType& kz,int dim) {
 		VectorType w(param.nOrb);
@@ -907,7 +987,7 @@ namespace rpa {
 			VectorType k(3,0);
 			k[0] = FSCenters[iSheet][0];
 			k[1] = FSCenters[iSheet][1];
-			k[scanAlongDir==1?0:1] += float(ik)*2.*Pi/float(nkPerSheet);
+			k[scanAlongDir==1?0:1] += float(ik)*Pi/float(nkPerSheet-1);
 			bands.getBands(k,w,v);
 			FieldType ek(w[FSBand[iSheet]]);
 			FieldType sgnW = (ek > 0) - (ek < 0);
@@ -935,18 +1015,6 @@ namespace rpa {
 				if (calcOW_) calcWeights(ic);
 			}
 		}
-		// Now calc. deltakF
-		size_t ind0(kFx.size()-nkPerSheet);
-		for (size_t ikF = 0; ikF < nkPerSheet-1; ++ikF)
-		{
-			FieldType dkF(sqrt(pow(kFx[ind0+ikF+1]-kFx[ind0+ikF],2)+pow(kFy[ind0+ikF+1]-kFy[ind0+ikF],2)));
-			deltakF.push_back(dkF);
-		}
-		// Special treatment for last point
-		FieldType dkF(0.0);
-		if (scanAlongDir == 1) dkF = sqrt(pow(Pi-kFx[ind0+nkPerSheet-1],2)+pow(kFy[ind0]-kFy[ind0+nkPerSheet-1],2));
-		if (scanAlongDir == 0) dkF = sqrt(pow(kFx[ind0]-kFx[ind0+nkPerSheet-1],2)+pow(Pi-kFy[ind0+nkPerSheet-1],2));
-		deltakF.push_back(dkF);
 	}
 
 	FieldType calcDeltaKF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,
@@ -997,21 +1065,8 @@ namespace rpa {
 		deltakF[nk-1] = 0.0; // for open Fermi surface
 	
 	}
-	// void calcDeltaKF2D() {
-	// 	size_t nk(kFx.size());
-	// 	FieldType length, vecx,vecy;
-	// 	for (size_t ik = 1; ik < nk-1; ++ik)
-	// 	{
-	// 		vecx = 0.5*(kFx[ik+1]-kFx[ik-1]); 
-	// 		vecy = 0.5*(kFy[ik+1]-kFy[ik-1]);
-	// 		length = sqrt(pow(vecx,2)+pow(vecy,2));
-	// 		deltakF[ik] = length;
-	// 	}
-	// 	vecx = kFx[1]-kFx[0]; 
-	// 	deltakF[0] = sqrt(pow(vecx,2)+pow(vecy,2));
-	// 	vecx = kFx[nk-1]-kFx[nk-2]; 
-	// 	deltakF[nk-1] = sqrt(pow(vecx,2)+pow(vecy,2));
-	// }
+
+
 
 	FieldType calcVkF(const FieldType& kFx, const FieldType& kFy, const FieldType& kFz,
 		              const size_t iband, size_t dim) {

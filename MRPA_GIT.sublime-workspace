@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"1band",
+				"1band_wSpin"
+			],
+			[
+				"1bn",
+				"USE_1BANDWSPIN"
+			],
+			[
+				"Psim",
+				"PartialPsimag"
+			],
+			[
 				"Delta",
 				"Deltax2y2"
 			],
@@ -63,7 +75,7 @@
 			"file": "parameters.h",
 			"settings":
 			{
-				"buffer_size": 25942,
+				"buffer_size": 28676,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -72,7 +84,7 @@
 			"file": "susceptibility.h",
 			"settings":
 			{
-				"buffer_size": 21722,
+				"buffer_size": 24044,
 				"line_ending": "Unix"
 			}
 		},
@@ -80,7 +92,7 @@
 			"file": "momentumDomain.h",
 			"settings":
 			{
-				"buffer_size": 18836,
+				"buffer_size": 18846,
 				"line_ending": "Unix"
 			}
 		},
@@ -88,7 +100,16 @@
 			"file": "gaps3D.h",
 			"settings":
 			{
-				"buffer_size": 30932,
+				"buffer_size": 39586,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "PsimagLite/src/PlotParams.h",
+			"settings":
+			{
+				"buffer_size": 1130,
 				"line_ending": "Unix"
 			}
 		},
@@ -96,7 +117,8 @@
 			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 1955,
+				"buffer_size": 2163,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -104,7 +126,8 @@
 			"file": "bandstructure.h",
 			"settings":
 			{
-				"buffer_size": 17971,
+				"buffer_size": 14234,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -112,7 +135,8 @@
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 7650,
+				"buffer_size": 7491,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -128,7 +152,7 @@
 			"file": "bilayer.h",
 			"settings":
 			{
-				"buffer_size": 3329,
+				"buffer_size": 6356,
 				"line_ending": "Unix"
 			}
 		},
@@ -136,7 +160,7 @@
 			"file": "SrRuO.h",
 			"settings":
 			{
-				"buffer_size": 2301,
+				"buffer_size": 2298,
 				"line_ending": "Unix"
 			}
 		},
@@ -144,7 +168,7 @@
 			"file": "KFe2Se2.h",
 			"settings":
 			{
-				"buffer_size": 7701,
+				"buffer_size": 7832,
 				"line_ending": "Unix"
 			}
 		},
@@ -152,7 +176,7 @@
 			"file": "FourOrbital.h",
 			"settings":
 			{
-				"buffer_size": 2246,
+				"buffer_size": 2370,
 				"line_ending": "Unix"
 			}
 		},
@@ -168,7 +192,7 @@
 			"file": "BaFeAs_5orb.h",
 			"settings":
 			{
-				"buffer_size": 7206,
+				"buffer_size": 7297,
 				"line_ending": "Unix"
 			}
 		},
@@ -176,7 +200,7 @@
 			"file": "ferminator.h",
 			"settings":
 			{
-				"buffer_size": 30979,
+				"buffer_size": 36485,
 				"line_ending": "Unix"
 			}
 		},
@@ -184,7 +208,26 @@
 			"file": "chi0.h",
 			"settings":
 			{
-				"buffer_size": 23384,
+				"buffer_size": 31477,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "SrRuO_SO.h",
+			"settings":
+			{
+				"buffer_size": 6837,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "1band_wSpin.h",
+			"settings":
+			{
+				"buffer_size": 4533,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -192,7 +235,7 @@
 			"file": "pairing.h",
 			"settings":
 			{
-				"buffer_size": 21870,
+				"buffer_size": 27077,
 				"line_ending": "Unix"
 			}
 		},
@@ -200,7 +243,16 @@
 			"file": "susInt.h",
 			"settings":
 			{
-				"buffer_size": 2372,
+				"buffer_size": 7322,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "MRPA_GIT.sublime-project",
+			"settings":
+			{
+				"buffer_size": 605,
 				"line_ending": "Unix"
 			}
 		},
@@ -208,24 +260,57 @@
 			"file": "CrystalHarmonics2D.h",
 			"settings":
 			{
-				"buffer_size": 16836,
+				"buffer_size": 17312,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Searching 286 files for \"FSpoints\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/ferminator.h:\n  873  \n  874  \tvoid writeKF() {\n  875: \t\tstd::ofstream os(\"FSpoints.txt\");\n  876  \t\tint width(8);\n  877  \t\tos.precision(width);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/main.cpp:\n   91  \ttypedef bandstructure<FieldType,psimag::Matrix,ConcurrencyType> BandsType;\n   92  \tif (param.options.find(\"calcFS\")!=std::string::npos) {\n   93: \t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,concurrency,1);\n   94  \t}\n   95  \n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/pairing.h:\n   98  \t\tstd::vector<SuscType> chiStore;\n   99  \t\tstd::vector<VectorType> qStore;\n  100: \t\tferminator<FieldType,BandsType,MatrixTemplate,ConcurrencyType> FSpoints;\n  101  \t\tsize_t nkF;\n  102  \t\tMatrixType chikk;\n  ...\n  134  \t\t\tchiStore(0,SuscType(param,conc)),\n  135  \t\t\tqStore(0,VectorType(3)),\n  136: \t\t\tFSpoints(param,conc),\n  137: \t\t\tnkF(FSpoints.nTotal),\n  138  \t\t\tchikk(nkF,nkF)\n  139  \t\t{\t\t\t\n  140  \t\t\t// determineKF(file);\n  141  \n  142: \t\t\t// size_t nkF(FSpoints.nTotal);\n  143  \t\t\tnTotal = (nkF * nkF + nkF) / 2;\n  144  \t\t\t// nTotal = nkF * nkF;\n  ...\n  188  \t\t\t// We have (nkF^2+nkF)/2 total elements to calculate for Gamma\n  189  \t\t\t// size_t nTotal((nkF*nkF+nkF)/2);\n  190: \t\t\t// size_t nkF(FSpoints.nTotal);\n  191  \t\t\tstd::vector<size_t> indToi(nTotal);\n  192  \t\t\tstd::vector<size_t> indToj(nTotal);\n  ...\n  217  \t\t\t\t// if (ik1==0 && ik2==16) {\n  218  \n  219: \t\t\t\tk1[0] = FSpoints.kFx[ik1]; k1[1] = FSpoints.kFy[ik1]; k1[2] = FSpoints.kFz[ik1];\n  220: \t\t\t\tk2[0] = FSpoints.kFx[ik2]; k2[1] = FSpoints.kFy[ik2]; k2[2] = FSpoints.kFz[ik2];\n  221: \t\t\t\tsize_t band1(FSpoints.kFtoBand[ik1]);\n  222: \t\t\t\tsize_t band2(FSpoints.kFtoBand[ik2]); \n  223  \t\t\t\t// q = kF1-kF2\n  224  \t\t\t\tfor (int l=0;l<3;l++) q[l] = k1[l]-k2[l];\n  ...\n  481  \n  482  \t\tvoid calcNorm() {\n  483: \t\t\tsize_t nkF(FSpoints.nTotal);\n  484  \t\t\tfor (size_t ik=0; ik<nkF; ++ik) {\n  485  \t\t\t\tVectorType k(3,0);\n  ...\n  488  \t\t\t\t// FieldType vkF2 = bands.fermiVelocity2D(k,band);\n  489  \t\t\t\t// std::cout << k[0] << \" , \" << k[1] << \" , \" << band << \" , \" << vkF2 << \"\\n\";\n  490: \t\t\t\tnormalization[ik]=FSpoints.deltakF[ik]/(pow(2.*param.pi_f,dim)*FSpoints.vkF[ik]);\n  491  \t\t\t}\n  492  \t\t}\n  ...\n  495  \t\t\t// std::cout << \"kFx1,kFy1\" << kFx[0] << \",\" << kFy[0];\n  496  \t\t\t// First in a format suitable for reading into R using the script in gammapp_diag.R\n  497: \t\t\tsize_t nkF(FSpoints.nTotal);\n  498  \t\t\tstd::ofstream os(\"Gammakkp.txt\");\n  499  \t\t\tos << \"nkF:\\n\" << nkF << \"\\n\";\n  500: \t\t\tos << \"kFx:\\n\" << FSpoints.kFx << \"\\n\";\n  501: \t\t\tos << \"kFy:\\n\" << FSpoints.kFy << \"\\n\";\n  502: \t\t\tos << \"kFz:\\n\" << FSpoints.kFz << \"\\n\";\n  503  \t\t\tos << \"U,U',J,J':\\n\" << param.U << \" , \" << param.Up << \" , \" << param.J << \" , \" << param.Jp << \"\\n\\n\";\n  504  \t\t\tos << \"Gamma(k,k'): \\n\";\n  ...\n  521  \t\t\tos2 << \" \\\"kfPoints\\\": [\\n\";\n  522  \t\t\tfor (size_t ik=0;ik<nkF;ik++) {\n  523: \t\t\t\tos2 << \"[\" << FSpoints.kFx[ik] << \" ,\" << FSpoints.kFy[ik] << \" ,\" << FSpoints.kFz[ik] << \"] \";\n  524  \t\t\t\tif (ik<nkF-1) os2 << \",\";\n  525  \t\t\t}\n  ...\n  599  \t\tos2 << \" \\\"kfPoints\\\": [\\n\";\n  600  \t\tfor (size_t ik=0;ik<nkF;ik++) {\n  601: \t\t\tos2 << \"[\" << FSpoints.kFx[ik] << \" ,\" << FSpoints.kFy[ik] << \" ,\" << FSpoints.kFz[ik] << \"] \";\n  602  \t\t\tif (ik<nkF-1) os2 << \",\";\n  603  \t\t}\n  ...\n  634  \n  635  \t\tfor (size_t ik=0;ik<nkF;ik++) {\n  636: \t\t\tsize_t band(FSpoints.kFtoBand[ik]);\n  637  \t\t\tVectorType k(3,0);\n  638: \t\t\tk[0] = FSpoints.kFx[ik];\n  639: \t\t\tk[1] = FSpoints.kFy[ik];\n  640: \t\t\tk[2] = FSpoints.kFz[ik];\n  641  \n  642  \t\t\tComplexMatrixType ak(nOrb,nOrb);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/susceptibility.h:\n  547  \n  548  \t\tvoid printGap3() {\n  549: \t\t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);\n  550: \t\t\tsize_t nk(FSpoints.nTotal);\n  551  \t\t\tmomentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);\n  552  \t\t\tBandsType bands(param,conc,kmesh,true);\n  ...\n  560  \t\t\tfor (size_t ik = 0; ik < nk; ++ik)\t{\n  561  \t\t\t\tVectorType k(3,0); size_t iband;\n  562: \t\t\t\tk[0] = FSpoints.kFx[ik];\n  563: \t\t\t\tk[1] = FSpoints.kFy[ik];\n  564: \t\t\t\tk[2] = FSpoints.kFz[ik];\n  565: \t\t\t\tiband = FSpoints.kFtoBand[ik];\n  566  \t\t\t\tbands.getEkAndAk(k,ek,ak);\n  567  \t\t\t\tComplexType gap1 = Delta(k,iband,ak);\n  ...\n  569  \t\t\t\tos << k[0] << \" , \" << k[1] << \" , \" << k[2] << \" , \" \n  570  \t\t\t\t\t   << iband;\n  571: \t\t\t\tfor (size_t iorb=0;iorb<param.nOrb;iorb++) os << \" , \" << FSpoints.weights[ik][iorb];\n  572  \t\t\t    os << \" , \" << real(gap1) << \"\\n\";\n  573  \t\t\t}\n\n41 matches across 6 files\n\n\nSearching 286 files for \"FSpoints.txt\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/ferminator.h:\n  873  \n  874  \tvoid writeKF() {\n  875: \t\tstd::ofstream os(\"FSpoints.txt\");\n  876  \t\tint width(8);\n  877  \t\tos.precision(width);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n3 matches across 3 files\n\n\nSearching 288 files for \"printGap\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/parameters.h:\n   34  \t\tField wmin,wmax;\n   35  \t\tsize_t scState;\n   36: \t\tsize_t printGap;\n   37  \t\tstd::string gAmpl;\n   38  \t\tField Delta0;\n   ..\n  131  \t\t\twmax(0.0),\n  132  \t\t\tscState(0),\n  133: \t\t\tprintGap(0),\n  134  \t\t\tgAmpl(\"LaOFeAs_s_1\"),\n  135  \t\t\tDelta0(0.04),\n  ...\n  347  \t\t        else if (text.find(\"wmax\")!=std::string::npos) str >> (*this).wmax; \t\t\t\t\n  348  \t\t        else if (text.find(\"scState\")!=std::string::npos) str >> (*this).scState; \t\t\t\t\n  349: \t\t        else if (text.find(\"printGap\")!=std::string::npos) str >> (*this).printGap; \t\t\t\t\n  350  \t\t        else if (text.find(\"gAmpl\")!=std::string::npos) str >> (*this).gAmpl; \t\t\t\t\n  351  \t\t        else if (text.find(\"Delta0\")!=std::string::npos) str >> (*this).Delta0; \t\t\t\t\n  ...\n  457  \t\t\t\tos << \"wmax = \" << (*this).wmax << \"\\n\";\n  458  \t\t\t\tos << \"scState = \" << (*this).scState << \"\\n\";\n  459: \t\t\t\tos << \"printGap = \" << (*this).printGap << \"\\n\";\n  460  \t\t\t\tos << \"gAmpl = \" << (*this).gAmpl << \"\\n\";\n  461  \t\t\t\tos << \"Delta0 = \" << (*this).Delta0 << \"\\n\";\n  ...\n  563  \t\t        conc.broadcast((*this).wmax); \t\t\t\t\n  564  \t\t        conc.broadcast((*this).scState); \t\t\t\t\n  565: \t\t        conc.broadcast((*this).printGap); \t\t\t\t\n  566  \t\t        conc.broadcast((*this).gAmpl); \t\t\t\t\n  567  \t\t        conc.broadcast((*this).Delta0); \t\t\t\t\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/susceptibility.h:\n   99  \t\t\t\t               wmin,wmax,QVec);\n  100  \n  101: \t\t\tif (param.scState==1 && param.printGap==1 && conc.rank()==0) {\n  102  \t\t\t\tif (conc.rank()==0) std::cout << \"Now writing gap.txt \\n\";\n  103: \t\t\t\tprintGap3();\n  104  \t\t\t\tif (conc.rank()==0) std::cout << \"Done writing gap.txt \\n\";\n  105  \t\t\t}\n  ...\n  481  \n  482  \n  483: \t\tvoid printGap(const std::string& file=\"gapRPA.txt\") {\n  484  \t\t\tVectorType data;\n  485  \t\t\tloadVector(data,file);\n  ...\n  521  \t\t}\n  522  \n  523: \t\tvoid printGap2() {\n  524  \t\t\tGapType Delta(param,conc);\n  525  \t\t\tmomentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);\n  ...\n  546  \t\t}\n  547  \n  548: \t\tvoid printGap3() {\n  549  \t\t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);\n  550  \t\t\tsize_t nk(FSpoints.nTotal);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111/input_1111.dat:\n   71  gAmpl             =    KFe2Se2_edoped_SO0p05_d\n   72  Delta0            =    0.00\n   73: printGap          =    0\n   74  \n   75  \n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111_3D/input.dat:\n   80  gAmpl             =    KFe2Se2_edoped_SO0p05_d\n   81  Delta0            =    0.00\n   82: printGap          =    0\n   83  \n   84  \n\n19 matches across 6 files\n",
+			"contents": "Searching 286 files for \"FSpoints\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/ferminator.h:\n  873  \n  874  \tvoid writeKF() {\n  875: \t\tstd::ofstream os(\"FSpoints.txt\");\n  876  \t\tint width(8);\n  877  \t\tos.precision(width);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/main.cpp:\n   91  \ttypedef bandstructure<FieldType,psimag::Matrix,ConcurrencyType> BandsType;\n   92  \tif (param.options.find(\"calcFS\")!=std::string::npos) {\n   93: \t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,concurrency,1);\n   94  \t}\n   95  \n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/pairing.h:\n   98  \t\tstd::vector<SuscType> chiStore;\n   99  \t\tstd::vector<VectorType> qStore;\n  100: \t\tferminator<FieldType,BandsType,MatrixTemplate,ConcurrencyType> FSpoints;\n  101  \t\tsize_t nkF;\n  102  \t\tMatrixType chikk;\n  ...\n  134  \t\t\tchiStore(0,SuscType(param,conc)),\n  135  \t\t\tqStore(0,VectorType(3)),\n  136: \t\t\tFSpoints(param,conc),\n  137: \t\t\tnkF(FSpoints.nTotal),\n  138  \t\t\tchikk(nkF,nkF)\n  139  \t\t{\t\t\t\n  140  \t\t\t// determineKF(file);\n  141  \n  142: \t\t\t// size_t nkF(FSpoints.nTotal);\n  143  \t\t\tnTotal = (nkF * nkF + nkF) / 2;\n  144  \t\t\t// nTotal = nkF * nkF;\n  ...\n  188  \t\t\t// We have (nkF^2+nkF)/2 total elements to calculate for Gamma\n  189  \t\t\t// size_t nTotal((nkF*nkF+nkF)/2);\n  190: \t\t\t// size_t nkF(FSpoints.nTotal);\n  191  \t\t\tstd::vector<size_t> indToi(nTotal);\n  192  \t\t\tstd::vector<size_t> indToj(nTotal);\n  ...\n  217  \t\t\t\t// if (ik1==0 && ik2==16) {\n  218  \n  219: \t\t\t\tk1[0] = FSpoints.kFx[ik1]; k1[1] = FSpoints.kFy[ik1]; k1[2] = FSpoints.kFz[ik1];\n  220: \t\t\t\tk2[0] = FSpoints.kFx[ik2]; k2[1] = FSpoints.kFy[ik2]; k2[2] = FSpoints.kFz[ik2];\n  221: \t\t\t\tsize_t band1(FSpoints.kFtoBand[ik1]);\n  222: \t\t\t\tsize_t band2(FSpoints.kFtoBand[ik2]); \n  223  \t\t\t\t// q = kF1-kF2\n  224  \t\t\t\tfor (int l=0;l<3;l++) q[l] = k1[l]-k2[l];\n  ...\n  481  \n  482  \t\tvoid calcNorm() {\n  483: \t\t\tsize_t nkF(FSpoints.nTotal);\n  484  \t\t\tfor (size_t ik=0; ik<nkF; ++ik) {\n  485  \t\t\t\tVectorType k(3,0);\n  ...\n  488  \t\t\t\t// FieldType vkF2 = bands.fermiVelocity2D(k,band);\n  489  \t\t\t\t// std::cout << k[0] << \" , \" << k[1] << \" , \" << band << \" , \" << vkF2 << \"\\n\";\n  490: \t\t\t\tnormalization[ik]=FSpoints.deltakF[ik]/(pow(2.*param.pi_f,dim)*FSpoints.vkF[ik]);\n  491  \t\t\t}\n  492  \t\t}\n  ...\n  495  \t\t\t// std::cout << \"kFx1,kFy1\" << kFx[0] << \",\" << kFy[0];\n  496  \t\t\t// First in a format suitable for reading into R using the script in gammapp_diag.R\n  497: \t\t\tsize_t nkF(FSpoints.nTotal);\n  498  \t\t\tstd::ofstream os(\"Gammakkp.txt\");\n  499  \t\t\tos << \"nkF:\\n\" << nkF << \"\\n\";\n  500: \t\t\tos << \"kFx:\\n\" << FSpoints.kFx << \"\\n\";\n  501: \t\t\tos << \"kFy:\\n\" << FSpoints.kFy << \"\\n\";\n  502: \t\t\tos << \"kFz:\\n\" << FSpoints.kFz << \"\\n\";\n  503  \t\t\tos << \"U,U',J,J':\\n\" << param.U << \" , \" << param.Up << \" , \" << param.J << \" , \" << param.Jp << \"\\n\\n\";\n  504  \t\t\tos << \"Gamma(k,k'): \\n\";\n  ...\n  521  \t\t\tos2 << \" \\\"kfPoints\\\": [\\n\";\n  522  \t\t\tfor (size_t ik=0;ik<nkF;ik++) {\n  523: \t\t\t\tos2 << \"[\" << FSpoints.kFx[ik] << \" ,\" << FSpoints.kFy[ik] << \" ,\" << FSpoints.kFz[ik] << \"] \";\n  524  \t\t\t\tif (ik<nkF-1) os2 << \",\";\n  525  \t\t\t}\n  ...\n  599  \t\tos2 << \" \\\"kfPoints\\\": [\\n\";\n  600  \t\tfor (size_t ik=0;ik<nkF;ik++) {\n  601: \t\t\tos2 << \"[\" << FSpoints.kFx[ik] << \" ,\" << FSpoints.kFy[ik] << \" ,\" << FSpoints.kFz[ik] << \"] \";\n  602  \t\t\tif (ik<nkF-1) os2 << \",\";\n  603  \t\t}\n  ...\n  634  \n  635  \t\tfor (size_t ik=0;ik<nkF;ik++) {\n  636: \t\t\tsize_t band(FSpoints.kFtoBand[ik]);\n  637  \t\t\tVectorType k(3,0);\n  638: \t\t\tk[0] = FSpoints.kFx[ik];\n  639: \t\t\tk[1] = FSpoints.kFy[ik];\n  640: \t\t\tk[2] = FSpoints.kFz[ik];\n  641  \n  642  \t\t\tComplexMatrixType ak(nOrb,nOrb);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/susceptibility.h:\n  547  \n  548  \t\tvoid printGap3() {\n  549: \t\t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);\n  550: \t\t\tsize_t nk(FSpoints.nTotal);\n  551  \t\t\tmomentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);\n  552  \t\t\tBandsType bands(param,conc,kmesh,true);\n  ...\n  560  \t\t\tfor (size_t ik = 0; ik < nk; ++ik)\t{\n  561  \t\t\t\tVectorType k(3,0); size_t iband;\n  562: \t\t\t\tk[0] = FSpoints.kFx[ik];\n  563: \t\t\t\tk[1] = FSpoints.kFy[ik];\n  564: \t\t\t\tk[2] = FSpoints.kFz[ik];\n  565: \t\t\t\tiband = FSpoints.kFtoBand[ik];\n  566  \t\t\t\tbands.getEkAndAk(k,ek,ak);\n  567  \t\t\t\tComplexType gap1 = Delta(k,iband,ak);\n  ...\n  569  \t\t\t\tos << k[0] << \" , \" << k[1] << \" , \" << k[2] << \" , \" \n  570  \t\t\t\t\t   << iband;\n  571: \t\t\t\tfor (size_t iorb=0;iorb<param.nOrb;iorb++) os << \" , \" << FSpoints.weights[ik][iorb];\n  572  \t\t\t    os << \" , \" << real(gap1) << \"\\n\";\n  573  \t\t\t}\n\n41 matches across 6 files\n\n\nSearching 286 files for \"FSpoints.txt\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/ferminator.h:\n  873  \n  874  \tvoid writeKF() {\n  875: \t\tstd::ofstream os(\"FSpoints.txt\");\n  876  \t\tint width(8);\n  877  \t\tos.precision(width);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n3 matches across 3 files\n\n\nSearching 288 files for \"printGap\"\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/parameters.h:\n   34  \t\tField wmin,wmax;\n   35  \t\tsize_t scState;\n   36: \t\tsize_t printGap;\n   37  \t\tstd::string gAmpl;\n   38  \t\tField Delta0;\n   ..\n  131  \t\t\twmax(0.0),\n  132  \t\t\tscState(0),\n  133: \t\t\tprintGap(0),\n  134  \t\t\tgAmpl(\"LaOFeAs_s_1\"),\n  135  \t\t\tDelta0(0.04),\n  ...\n  347  \t\t        else if (text.find(\"wmax\")!=std::string::npos) str >> (*this).wmax; \t\t\t\t\n  348  \t\t        else if (text.find(\"scState\")!=std::string::npos) str >> (*this).scState; \t\t\t\t\n  349: \t\t        else if (text.find(\"printGap\")!=std::string::npos) str >> (*this).printGap; \t\t\t\t\n  350  \t\t        else if (text.find(\"gAmpl\")!=std::string::npos) str >> (*this).gAmpl; \t\t\t\t\n  351  \t\t        else if (text.find(\"Delta0\")!=std::string::npos) str >> (*this).Delta0; \t\t\t\t\n  ...\n  457  \t\t\t\tos << \"wmax = \" << (*this).wmax << \"\\n\";\n  458  \t\t\t\tos << \"scState = \" << (*this).scState << \"\\n\";\n  459: \t\t\t\tos << \"printGap = \" << (*this).printGap << \"\\n\";\n  460  \t\t\t\tos << \"gAmpl = \" << (*this).gAmpl << \"\\n\";\n  461  \t\t\t\tos << \"Delta0 = \" << (*this).Delta0 << \"\\n\";\n  ...\n  563  \t\t        conc.broadcast((*this).wmax); \t\t\t\t\n  564  \t\t        conc.broadcast((*this).scState); \t\t\t\t\n  565: \t\t        conc.broadcast((*this).printGap); \t\t\t\t\n  566  \t\t        conc.broadcast((*this).gAmpl); \t\t\t\t\n  567  \t\t        conc.broadcast((*this).Delta0); \t\t\t\t\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/susceptibility.h:\n   99  \t\t\t\t               wmin,wmax,QVec);\n  100  \n  101: \t\t\tif (param.scState==1 && param.printGap==1 && conc.rank()==0) {\n  102  \t\t\t\tif (conc.rank()==0) std::cout << \"Now writing gap.txt \\n\";\n  103: \t\t\t\tprintGap3();\n  104  \t\t\t\tif (conc.rank()==0) std::cout << \"Done writing gap.txt \\n\";\n  105  \t\t\t}\n  ...\n  481  \n  482  \n  483: \t\tvoid printGap(const std::string& file=\"gapRPA.txt\") {\n  484  \t\t\tVectorType data;\n  485  \t\t\tloadVector(data,file);\n  ...\n  521  \t\t}\n  522  \n  523: \t\tvoid printGap2() {\n  524  \t\t\tGapType Delta(param,conc);\n  525  \t\t\tmomentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);\n  ...\n  546  \t\t}\n  547  \n  548: \t\tvoid printGap3() {\n  549  \t\t\tferminator<FieldType,BandsType,psimag::Matrix,ConcurrencyType> FSpoints(param,conc,1);\n  550  \t\t\tsize_t nk(FSpoints.nTotal);\n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111/input_1111.dat:\n   71  gAmpl             =    KFe2Se2_edoped_SO0p05_d\n   72  Delta0            =    0.00\n   73: printGap          =    0\n   74  \n   75  \n\n/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111_3D/input.dat:\n   80  gAmpl             =    KFe2Se2_edoped_SO0p05_d\n   81  Delta0            =    0.00\n   82: printGap          =    0\n   83  \n   84  \n\n19 matches across 6 files\n\n\nSearching 345 files for \"Omega0\"\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags:\n 1716  OccupantMap\tPartialPsimag/Symmetry/PatternData.h\t/^    typedef std::map<Occupant,CellPositions>             OccupantMap;$/;\"\tt\tclass:psimag::PatternData\n 1717  Occupants\tPartialPsimag/Symmetry/PatternData.h\t/^    typedef std::set<Occupant>                           Occupants;$/;\"\tt\tclass:psimag::PatternData\n 1718: Omega0\tparameters.h\t/^\t\tField Omega0;$/;\"\tm\tclass:rpa::parameters\n 1719  OperationClosure\tPartialPsimag/OperationClosure.h\t/^    OperationClosure(const Operand1Type& l,$/;\"\tf\tclass:psimag::OperationClosure\n 1720  OperationClosure\tPartialPsimag/OperationClosure.h\t/^  class OperationClosure {$/;\"\tc\tnamespace:psimag\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags_sorted_by_file:\n 5534  LS\tparameters.h\t/^\t\tbool LS;$/;\"\tm\tclass:rpa::parameters\n 5535  MatrixType\tparameters.h\t/^\t\ttypedef MatrixTemplate<Field> \t\t\tMatrixType;$/;\"\tt\tclass:rpa::parameters\n 5536: Omega0\tparameters.h\t/^\t\tField Omega0;$/;\"\tm\tclass:rpa::parameters\n 5537  OrbsToIndex\tparameters.h\t/^\t\tIntMatrixType OrbsToIndex;$/;\"\tm\tclass:rpa::parameters\n 5538  PARAMETERS_H\tparameters.h\t/^#define PARAMETERS_H$/;\"\td\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/bandstructure.h:\n  217  \t\t\t\t\tfor (size_t i=0; i < nbands; i++) {\n  218  \t\t\t\t\t\tgapk[ik][i] = Delta(k,i,ak[ik]);\n  219: \t\t\t\t\t\tgapk[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ek[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off\n  220  \t\t\t\t\t}\n  221  \t\t\t\t}\n  ...\n  248  \t\t\t\t\tfor (size_t i=0; i < nbands; i++) {\n  249  \t\t\t\t\t\tgapkq[ik][i] = Delta(kq,i,akq[ik]);\n  250: \t\t\t\t\t\tgapkq[ik][i] *= std::pow(param.Omega0,2)/(std::pow(ekq[ik][i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off\n  251  \t\t\t\t\t}\n  252  \t\t\t\t}\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/chi0.h:\n  173  \t\t\t\tfor (size_t band1 = 0; band1 < nOrb; ++band1){\n  174  \t\t\t\t\tComplexType gap1 = Delta(kq,band1,akq);\n  175: \t\t\t\t\tgap1 *= pow(param.Omega0,2)/(pow(ekq[band1],2)+pow(param.Omega0,2)); // Lorentzian cut-off\n  176  \t\t\t\t\tfor (size_t band2 = 0; band2 < nOrb; ++band2){\n  177  \t\t\t\t\t\tComplexType r1(0.0);\n  178  \t\t\t\t\t\tComplexType gap2 = Delta(k,band2,ak);\n  179: \t\t\t\t\t\tgap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off\n  180  \t\t\t\t\t\tr1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);\n  181  \n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/parameters.h:\n   41  \t\tstd::string gAmpl;\n   42  \t\tField Delta0;\n   43: \t\tField Omega0;\n   44  \t\tField signF; // sign of FF term in BCS chi0 calculation\n   45  \t\tsize_t nwn;\n   ..\n  147  \t\t\tgAmpl(\"LaOFeAs_s_1\"),\n  148  \t\t\tDelta0(0.04),\n  149: \t\t\tOmega0(0.1),\n  150  \t\t\tsignF(-1.0),\n  151  \t\t\tnwn(100),\n  ...\n  398  \t\t        else if (text.find(\"nkPerSheet\")!=std::string::npos) str >> (*this).nkPerSheet;\n  399  \t\t        else if (text.find(\"FSnkz\")!=std::string::npos) str >> (*this).FSnkz;\n  400: \t\t        else if (text.find(\"Omega0\")!=std::string::npos) str >> (*this).Omega0;\n  401  \t\t        else if (text.find(\"signF\")!=std::string::npos) str >> (*this).signF;\n  402  \t\t        else if (text.find(\"damp\")!=std::string::npos) str >> (*this).damp;\n  ...\n  510  \t\t\t\tos << \"nkPerSheet = \" << (*this).nkPerSheet << \"\\n\";\n  511  \t\t\t\tos << \"FSnkz = \" << (*this).FSnkz << \"\\n\";\n  512: \t\t\t\tos << \"Omega0 = \" << (*this).Omega0 << \"\\n\";\n  513  \t\t\t\tos << \"signF = \" << (*this).signF << \"\\n\";\n  514  \t\t\t\tos << \"damp = \" << (*this).damp << \"\\n\";\n  ...\n  628  \t\t        conc.broadcast((*this).nkPerSheet);\n  629  \t\t        conc.broadcast((*this).FSnkz);\n  630: \t\t        conc.broadcast((*this).Omega0);\n  631  \t\t        conc.broadcast((*this).signF);\n  632  \t\t        conc.broadcast((*this).damp);\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/susceptibility.h:\n  546  \t\t\t\t// for (size_t iband=0;iband<param.nOrb;iband++) {\t\n  547  \t\t\t\tComplexType gap1 = Delta(k,iband);\n  548: \t\t\t\t\t// gap1 *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off\n  549  \n  550  \t\t\t\tos << k[0] << \" , \" << k[1] << \" , \" << k[2] << \" , \" \n  ...\n  574  \t\t\t\tfor (size_t iband=0;iband<param.nOrb;iband++) {\t\n  575  \t\t\t\t\tgap1[iband] = Delta(k,iband,ak);\n  576: \t\t\t\t\tgap1[iband] *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off\n  577  \t\t\t\t}\n  578  \n  ...\n  603  \t\t\t\tbands.getEkAndAk(k,ek,ak);\n  604  \t\t\t\tComplexType gap1 = Delta(k,iband,ak);\n  605: \t\t\t\t// gap1 *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off\n  606  \t\t\t\tos << k[0] << \" , \" << k[1] << \" , \" << k[2] << \" , \" \n  607  \t\t\t\t\t   << iband;\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/tags:\n 1716  OccupantMap\tPartialPsimag/Symmetry/PatternData.h\t/^    typedef std::map<Occupant,CellPositions>             OccupantMap;$/;\"\tt\tclass:psimag::PatternData\n 1717  Occupants\tPartialPsimag/Symmetry/PatternData.h\t/^    typedef std::set<Occupant>                           Occupants;$/;\"\tt\tclass:psimag::PatternData\n 1718: Omega0\tparameters.h\t/^\t\tField Omega0;$/;\"\tm\tclass:rpa::parameters\n 1719  OperationClosure\tPartialPsimag/OperationClosure.h\t/^    OperationClosure(const Operand1Type& l,$/;\"\tf\tclass:psimag::OperationClosure\n 1720  OperationClosure\tPartialPsimag/OperationClosure.h\t/^  class OperationClosure {$/;\"\tc\tnamespace:psimag\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/chiTest.txt:\n    File too large, skipping\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/mrpapp:\n    ERROR: Unable to open file\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/U1.2J0.3/mrpapp:\n    ERROR: Unable to open file\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/x0.125/mrpapp:\n    <binary>\n\n33 matches across 10 files\n\n\nSearching 345 files for \"signF\"\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags:\n 5414  signChange\tPsimagLite/src/Geometry/KTwoNiFFour.h\t/^\t\tint signChange(size_t i1,size_t i2) const$/;\"\tf\tclass:PsimagLite::KTwoNiFFour\n 5415  signChange_\tPsimagLite/src/Geometry/KTwoNiFFour.h\t/^\t\tint signChange_;$/;\"\tm\tclass:PsimagLite::KTwoNiFFour\n 5416: signF\tparameters.h\t/^\t\tField signF; \\/\\/ sign of FF term in BCS chi0 calculation$/;\"\tm\tclass:rpa::parameters\n 5417  signalsReceived\tPsimagLite/src/Rusage.h\t/^\t\tlong signalsReceived() const { return rusage_.ru_nsignals; }$/;\"\tf\tclass:PsimagLite::Rusage\n 5418  simplex\tPsimagLite/src/Minimizer.h\t/^\t\tint simplex(VectorType& minVector,RealType delta=1e-3,RealType tolerance=1e-3)$/;\"\tf\tclass:PsimagLite::Minimizer\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags_sorted_by_file:\n 5626  setParamBasedOnText\tparameters.h\t/^\t\t\tvoid setParamBasedOnText(std::string& text, std::stringstream& str) {$/;\"\tf\tclass:rpa::parameters\n 5627  setupOrbitalIndices\tparameters.h\t/^\t\t\tvoid setupOrbitalIndices(){$/;\"\tf\tclass:rpa::parameters\n 5628: signF\tparameters.h\t/^\t\tField signF; \\/\\/ sign of FF term in BCS chi0 calculation$/;\"\tm\tclass:rpa::parameters\n 5629  spinFactor\tparameters.h\t/^\t\tField staticUFactor,chargeFactor,spinFactor;$/;\"\tm\tclass:rpa::parameters\n 5630  staticUFactor\tparameters.h\t/^\t\tField staticUFactor,chargeFactor,spinFactor;$/;\"\tm\tclass:rpa::parameters\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/chi0.h:\n  178  \t\t\t\t\t\tComplexType gap2 = Delta(k,band2,ak);\n  179  \t\t\t\t\t\tgap2 *= pow(param.Omega0,2)/(pow(ek[band2],2)+pow(param.Omega0,2)); // Lorentzian cut-off\n  180: \t\t\t\t\t\tr1 = susIntBCS(ekq[band1],ek[band2],gap1,gap2,invT,omega,param.damp,param.signF);\n  181  \n  182  \n  ...\n  455  \t\t\t\t\t\t\tSmGG(band1,band2) = susInt(bands.ekq[ik][band1],bands.ek[ik][band2],invT,omega,param.damp);\n  456  \t\t\t\t\t\t} else {\n  457: \t\t\t\t\t\t\tSmGG(band1,band2) = susIntBCSGG(bands.ekq[ik][band1],bands.ek[ik][band2],bands.gapkq[ik][band1],bands.gapk[ik][band2],invT,omega,param.damp,param.signF);\n  458: \t\t\t\t\t\t\tSmFF(band1,band2) = susIntBCSFF(bands.ekq[ik][band1],bands.ek[ik][band2],bands.gapkq[ik][band1],bands.gapk[ik][band2],invT,omega,param.damp,param.signF);\n  459  \t\t\t\t\t\t}\n  460  \t\t\t\t\t}\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/mrpapp:\n    <binary>\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/mrpapp_stripped:\n    <binary>\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/parameters.h:\n   42  \t\tField Delta0;\n   43  \t\tField Omega0;\n   44: \t\tField signF; // sign of FF term in BCS chi0 calculation\n   45  \t\tsize_t nwn;\n   46  \t\tstd::string Case;\n   ..\n  148  \t\t\tDelta0(0.04),\n  149  \t\t\tOmega0(0.1),\n  150: \t\t\tsignF(-1.0),\n  151  \t\t\tnwn(100),\n  152  \t\t\tCase(\"\"),\n  ...\n  399  \t\t        else if (text.find(\"FSnkz\")!=std::string::npos) str >> (*this).FSnkz;\n  400  \t\t        else if (text.find(\"Omega0\")!=std::string::npos) str >> (*this).Omega0;\n  401: \t\t        else if (text.find(\"signF\")!=std::string::npos) str >> (*this).signF;\n  402  \t\t        else if (text.find(\"damp\")!=std::string::npos) str >> (*this).damp;\n  403  \t\t        else if (text.find(\"calcOnlyDiagonal\")!=std::string::npos) str >> (*this).calcOnlyDiagonal;\n  ...\n  511  \t\t\t\tos << \"FSnkz = \" << (*this).FSnkz << \"\\n\";\n  512  \t\t\t\tos << \"Omega0 = \" << (*this).Omega0 << \"\\n\";\n  513: \t\t\t\tos << \"signF = \" << (*this).signF << \"\\n\";\n  514  \t\t\t\tos << \"damp = \" << (*this).damp << \"\\n\";\n  515  \t\t\t\tos << \"calcOnlyDiagonal = \" << (*this).calcOnlyDiagonal << \"\\n\";\n  ...\n  629  \t\t        conc.broadcast((*this).FSnkz);\n  630  \t\t        conc.broadcast((*this).Omega0);\n  631: \t\t        conc.broadcast((*this).signF);\n  632  \t\t        conc.broadcast((*this).damp);\n  633  \t\t        conc.broadcast((*this).writeFullChi0);\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/susInt.h:\n   45  \t// \t\t\t\t\t                \t const FieldType& invT, const FieldType& omega,\n   46  \t// \t\t\t\t                \t     const FieldType& damp=FieldType(1.0e-3),\n   47: \t// \t\t\t\t                \t     const FieldType& signF = -1) {\n   48  \t// \tstd::complex<FieldType> sus(0);\n   49  \n   ..\n   65  \t// \telse {uk2 = 0.5*(1.0+r2); vk2 = 0.5*(1.0-r2);}\n   66  \n   67: \t// \tr1 = -signF * 0.25 * real(gap1*conj(gap2))/(EnergyBCS1*EnergyBCS2);\n   68  \t\t\n   69  \t// \tFieldType skq1(uk1*uk2+r1);\n   ..\n   86  \t\t\t\t\t         const FieldType& invT, const FieldType& omega,\n   87  \t\t\t\t\t         const FieldType& damp=FieldType(1.0e-3),\n   88: \t\t\t\t\t         const FieldType& signF = -1) {\n   89  \t\tstd::complex<FieldType> sus(0);\n   90  \t\tFieldType uk1(0),vk1(0),uk2(0),vk2(0),r1(0),r2(0);\n   ..\n  121  \t\t\tuk2 = 0.5*(1.0+r2); vk2 = 0.5*(1.0-r2);\n  122  \n  123: \t\t\tr1 = -signF * 0.25 * real(gap1*conj(gap2))/(EnergyBCS1*EnergyBCS2);\n  124  \n  125  \t\t\tFieldType skq1(uk1*uk2+r1);\n  ...\n  145  \t\t\t\t\t\t\t\t\t\t\t   const FieldType& invT, const FieldType& omega,\n  146  \t\t\t\t\t\t\t\t\t\t\t   const FieldType& damp=FieldType(1.0e-3),\n  147: \t\t\t\t\t\t\t\t\t\t\t   const FieldType& signF = -1) {\n  148  \t\t\n  149  \t\tstd::complex<FieldType> sus(0);\n  ...\n  202  \t\t\t\t\t         \t\t\t\t   const FieldType& invT, const FieldType& omega,\n  203  \t\t\t\t\t         \t\t\t\t   const FieldType& damp=FieldType(1.0e-3),\n  204: \t\t\t\t\t         \t\t\t\t   const FieldType& signF = -1) {\n  205  \t\t\n  206  \t\tstd::complex<FieldType> sus(0);\n  ...\n  219  \t\t\tFieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));\n  220  \t\t\tFieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));\n  221: \t\t\tr1 = -signF * 0.25 * real(conj(gap1)*gap2)/(EnergyBCS1*EnergyBCS2);\n  222  \n  223  \t\t\tsus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) \n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/tags:\n 5414  signChange\tPsimagLite/src/Geometry/KTwoNiFFour.h\t/^\t\tint signChange(size_t i1,size_t i2) const$/;\"\tf\tclass:PsimagLite::KTwoNiFFour\n 5415  signChange_\tPsimagLite/src/Geometry/KTwoNiFFour.h\t/^\t\tint signChange_;$/;\"\tm\tclass:PsimagLite::KTwoNiFFour\n 5416: signF\tparameters.h\t/^\t\tField signF; \\/\\/ sign of FF term in BCS chi0 calculation$/;\"\tm\tclass:rpa::parameters\n 5417  signalsReceived\tPsimagLite/src/Rusage.h\t/^\t\tlong signalsReceived() const { return rusage_.ru_nsignals; }$/;\"\tf\tclass:PsimagLite::Rusage\n 5418  simplex\tPsimagLite/src/Minimizer.h\t/^\t\tint simplex(VectorType& minVector,RealType delta=1e-3,RealType tolerance=1e-3)$/;\"\tf\tclass:PsimagLite::Minimizer\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/chiTest.txt:\n    File too large, skipping\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/mrpapp:\n    ERROR: Unable to open file\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/U1.2J0.3/mrpapp:\n    ERROR: Unable to open file\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/x0.125/mrpapp:\n    <binary>\n\n29 matches across 9 files\n\n\nSearching 346 files for \"ifdef\"\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/bands.h:\n   18  namespace rpa {\n   19  \textern \"C\" void \n   20: #ifdef glyph\n   21  \tzheev_\n   22  #else\n   ..\n   30  \t\t\t\t\t int lwork,std::vector<double> &rwork,int *info) \n   31  \t\t\t\t\t {\n   32: #ifdef glyph\t\t\t\t\t\t\n   33  \t\t\t\t\t\tzheev_\n   34  #else\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/bandstructure.h:\n   63  \t\tstd::vector<ComplexMatrixType> MkqFF;\n   64  \n   65: #ifdef USE_SRRUO\n   66  \t\t\tSrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;\n   67  #elif USE_BILAYER\n   ..\n  205  \t\t\t\t\t\tMk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));\n  206  \t\t\t\t\t\tif (param.scState) \n  207: #ifdef USE_SRRUO\n  208  \t\t\t\t\t\t\tMkFF[ik](b,i) = ak[ik](l1,b) * ak[ik](l2,(b+3)%6); // Pseudospin up-down pairing\n  209  #else\t\t\t\t\t\t\t\n  ...\n  236  \t\t\t\t\t\tMkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));\n  237  \t\t\t\t\t\tif (param.scState) \n  238: #ifdef USE_SRRUO\n  239  \t\t\t\t\t\t\tMkqFF[ik](i,b) = conj(akq[ik](l1,b)) * conj(akq[ik](l2,(b+3)%6)); // Pseudospin up-down pairing\n  240  #else\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/bilayer.h:\n  202  \t\t\tFieldType r1(1./sqrt(2.));\n  203  \n  204: // #ifdef USE_ABANDONLY\n  205  // \t\t\teigenvals[0] = ek + ekz;\n  206  // \t\t\teigenvects(0,0) =  1.0; \n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/pairing.h:\n   24  namespace rpa {\n   25  \textern \"C\" void \n   26: #ifdef glyph\n   27  \tdgeev_\n   28  #else\n   ..\n   35  \t\t\t\t\t int ldvl, psimag::Matrix<double> &vr, int ldvr, std::vector<double> &work, int &lwork, int *info) \n   36  \t\t\t\t\t {\n   37: #ifdef glyph\t\t\t\t\t\t\n   38  \t\t\t\t\t\tdgeev_\n   39  #else\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/rpa.h:\n   16  \n   17  \textern \"C\" void \n   18: #ifdef glyph\n   19  \tzgemm_\n   20  #else\n   ..\n   26  \t\n   27  \textern \"C\" void \n   28: #ifdef glyph\n   29  \tzgetrf_\n   30  #else\n   ..\n   35  \t\n   36  \textern \"C\" void \n   37: #ifdef glyph\n   38  \tzgetri_\n   39  #else\n   ..\n   51  \t\t\t\t     psimag::Matrix<std::complex<double> > &c,int ldc) \n   52  \t\t\t\t\t {\n   53: #ifdef glyph\t\t\t\t\t\t\n   54  \t\t\t\t\t\tzgemm_\n   55  #else\n   ..\n   63  \t \t\t\t      std::vector<int> &ipiv, int *info) \n   64  \t\t\t\t\t {\n   65: #ifdef glyph\t\t\t\t\t\t\n   66  \t\t\t\t\t\tzgetrf_\n   67  #else\n   ..\n   75  \t\t\t\t\t  psimag::Matrix<std::complex<double> > &work, int lwork, int *info) \n   76  \t\t\t\t\t {\n   77: #ifdef glyph\t\t\t\t\t\t\n   78  \t\t\t\t\t\tzgetri_\n   79  #else\n   ..\n  101  \t\tpublic:\n  102  \t\t\t// Model specific needed for charge and spin matrices\n  103: #ifdef USE_SRRUO\n  104  \t\t\tSrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> model;\n  105  #elif USE_BILAYER\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/susceptibility.h:\n   36  \t\t\ttypedef PsimagLite::Range<ConcurrencyType> RangeType;\n   37  \t\t\ttypedef std::vector<SuscType>              VectorSuscType;\n   38: #ifdef USE_SCGAP2D\n   39  \t\t\ttypedef rpa::gap2D<FieldType,psimag::Matrix,ConcurrencyType> GapType;\n   40  #elif  USE_SCGAP3D\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/utilities.h:\n    8  \n    9  extern \"C\" void \n   10: #ifdef glyph\n   11  \tzheev_\n   12  #else\n   ..\n   19  \t\t\t\t int lwork,std::vector<double> &rwork,int *info)\n   20  \t\t\t\t {\n   21: #ifdef glyph\n   22  \t\t\t\t\t\tzheev_\n   23  #else\n   ..\n   29  \n   30  extern \"C\" void \n   31: #ifdef glyph\n   32  \tzgemm_\n   33  #else\n   ..\n   39  \n   40  extern \"C\" void \n   41: #ifdef glyph\n   42  \tdgetrf_\n   43  #else\n   ..\n   47  \t\n   48  \textern \"C\" void \n   49: #ifdef glyph\n   50  \tdgetri_\n   51  #else\n   ..\n   58   \t\t\t      std::vector<int> &ipiv, int *info) \n   59  \t\t\t\t {\n   60: #ifdef glyph\t\t\t\t\t\t\n   61  \t\t\t\tdgetrf_\n   62  #else\n   ..\n   70  \t\t\t\t  psimag::Matrix<double> &work, int lwork, int *info) \n   71  \t\t\t\t {\n   72: #ifdef glyph\t\t\t\t\t\t\n   73  \t\t\t\tdgetri_\n   74  #else\n   ..\n   79  \n   80  extern \"C\" void \n   81: #ifdef glyph\n   82  \tzgetrf_\n   83  #else\n   ..\n   87  \t\n   88  \textern \"C\" void \n   89: #ifdef glyph\n   90  \tzgetri_\n   91  #else\n   ..\n   98   \t\t\t      std::vector<int> &ipiv, int *info) \n   99  \t\t\t\t {\n  100: #ifdef glyph\t\t\t\t\t\t\n  101  \t\t\t\tzgetrf_\n  102  #else\n  ...\n  110  \t\t\t\t  psimag::Matrix<std::complex<double> > &work, int lwork, int *info) \n  111  \t\t\t\t {\n  112: #ifdef glyph\t\t\t\t\t\t\n  113  \t\t\t\tzgetri_\n  114  #else\n  ...\n  133  \tchar transb('N');\n  134  \n  135: #ifdef glyph\n  136  \tzgemm_\n  137  #else\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PartialPsimag/KISS.h:\n   26      // Because of bit operatirions, seed_type must be 32-bit integer\n   27      // For some systems, need to use a regular int\n   28: #ifdef KISS_INT\n   29      typedef unsigned int seed_type; \n   30  #else\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PartialPsimag/Matrix.h:\n  622    };\n  623  \n  624: //#ifdef PSIMAG_MATRIX_INVERT\n  625    template<class T>\n  626    class INVERT {\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PartialPsimag/Matrix.h.orig:\n  568    };\n  569  \n  570: //#ifdef PSIMAG_MATRIX_INVERT\n  571    template<class T>\n  572    class INVERT {\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PartialPsimag/PSIMAGAssert.h:\n   77  \n   78  \n   79: #ifdef NDEBUG\n   80  \n   81  // Does nothing if NDEBUG is defined\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PartialPsimag/Real.h:\n   47   */\n   48  \n   49: #ifdef SINGLE_PRECISION\n   50  \n   51  typedef float Real;\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PsimagLite/drivers/concurrencyTest.cpp:\n   27  \n   28  typedef double RealType;\n   29: #ifdef USE_MPI\n   30  #include \"ConcurrencyMpi.h\"\n   31  typedef PsimagLite::ConcurrencyMpi<RealType> ConcurrencyType;\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PsimagLite/src/GslWrapper.h:\n   83  #define GSL_WRAPPER_H_\n   84  \n   85: #ifdef USE_GSL\n   86  #include <gsl/gsl_integration.h>\n   87  #include <gsl/gsl_errno.h>\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PsimagLite/src/JSON/PSIMAGAssert.h:\n   78  \n   79  \n   80: #ifdef NDEBUG\n   81  \n   82  // Does nothing if NDEBUG is defined\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/chiTest.txt:\n    File too large, skipping\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/mrpapp:\n    ERROR: Unable to open file\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/U1.2J0.3/mrpapp:\n    ERROR: Unable to open file\n\n36 matches across 15 files\n\n\nSearching 346 files for \"USE_SRRUO\"\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags:\n  797  FETCHMESH_HEADER_H\tPartialPsimag/Symmetry/fetchMeshWignerSeitz.h\t/^#define FETCHMESH_HEADER_H$/;\"\td\n  798  FETCH_GEOMETRY_1D_HEADER_H\tPartialPsimag/Symmetry/fetchGeometry1D.h\t/^#define  FETCH_GEOMETRY_1D_HEADER_H$/;\"\td\n  799: FLAGS\tMakefile\t/^FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO$/;\"\tm\n  800  FLAGS\tPsimagLite/src/JSON/JsonParser/Makefile\t/^FLAGS        = $(MatrixBoundsChecking) -g  -Wall  -Werror  $/;\"\tm\n  801  FLAGSC\tMakefile\t/^FLAGSC\t     = $(MatrixBoundsChecking) $/;\"\tm\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags_sorted_by_file:\n   88  CC\tMakefile\t/^CC                   = mpicxx$/;\"\tm\n   89  EXENAME\tMakefile\t/^EXENAME\t\t         = mrpapp$/;\"\tm\n   90: FLAGS\tMakefile\t/^FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO$/;\"\tm\n   91  FLAGSC\tMakefile\t/^FLAGSC\t     = $(MatrixBoundsChecking) $/;\"\tm\n   92  INCLUDES\tMakefile\t/^INCLUDES =  -I. \\\\$/;\"\tm\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/bandstructure.h:\n   64  \t\tstd::vector<ComplexMatrixType> MkqFF;\n   65  \n   66: #ifdef USE_SRRUO\n   67  \t\t\tSrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;\n   68  #elif USE_1BANDWSPIN\n   ..\n  208  \t\t\t\t\t\tMk[ik](b,i) = ak[ik](l1,b) * conj(ak[ik](l2,b));\n  209  \t\t\t\t\t\tif (param.scState) \n  210: #if defined(USE_SRRUO) || defined(USE_1BANDWSPIN)\n  211  \t\t\t\t\t\t\tMkFF[ik](b,i) = ak[ik](l1,b) * ak[ik](l2,(b+int(nbands/2))%nbands); // Pseudospin up-down pairing\n  212  #else\t\t\t\t\t\t\t\n  ...\n  239  \t\t\t\t\t\tMkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));\n  240  \t\t\t\t\t\tif (param.scState) \n  241: #if defined(USE_SRRUO) || defined(USE_1BANDWSPIN)\n  242  \t\t\t\t\t\t\tMkqFF[ik](i,b) = conj(akq[ik](l1,b)) * conj(akq[ik](l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing\n  243  #else\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/Makefile:\n   18  \n   19  #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE\n   20: FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO\n   21  #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BILAYER_FESC\n   22  #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_KFE2SE2\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/rpa.h:\n  101  \t\tpublic:\n  102  \t\t\t// Model specific needed for charge and spin matrices\n  103: #ifdef USE_SRRUO\n  104  \t\t\tSrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> model;\n  105  #elif USE_BILAYER\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/tags:\n  797  FETCHMESH_HEADER_H\tPartialPsimag/Symmetry/fetchMeshWignerSeitz.h\t/^#define FETCHMESH_HEADER_H$/;\"\td\n  798  FETCH_GEOMETRY_1D_HEADER_H\tPartialPsimag/Symmetry/fetchGeometry1D.h\t/^#define  FETCH_GEOMETRY_1D_HEADER_H$/;\"\td\n  799: FLAGS\tMakefile\t/^FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO$/;\"\tm\n  800  FLAGS\tPsimagLite/src/JSON/JsonParser/Makefile\t/^FLAGS        = $(MatrixBoundsChecking) -g  -Wall  -Werror  $/;\"\tm\n  801  FLAGSC\tMakefile\t/^FLAGSC\t     = $(MatrixBoundsChecking) $/;\"\tm\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/chiTest.txt:\n    File too large, skipping\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/mrpapp:\n    ERROR: Unable to open file\n\n/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/TEST/5band1111/U1.2J0.3/mrpapp:\n    ERROR: Unable to open file\n\n8 matches across 6 files\n",
 			"settings":
 			{
-				"buffer_size": 7935,
+				"buffer_size": 31589,
 				"line_ending": "Unix",
 				"name": "Find Results",
 				"scratch": true
 			}
+		},
+		{
+			"file": "rpa.h",
+			"settings":
+			{
+				"buffer_size": 8625,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/Makefile/Make.sublime-build",
 	"build_system_choices":
 	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		],
 		[
 			[
 				[
@@ -315,6 +400,10 @@
 		"selected_items":
 		[
 			[
+				"ecc",
+				"ECC: Settings"
+			],
+			[
 				"ins",
 				"Package Control: Install Package"
 			],
@@ -384,13 +473,19 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP",
-		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/PythonScripts",
-		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST",
-		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111"
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PsimagLite",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/PsimagLite/src"
 	],
 	"file_history":
 	[
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/bandstructure.h",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/susInt.h",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/MRPA_GIT.sublime-project",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/gaps3D.h",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/SrRuO_SO.h",
+		"/Users/thomasmaier/Dropbox (ORNL)/Projects/MultiBandRPA/GIT_CODE/MRPAPP/.tags",
+		"/Users/thomasmaier/Library/Application Support/Sublime Text 3/Packages/User/CTags.sublime-settings",
 		"/Users/t7m/Dropbox/GIT_CODE/MRPAPP/TEST/5band1111/input_1111.dat",
 		"/Users/t7m/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/t7m/Library/Caches/com.binarynights.ForkLift2/#0/Gammakkp.txt",
@@ -430,11 +525,11 @@
 	],
 	"find":
 	{
-		"height": 38.0
+		"height": 29.0
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 158.0,
 		"where_history":
 		[
 			""
@@ -445,6 +540,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dwave",
+			"USE_SRRUO",
+			"ifdef",
+			"signF",
+			"Omega0",
 			"dwave",
 			"dwave_2D_KFe2Se2_iso",
 			"calcOnly",
@@ -567,12 +667,7 @@
 			"initialize",
 			"Monte_Carlo_Integrator_type",
 			"MonteCarloIntegrator",
-			"solve_cluster_problem",
-			"initialize",
-			"dca_object",
-			"initialize_G0",
-			"start coarsegraining G0_k_w",
-			"quadrature_integration_G_q_t_st"
+			"solve_cluster_problem"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -592,7 +687,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 18,
 			"sheets":
 			[
 				{
@@ -601,15 +696,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 25942,
+						"buffer_size": 28676,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								20210,
-								20223
+								0,
+								0
 							]
 						],
 						"settings":
@@ -753,10 +848,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 7742.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
@@ -765,15 +860,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21722,
+						"buffer_size": 24044,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4978,
-								4978
+								0,
+								0
 							]
 						],
 						"settings":
@@ -917,10 +1012,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1856.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
@@ -929,15 +1024,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18836,
+						"buffer_size": 18846,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6163,
-								6163
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1020,7 +1115,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3513.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 15,
@@ -1032,202 +1127,73 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 30932,
+						"buffer_size": 39586,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3952,
-								4003
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"WordCount":
-							{
-								"changes": -1,
-								"modified": false,
-								"selection": false,
-								"status": -1,
-								"syntax": "plain text"
-							},
-							"WordCountSyntax": "c++",
-							"bh_regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										4127,
-										4128
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"brackethighlighter.default"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										3809,
-										3810
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content"
-							],
-							"syntax": "Packages/C++/C++.tmLanguage",
+							"syntax": "Packages/C++/C++.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 484.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "Makefile",
-					"semi_transient": false,
+					"file": "PsimagLite/src/PlotParams.h",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 1955,
+						"buffer_size": 1130,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1202,
-								1202
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2163,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								844,
+								844
 							]
 						],
 						"settings":
@@ -1306,30 +1272,60 @@
 								"bh_regex_close",
 								"bh_regex_content"
 							],
-							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "bandstructure.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17971,
+						"buffer_size": 14234,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6950,
-								6950
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7491,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1352,36 +1348,41 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -1392,16 +1393,11 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -1412,117 +1408,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2950.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "main.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7650,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1416,
-								1416
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/R-Box/syntax/Rcpp.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "TEST/5band1111_3D/input.dat",
 					"semi_transient": false,
 					"settings":
@@ -1617,110 +1510,7 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 243.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "bilayer.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3329,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								112,
-								112
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 30.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 17,
@@ -1728,11 +1518,11 @@
 				},
 				{
 					"buffer": 9,
-					"file": "SrRuO.h",
+					"file": "bilayer.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2301,
+						"buffer_size": 6356,
 						"regions":
 						{
 						},
@@ -1740,7 +1530,7 @@
 						[
 							[
 								0,
-								2301
+								0
 							]
 						],
 						"settings":
@@ -1826,24 +1616,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 16,
+					"stack_index": 24,
 					"type": "text"
 				},
 				{
 					"buffer": 10,
-					"file": "KFe2Se2.h",
+					"file": "SrRuO.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7701,
+						"buffer_size": 2298,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								7701
+								221,
+								221
 							]
 						],
 						"settings":
@@ -1866,21 +1656,6 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -1896,31 +1671,46 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
-								"bh_square_content"
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
 							],
 							"syntax": "Packages/C++/C++.sublime-syntax",
 							"translate_tabs_to_spaces": false
@@ -1934,19 +1724,19 @@
 				},
 				{
 					"buffer": 11,
-					"file": "FourOrbital.h",
+					"file": "KFe2Se2.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2246,
+						"buffer_size": 7832,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1263,
-								1263
+								0,
+								0
 							]
 						],
 						"settings":
@@ -2029,14 +1819,117 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 397.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 23,
 					"type": "text"
 				},
 				{
 					"buffer": 12,
+					"file": "FourOrbital.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2370,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 20,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
 					"file": "4Orbital.h",
 					"semi_transient": false,
 					"settings":
@@ -2132,27 +2025,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 360.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 21,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 14,
 					"file": "BaFeAs_5orb.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7206,
+						"buffer_size": 7297,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1013,
-								1013
+								0,
+								0
 							]
 						],
 						"settings":
@@ -2235,27 +2128,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 292.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 22,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 15,
 					"file": "ferminator.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 30979,
+						"buffer_size": 36485,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2731,
-								2731
+								0,
+								0
 							]
 						],
 						"settings":
@@ -2399,27 +2292,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1230.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 19,
 					"type": "text"
 				},
 				{
-					"buffer": 15,
+					"buffer": 16,
 					"file": "chi0.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 23384,
+						"buffer_size": 31477,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9475,
-								9475
+								0,
+								0
 							]
 						],
 						"settings":
@@ -2566,24 +2459,82 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 16,
-					"file": "pairing.h",
+					"buffer": 17,
+					"file": "SrRuO_SO.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21870,
+						"buffer_size": 6837,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17903,
-								17903
+								0,
+								6837
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "1band_wSpin.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4533,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "pairing.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27077,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -2727,191 +2678,84 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8002.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 18,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
+					"buffer": 20,
 					"file": "susInt.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2372,
+						"buffer_size": 7322,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								385,
-								385
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"WordCountShouldRun": true,
-							"WordCountSyntax": "c++",
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"syntax": "Packages/C++/C++.tmLanguage",
+							"syntax": "Packages/C++/C++.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 40.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 19,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 18,
-					"file": "CrystalHarmonics2D.h",
+					"buffer": 21,
+					"file": "MRPA_GIT.sublime-project",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16836,
+						"buffer_size": 605,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1732,
-								1732
+								192,
+								192
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (Sublime).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 22,
+					"file": "CrystalHarmonics2D.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17312,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -3054,18 +2898,18 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 352.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 19,
+					"buffer": 23,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7935,
+						"buffer_size": 31589,
 						"regions":
 						{
 							"match":
@@ -3288,6 +3132,382 @@
 									[
 										7867,
 										7875
+									],
+									[
+										8373,
+										8379
+									],
+									[
+										8403,
+										8409
+									],
+									[
+										8962,
+										8968
+									],
+									[
+										8992,
+										8998
+									],
+									[
+										9408,
+										9414
+									],
+									[
+										9456,
+										9462
+									],
+									[
+										9664,
+										9670
+									],
+									[
+										9713,
+										9719
+									],
+									[
+										9995,
+										10001
+									],
+									[
+										10034,
+										10040
+									],
+									[
+										10243,
+										10249
+									],
+									[
+										10281,
+										10287
+									],
+									[
+										10768,
+										10774
+									],
+									[
+										10934,
+										10940
+									],
+									[
+										11217,
+										11223
+									],
+									[
+										11261,
+										11267
+									],
+									[
+										11583,
+										11589
+									],
+									[
+										11605,
+										11611
+									],
+									[
+										11874,
+										11880
+									],
+									[
+										12211,
+										12217
+									],
+									[
+										12249,
+										12255
+									],
+									[
+										12505,
+										12511
+									],
+									[
+										12543,
+										12549
+									],
+									[
+										12723,
+										12729
+									],
+									[
+										12761,
+										12767
+									],
+									[
+										13288,
+										13294
+									],
+									[
+										13318,
+										13324
+									],
+									[
+										14513,
+										14518
+									],
+									[
+										14542,
+										14547
+									],
+									[
+										15270,
+										15275
+									],
+									[
+										15299,
+										15304
+									],
+									[
+										15920,
+										15925
+									],
+									[
+										16238,
+										16243
+									],
+									[
+										16406,
+										16411
+									],
+									[
+										16788,
+										16793
+									],
+									[
+										16949,
+										16954
+									],
+									[
+										17221,
+										17226
+									],
+									[
+										17264,
+										17269
+									],
+									[
+										17599,
+										17604
+									],
+									[
+										17620,
+										17625
+									],
+									[
+										17906,
+										17911
+									],
+									[
+										18313,
+										18318
+									],
+									[
+										18470,
+										18475
+									],
+									[
+										18756,
+										18761
+									],
+									[
+										18951,
+										18956
+									],
+									[
+										19233,
+										19238
+									],
+									[
+										19493,
+										19498
+									],
+									[
+										19694,
+										19699
+									],
+									[
+										20167,
+										20172
+									],
+									[
+										20196,
+										20201
+									],
+									[
+										21286,
+										21291
+									],
+									[
+										21417,
+										21422
+									],
+									[
+										21621,
+										21626
+									],
+									[
+										21835,
+										21840
+									],
+									[
+										22078,
+										22083
+									],
+									[
+										22357,
+										22362
+									],
+									[
+										22593,
+										22598
+									],
+									[
+										22774,
+										22779
+									],
+									[
+										22946,
+										22951
+									],
+									[
+										23034,
+										23039
+									],
+									[
+										23123,
+										23128
+									],
+									[
+										23260,
+										23265
+									],
+									[
+										23394,
+										23399
+									],
+									[
+										23557,
+										23562
+									],
+									[
+										23704,
+										23709
+									],
+									[
+										24045,
+										24050
+									],
+									[
+										24295,
+										24300
+									],
+									[
+										24423,
+										24428
+									],
+									[
+										24514,
+										24519
+									],
+									[
+										24600,
+										24605
+									],
+									[
+										24689,
+										24694
+									],
+									[
+										24811,
+										24816
+									],
+									[
+										24955,
+										24960
+									],
+									[
+										25051,
+										25056
+									],
+									[
+										25140,
+										25145
+									],
+									[
+										25262,
+										25267
+									],
+									[
+										25421,
+										25426
+									],
+									[
+										25519,
+										25524
+									],
+									[
+										25796,
+										25801
+									],
+									[
+										25995,
+										26000
+									],
+									[
+										26205,
+										26210
+									],
+									[
+										26410,
+										26415
+									],
+									[
+										26597,
+										26602
+									],
+									[
+										26816,
+										26821
+									],
+									[
+										27082,
+										27087
+									],
+									[
+										27303,
+										27308
+									],
+									[
+										28242,
+										28251
+									],
+									[
+										28769,
+										28778
+									],
+									[
+										29066,
+										29075
+									],
+									[
+										29288,
+										29297
+									],
+									[
+										29581,
+										29590
+									],
+									[
+										30046,
+										30055
+									],
+									[
+										30446,
+										30455
+									],
+									[
+										30963,
+										30972
 									]
 								],
 								"scope": ""
@@ -3296,8 +3516,8 @@
 						"selection":
 						[
 							[
-								6645,
-								6645
+								30451,
+								30451
 							]
 						],
 						"settings":
@@ -3379,7 +3599,7 @@
 							"default_dir": "/Users/t7m/Dropbox/GIT_CODE/MRPAPP",
 							"detect_indentation": false,
 							"line_numbers": false,
-							"output_tag": 3,
+							"output_tag": 7,
 							"result_base_dir": "",
 							"result_file_regex": "^([^ \t].*):$",
 							"result_line_regex": "^ +([0-9]+):",
@@ -3387,10 +3607,39 @@
 							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2805.0,
+						"translation.y": 13503.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 24,
+					"file": "rpa.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8625,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3663,
+								3663
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -3398,7 +3647,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 29.0
 	},
 	"input":
 	{
@@ -3427,6 +3676,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.diagnostics":
+	{
+		"height": 156.0
+	},
 	"output.exec":
 	{
 		"height": 467.0
@@ -3439,6 +3692,10 @@
 	{
 		"height": 106.0
 	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
 	"output.unsaved_changes":
 	{
 		"height": 106.0
@@ -3447,7 +3704,7 @@
 	"project": "MRPA_GIT.sublime-project",
 	"replace":
 	{
-		"height": 72.0
+		"height": 54.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -3457,24 +3714,88 @@
 		"selected_items":
 		[
 			[
+				"1ban",
+				"1band_wSpin.h"
+			],
+			[
 				"",
 				"gaps3D.h"
 			],
 			[
-				"cr",
+				"Crys",
 				"CrystalHarmonics2D.h"
+			],
+			[
+				"gaps3",
+				"gaps3D.h"
+			],
+			[
+				"rpa",
+				"rpa.h"
+			],
+			[
+				"bands",
+				"bandstructure.h"
+			],
+			[
+				"Make",
+				"Makefile"
+			],
+			[
+				"Sr",
+				"SrRuO_SO.h"
+			],
+			[
+				"param",
+				"parameters.h"
+			],
+			[
+				"bandst",
+				"bandstructure.h"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"chi0",
+				"chi0.h"
 			],
 			[
 				"gaps",
 				"gaps3D.h"
 			],
 			[
-				"inpu",
-				"TEST/5band1111_3D/input.dat"
+				"susi",
+				"susInt.h"
+			],
+			[
+				"pro",
+				"MRPA_GIT.sublime-project"
+			],
+			[
+				"sr",
+				"SrRuO_SO.h"
+			],
+			[
+				"m",
+				"Makefile"
+			],
+			[
+				"proje",
+				"MRPA_GIT.sublime-project"
 			],
 			[
 				"main",
 				"main.cpp"
+			],
+			[
+				"cr",
+				"CrystalHarmonics2D.h"
+			],
+			[
+				"inpu",
+				"TEST/5band1111_3D/input.dat"
 			],
 			[
 				"para",
@@ -3483,10 +3804,6 @@
 			[
 				"suscept",
 				"susceptibility.h"
-			],
-			[
-				"chi0",
-				"chi0.h"
 			],
 			[
 				"gap",
@@ -3505,16 +3822,8 @@
 				"Makefile"
 			],
 			[
-				"bands",
-				"bandstructure.h"
-			],
-			[
 				"four",
 				"FourOrbital.h"
-			],
-			[
-				"make",
-				"Makefile"
 			],
 			[
 				"kfe",
@@ -3541,10 +3850,6 @@
 				"bandstructure.h"
 			],
 			[
-				"sr",
-				"SrRuO.h"
-			],
-			[
 				"bila",
 				"bilayer.h"
 			],
@@ -3561,16 +3866,8 @@
 				"BaFeAs_5orb.h"
 			],
 			[
-				"gaps3",
-				"gaps3D.h"
-			],
-			[
 				"crysta",
 				"CrystalHarmonics2D.h"
-			],
-			[
-				"param",
-				"parameters.h"
 			],
 			[
 				"pairing",

@@ -27,7 +27,7 @@
 
 namespace rpa {
 
-	template<typename Field, template<typename> class MatrixTemplate, typename ConcurrencyType>
+	template<typename Field, template<typename> class MatrixTemplate, typename ModelType, typename ConcurrencyType>
 	class bandstructure {
 
 	private:
@@ -41,6 +41,7 @@ namespace rpa {
 		typedef PsimagLite::Range<ConcurrencyType> RangeType;
 
 		rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		ModelType& model;
 		ConcurrencyType& conc;
 		size_t nbands;
 		int nLines;
@@ -65,7 +66,7 @@ namespace rpa {
 		std::vector<ComplexMatrixType> Mkq;
 		std::vector<ComplexMatrixType> MkqFF;
 
-		model<FieldType, MatrixTemplate, ConcurrencyType> model;
+		// model<FieldType, MatrixTemplate, ConcurrencyType> model;
 
 // #ifdef USE_SRRUO
 // 			SrRuO_SO<FieldType,MatrixTemplate,ConcurrencyType> s;
@@ -95,9 +96,10 @@ namespace rpa {
 	public:
 
 		bandstructure(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-				  ConcurrencyType& concurrency, const kDomain& kmeshIn,
+				  ModelType& modelIn, ConcurrencyType& concurrency, const kDomain& kmeshIn,
 				  bool caching):
 			param(parameters),
+			model(modelIn),
 			conc(concurrency),
 			nbands(param.nOrb),
 			kmesh_(param,conc,0,2), // not being used
@@ -115,8 +117,7 @@ namespace rpa {
 			gapkq(caching_?kmesh.nktot:1,ComplexVectorType(nbands)),
 			akq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
-			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
-			model(param,conc)
+			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands))
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
 			// if (param.tbfile!="") readCSVFile();
@@ -127,8 +128,9 @@ namespace rpa {
 
 		// Constructor without kmesh input
 		bandstructure(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters,
-				  ConcurrencyType& concurrency):
+				  ModelType& modelIn, ConcurrencyType& concurrency):
 			param(parameters),
+			model(modelIn),
 			conc(concurrency),
 			nbands(param.nOrb),
 			kmesh_(param,conc,0,2),
@@ -145,8 +147,7 @@ namespace rpa {
 			gapkq(caching_?kmesh.nktot:1,ComplexVectorType(nbands)),
 			akq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands,nbands)),
 			Mkq(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
-			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands)),
-			model(param,conc)
+			MkqFF(caching_?kmesh.nktot:1,ComplexMatrixType(nbands*nbands,nbands))
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
 			// if (param.tbfile!="") readCSVFile();
@@ -232,7 +233,14 @@ namespace rpa {
 					  bool calcGap=0,
 					  bool qshift=0) {
 
+			
 			getEkAndAk(k_,ek_,ak_);
+			VectorType mk_(k_);
+			VectorType emk_(ek_);
+			ComplexMatrixType amk_(ak_);
+			for (size_t i=0; i<param.dimension ; i++) mk_[i] = -mk_[i];
+			getEkAndAk(mk_,emk_,amk_);
+
 			for (size_t i=0; i < nbands*nbands; i++) {
 				size_t l1 = param.indexToOrb(i,0); size_t l2 = param.indexToOrb(i,1);
 				for (size_t b=0; b < nbands; b++) {
@@ -240,18 +248,23 @@ namespace rpa {
 					else MGG(b,i) = ak_(l1,b) * conj(ak_(l2,b));
 					if (calcGap) {
 						if (param.explicitSpin && param.oppositeSpinPairing == 1) { // spin explicitely taken into account and up-down gap
-							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
-							else MFF(i,b) = ak_(l1,b) * ak_(l2,(b+int(nbands/2))%nbands);
+							// if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
+							// else MFF(i,b) = ak_(l1,b) * ak_(l2,(b+int(nbands/2))%nbands);
+							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(amk_(l2,(b+int(nbands/2))%nbands)); // Pseudospin up-down pairing
+							else MFF(i,b) = amk_(l1,b) * ak_(l2,(b+int(nbands/2))%nbands);
 						} else {
-							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,b));
-							else MFF(i,b) = ak_(l1,b) * ak_(l2,b);
+							// if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(ak_(l2,b));
+							// else MFF(i,b) = ak_(l1,b) * ak_(l2,b);
+							if (!qshift) MFF(b,i) = conj(ak_(l1,b)) * conj(amk_(l2,b));
+							else MFF(i,b) = amk_(l1,b) * ak_(l2,b);
 						}
 					}
 				}
 			}
+
 			if (calcGap) {
-				kmesh.mapTo1BZ(k_); // make sure k is in 1. BZ because gap may not be periodic in k
-				gap3D<FieldType,psimag::Matrix,ConcurrencyType> Delta(param,conc);
+				// kmesh.mapTo1BZ(k_); // make sure k is in 1. BZ because gap may not be periodic in k
+				gap3D<FieldType,psimag::Matrix,ModelType,ConcurrencyType> Delta(param,model,conc);
 				for (size_t i=0; i < nbands; i++) {
 					gap[i] = Delta(k_,i,ak_);
 					// gap[i] *= std::pow(param.Omega0,2)/(std::pow(ek_[i],2)+std::pow(param.Omega0,2)); // Lorentzian cut-off

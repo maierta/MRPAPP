@@ -46,6 +46,7 @@ namespace rpa {
 
 	template<typename Field, typename BandsType, 
 	         typename SuscType, typename GapType, template<typename> class MatrixTemplate, 
+	         typename ModelType,
 	         typename ConcurrencyType>
 	class pairing {
 
@@ -60,6 +61,7 @@ namespace rpa {
 		typedef std::vector<ComplexType>      	ComplexVectorType;
 
 		rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		rpa::model<Field,MatrixTemplate,ConcurrencyType>& model;
 		const size_t& dim;
 		ConcurrencyType& conc;
 		size_t interpolateChi_;
@@ -95,20 +97,19 @@ namespace rpa {
 		size_t nTotal;
 		std::vector<SuscType> chiStore;
 		std::vector<VectorType> qStore;
-		ferminator<FieldType,BandsType,MatrixTemplate,ConcurrencyType> FSpoints;
+		ferminator<FieldType,BandsType,MatrixTemplate,ModelType,ConcurrencyType> FSpoints;
 		size_t nkF;
 		MatrixType chikk;
-
-		model<FieldType, MatrixTemplate, ConcurrencyType> model;
-
 
 	public:
 
 		pairing(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, 
+				ModelType& modelIn,
 				ConcurrencyType& concurrency, 
 				const size_t interpolateChi,
 				momentumDomain<FieldType,psimag::Matrix,ConcurrencyType>& qMeshIn):
 			param(parameters),
+			model(modelIn),
 			dim(param.dimension),
 			conc(concurrency),
 			interpolateChi_(interpolateChi),
@@ -120,7 +121,7 @@ namespace rpa {
 			nk(parameters.nkInt),
 			msize(param.nOrb*param.nOrb),
 			kMesh(param,conc,param.nkInt,param.nkIntz,param.dimension),
-			bands(param,conc,kMesh,param.cacheBands),
+			bands(param,model,conc,kMesh,param.cacheBands),
 			chi0(param,conc),
 			susq(param,qMesh,param.chifile,conc),
 			chiRPAs(param,conc),
@@ -137,10 +138,9 @@ namespace rpa {
 			nTotal(0),
 			chiStore(0,SuscType(param,conc)),
 			qStore(0,VectorType(3)),
-			FSpoints(param,conc),
+			FSpoints(param,model,conc),
 			nkF(FSpoints.nTotal),
-			chikk(nkF,nkF),
-			model(param,conc)
+			chikk(nkF,nkF)
 		{			
 			// determineKF(file);
 
@@ -639,7 +639,6 @@ namespace rpa {
 			}
 			os2 << "]],\n";
 
-
 			os2 << " \"Velocity\": [\n";
 			os2 << "[";
 			for(size_t ik=0;ik<nkF;ik++) {
@@ -656,13 +655,13 @@ namespace rpa {
 			}
 			os2 << "]],\n";
 
-			os2 << " \"gammaB1G\": [\n";
-			os2 << "[";
-			for(size_t ik=0;ik<nkF;ik++) {
-				os2 << FSpoints.gammaB1GkF[ik];
-				if (ik<nkF-1) os2 << ", ";
-			}
-			os2 << "]],\n";
+			// os2 << " \"gammaB1G\": [\n";
+			// os2 << "[";
+			// for(size_t ik=0;ik<nkF;ik++) {
+			// 	os2 << FSpoints.gammaB1GkF[ik];
+			// 	if (ik<nkF-1) os2 << ", ";
+			// }
+			// os2 << "]],\n";
 			os2 << " \"chikk\": [\n";
 			for(size_t ik=0;ik<nkF;ik++) {
 				os2 << "[";
@@ -676,7 +675,6 @@ namespace rpa {
 			os2 << "]\n";
 			os2 << "}\n";
 			os2.close();
-
 		}
 
 	void eigen(MatrixType& matrix, VectorType& wr, MatrixType& vr) const {

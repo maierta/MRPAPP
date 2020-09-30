@@ -16,8 +16,9 @@ MatrixBoundsChecking = -DNDEBUG
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D 
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BAFEAS
 
-FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
-# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO
+# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
+# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_NDNIO2
+FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO3D
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BSCCOBILAYER
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_COUPLEDLADDERS
 #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BILAYER_FESC

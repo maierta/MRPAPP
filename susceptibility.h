@@ -372,8 +372,9 @@ namespace rpa {
 						os << real(chi0Matrix[iq](l1,l2))<< " , ";
 					for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) 
 						os << imag(chi0Matrix[iq](l1,l2))<< " , ";
-	     			ComplexType sus0(chi0Matrix[iq].calcSus());
-					os << real(sus0) << " , " << imag(sus0);
+					ComplexType sus0(model.calcSus(chi0Matrix[iq],"zz"));
+					ComplexType sus1(model.calcSus(chi0Matrix[iq],"+-"));
+					os << real(sus0) << " , " << imag(sus0) << " , " << real(sus1) << " , " << imag(sus1);
 					os << "\n";
 				}
 			}
@@ -384,14 +385,22 @@ namespace rpa {
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
-     			calcRPAResult(chi0Matrix[iq],model.spinMatrix,chiRPA,q);
-     			ComplexType susRzz(model.calcSus(chiRPA,"zz"));
-     			ComplexType susRpm(model.calcSus(chiRPA,"+-"));
-     			// ComplexType sus1(chi0Matrix[iq].calcSus());
-     			ComplexType sus1(model.calcSus(chi0Matrix[iq],"zz"));
-     			ComplexType sus2(model.calcSus(chi0Matrix[iq],"+-"));
-     			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
-     			os2 << real(susRzz) << ","  << imag(susRzz) << " ," << real(susRpm) << ","  << imag(susRpm) << " ," << real(sus1) << " , " << imag(sus1) << " , " << real(sus2) << " , " << imag(sus2) << "\n";
+				calcRPAResult(chi0Matrix[iq],model.spinMatrix,chiRPA,q);
+				ComplexType susRzz(model.calcSus(chiRPA,"zz"));
+				ComplexType susRpm(model.calcSus(chiRPA,"+-"));
+				// ComplexType sus1(chi0Matrix[iq].calcSus());
+				ComplexType sus1(model.calcSus(chi0Matrix[iq],"zz"));
+				ComplexType sus2(model.calcSus(chi0Matrix[iq],"+-"));
+				ComplexType sus3(model.calcSus(chi0Matrix[iq],"xx"));
+				ComplexType sus4(model.calcSus(chi0Matrix[iq],"yy"));
+				os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
+				os2 << real(susRzz) << ","  << imag(susRzz) << " ," 
+				    << real(susRpm) << ","  << imag(susRpm) << " ," 
+				    << real(sus1) << " , " << imag(sus1) << " , " 
+				    << real(sus2) << " , " << imag(sus2) << " , "
+				    << real(sus3) << " , " << imag(sus3) << " , "
+				    << real(sus4) << " , " << imag(sus4) 
+				    << "\n";
 			}
 		}
 

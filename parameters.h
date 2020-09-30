@@ -26,6 +26,7 @@ namespace rpa {
 		Field temperature;
 		const Field pi_f;
 		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;
+		Field U1, U2, U3;
 		Field lambda_SO;
 		Field staticUFactor,chargeFactor,spinFactor;
 		std::vector<Field> deltaU;
@@ -53,6 +54,8 @@ namespace rpa {
 		size_t nOrb;
 		Field  mu;
 		std::string tbfile;
+		Field hopping_t;
+		Field hopping_tp;
 		std::string fileID;
 		std::string fsfile;
 		bool readFSFromFile;
@@ -122,6 +125,9 @@ namespace rpa {
 			U_p_coupl(0.0),
 			U_pd_coupl(0.0),
 			U_pp_coupl(0.0),
+			U1(1.0),
+			U2(0.5),
+			U3(0.25),
 			lambda_SO(0.0),
 			staticUFactor(1.0),
 			chargeFactor(1.0),
@@ -163,6 +169,8 @@ namespace rpa {
 			nOrb(1),
 			mu(-0.1),
 			tbfile(""),
+			hopping_t(1.0),
+			hopping_tp(0.0),
 			fileID(""),
 			fsfile("FSforPairing.dat"),
 			readFSFromFile(0),
@@ -312,6 +320,8 @@ namespace rpa {
 		        else if (text.find("numberOfOrbitals")!=std::string::npos) str >> (*this).nOrb; 
 		        else if (text.find("chemicalPotential")!=std::string::npos) str >> (*this).mu; 
 		        else if (text.find("tbParametersFile")!=std::string::npos) str >> (*this).tbfile; 
+		        else if (text.find("0hopping_t")!=std::string::npos) str >> (*this).hopping_t; 
+		        else if (text.find("1hopping_tp")!=std::string::npos) str >> (*this).hopping_tp; 
 		        else if (text.find("fileID")!=std::string::npos) str >> (*this).fileID; 
 		        else if (text.find("complexHopping")!=std::string::npos) str >> (*this).complexHopping; 
 		        else if (text.find("FSforPairingFile")!=std::string::npos) str >> (*this).fsfile; 
@@ -335,6 +345,9 @@ namespace rpa {
 		        else if (text.find("Coulomb14U_p_coupl")!=std::string::npos) str >> (*this).U_p_coupl; 
 		        else if (text.find("Coulomb15U_pd_coupl")!=std::string::npos) str >> (*this).U_pd_coupl; 
 		        else if (text.find("Coulomb16U_pp_coupl")!=std::string::npos) str >> (*this).U_pp_coupl; 
+		        else if (text.find("CoulombNiU")!=std::string::npos) str >> (*this).U1; 
+		        else if (text.find("CoulombNdU")!=std::string::npos) str >> (*this).U2; 
+		        else if (text.find("CoulombSU")!=std::string::npos) str >> (*this).U3; 
 		        else if (text.find("Lambda_SO")!=std::string::npos) str >> (*this).lambda_SO; 
 		        else if (text.find("sublattice")!=std::string::npos) str >> (*this).sublattice; 
 		        else if (text.find("deltaU0")!=std::string::npos) str >> (*this).deltaU[0]; 
@@ -427,6 +440,8 @@ namespace rpa {
 				os << "numberOfOrbitals = " << (*this).nOrb << "\n";
 				os << "chemicalPotential = " << (*this).mu << "\n";
 				os << "tbParametersFile = " << (*this).tbfile << "\n";
+				os << "hopping_t = " << (*this).hopping_t << "\n";
+				os << "hopping_tp = " << (*this).hopping_tp << "\n";
 				os << "fileID = " << (*this).fileID << "\n";
 				os << "complexHopping = " << (*this).complexHopping << "\n";
 				os << "FSforPairingFile = " << (*this).fsfile << "\n";
@@ -457,6 +472,9 @@ namespace rpa {
 				os << "Coulomb14U_p_coupl = " << (*this).U_p_coupl << "\n";
 				os << "Coulomb15U_pd_coupl = " << (*this).U_pd_coupl << "\n";
 				os << "Coulomb16U_pp_coupl = " << (*this).U_pp_coupl << "\n";
+				os << "CoulombNiU = " << (*this).U1 << "\n";
+				os << "CoulombNdU = " << (*this).U2 << "\n";
+				os << "CoulombSU = " << (*this).U3 << "\n";
 				os << "Lambda_SO = " << (*this).lambda_SO << "\n";
 				os << "sublattice = " << (*this).sublattice << "\n";
 				os << "deltaU0 = " << (*this).deltaU[0] << "\n";
@@ -551,6 +569,8 @@ namespace rpa {
 		        conc.broadcast((*this).nOrb); 
 		        conc.broadcast((*this).mu); 
 		        conc.broadcast((*this).tbfile); 
+		        conc.broadcast((*this).hopping_t); 
+		        conc.broadcast((*this).hopping_tp); 
 		        conc.broadcast((*this).fileID); 
 		        conc.broadcast((*this).complexHopping);
 		        conc.broadcast((*this).fsfile); 
@@ -574,6 +594,9 @@ namespace rpa {
 		        conc.broadcast((*this).U_p_coupl); 
 		        conc.broadcast((*this).U_pd_coupl); 
 		        conc.broadcast((*this).U_pp_coupl); 
+		        conc.broadcast((*this).U1); 
+		        conc.broadcast((*this).U2); 
+		        conc.broadcast((*this).U3); 
 		        conc.broadcast((*this).lambda_SO); 
 		        conc.broadcast((*this).sublattice); 
 		        conc.broadcast((*this).deltaU[0]); 

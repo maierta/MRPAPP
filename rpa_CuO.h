@@ -149,8 +149,8 @@ namespace rpa {
 			int n = interactionMatrix.n_row();
 			// int m = matrix0.n_col();
 			// int k = spinMatrix.n_col();
-			ComplexType alpha(1.0);
-			ComplexType beta(0.0);
+			// ComplexType alpha(1.0);
+			// ComplexType beta(0.0);
 			std::vector<int> ipiv(n);
 			int info;
 			ComplexMatrixType work(n,n);
@@ -178,8 +178,8 @@ namespace rpa {
 			int n = Gamma.n_row();
 			// int m = matrix0.n_col();
 			// int k = spinMatrix.n_col();
-			ComplexType alpha(1.0);
-			ComplexType beta(0.0);
+			// ComplexType alpha(1.0);
+			// ComplexType beta(0.0);
 			std::vector<int> ipiv(n);
 			int info;
 			ComplexMatrixType work(n,n);

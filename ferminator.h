@@ -852,6 +852,27 @@ namespace rpa {
 			calcDeltaKFOpen2D();
 			mirrorSheet();
 
+		} else if (Case_ == "NdNiO2_kz0") {
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = Pi  ; FSCenters[0][1] = Pi  ; FSBand[0]  =  0;
+			FSCenters[1][0] = 0   ; FSCenters[1][1] = 0   ; FSBand[1]  =  1;
+
+			size_t nkSearch(1000);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
+
+		} else if (Case_ == "NdNiO2_kzpi") {
+			nSheets = 2;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = 0  ; FSCenters[0][1] = 0  ; FSBand[0]  =  0;
+			FSCenters[1][0] = Pi   ; FSCenters[1][1] = Pi   ; FSBand[1]  =  0;
+
+			size_t nkSearch(1000);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,Pi,2);
 		}
 
 		if (conc.rank()==0) std::cout << "Number of kF points: " << nTotal << "\n";

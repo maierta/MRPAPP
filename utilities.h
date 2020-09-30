@@ -269,8 +269,8 @@ void calcRPAResult(MatrixTemplate<std::complex<FieldType> >& matrix0,
 	int n = interactionMatrix.n_row();
 	// int m = matrix0.n_col();
 	// int k = spinMatrix.n_col();
-	std::complex<FieldType> alpha(1.0);
-	std::complex<FieldType> beta(0.0);
+	// std::complex<FieldType> alpha(1.0);
+	// std::complex<FieldType> beta(0.0);
 	std::vector<int> ipiv(n);
 	int info;
 	MatrixTemplate<std::complex<FieldType> > work(n,n);

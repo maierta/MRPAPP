@@ -217,6 +217,7 @@ namespace rpa {
 				}
 
 			}
+
 			for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) {
 					chi0matrix(i,j) /= ComplexType(kmesh.nktot,0.0);
 					// std::cout << chi0matrix(i,j) << "\n";

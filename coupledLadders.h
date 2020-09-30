@@ -62,8 +62,10 @@ namespace rpa {
 			// ComplexType e2kx, em2kx;
 			// const ComplexType ii = ComplexType(0.0,1.0);
 
-			t = 1.0; tp = -0.25; 
+			// t = 1.0; tp = -0.25; 
 			// t = 1.0; tp = 0.0; 
+			t = param.hopping_t;
+			tp = param.hopping_tp;
 			tl  = t  * param.couplingRatio;
 			tlp = tp * param.couplingRatio;
 

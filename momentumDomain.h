@@ -66,6 +66,8 @@ namespace rpa {
 			// GNorm(3,0)
 			{
 				set_primitiveVectors();
+				if (conc.rank()==0) std::cout << "nktot: " << nktot << "\n";
+
 				// shift[0] = -0.25; shift[1] = -0.25; shift[2] = -0.5;
 			}
 
@@ -136,6 +138,7 @@ namespace rpa {
 		{ 
 			if (path == "Path1") set_momenta_Path1(); 
 			if (path == "Path2") set_momenta_Path2(); 
+			if (path == "Path3") set_momenta_Path3(); 
 		}
 
 
@@ -340,6 +343,54 @@ namespace rpa {
 				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
 				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f;
 				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+		}
+
+		void set_momenta_Path3() { // Gamma -> X -> M -> Gamma -> Z -> R -> A -> Z
+
+			size_t nks(nk/7);
+			size_t ind(0);
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> X
+				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = 0.0;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // X -> M
+				momenta(ind,0) = param.pi_f;
+				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // M -> Gamma
+				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> Z
+				momenta(ind,0) = 0.0;
+				momenta(ind,1) = 0.0;
+				momenta(ind,2) = float(ik)/float(nks) * param.pi_f;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // Z -> R
+				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = 0.0;
+				momenta(ind,2) = param.pi_f;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // R -> A
+				momenta(ind,0) = param.pi_f;
+				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,2) = param.pi_f;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // A -> Z
+				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f; 
+				momenta(ind,2) = param.pi_f;
 				ind += 1;
 			}
 		}

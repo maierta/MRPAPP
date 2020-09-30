@@ -91,7 +91,7 @@ namespace rpa{
 				// << "," << kMesh.momenta(ind00,1) << ") , (" << kMesh.momenta(ind11,0) << "," << kMesh.momenta(ind11,1) << ")\n";
 		    size_t msize(function[0].n_row());
 			for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) {
-				ComplexType c00(0.0); ComplexType c10(0.0); ComplexType  c0(0.0);
+				ComplexType c00(0.0); ComplexType c10(0.0); 
 				c00 = function[ind00](l1,l2) * (1.-dis[0]) + function[ind10](l1,l2) * dis[0];
 				c10 = function[ind01](l1,l2) * (1.-dis[0]) + function[ind11](l1,l2) * dis[0];
 				result(l1,l2) = c00 * (1.-dis[1]) + c10 * dis[1];

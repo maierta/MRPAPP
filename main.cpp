@@ -80,7 +80,8 @@ int main(int argc,char *argv[])
 
 	parameters<FieldType,psimag::Matrix,ConcurrencyType> param(concurrency);
 	param.readFromInputFile(filename);
-	if (concurrency.rank()==0) param.writeParameters(std::cout);
+	std::ofstream os1("parameters_" + param.fileID + ".txt");
+	if (concurrency.rank()==0) param.writeParameters(os1);
 	param.setupOrbitalIndices();
 
 	ModelType model(param, concurrency);

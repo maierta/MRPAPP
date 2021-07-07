@@ -619,11 +619,24 @@ namespace rpa {
 				if (ik<nkF-1) os2 << ",";
 			}
 			os2 << "],\n";
+
 			os2 << " \"GammaPP\": [\n";
 			for(size_t ik=0;ik<nkF;ik++) {
 				os2 << "[";
 				for(size_t ikp=0;ikp<nkF;ikp++) {
 					os2 << gammaPP(ik,ikp);
+					if (ikp<nkF-1) os2 << ", ";
+				}
+				os2 << "]";
+				if (ik<nkF-1) os2 << ",\n";
+			}
+			os2 << "],\n";
+
+			os2 << " \"GammaZ\": [\n";
+			for(size_t ik=0;ik<nkF;ik++) {
+				os2 << "[";
+				for(size_t ikp=0;ikp<nkF;ikp++) {
+					os2 << gammaZ(ik,ikp);
 					if (ikp<nkF-1) os2 << ", ";
 				}
 				os2 << "]";

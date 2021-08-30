@@ -74,6 +74,7 @@ namespace rpa {
 
 			t1  = 0.088; t2 = 0.009; t3 = 0.080; t4 = 0.040; t5 = 0.005; 
 			t11 = 0.003; t12 = -0.005; tint = -0.004;
+			// t11 = 0.0; t12 = 0.0; tint = 0.0;
 
 			sx = sin(k[0]); sy = sin(k[1]); sx2 = sin(0.5*k[0]); sy2 = sin(0.5*k[1]); sz2 = sin(0.5*k[2]);
 			cx = cos(k[0]); cy = cos(k[1]); cxy = cos(k[0])*cos(k[1]);
@@ -140,6 +141,56 @@ namespace rpa {
 			H0(5,3) = -ii*lso;
 			H0(5,4) = lso;
 			H0(5,5) = ekXY;
+
+
+			// Optionally add k-SOC terms
+			if (param.k_SOC) {
+
+				FieldType t12z, t56z, tdxy, td;
+			// Cobo case 0
+				// t12z = 0; t56z = 0; tdxy = 0; td = 0; 			
+			// Cobo case 1
+				t12z = 0.005; t56z = 0.003; tdxy = 0; td = 0; 			
+			// Cobo case 2
+				// t12z = 0.005; t56z = 0.004; tdxy = 0; td = 0; 			
+			// Cobo case 3
+				// t12z = 0.005; t56z = 0.005; tdxy = 0; td = 0; 
+			// Cobo case 4
+				// t12z = 0.005; t56z = 0.003; tdxy = 0.002; td = 0.002; 
+
+				FieldType etax   =  8*t12z*cx2*sy2*sz2;
+				FieldType etay   = -8*t12z*sx2*cy2*sz2;
+				FieldType gammax =  8*t56z*cx2*sy2*sz2;
+				FieldType gammay = -8*t56z*sx2*cy2*sz2;
+				FieldType alpha  =  4*tdxy*sx*sy;
+				FieldType beta   =  2*td*(cx-cy);
+
+				H0(0,2) += alpha - ii*beta;
+				H0(0,4) += etax - ii*etay;
+				H0(0,5) += -ii*gammay;
+
+				H0(1,2) += -beta - ii*alpha;
+				H0(1,3) += -etax + ii*etay;
+				H0(1,5) += -ii*gammax;
+
+				H0(2,0) += alpha + ii*beta;
+				H0(2,1) += -beta + ii*alpha;
+				H0(2,3) += -ii*gammay;
+				H0(2,4) += -ii*gammax;
+
+				H0(3,1) += -etax - ii*etay;
+				H0(3,2) += ii*gammay;
+				H0(3,5) += -alpha - ii*beta;
+
+				H0(4,0) += etax + ii*etay;
+				H0(4,2) += ii*gammax;
+				H0(4,5) += beta - ii*alpha;
+
+				H0(5,0) += ii*gammay;
+				H0(5,1) += ii*gammax;
+				H0(5,3) += -alpha + ii*beta;
+				H0(5,4) += beta + ii*alpha;
+			}
 
 			eigen(eigenvals,H0);
 

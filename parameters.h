@@ -28,6 +28,7 @@ namespace rpa {
 		Field U,Up,J,Jp,U_d_s,U_d_c,U_p_s,U_p_c,U_pd_s,U_pd_c,U_pp_s,U_pp_c,U_d_coupl,U_p_coupl,U_pd_coupl,U_pp_coupl;
 		Field U1, U2, U3;
 		Field lambda_SO;
+		bool k_SOC;
 		Field staticUFactor,chargeFactor,spinFactor;
 		std::vector<Field> deltaU;
 		std::vector<Field> a1,a2,a3;
@@ -129,6 +130,7 @@ namespace rpa {
 			U2(0.5),
 			U3(0.25),
 			lambda_SO(0.0),
+			k_SOC(0),
 			staticUFactor(1.0),
 			chargeFactor(1.0),
 			spinFactor(1.0),
@@ -349,6 +351,7 @@ namespace rpa {
 		        else if (text.find("CoulombNdU")!=std::string::npos) str >> (*this).U2; 
 		        else if (text.find("CoulombSU")!=std::string::npos) str >> (*this).U3; 
 		        else if (text.find("Lambda_SO")!=std::string::npos) str >> (*this).lambda_SO; 
+		        else if (text.find("k_SOC")!=std::string::npos) str >> (*this).k_SOC; 
 		        else if (text.find("sublattice")!=std::string::npos) str >> (*this).sublattice; 
 		        else if (text.find("deltaU0")!=std::string::npos) str >> (*this).deltaU[0]; 
 		        else if (text.find("deltaU1")!=std::string::npos) str >> (*this).deltaU[1]; 
@@ -476,6 +479,7 @@ namespace rpa {
 				os << "CoulombNdU = " << (*this).U2 << "\n";
 				os << "CoulombSU = " << (*this).U3 << "\n";
 				os << "Lambda_SO = " << (*this).lambda_SO << "\n";
+				os << "k_SOC = " << (*this).k_SOC << "\n";
 				os << "sublattice = " << (*this).sublattice << "\n";
 				os << "deltaU0 = " << (*this).deltaU[0] << "\n";
 				os << "deltaU1 = " << (*this).deltaU[1] << "\n";
@@ -598,6 +602,7 @@ namespace rpa {
 		        conc.broadcast((*this).U2); 
 		        conc.broadcast((*this).U3); 
 		        conc.broadcast((*this).lambda_SO); 
+		        conc.broadcast((*this).k_SOC); 
 		        conc.broadcast((*this).sublattice); 
 		        conc.broadcast((*this).deltaU[0]); 
 		        conc.broadcast((*this).deltaU[1]); 

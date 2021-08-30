@@ -1,6 +1,6 @@
 // Model file for Sr2RuO4 with spin-orbit coupling --> 6 bands total
-#ifndef SRRUO_SO_3D_H
-#define SRRUO_SO_3D_H
+#ifndef MODELFROMFILESO_H
+#define MODELFROMFILESO_H
 
 
 #include <string>
@@ -28,7 +28,10 @@ namespace rpa {
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
-		
+		VectorType dx,dy,dz,ht;
+		std::vector<size_t> orb1,orb2;
+		int nLines;
+
 	private:
 		size_t msize;
 	public:
@@ -49,150 +52,77 @@ namespace rpa {
 			spinOfEll(nbands),
 			orbOfEll(nbands)
 		{
-			if (nbands != 6) 
-				std::cerr<<"Number of orbitals should be 6! Exiting ...\n";
-			if (dim != 3) 
-				std::cerr<<"Dimension should be 3! Exiting ...\n";
-
-			msize = 36;
+			readCSVFile();
+			msize = int(nbands*nbands);
 
 			// Note that here the "orbitals" denote a combined orbital and spin index
-			// The basis is (xz,up;yz,up;xy,down ; xz,down;yz,down;xy,up)
-			spinOfEll[0] = +1; orbOfEll[0] = 0;
-			spinOfEll[1] = +1; orbOfEll[1] = 1; 
-			spinOfEll[2] = -1; orbOfEll[2] = 2; 
-			spinOfEll[3] = -1; orbOfEll[3] = 0; 
-			spinOfEll[4] = -1; orbOfEll[4] = 1; 
-			spinOfEll[5] = +1; orbOfEll[5] = 2; 
+			// The basis is is assumed to be (orb 0, up, orb 0, down, orb 1, up, orb 1, down, ...)
+			for (size_t il=0; il<nbands; il++) {
+				orbOfEll[il]  = int(il/2);
+				spinOfEll[il] = -2 * (il % 2) + 1;
+			}
 
 			setupInteractionMatrix();
 
 		}
+
+		void readCSVFile() {
+			std::string file = param.tbfile;
+			VectorType data;
+			loadVector(data,file);
+			// We assume that each line has the format dx,dy,dz,orb1,orb2,t
+			size_t length = 6;
+			size_t nLinesTotal(data.size()/length);
+			if (conc.rank()==0) std::cout << "tb file contains " << nLinesTotal << " lines\n";
+			for (size_t i = 0; i < nLinesTotal; i++) {
+				size_t l1(size_t(data[i*length+3]-1));
+				size_t l2(size_t(data[i*length+4]-1));
+				if (l1<=l2) {
+					dx.push_back  (data[i*length]);
+					dy.push_back  (data[i*length+1]);
+					dz.push_back  (data[i*length+2]);
+					orb1.push_back(l1);
+					if (orb1[orb1.size()] > nbands)
+						std::cerr<<"Number of orbitals exceeds maximum! Exiting ...\n";
+					orb2.push_back(l2);
+					if (orb2[orb2.size()] > nbands)
+						std::cerr<<"Number of orbitals exceeds maximum! Exiting ...\n";
+					ht.push_back  (data[i*length+5]);
+				}
+			}
+			nLines = dx.size();
+			if (conc.rank()==0) std::cout << nLines <<" entries used from tb input file\n";
+		}
+
 		
-		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& H0) {
-		    	FieldType t1,t2,t3,t4,t5,t11,t12,tint,cx,cy,cxy,c2x,c2y,sx,sy,sx2,sy2,cz2,cx2,sz2,cy2;
+		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
 
-			t1  = 0.088; t2 = 0.009; t3 = 0.080; t4 = 0.040; t5 = 0.005; 
-			t11 = 0.003; t12 = -0.005; tint = -0.004;
-			// t11 = 0.0; t12 = 0.0; tint = 0.0;
+			FieldType exponent(0.);
+			int n = eigenvects.n_col();
+			std::vector<FieldType> ks(k);
+			for (int i=0;i<n;i++) for (int j=0;j<n;j++) eigenvects(i,j)=ComplexType(0.,0.);
 
-			sx = sin(k[0]); sy = sin(k[1]); sx2 = sin(0.5*k[0]); sy2 = sin(0.5*k[1]); sz2 = sin(0.5*k[2]);
-			cx = cos(k[0]); cy = cos(k[1]); cxy = cos(k[0])*cos(k[1]);
-			c2x = cos(2*k[0]); c2y = cos(2*k[1]); 
-			cx2 = cos(0.5*k[0]); cy2 = cos(0.5*k[1]); cz2 = cos(0.5*k[2]);
-
-			FieldType gxzyz   = -4*t11*sx*sy - 4*t12*sx2*sy2*cz2;
-			FieldType Txzxy   = -4*tint*cx2*sy2*sz2; 
-			FieldType Tyzxy   = -4*tint*sx2*cy2*sz2; 
-
-			FieldType ekXZ    = -2*t1*cx-2*t2*cy - param.mu;
-			FieldType ekYZ    = -2*t2*cx-2*t1*cy - param.mu;
-			FieldType ekXY    = -2*t3*(cx+cy)-4*t4*cxy-2*t5*(c2x+c2y) - param.mu;
-
-			FieldType lso     = 0.5*param.lambda_SO;
-
-			// Write Hamiltonian into eigenvects
-			// Basis is (xz,up;yz,up;xy,down ; xz,down;yz,down;xy,up)
-			
-			const ComplexType ii = ComplexType(0.0,1.0);
-			// ComplexMatrixType H0(6,6);
-
-			// for (size_t i=0; i<nbands; i++) 
-				// for (size_t j=0; j<nbands; j++) H0(i,j) = ComplexType(0.,0.);
-					
-			H0(0,0) = ekXZ;
-			H0(0,1) = gxzyz - ii*lso;
-			H0(0,2) = ii*lso;
-			H0(0,3) = 0;
-			H0(0,4) = 0;
-			H0(0,5) = Txzxy;
-
-			H0(1,0) = gxzyz + ii*lso;
-			H0(1,1) = ekYZ;
-			H0(1,2) = -lso;
-			H0(1,3) = 0;
-			H0(1,4) = 0;
-			H0(1,5) = Tyzxy;
-
-			H0(2,0) = -ii*lso;
-			H0(2,1) = -lso;
-			H0(2,2) = ekXY;
-			H0(2,3) = Txzxy;
-			H0(2,4) = Tyzxy;
-			H0(2,5) = 0;
-
-			H0(3,0) = 0;
-			H0(3,1) = 0;
-			H0(3,2) = Txzxy;
-			H0(3,3) = ekXZ;
-			H0(3,4) = gxzyz + ii*lso;
-			H0(3,5) = ii*lso;
-
-			H0(4,0) = 0;
-			H0(4,1) = 0;
-			H0(4,2) = Tyzxy;
-			H0(4,3) = gxzyz - ii*lso;
-			H0(4,4) = ekYZ;
-			H0(4,5) = lso;
-
-			H0(5,0) = Txzxy;
-			H0(5,1) = Tyzxy;
-			H0(5,2) = 0;
-			H0(5,3) = -ii*lso;
-			H0(5,4) = lso;
-			H0(5,5) = ekXY;
-
-
-			// Optionally add k-SOC terms
-			if (param.k_SOC) {
-
-				FieldType t12z, t56z, tdxy, td;
-			// Cobo case 0
-				// t12z = 0; t56z = 0; tdxy = 0; td = 0; 			
-			// Cobo case 1
-				t12z = 0.005; t56z = 0.003; tdxy = 0; td = 0; 			
-			// Cobo case 2
-				// t12z = 0.005; t56z = 0.004; tdxy = 0; td = 0; 			
-			// Cobo case 3
-				// t12z = 0.005; t56z = 0.005; tdxy = 0; td = 0; 
-			// Cobo case 4
-				// t12z = 0.005; t56z = 0.003; tdxy = 0.002; td = 0.002; 
-
-				FieldType etax   =  8*t12z*cx2*sy2*sz2;
-				FieldType etay   = -8*t12z*sx2*cy2*sz2;
-				FieldType gammax =  8*t56z*cx2*sy2*sz2;
-				FieldType gammay = -8*t56z*sx2*cy2*sz2;
-				FieldType alpha  =  4*tdxy*sx*sy;
-				FieldType beta   =  2*td*(cx-cy);
-
-				H0(0,2) += alpha - ii*beta;
-				H0(0,4) += etax - ii*etay;
-				H0(0,5) += -ii*gammay;
-
-				H0(1,2) += -beta - ii*alpha;
-				H0(1,3) += -etax + ii*etay;
-				H0(1,5) += -ii*gammax;
-
-				H0(2,0) += alpha + ii*beta;
-				H0(2,1) += -beta + ii*alpha;
-				H0(2,3) += -ii*gammay;
-				H0(2,4) += -ii*gammax;
-
-				H0(3,1) += -etax - ii*etay;
-				H0(3,2) += ii*gammay;
-				H0(3,5) += -alpha - ii*beta;
-
-				H0(4,0) += etax + ii*etay;
-				H0(4,2) += ii*gammax;
-				H0(4,5) += beta - ii*alpha;
-
-				H0(5,0) += ii*gammay;
-				H0(5,1) += ii*gammax;
-				H0(5,3) += -alpha + ii*beta;
-				H0(5,4) += beta + ii*alpha;
+			// Now add hopping terms
+			for (int i = 0; i < nLines; ++i)
+			{
+				// if (orb1[i]<=orb2[i]) {
+					exponent = (ks[0]*dx[i] + ks[1]*dy[i] + ks[2]*dz[i]);
+					ComplexType cs(cos(exponent),sin(exponent));
+					eigenvects(orb1[i],orb2[i]) += ht[i] * cs;
+				// }
 			}
 
-			eigen(eigenvals,H0);
+			for (size_t i=0;i<nbands;i++) eigenvects(i,i) -= param.mu;
+
+			// Now add SO coupling terms
+			// Note: For this we need to know the basis
+			// FieldType lso     = 0.5*param.lambda_SO;
+			// const ComplexType ii = ComplexType(0.0,1.0);
+
+
+			eigen(eigenvals,eigenvects);
+	
+			return;
 
 		}
 

@@ -30,5 +30,7 @@
 #elif USE_NDNIO2
 #include "NdNiO2.h"
 #endif
-
+#elif USE_MODELFROMFILESO
+#include "modelFromFileSO.h"
 #endif
+

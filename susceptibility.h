@@ -46,7 +46,7 @@ namespace rpa {
 #endif
 
 			rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
-			rpa::model<Field,MatrixTemplate,ConcurrencyType>& model;
+			rpa::model<Field,MatrixTemplate,ConcurrencyType>& tbmodel;
 			ConcurrencyType& conc;
 			// momentumDomain<Field,psimag::Matrix> qMesh;
 			size_t numberOfQ;
@@ -76,7 +76,7 @@ namespace rpa {
 					   const FieldType& wmin,  const FieldType& wmax,  const size_t nwIn
 					   ):
 						param(parameters),
-						model(modelIn),
+						tbmodel(modelIn),
 						conc(concurrency),
 						// qMesh(param,nqxIn,nqzIn,3),
 						numberOfQ(nq1In*nq2In*nq3In*nwIn),
@@ -130,7 +130,7 @@ namespace rpa {
 			// Setup k-mesh for chi0 calculation
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,model,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
+			BandsType bands(param,tbmodel,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
 
 			std::vector<FieldType> q(3);
 			bool single_q = false;
@@ -209,7 +209,7 @@ namespace rpa {
 			// Setup k-mesh for chi0 calculation
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,model,conc,kmesh,false); // false = no Caching
+			BandsType bands(param,tbmodel,conc,kmesh,false); // false = no Caching
 			RangeType range(0,numberOfQ,conc);
 
 			for (;!range.end();range.next()) {
@@ -372,27 +372,29 @@ namespace rpa {
 						os << real(chi0Matrix[iq](l1,l2))<< " , ";
 					for (size_t l1=0;l1<msize;l1++) for (size_t l2=0;l2<msize;l2++) 
 						os << imag(chi0Matrix[iq](l1,l2))<< " , ";
-					ComplexType sus0(model.calcSus(chi0Matrix[iq],"zz"));
-					ComplexType sus1(model.calcSus(chi0Matrix[iq],"+-"));
+					ComplexType sus0(tbmodel.calcSus(chi0Matrix[iq],"zz"));
+					ComplexType sus1(tbmodel.calcSus(chi0Matrix[iq],"+-"));
 					os << real(sus0) << " , " << imag(sus0) << " , " << real(sus1) << " , " << imag(sus1);
 					os << "\n";
 				}
 			}
-			std::ofstream os2("chiRPA_" + param.fileID + ".txt");
+			std::string cstr = "chiRPA_" + param.fileID + ".txt";
+			const char *filename = cstr.c_str();
+			std::ofstream os2(filename);
 			// interaction<FieldType,psimag::Matrix,ConcurrencyType> rpa(param,conc);
 			os2.precision(width);
 			os2 << std::fixed;
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
-				calcRPAResult(chi0Matrix[iq],model.spinMatrix,chiRPA,q);
-				ComplexType susRzz(model.calcSus(chiRPA,"zz"));
-				ComplexType susRpm(model.calcSus(chiRPA,"+-"));
+				calcRPAResult(chi0Matrix[iq],tbmodel.spinMatrix,chiRPA,q);
+				ComplexType susRzz(tbmodel.calcSus(chiRPA,"zz"));
+				ComplexType susRpm(tbmodel.calcSus(chiRPA,"+-"));
 				// ComplexType sus1(chi0Matrix[iq].calcSus());
-				ComplexType sus1(model.calcSus(chi0Matrix[iq],"zz"));
-				ComplexType sus2(model.calcSus(chi0Matrix[iq],"+-"));
-				ComplexType sus3(model.calcSus(chi0Matrix[iq],"xx"));
-				ComplexType sus4(model.calcSus(chi0Matrix[iq],"yy"));
+				ComplexType sus1(tbmodel.calcSus(chi0Matrix[iq],"zz"));
+				ComplexType sus2(tbmodel.calcSus(chi0Matrix[iq],"+-"));
+				ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq],"xx"));
+				ComplexType sus4(tbmodel.calcSus(chi0Matrix[iq],"yy"));
 				os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3] << " , ";
 				os2 << real(susRzz) << ","  << imag(susRzz) << " ," 
 				    << real(susRpm) << ","  << imag(susRpm) << " ," 
@@ -574,10 +576,10 @@ namespace rpa {
 		}
 
 		void printGap2() {
-			GapType Delta(param,model,conc);
+			GapType Delta(param,tbmodel,conc);
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,model,conc,kmesh,true);
+			BandsType bands(param,tbmodel,conc,kmesh,true);
 			VectorType ek(param.nOrb,0), k(3);
 			ComplexMatrixType ak(param.nOrb,param.nOrb);
 			std::ofstream os("gapAll.txt");
@@ -601,7 +603,7 @@ namespace rpa {
 		}
 
 		void printGap3() {
-			ferminator<FieldType,BandsType,psimag::Matrix,ModelType,ConcurrencyType> FSpoints(param,model,conc,1);
+			ferminator<FieldType,BandsType,psimag::Matrix,ModelType,ConcurrencyType> FSpoints(param,tbmodel,conc,1);
 			size_t nk(FSpoints.nTotal);
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			BandsType bands(param,conc,kmesh,true);

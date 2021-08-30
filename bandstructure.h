@@ -279,7 +279,8 @@ namespace rpa {
 			size_t nktot(kmesh.nktot);
 			std::vector<FieldType> k(3);
 
-			std::string filename = "gap_" + param.fileID + ".txt";
+			std::string cstr = "gap_" + param.fileID + ".txt";
+			const char *filename = cstr.c_str();
 			if (conc.rank()==0) {
 				// const char *filename = file.c_str();
 				std::ofstream os(filename);

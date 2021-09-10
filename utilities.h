@@ -28,7 +28,6 @@ inline void GEEV(char jobvl,char jobvr,int n,psimag::Matrix<std::complex<double>
 						      &(w[0]),&(work[0]),&lwork,&(rwork[0]),info);
 						}
 
-/*
 extern "C" void 
 #ifdef glyph
 	zgemm_
@@ -54,7 +53,7 @@ extern "C" void
 	dgetri
 #endif
 	(int *, double *, int *, int *, double *, int *, int *);
-*/
+
 
 inline void GETRF(int m, int n, 
  			      psimag::Matrix<double> &a,int lda, 

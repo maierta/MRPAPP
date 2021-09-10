@@ -1,6 +1,6 @@
-// Model file for Sr2RuO4 with spin-orbit coupling --> 6 bands total
-#ifndef SRRUO_SO_3D_H
-#define SRRUO_SO_3D_H
+// Model file for Sr2RuO4 with spin-orbit coupling --> 6 bands total; Suh bands
+#ifndef SRRUO_SO_3D_SUH_H
+#define SRRUO_SO_3D_SUH_H
 
 
 #include <string>
@@ -73,28 +73,31 @@ namespace rpa {
 
 			FieldType ekXZ, ekYZ, ekXY;
 			FieldType gxzyz, Txzxy, Tyzxy;
-			FieldType cx,cy,cxy,c2x,c2y,sx,sy,cz2,cx2,cy2,sx2,sy2,sz2;
+			FieldType cx,cy,cz,cxy,c2x,c2y,sx,sy,cz2,cx2,cy2,sx2,sy2,sz2;
 
 			sx = sin(k[0]); sy = sin(k[1]); sx2 = sin(0.5*k[0]); sy2 = sin(0.5*k[1]); sz2 = sin(0.5*k[2]);
-			cx = cos(k[0]); cy = cos(k[1]); cxy = cos(k[0])*cos(k[1]);
+			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]); cxy = cos(k[0])*cos(k[1]);
 			c2x = cos(2*k[0]); c2y = cos(2*k[1]); 
 			cx2 = cos(0.5*k[0]); cy2 = cos(0.5*k[1]); cz2 = cos(0.5*k[2]);
 
 
-			FieldType t1,t2,t3,t4,t5,t11,t12,tint;
+			FieldType t1,t2,t3,t4,t5,tp,tpp,tppp,tint;
+			FieldType t6, t7, t8, t9, mu, muxy;
+			FieldType t1xy, t2xy, t3xy, t4xy, t5xy, t6xy;
 
-			t1  = 0.088; t2 = 0.009; t3 = 0.080; t4 = 0.040; t5 = 0.005; 
-			t11 = 0.003; t12 = -0.005; tint = -0.004;
-			// t11 = 0.0; t12 = 0.0; tint = 0.0;
+			t1 = 0.3624; t2 = 0.134; t3 = 0.001021; t4 = 0.005727; t5 = 0.04401; 
+			t6 = 0.01393; t7 = 0.00752; t8 = -0.02522; t9 = 0.0000228; mu = 0.4385;
+			t1xy = 0.262; t2xy = -0.03423; t3xy = 0.04373; t4xy = -0.008069; t5xy = 0.003159; t6xy = -0.001811; muxy = 0.2186;
+			tp = 0.01625; tpp = -0.01995; tppp = 0.00394; tint = -2*0.008304;
 
+			ekXZ    = -2*t1*cx-2*t2*cy-2*t3*c2x-2*t4*c2y-4*t5*cx*cy-4*t6*c2x*cy-4*t7*cx*c2y-2*t8*(cx-1)-8*t9*cx2*cy2*cz2 - mu - param.mu;
+			ekYZ    = -2*t1*cy-2*t2*cx-2*t3*c2y-2*t4*c2x-4*t5*cy*cx-4*t6*c2y*cx-4*t7*cy*c2x-2*t8*(cy-1)-8*t9*cy2*cx2*cz2 - mu - param.mu;
+			ekXY    = -2*t1xy*(cx+cy)-2*t2xy*(c2x+c2y)-4*t3xy*cx*cy -4*t4xy*(c2x*cy+cx*c2y) - 2*t5xy*(cz-1) - 8*t6xy*cx2*cy2*cz2 - param.mu;
 
-			gxzyz   = -4*t11*sx*sy - 4*t12*sx2*sy2*cz2;
+			gxzyz   = -4*tp*sx*sy - 4*tpp*sx2*sy2*cz2;
 			Txzxy   = -4*tint*cx2*sy2*sz2; 
 			Tyzxy   = -4*tint*sx2*cy2*sz2; 
 
-			ekXZ    = -2*t1*cx-2*t2*cy - param.mu;
-			ekYZ    = -2*t2*cx-2*t1*cy - param.mu;
-			ekXY    = -2*t3*(cx+cy)-4*t4*cxy-2*t5*(c2x+c2y) - param.mu;
 
 			FieldType lso     = 0.5*param.lambda_SO;
 

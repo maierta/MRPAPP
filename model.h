@@ -5,6 +5,8 @@
 #include "SrRuO_SO.h"
 #elif USE_SRRUO3D
 #include "SrRuO_SO_3D.h"
+#elif USE_SRRUO3DSUH
+#include "SrRuO_SO_3D_Suh.h"
 #elif USE_1BANDWSPIN
 #include "1band_wSpin.h"
 #elif USE_BILAYER_FESC

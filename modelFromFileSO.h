@@ -28,7 +28,7 @@ namespace rpa {
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
-		VectorType dx,dy,dz,ht;
+		VectorType dx,dy,dz,htr,hti;
 		std::vector<size_t> orb1,orb2;
 		int nLines;
 
@@ -70,8 +70,8 @@ namespace rpa {
 			std::string file = param.tbfile;
 			VectorType data;
 			loadVector(data,file);
-			// We assume that each line has the format dx,dy,dz,orb1,orb2,t
-			size_t length = 6;
+			// We assume that each line has the format dx,dy,dz,orb1,orb2,real(t), imag(t)
+			size_t length = 7;
 			size_t nLinesTotal(data.size()/length);
 			if (conc.rank()==0) std::cout << "tb file contains " << nLinesTotal << " lines\n";
 			for (size_t i = 0; i < nLinesTotal; i++) {
@@ -82,12 +82,15 @@ namespace rpa {
 					dy.push_back  (data[i*length+1]);
 					dz.push_back  (data[i*length+2]);
 					orb1.push_back(l1);
-					if (orb1[orb1.size()] > nbands)
+					if (orb1[orb1.size()-1] > nbands) {
 						std::cerr<<"Number of orbitals exceeds maximum! Exiting ...\n";
+						exit(0);
+					}
 					orb2.push_back(l2);
-					if (orb2[orb2.size()] > nbands)
+					if (orb2[orb2.size()-1] > nbands)
 						std::cerr<<"Number of orbitals exceeds maximum! Exiting ...\n";
-					ht.push_back  (data[i*length+5]);
+					htr.push_back  (data[i*length+5]);
+					hti.push_back  (data[i*length+6]);
 				}
 			}
 			nLines = dx.size();
@@ -107,8 +110,8 @@ namespace rpa {
 			{
 				// if (orb1[i]<=orb2[i]) {
 					exponent = (ks[0]*dx[i] + ks[1]*dy[i] + ks[2]*dz[i]);
-					ComplexType cs(cos(exponent),sin(exponent));
-					eigenvects(orb1[i],orb2[i]) += ht[i] * cs;
+					// ComplexType cs(cos(exponent),sin(exponent));
+					eigenvects(orb1[i],orb2[i]) += ComplexType(htr[i]*cos(exponent)-hti[i]*sin(exponent), htr[i]*sin(exponent)+hti[i]*cos(exponent));
 				// }
 			}
 

@@ -541,7 +541,7 @@ namespace rpa {
 				os << "hybBand2 = " << (*this).hybBand2 << "\n";
 				os << "nSitesPerUnitCell = " << (*this).nSitesPerUnitCell << "\n";
 				os << "nOrbAtom = ";
-				for (int i=0; i<nOrbAtom.size();i++) os << (*this).nOrbAtom[i] << " "; 
+				for (size_t i=0; i<nOrbAtom.size();i++) os << (*this).nOrbAtom[i] << " "; 
 				os << "\n";
 				os << "nkPerSheet = " << (*this).nkPerSheet << "\n";
 				os << "FSnkz = " << (*this).FSnkz << "\n";

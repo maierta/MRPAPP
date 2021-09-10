@@ -668,7 +668,7 @@ namespace rpa {
 		std::string file;
 		size_t nOrb, msize;
 
-		model<FieldType, MatrixTemplate, ConcurrencyType> model;
+		model<FieldType, MatrixTemplate, ConcurrencyType> tbmodel;
 
 	public:
  		typedef std::vector<SuscType> BaseType;
@@ -683,7 +683,7 @@ namespace rpa {
 			file("none"),
 			nOrb(param.nOrb),
 			msize(nOrb*nOrb),
-			model(param,conc)
+			tbmodel(param,conc)
 		{
 			calcChi0q();
 		}
@@ -699,7 +699,7 @@ namespace rpa {
 			file(fileIn),
 			nOrb(param.nOrb),
 			msize(nOrb*nOrb),
-			model(param,conc)
+			tbmodel(param,conc)
 		{
 			if (qMesh.nktot > 0) {
 				// if (file=="none") calcChi0q();
@@ -718,7 +718,7 @@ namespace rpa {
 		void calcChi0q() {
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
-			BandsType bands(param,model,conc,kmesh,true);
+			BandsType bands(param,tbmodel,conc,kmesh,true);
 			RangeType range(0,qMesh.nktot,conc);
 			for (;!range.end();range.next()) {
 
@@ -771,7 +771,7 @@ namespace rpa {
 				os << real(sus0) << " , " << imag(sus0);
 				os << "\n";
 				SuscType chiRPA(param,conc);
-     			calcRPAResult((*this)[iq],model.spinMatrix,chiRPA,q);
+     			calcRPAResult((*this)[iq],tbmodel.spinMatrix,chiRPA,q);
      			ComplexType susR(chiRPA.calcSus());
      			os2 << q[0] << " , " << q[1] << " , " << q[2] << " , ";
      			os2 << real(susR) << ","  << imag(susR) << "\n";

@@ -6,6 +6,7 @@
 #include <vector>
 
 
+
 extern "C" void 
 #ifdef glyph
 	zheev_
@@ -27,6 +28,7 @@ inline void GEEV(char jobvl,char jobvr,int n,psimag::Matrix<std::complex<double>
 						      &(w[0]),&(work[0]),&lwork,&(rwork[0]),info);
 						}
 
+/*
 extern "C" void 
 #ifdef glyph
 	zgemm_
@@ -52,13 +54,14 @@ extern "C" void
 	dgetri
 #endif
 	(int *, double *, int *, int *, double *, int *, int *);
+*/
 
 inline void GETRF(int m, int n, 
  			      psimag::Matrix<double> &a,int lda, 
  			      std::vector<int> &ipiv, int *info) 
 				 {
 #ifdef glyph						
-				dgetrf_
+				psimag::LAPACK::dgetrf_
 #else
 				dgetrf
 #endif
@@ -70,7 +73,7 @@ inline void GETRI(int m,
 				  psimag::Matrix<double> &work, int lwork, int *info) 
 				 {
 #ifdef glyph						
-				dgetri_
+				psimag::LAPACK::dgetri_
 #else
 				dgetri
 #endif
@@ -118,6 +121,7 @@ inline void GETRI(int m,
 				}
 
 
+
 typedef psimag::Matrix<std::complex<double> > ComplexMatrixType;
 typedef psimag::Matrix<double>  MatrixType;
 
@@ -133,7 +137,7 @@ inline void matMul(ComplexMatrixType& matrix0, ComplexMatrixType& matrix1, Compl
 	char transb('N');
 
 #ifdef glyph
-	zgemm_
+	psimag::BLAS::zgemm_
 #else
 	zgemm
 #endif
@@ -295,6 +299,33 @@ void calcRPAResult(MatrixTemplate<std::complex<FieldType> >& matrix0,
 	// GEMM('N','N',m,n,k,alpha,matrix0,m,c,n,beta,matrix1,n);
 	matMul(matrix0,c,matrix1);
 	// std::cout << "matrix1: " << "\n" << matrix1;
+
+}
+
+template<typename FieldType, typename SuscType, template<typename> class MatrixTemplate>
+void calcRPAResult(SuscType& matrix0, 
+		   MatrixTemplate<std::complex<FieldType> >& interactionMatrix, 
+		   SuscType& matrix1, 
+		   std::vector<FieldType> q=std::vector<FieldType>(3,0.0)) {
+	int n = interactionMatrix.n_row();
+	std::vector<int> ipiv(n);
+	int info;
+	MatrixTemplate<std::complex<FieldType> > work(n,n);
+	MatrixTemplate<std::complex<FieldType> > c(n,n);
+	int lwork(n);
+
+
+	matMul(interactionMatrix,matrix0,c);
+	// Result of matrix multiplication is in c
+	for (size_t i = 0; i < c.n_row(); ++i) for (size_t j = 0; j < c.n_col(); ++j) c(i,j) = -c(i,j);
+	for (size_t i = 0; i < c.n_row(); ++i) c(i,i) = 1.+c(i,i);
+	// Now invert
+	GETRF(n,n,c,n,ipiv,&info);
+	if (info!=0) throw std::runtime_error("GETRF: failed\n");
+	GETRI(n,c,n,ipiv,work,lwork,&info);
+	if (info!=0) throw std::runtime_error("GETRI: failed\n");
+	// Now multiply result with matrix0
+	matMul(matrix0,c,matrix1);
 
 }
 #endif

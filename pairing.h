@@ -227,7 +227,8 @@ namespace rpa {
 			FieldType chiTerm(0.0);
 			// FieldType term2(0.0);
 
-			std::string filename = "GammaPPOrb_" + param.fileID + ".txt";
+			std::string cstr = "GammaPPOrb_" + param.fileID + ".txt";
+			const char *filename = cstr.c_str();
 			std::ofstream os(filename);
 			os << "#i\t j\t l1\t l2\t l3\t l4\t Gammma_{l1,l2,l3,l4}(k_i,k_j)\n";
 
@@ -582,7 +583,8 @@ namespace rpa {
 			// std::cout << "kFx1,kFy1" << kFx[0] << "," << kFy[0];
 			// First in a format suitable for reading into R using the script in gammapp_diag.R
 			size_t nkF(FSpoints.nTotal);
-			std::string filename = "Gammakkp_" + param.fileID + ".txt";
+			std::string cstr = "Gammakkp_" + param.fileID + ".txt";
+			const char *filename = cstr.c_str();
 			std::ofstream os(filename);
 			os << "nkF:\n" << nkF << "\n";
 			os << "kFx:\n" << FSpoints.kFx << "\n";
@@ -600,7 +602,8 @@ namespace rpa {
 			os.close();
 
 			// Now write in jsn format for post-processing with python/matplotlib
-			std::string filename2 = "Gammakkp_" + param.fileID + ".jsn";
+			std::string cstr2 = "Gammakkp_" + param.fileID + ".jsn";
+			const char *filename2 = cstr2.c_str();
 			std::ofstream os2(filename2);
 			int width(13);
 			os2.precision(width);
@@ -733,7 +736,8 @@ namespace rpa {
 		VectorType eigenvals(nkF);
 		eigen(matrix,eigenvals,eigenvects);
 		// Now print out eigenvalues and -vectors
-		std::string filename = "Gap_" + param.fileID + ".jsn";
+		std::string cstr = "Gap_" + param.fileID + ".jsn";
+		const char *filename = cstr.c_str();
 		std::ofstream os2(filename);
 		int width(13);
 		os2.precision(width);
@@ -790,7 +794,8 @@ namespace rpa {
 	}
 
 	void writeMatrixElementsOnFs(){
-		std::string filename = "akOnFS_" + param.fileID + ".txt";
+		std::string cstr = "akOnFS_" + param.fileID + ".txt";
+		const char *filename = cstr.c_str();
 		std::ofstream os(filename);
 		os << "nkF: \n";
 		os << nkF << "\n";

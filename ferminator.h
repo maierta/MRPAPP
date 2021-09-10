@@ -1246,7 +1246,8 @@ namespace rpa {
 
 	void writeKF() {
 		std::string filename = "FSpoints_" + param.fileID + ".txt";
-		std::ofstream os(filename);
+		const char *cstr = filename.c_str();
+		std::ofstream os(cstr);
 		int width(8);
 		os.precision(width);
 		os << std::fixed;

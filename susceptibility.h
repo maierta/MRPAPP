@@ -360,7 +360,9 @@ namespace rpa {
 			int width(10);
 			std::vector<FieldType> q(3);
 			if (writeFullChi0) {
-				std::ofstream os("chi0Full.txt");
+				std::string cstr = "chi0Full_" + param.fileID + ".txt";
+				const char *filename = cstr.c_str();
+				std::ofstream os(filename);
 				os.precision(width);
 				os << std::fixed;
 				os << "nq1,nq2,nq3,nw: \n";

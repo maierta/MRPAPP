@@ -86,13 +86,13 @@ namespace rpa {
 			FieldType t1xy, t2xy, t3xy, t4xy, t5xy, t6xy;
 
 			t1 = 0.3624; t2 = 0.134; t3 = 0.001021; t4 = 0.005727; t5 = 0.04401; 
-			t6 = 0.01393; t7 = 0.00752; t8 = -0.02522; t9 = 0.0000228; mu = 0.4385;
+			t6 = 0.01393; t7 = 0.00752; t8 = -0.002522; t9 = 0.0000228; mu = 0.4385;
 			t1xy = 0.262; t2xy = -0.03423; t3xy = 0.04373; t4xy = -0.008069; t5xy = 0.003159; t6xy = -0.001811; muxy = 0.2186;
 			tp = 0.01625; tpp = -0.01995; tppp = 0.00394; tint = -2*0.008304;
 
-			ekXZ    = -2*t1*cx-2*t2*cy-2*t3*c2x-2*t4*c2y-4*t5*cx*cy-4*t6*c2x*cy-4*t7*cx*c2y-2*t8*(cx-1)-8*t9*cx2*cy2*cz2 - mu - param.mu;
-			ekYZ    = -2*t1*cy-2*t2*cx-2*t3*c2y-2*t4*c2x-4*t5*cy*cx-4*t6*c2y*cx-4*t7*cy*c2x-2*t8*(cy-1)-8*t9*cy2*cx2*cz2 - mu - param.mu;
-			ekXY    = -2*t1xy*(cx+cy)-2*t2xy*(c2x+c2y)-4*t3xy*cx*cy -4*t4xy*(c2x*cy+cx*c2y) - 2*t5xy*(cz-1) - 8*t6xy*cx2*cy2*cz2 - param.mu;
+			ekXZ    = -2*t1*cx-2*t2*cy-2*t3*c2x-2*t4*c2y-4*t5*cx*cy-4*t6*c2x*cy-4*t7*cx*c2y-2*t8*(cz-1)-8*t9*cx2*cy2*cz2 - mu - param.mu;
+			ekYZ    = -2*t1*cy-2*t2*cx-2*t3*c2y-2*t4*c2x-4*t5*cy*cx-4*t6*c2y*cx-4*t7*cy*c2x-2*t8*(cz-1)-8*t9*cy2*cx2*cz2 - mu - param.mu;
+			ekXY    = -2*t1xy*(cx+cy)-2*t2xy*(c2x+c2y)-4*t3xy*cx*cy -4*t4xy*(c2x*cy+cx*c2y) - 2*t5xy*(cz-1) - 8*t6xy*cx2*cy2*cz2 - muxy - param.mu;
 
 			gxzyz   = -4*tp*sx*sy - 4*tpp*sx2*sy2*cz2;
 			Txzxy   = -4*tint*cx2*sy2*sz2; 
@@ -158,18 +158,8 @@ namespace rpa {
 
 				FieldType t12z, t56z, tdxy, td;
 
-				if (param.Case == "Cobo0") {
-						t12z = 0; t56z = 0; tdxy = 0; td = 0; 			
-				} else if (param.Case == "Cobo1") {
-						t12z = 0.005; t56z = 0.003; tdxy = 0; td = 0; 			
-				} else if (param.Case == "Cobo2") {
-						t12z = 0.005; t56z = 0.004; tdxy = 0; td = 0; 			
-				} else if (param.Case == "Cobo3") {
-						t12z = 0.005; t56z = 0.005; tdxy = 0; td = 0; 
-				} else if (param.Case == "Cobo4") {
-						t12z = 0.005; t56z = 0.003; tdxy = 0.002; td = 0.002; 
-				} else if (param.Case == "Suh4") {
-						t12z = 0; t56z = 0.015; tdxy = 0; td = 0; 
+				if (param.Case == "Suh4") {
+						t12z = 0; t56z = 0.015; tdxy = 0; td = 0; 			
 				} else {
 					std::cerr << "Case not implemented \n";
 					exit(0);

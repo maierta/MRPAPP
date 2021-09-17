@@ -73,9 +73,10 @@ namespace rpa {
 
 			FieldType ekXZ, ekYZ, ekXY;
 			FieldType gxzyz, Txzxy, Tyzxy;
-			FieldType cx,cy,cz,cxy,c2x,c2y,sx,sy,cz2,cx2,cy2,sx2,sy2,sz2;
+			FieldType cx,cy,cz,cxy,c2x,c2y,sx,sy,cz2,cx2,cy2,sx2,sy2,sz2,s2x,s2y;
 
 			sx = sin(k[0]); sy = sin(k[1]); sx2 = sin(0.5*k[0]); sy2 = sin(0.5*k[1]); sz2 = sin(0.5*k[2]);
+			s2x = sin(2*k[0]); s2y = sin(2*k[1]);
 			cx = cos(k[0]); cy = cos(k[1]); cz = cos(k[2]); cxy = cos(k[0])*cos(k[1]);
 			c2x = cos(2*k[0]); c2y = cos(2*k[1]); 
 			cx2 = cos(0.5*k[0]); cy2 = cos(0.5*k[1]); cz2 = cos(0.5*k[2]);
@@ -94,7 +95,7 @@ namespace rpa {
 			ekYZ    = -2*t1*cy-2*t2*cx-2*t3*c2y-2*t4*c2x-4*t5*cy*cx-4*t6*c2y*cx-4*t7*cy*c2x-2*t8*(cz-1)-8*t9*cy2*cx2*cz2 - mu - param.mu;
 			ekXY    = -2*t1xy*(cx+cy)-2*t2xy*(c2x+c2y)-4*t3xy*cx*cy -4*t4xy*(c2x*cy+cx*c2y) - 2*t5xy*(cz-1) - 8*t6xy*cx2*cy2*cz2 - muxy - param.mu;
 
-			gxzyz   = -4*tp*sx*sy - 4*tpp*sx2*sy2*cz2;
+			gxzyz   = -4*tp*sx*sy - 4*tpp*sx2*sy2*cz2 -4*tppp*(s2x*sy+sx*s2y);
 			Txzxy   = -4*tint*cx2*sy2*sz2; 
 			Tyzxy   = -4*tint*sx2*cy2*sz2; 
 

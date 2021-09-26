@@ -795,7 +795,7 @@ namespace rpa {
 			FSCenters[1][0] =  Pi/2.  ; FSCenters[1][1] = Pi  ; FSBand[1]  =  0;
 			FSCenters[2][0] =  -Pi    ; FSCenters[2][1] = 0.  ; FSBand[2]  =  1;
 
-			size_t nkSearch(1000000);
+			size_t nkSearch(100000);
 			for (size_t iSheet=0;iSheet<2;iSheet++) calcKF(nkSearch,iSheet,0.0,2);
 			for (size_t iSheet=2;iSheet<3;iSheet++) calcKFOpen2D(nkSearch,iSheet,1);
 
@@ -841,8 +841,10 @@ namespace rpa {
 			nTotal = nSheets * nkPerSheet;
 			resizeContainers();
 
-			FSCenters[0][0] = -0.5*Pi  ; FSCenters[0][1] = 0  ; FSBand[0]  =  0;
-			FSCenters[1][0] = -0.5*Pi  ; FSCenters[1][1] = 0   ; FSBand[1]  =  1;
+			// FSCenters[0][0] = -0.5*Pi  ; FSCenters[0][1] = 0  ; FSBand[0]  =  0;
+			// FSCenters[1][0] = -0.5*Pi  ; FSCenters[1][1] = 0   ; FSBand[1]  =  1;
+			FSCenters[0][0] = -Pi  ; FSCenters[0][1] = 0  ; FSBand[0]  =  0;
+			FSCenters[1][0] = -Pi  ; FSCenters[1][1] = 0   ; FSBand[1]  =  1;
 
 			size_t nkSearch(100000);
 			for (size_t iSheet=0;iSheet<1;iSheet++) calcKFOpen2D(nkSearch,iSheet,1);
@@ -1008,7 +1010,7 @@ namespace rpa {
 			VectorType k(3,0);
 			k[0] = FSCenters[iSheet][0];
 			k[1] = FSCenters[iSheet][1];
-			k[scanAlongDir==1?0:1] += float(ik)*Pi/float(nkPerSheet-1);
+			k[scanAlongDir==1?0:1] += float(ik)*2.*Pi/float(nkPerSheet-1);
 			bands.getBands(k,w,v);
 			FieldType ek(w[FSBand[iSheet]]);
 			FieldType sgnW = (ek > 0) - (ek < 0);

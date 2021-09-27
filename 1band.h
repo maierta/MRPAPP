@@ -47,6 +47,7 @@ namespace rpa {
 			spinMatrix(nbands*nbands,nbands*nbands),
 			chargeMatrix(nbands*nbands,nbands*nbands)
 		{
+			std::cout << "Single-band Model \n";
 			if (nbands != 1) 
 				std::cerr<<"Number of orbitals should be 1! Exiting ...\n";
 
@@ -60,7 +61,7 @@ namespace rpa {
 			t = param.hopping_t;
 			tp = param.hopping_tp;
 			cx = cos(k[0]); cy = cos(k[1]);
-			eigenvals[0] = -2*t*(cx+cy)-4*tp*cx*cy;
+			eigenvals[0] = -2*t*(cx+cy)-4*tp*cx*cy - param.mu;
 			eigenvects(0,0) = 1.0;
 		}
 

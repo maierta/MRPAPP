@@ -35,6 +35,18 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 
 	rpa::bandstructure<Field,psimag::Matrix, ModelType, ConcurrencyType> bands(param,model,conc,kmesh,false);
 
+
+	// Simple test
+	// std::vector<FieldType> ek(param.nOrb,0), k(3);
+	// ComplexMatrixType ak(param.nOrb,param.nOrb);
+        //
+	// k[0] = 0.6283185307;
+	// k[1] = 0.9424777961;
+	// k[2] = 1.2566370614;
+	//
+	// bands.getEkAndAk(k, ek, ak);
+	// std::cout << ek << "\n";
+
 	std::string filename = "ek_" + param.fileID + ".txt";
 
 	bands.calcBandStructure(filename,true);

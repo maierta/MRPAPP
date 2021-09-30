@@ -86,10 +86,21 @@ namespace rpa {
 			FieldType t6, t7, t8, t9, mu, muxy;
 			FieldType t1xy, t2xy, t3xy, t4xy, t5xy, t6xy;
 
-			t1 = 0.3624; t2 = 0.134; t3 = 0.001021; t4 = 0.005727; t5 = 0.04401; 
-			t6 = 0.01393; t7 = 0.00752; t8 = -0.002522; t9 = 0.0000228; mu = 0.4385;
-			t1xy = 0.262; t2xy = -0.03423; t3xy = 0.04373; t4xy = -0.008069; t5xy = 0.003159; t6xy = -0.001811; muxy = 0.2186;
+			t1 = 0.3624; t2 = 0.134; 
+			t3 = 0.001021; t4 = 0.005727; t5 = 0.04401; 
+			t6 = 0.01393; t7 = 0.00752; t8 = -0.002522; t9 = 0.0000228; 
+			// t3 = 0; t4 = 0; t5 = 0; 
+			// t6 = 0; t7 = 0; t8 = 0; t9 = 0; 
+
+			mu = 0.4385;
+
+			t1xy = 0.262; t2xy = -0.03423; t3xy = 0.04373; 
+			t4xy = -0.008069; t5xy = 0.003159; t6xy = -0.001811; 
+			// t4xy = 0; t5xy = 0; t6xy = 0; 
+
+			muxy = 0.2186;
 			tp = 0.01625; tpp = -0.01995; tppp = 0.00394; tint = -2*0.008304;
+			// tp = 0; tpp = 0; tppp = 0; tint = 0;
 
 			ekXZ    = -2*t1*cx-2*t2*cy-2*t3*c2x-2*t4*c2y-4*t5*cx*cy-4*t6*c2x*cy-4*t7*cx*c2y-2*t8*(cz-1)-8*t9*cx2*cy2*cz2 - mu - param.mu;
 			ekYZ    = -2*t1*cy-2*t2*cx-2*t3*c2y-2*t4*c2x-4*t5*cy*cx-4*t6*c2y*cx-4*t7*cy*c2x-2*t8*(cz-1)-8*t9*cy2*cx2*cz2 - mu - param.mu;
@@ -156,7 +167,6 @@ namespace rpa {
 
 			// Optionally add k-SOC terms
 			if (param.k_SOC) {
-
 				FieldType t12z, t56z, tdxy, td;
 
 				if (param.Case == "Suh4") {

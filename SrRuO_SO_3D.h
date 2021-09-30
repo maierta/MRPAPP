@@ -165,8 +165,6 @@ namespace rpa {
 						t12z = 0.005; t56z = 0.005; tdxy = 0; td = 0; 
 				} else if (param.Case == "Cobo4") {
 						t12z = 0.005; t56z = 0.003; tdxy = 0.002; td = 0.002; 
-				} else if (param.Case == "Suh4") {
-						t12z = 0; t56z = 0.015; tdxy = 0; td = 0; 
 				} else {
 					std::cerr << "Case not implemented \n";
 					exit(0);

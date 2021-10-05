@@ -1,13 +1,12 @@
 #
 SHELL    = /bin/bash
 SRC_DIR = ./
-INCLUDES =  -I. \
-	-I$(SRC_DIR) \
+INCLUDES =  -I$(SRC_DIR) \
 	-I$(SRC_DIR)/PartialPsimag \
 	-I$(SRC_DIR)/PsimagLite \
 	-I$(SRC_DIR)/PsimagLite/src \
 
-EXENAME		         = mrpapp
+EXENAME		     = mrpapp
 CC                   = mpicxx
 cc                   = mpicxx
 MatrixBoundsChecking = -DNDEBUG 
@@ -16,11 +15,8 @@ MatrixBoundsChecking = -DNDEBUG
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D 
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BAFEAS
 
-# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
-# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_NDNIO2
-FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_SRRUO3DSUH
-# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BSCCOBILAYER
-# FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_COUPLEDLADDERS
+#FLAGS        = $(MatrixBoundsChecking)  -O2 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
+FLAGS        = $(MatrixBoundsChecking)  -O3 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_COUPLEDLADDERS
 #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BILAYER_FESC
 #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_KFE2SE2
 
@@ -46,11 +42,11 @@ showEnv:
 	@echo ----------------------------------------------------------------
 	@echo
 
-main.o: main.cpp 
-	$(CC) $(INCLUDES) $(FLAGS) -c main.cpp 
+main.o: $(SRC_DIR)/main.cpp 
+	$(CC) $(INCLUDES) $(FLAGS) -c $(SRC_DIR)/main.cpp 
 
-main.s: main.cpp 
-	$(CC) -S $(INCLUDES) $(FLAGS) -c main.cpp 
+main.s: $(SRC_DIR)/main.cpp 
+	$(CC) -S $(INCLUDES) $(FLAGS) -c $(SRC_DIR)/main.cpp 
 
 $(EXENAME): $(OBJECTS)
 	$(CC) $(INCLUDES) $(FLAGS) $(OBJECTS) -o $(EXENAME)  -lblas -llapack

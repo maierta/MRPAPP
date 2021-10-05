@@ -330,7 +330,7 @@ namespace rpa {
 		// 	}
 		// }
 
-		void calcBandStructure(std::string file,bool printOccupation) {
+		void calcBandStructure(std::string file) {
 			size_t nktot(kmesh.nktot);
 			RangeType range(0,nktot,conc);
 			std::vector<std::vector<FieldType> > ek(nktot,VectorType(nbands,0));
@@ -343,8 +343,6 @@ namespace rpa {
 				std::vector<FieldType> k(3);
 				kmesh.momenta.getRow(ik,k);
 				getEkAndAk(k,ek[ik],ak);
-				if (printOccupation) 
-					for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[ik][i],1./param.temperature);
 
 				for (size_t iband=0; iband<nbands; iband++) 
 					for (size_t iorb=0; iorb<nbands; iorb++) weights[ik](iorb,iband)=pow(abs(ak(iorb,iband)),2);
@@ -354,14 +352,7 @@ namespace rpa {
 				conc.reduce(ek[ik]);
 				conc.reduce(weights[ik]);
 			}
-			if (printOccupation) {
-				conc.reduce(occupation);
-				FieldType occ(0.0);
-				for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
-				occ /= FieldType(nktot);
-				if (conc.rank()==0) std::cout << "\n\t\tFilling = " << 2 * occ  << "\n\n";
-			}
-
+			
 			if (conc.rank()==0) {
 				const char *filename = file.c_str();
 				std::ofstream os(filename);
@@ -375,23 +366,35 @@ namespace rpa {
 
 					for (size_t iorb=0; iorb < nbands; iorb++) 
 						for (size_t iband=0; iband < nbands; iband++) os << "," << weights[ik](iorb,iband);
-					// os << std::setw(15);
-					// os << k[0]/param.pi_f;
-					// os << std::setw(15);
-					// os << k[1]/param.pi_f;
-					// os << std::setw(15);
-					// os << k[2]/param.pi_f;
-					// os << std::setw(15);
-					// for (size_t i = 0; i < nbands; ++i) os << ek[ik][i] << std::setw(15);
-
-					// for (size_t iorb=0; iorb < nbands; iorb++) 
-					// 	for (size_t iband=0; iband < nbands; iband++) os << weights[ik](iorb,iband) << std::setw(15);
-					
 					os << "\n";
 				}
 				os.close();
 			}
 		}
+
+		FieldType calcFilling() {
+			size_t nktot(kmesh.nktot);
+			RangeType range(0,nktot,conc);
+			VectorType ek(nbands,0);
+			ComplexMatrixType ak(nbands,nbands);
+			FieldType occ(0.0);
+
+			VectorType occupation(nktot,0);
+			for (;!range.end();range.next()) {
+				size_t ik = range.index();
+				std::vector<FieldType> k(3);
+				kmesh.momenta.getRow(ik,k);
+				getEkAndAk(k,ek,ak);
+				for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[i],1./param.temperature);
+			}
+
+			conc.reduce(occupation);
+			for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
+			occ /= FieldType(nktot);
+			// if (conc.rank()==0) std::cout << "\n\t\tFilling = " << 2 * occ  << "\n\n";
+			return 2*occ;
+		}
+
 
 		inline FieldType fermi(const FieldType& energy, const FieldType& invT) {
 			FieldType xx=energy*invT;

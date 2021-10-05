@@ -154,6 +154,7 @@ namespace rpa {
 			for (size_t i=0;i<nktot;i++) occ += occupation[i];
 			occ /= FieldType(nktot*param.sublattice*2);
 			if (conc.rank()==0) std::cout << "Filling = " << 2.*occ << "\n";
+			filling = 2.*occ;
 
 			if (conc.rank()==0) std::cout << "Done calculating band structure \n";
 

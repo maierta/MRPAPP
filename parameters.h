@@ -54,6 +54,8 @@ namespace rpa {
 		size_t FSnkz;
 		size_t nOrb;
 		Field  mu;
+		Field  nTarget;
+		bool adjustChemicalPotential;
 		std::string tbfile;
 		Field hopping_t;
 		Field hopping_tp;
@@ -170,6 +172,8 @@ namespace rpa {
 			FSnkz(1),
 			nOrb(1),
 			mu(-0.1),
+			nTarget(1.0),
+			adjustChemicalPotential(0),
 			tbfile(""),
 			hopping_t(1.0),
 			hopping_tp(0.0),
@@ -321,6 +325,8 @@ namespace rpa {
 		        else if (text.find("temperature")!=std::string::npos) str >> (*this).temperature; 
 		        else if (text.find("numberOfOrbitals")!=std::string::npos) str >> (*this).nOrb; 
 		        else if (text.find("chemicalPotential")!=std::string::npos) str >> (*this).mu; 
+		        else if (text.find("targetFilling")!=std::string::npos) str >> (*this).nTarget; 
+		        else if (text.find("adjustChemicalPotential")!=std::string::npos) str >> (*this).adjustChemicalPotential; 
 		        else if (text.find("tbParametersFile")!=std::string::npos) str >> (*this).tbfile; 
 		        else if (text.find("0hopping_t")!=std::string::npos) str >> (*this).hopping_t; 
 		        else if (text.find("1hopping_tp")!=std::string::npos) str >> (*this).hopping_tp; 
@@ -442,6 +448,8 @@ namespace rpa {
 				os << "temperature = " << (*this).temperature << "\n";
 				os << "numberOfOrbitals = " << (*this).nOrb << "\n";
 				os << "chemicalPotential = " << (*this).mu << "\n";
+				os << "targetFilling = " << (*this).nTarget << "\n";
+				os << "adjustChemicalPotential = " << (*this).adjustChemicalPotential << "\n";
 				os << "tbParametersFile = " << (*this).tbfile << "\n";
 				os << "hopping_t = " << (*this).hopping_t << "\n";
 				os << "hopping_tp = " << (*this).hopping_tp << "\n";
@@ -572,6 +580,8 @@ namespace rpa {
 		        conc.broadcast((*this).temperature); 
 		        conc.broadcast((*this).nOrb); 
 		        conc.broadcast((*this).mu); 
+		        conc.broadcast((*this).nTarget); 
+		        conc.broadcast((*this).adjustChemicalPotential); 
 		        conc.broadcast((*this).tbfile); 
 		        conc.broadcast((*this).hopping_t); 
 		        conc.broadcast((*this).hopping_tp); 

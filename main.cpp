@@ -47,9 +47,29 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 	// bands.getEkAndAk(k, ek, ak);
 	// std::cout << ek << "\n";
 
-	std::string filename = "ek_" + param.fileID + ".txt";
 
-	bands.calcBandStructure(filename,true);
+	FieldType filling(bands.calcFilling());
+	if (conc.rank()==0) std::cout << "Filling = " << filling << " \n";
+	if (conc.rank()==0) std::cout << "Target filling = " << param.nTarget << " \n";
+
+	if (param.adjustChemicalPotential) {
+
+		FieldType delta = 1.0e-3;
+		while ((abs(filling) - param.nTarget) > delta) {
+			// adjust chemical potential to yield target density
+			param.mu -= 0.1*(filling - param.nTarget);
+			filling = bands.calcFilling();
+		}
+
+	if (conc.rank()==0) std::cout << "Chemical potential = " << param.mu << " \n";
+
+
+	}
+
+
+	// Now that chemical potential is fixed to give target filling, calculate bandstructure
+	std::string filename = "ek_" + param.fileID + ".txt";
+	bands.calcBandStructure(filename);
 
 	// Now calculate bands along high-symmetry direction
 	std::string path("Path2");
@@ -63,7 +83,7 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 	// kmesh2.set_momenta_Path2();
 	rpa::bandstructure<Field,psimag::Matrix,ModelType,ConcurrencyType> bands2(param,model,conc,kmesh2,false);
 	std::string filename2 = "ek_high_sym_" + param.fileID + ".txt";
-	bands2.calcBandStructure(filename2,false);
+	bands2.calcBandStructure(filename2);
 
 }
 

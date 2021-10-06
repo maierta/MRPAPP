@@ -151,7 +151,7 @@ namespace rpa {
 		{
 			// if (kmesh.nktot>=16384) caching_=false;
 			// if (param.tbfile!="") readCSVFile();
-			std::cout << "Caching=" << caching_ << "\n";
+			if (conc.rank()==0) std::cout << "Caching=" << caching_ << "\n";
 			// if (param.LS==1) setupLMatrix();
 			// if (param.sublattice==1) fixdr();
 		}
@@ -337,7 +337,6 @@ namespace rpa {
 			std::vector<MatrixType> weights(nktot,MatrixType(nbands,nbands));
 			ComplexMatrixType ak(nbands,nbands);
 
-			VectorType occupation(nktot,0);
 			for (;!range.end();range.next()) {
 				size_t ik = range.index();
 				std::vector<FieldType> k(3);
@@ -388,7 +387,11 @@ namespace rpa {
 				for (size_t i=0;i<nbands;i++) occupation[ik] += fermi(ek[i],1./param.temperature);
 			}
 
-			conc.reduce(occupation);
+			conc.allReduce(occupation);
+			// for (size_t ik=0;ik<nktot;ik++) conc.allReduce(occupation[ik]);
+
+			// std::cout << "Rank:" << conc.rank() << "Occupation:"<<occupation[0]<<"\n";
+
 			for (size_t ik=0;ik<nktot;ik++) occ += occupation[ik];
 			occ /= FieldType(nktot);
 			// if (conc.rank()==0) std::cout << "\n\t\tFilling = " << 2 * occ  << "\n\n";

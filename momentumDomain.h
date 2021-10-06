@@ -214,7 +214,7 @@ namespace rpa {
 		void set_momenta(const bool& indexation) {
 						 	
 					if (dim==2) {	
-						std::cout << "shift=" << shift[0] << ", b[0,0]" << b(0,0) << ", b[1,0]" << b(1,0) << "\n";
+						if (conc.rank()==0) std::cout << "shift=" << shift[0] << ", b[0,0]" << b(0,0) << ", b[1,0]" << b(1,0) << "\n";
 						for (size_t ikx = 0; ikx < nk; ++ikx) {
 							for (size_t iky = 0; iky < nk; ++iky) {
 								size_t ind = index(ikx,iky);

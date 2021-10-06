@@ -49,23 +49,26 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 
 
 	FieldType filling(bands.calcFilling());
-	if (conc.rank()==0) std::cout << "Filling = " << filling << " \n";
+
+	if (conc.rank()==0) std::cout << "\n\nFilling = " << filling << " \n";
 	if (conc.rank()==0) std::cout << "Target filling = " << param.nTarget << " \n";
 
 	if (param.adjustChemicalPotential) {
+		// std::cout << "adjusting chem. pot." << abs(filling) - param.nTarget << "\n";
 
 		FieldType delta = 1.0e-3;
-		while ((abs(filling) - param.nTarget) > delta) {
+		while (abs(filling - param.nTarget) > delta) {
 			// adjust chemical potential to yield target density
 			param.mu -= 0.1*(filling - param.nTarget);
+			// if (conc.rank()==0) std::cout << "mu adjusted to " << param.mu << "\n";
 			filling = bands.calcFilling();
 		}
 
-	if (conc.rank()==0) std::cout << "Chemical potential = " << param.mu << " \n";
-
-
+		if (conc.rank()==0) {
+			std::cout << "\n\nChemical potential = " << param.mu << " \n";
+			std::cout << "Filling = " << filling << " \n\n\n";
+		}
 	}
-
 
 	// Now that chemical potential is fixed to give target filling, calculate bandstructure
 	std::string filename = "ek_" + param.fileID + ".txt";
@@ -112,10 +115,6 @@ int main(int argc,char *argv[])
 
 	parameters<FieldType,psimag::Matrix,ConcurrencyType> param(concurrency);
 	param.readFromInputFile(filename);
-	std::string cstr = "parameters_" + param.fileID + ".txt";
-	const char *filename1 = cstr.c_str();
-	std::ofstream os1(filename1);
-	if (concurrency.rank()==0) param.writeParameters(os1);
 	param.setupOrbitalIndices();
 
 	ModelType model(param, concurrency);
@@ -178,6 +177,10 @@ int main(int argc,char *argv[])
 		pairing<FieldType,BandsType,SuscType,GapType,psimag::Matrix,ModelType,ConcurrencyType> pairing(param,model,concurrency,param.interpolateChi,qMesh);
 	}
 
+	std::string cstr = "parameters_" + param.fileID + ".txt";
+	const char *filename1 = cstr.c_str();
+	std::ofstream os1(filename1);
+	if (concurrency.rank()==0) param.writeParameters(os1);
 
 
 	// if(param.options.find("calcTest")!=std::string::npos) {

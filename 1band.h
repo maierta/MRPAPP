@@ -32,6 +32,8 @@ namespace rpa {
 		size_t msize;
 		const ComplexType ii;
 
+	public:
+		FieldType nbands;
 		ComplexMatrixType spinMatrix;
 		ComplexMatrixType chargeMatrix;
 

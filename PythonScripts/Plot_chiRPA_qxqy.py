@@ -4,6 +4,7 @@ from numpy import *
 from matplotlib.pyplot import *
 
 
+style.use("bmh")
 
 def plotchi(file="chiRPA.txt"):
 
@@ -43,18 +44,19 @@ def plotchi(file="chiRPA.txt"):
 	else:
 	    ax.set_title(r"$\chi\prime(q,\omega)$ for $\omega=$"+str(round(omega,5)),fontsize=13)
 
+	ax.set_facecolor("white")
 	# ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
 	# ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
 	# ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
 
 	# ax.set_title(file)
 
-	show()
+	# show()
 
 	fig2 = figure(figsize=(8,6))
 	ax2=fig2.add_subplot(111)
 
-	cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="bilinear",origin='lower',cmap='jet')
+	cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="none",origin='lower',cmap='jet')
 	fig2.colorbar(cset)
 	ax2.set_xlabel(r"$q_x/\pi$",fontsize=13,labelpad=10)
 	ax2.set_ylabel(r"$q_y/\pi$",fontsize=13,labelpad=10)

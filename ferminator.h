@@ -77,7 +77,8 @@ namespace rpa {
 		{
 			// if (param.readFSFromFile) readFromFile(); // if data has additional columns for deltakf and vkf
 			if (param.readFSFromFile) {
-				readFromFile2();// if data only has kFx, kFy, kFz, band
+				readFromFile();// if data has kFx, kFy, kFz, band, deltakf, vkf
+				// readFromFile2();// if data only has kFx, kFy, kFz, band
 				if (conc.rank()==0) writeKF();
 			} else {
 				if (conc.rank()==0) std::cout << "Now setting up Fermi surface for case " << Case_ << "\n";
@@ -1020,7 +1021,8 @@ namespace rpa {
 				sgnOld = sgnW;
 				kOld = k;
 				ikF += 1;
-				FieldType dist(Pi/float(nkSearch)*float(ikF));
+				// FieldType dist(Pi/float(nkSearch)*float(ikF));
+				FieldType dist(Pi/float(nkSearch));
 				k[scanAlongDir] += dist;
 				bands.getBands(k,w,v);
 				FieldType ek(w[FSBand[iSheet]]);

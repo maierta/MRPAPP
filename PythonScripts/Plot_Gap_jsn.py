@@ -45,7 +45,7 @@ def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0):
             for j in range(nrows):
                 ax[j,i].scatter(kf[:,0],kf[:,1],c=evec[index,:],cmap=get_cmap('BrBG'),s=50,lw=0.2)
                 ax[j,i].set_aspect('equal')
-                ax[j,i].set_title(r'$\lambda=$'+str(round(e[i],4)))
+                ax[j,i].set_title(r'$\lambda=$'+str(round(e[index],4)))
                 index += 1
     
 

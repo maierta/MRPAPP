@@ -77,7 +77,8 @@ namespace rpa {
 		{
 			// if (param.readFSFromFile) readFromFile(); // if data has additional columns for deltakf and vkf
 			if (param.readFSFromFile) {
-				readFromFile2();// if data only has kFx, kFy, kFz, band
+				readFromFile(); // if data has kFx, kFy, kFz, band, deltaKf, vKf
+				// readFromFile2();// if data only has kFx, kFy, kFz, band
 				if (conc.rank()==0) writeKF();
 			} else {
 				if (conc.rank()==0) std::cout << "Now setting up Fermi surface for case " << Case_ << "\n";
@@ -1010,7 +1011,8 @@ namespace rpa {
 			VectorType k(3,0);
 			k[0] = FSCenters[iSheet][0];
 			k[1] = FSCenters[iSheet][1];
-			k[scanAlongDir==1?0:1] += float(ik)*2.*Pi/float(nkPerSheet-1);
+			k[scanAlongDir==1?0:1] += float(ik)*2*Pi/float(nkPerSheet-1);
+			// k[scanAlongDir==1?0:1] += float(ik)*2.*Pi/float(nkPerSheet-1);
 			bands.getBands(k,w,v);
 			FieldType ek(w[FSBand[iSheet]]);
 			FieldType sgnW = (ek > 0) - (ek < 0);
@@ -1020,13 +1022,14 @@ namespace rpa {
 				sgnOld = sgnW;
 				kOld = k;
 				ikF += 1;
-				FieldType dist(Pi/float(nkSearch)*float(ikF));
+				// FieldType dist(Pi/float(nkSearch)*float(ikF));
+				FieldType dist(Pi/float(nkSearch));
 				k[scanAlongDir] += dist;
 				bands.getBands(k,w,v);
 				FieldType ek(w[FSBand[iSheet]]);
 				sgnW = (ek > 0) - (ek < 0);
 			}
-			if (ikF <= nkSearch) {
+			if (ikF < nkSearch) {
 				FieldType kx(0.5*(k[0]+kOld[0]));
 				FieldType ky(0.5*(k[1]+kOld[1]));
 				kFx.push_back(kx);
@@ -1202,7 +1205,8 @@ namespace rpa {
 			std::string file(param.fsfile);
 			VectorType data;
 			loadVector(data,file);
-			// We assume that each line has the format kFx,kFy,kFz,band, dk, vF
+			// We assume that each line has the format kFx,kFy,kFz,band, vF
+			// dk still has to generated
 			size_t step=6;
 			std::cout << "File="<<file<<"\n";
 			nTotal=data.size()/step;

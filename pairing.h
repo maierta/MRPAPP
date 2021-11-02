@@ -250,6 +250,11 @@ namespace rpa {
 				
 				else calcGammaPPTerms(ind,q,k1,k2,ik1,ik2,band1,band2,GammaPPkkp,GammaZkkp,chiTerm,os);
 
+				if (GammaPPkkp < 1.0e-5) {
+					std::cout << "GammaPPkkp negative !! \n";
+					exit(0);
+				}
+
 				Container[ind] = GammaPPkkp;
 				ContainerZ[ind] = GammaZkkp;
 				Container2[ind] = chiTerm;

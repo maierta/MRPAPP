@@ -21,16 +21,19 @@ namespace rpa {
 	class model {
 	private:
 		typedef MatrixTemplate<Field> 		MatrixType;
-		typedef std::complex<Field>		    ComplexType;
+		typedef std::complex<Field>	        ComplexType;
 		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;
 		typedef std::vector<Field>      	VectorType;
-		typedef Field 				        FieldType;
+		typedef Field 				FieldType;
 		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
 		
 	private:
 		size_t msize;
+		// std::vector<std::vector<Field> > kField;
+		// std::vector<size_t> bandField;
+		// std::vector<std::vector<Field> > gapField(3, 0);
 	public:
 		FieldType nbands;
 		ComplexMatrixType spinMatrix;
@@ -66,6 +69,18 @@ namespace rpa {
 			spinOfEll[5] = +1; orbOfEll[5] = 2; 
 
 			setupInteractionMatrix();
+
+			// if (param.options.find("calcSus")!=std::string::npos && param.scState) {
+			// 	if (conc.rank()==0) readSCGap(kField, gapField, param.scGapfile);
+			// 	std::cout << "GapFile was read in \n";
+			// 	for (size_t ik=0;ik<kField.size();ik++) {
+			// 		conc.broadcast(kField[ik]);
+			// 		conc.broadcast(gapField[0][ik]);
+			// 		conc.broadcast(gapField[1][ik]);
+			// 		conc.broadcast(gapField[2][ik]);
+			// 	}
+			// }
+
 
 		}
 		
@@ -282,6 +297,34 @@ namespace rpa {
 			return 0.25*chiPhys;
 
 		}
+
+		// template<typename FieldType>
+		// void readSCGap(std::vector<std::vector<FieldType> > & kField,
+		// 			      std::vector<size_t>& bandField,
+		// 			      std::vector<FieldType>& gapField,
+		// 			      const std::string& filename) {
+                //
+		// 	std::vector<FieldType> data;
+		// 	loadVector(data,filename);
+		// 	// We assume that each line has the format qx,qy,qz,chi_{l1,l2,l3,l4}(q) chi_phys(q)
+		// 	size_t step = 5; //  kx,ky,kz, band index, gap
+		// 	size_t nq(data.size()/step);
+		// 	std::cout << "We have " << nq << " points in the stored gap file " << filename.c_str() << "\n";
+		// 	std::cout << "data.size()" << data.size() << "\n";
+		// 	// if (kField.size()!=nq) {std::cerr << "Number of k-points in file not correct! \n"; exit(1);}
+		// 	for (size_t iq=0; iq<nq; iq++) {
+		// 		std::vector<FieldType> k(3, 0);
+		// 		k[0] = data[0 + iq*step];
+		// 		k[1] = data[1 + iq*step];
+		// 		k[2] = data[2 + iq*step];
+		// 		kField.push_back(k);
+		// 		bandField.push_back(data[3 + iq*step]);
+		// 		gapField.push_back(data[4 + iq*step]);
+		// 		}
+                //
+		// 		// std::cout << "iq,q,chi.calcSus,file.calcSus: " << iq << ", " << qField[iq] << ", "
+		// 			  // << chiField[iq].calcSus() << ", " << data[2*msize*msize + 3 + iq*step] << "\n";
+		// 	}
 
 		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
 			return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now

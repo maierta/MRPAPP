@@ -32,9 +32,10 @@ namespace rpa {
 		size_t msize;
 		const ComplexType ii;
 
+	public:
+		FieldType nbands;
 		ComplexMatrixType spinMatrix;
 		ComplexMatrixType chargeMatrix;
-
 
 		model(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
 			param(parameters),

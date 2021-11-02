@@ -39,6 +39,7 @@ namespace rpa {
 		Field wmin,wmax;
 		bool cacheBands;
 		size_t scState;
+		std::string scGapfile;
 		size_t printGap;
 		std::string gAmpl;
 		Field Delta0;
@@ -157,6 +158,7 @@ namespace rpa {
 			wmax(0.0),
 			cacheBands(0),
 			scState(0),
+			scGapfile(""),
 			printGap(0),
 			gAmpl("LaOFeAs_s_1"),
 			Delta0(0.04),
@@ -403,6 +405,7 @@ namespace rpa {
 		        else if (text.find("wmax")!=std::string::npos) str >> (*this).wmax; 				
 		        else if (text.find("cacheBands")!=std::string::npos) str >> (*this).cacheBands;
 		        else if (text.find("scState")!=std::string::npos) str >> (*this).scState; 				
+		        else if (text.find("scGapfile")!=std::string::npos) str >> (*this).scGapfile; 				
 		        else if (text.find("printGap")!=std::string::npos) str >> (*this).printGap; 				
 		        else if (text.find("gAmpl")!=std::string::npos) str >> (*this).gAmpl; 				
 		        else if (text.find("Delta0")!=std::string::npos) str >> (*this).Delta0; 				
@@ -533,6 +536,7 @@ namespace rpa {
 				os << "wmax = " << (*this).wmax << "\n";
 				os << "cacheBands = " << (*this).cacheBands << "\n";
 				os << "scState = " << (*this).scState << "\n";
+				os << "scGapfile = " << (*this).scGapfile << "\n";
 				os << "printGap = " << (*this).printGap << "\n";
 				os << "gAmpl = " << (*this).gAmpl << "\n";
 				os << "Delta0 = " << (*this).Delta0 << "\n";
@@ -658,6 +662,7 @@ namespace rpa {
 		        conc.broadcast((*this).wmax); 				
 		        conc.broadcast((*this).cacheBands); 				
 		        conc.broadcast((*this).scState); 				
+		        conc.broadcast((*this).scGapfile); 				
 		        conc.broadcast((*this).printGap); 				
 		        conc.broadcast((*this).gAmpl); 				
 		        conc.broadcast((*this).Delta0); 				

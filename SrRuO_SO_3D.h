@@ -33,10 +33,17 @@ namespace rpa {
 		size_t msize;
 	public:
 		FieldType nbands;
-		ComplexMatrixType spinMatrix;
-		ComplexMatrixType chargeMatrix;
-		std::vector<int> spinOfEll;
+		ComplexMatrixType   spinMatrix;
+		ComplexMatrixType   chargeMatrix;
+		std::vector<int>    spinOfEll;
 		std::vector<size_t> orbOfEll;
+
+		std::vector<FieldType> kxGap;
+		std::vector<FieldType> kyGap;
+		std::vector<FieldType> kzGap;
+		std::vector<FieldType> DeltaGap1;
+		std::vector<FieldType> DeltaGap2;
+		std::vector<FieldType> DeltaGap3;
 
 
 		model(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
@@ -284,8 +291,47 @@ namespace rpa {
 		}
 
 		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
-			return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now
+			// return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now
+			FieldType delta=1.0e-5;
+			for (size_t ik=0; ik < kxGap.size(); ik++) {
+				bool x = (abs(k[0]-kxGap[ik]) < delta); 
+				bool y = (abs(k[1]-kyGap[ik]) < delta); 
+				bool z = (abs(k[2]-kzGap[ik]) < delta); 
+				if (x & y & z) {
+					if (band==0 || band==1) {
+						return ComplexType(DeltaGap1[ik],0);
+					} else if (band==2 || band==3) {
+						return ComplexType(DeltaGap2[ik]);
+					} else if (band==4 || band==5) {
+						return ComplexType(DeltaGap3[ik]);
+					} 
+				}
+			}
+			std::cout << "k-point not found in gap file !!! \n";
+			exit(0);
 		}
+
+		void readGapFromFile() {
+			std::string file = param.gapFile;
+			VectorType data;
+			loadVector(data,file);
+			// We assume that each line has the format dx,dy,dz,orb1,orb2,t
+			size_t length = 6;
+			// if (param.complexHopping) length=7;
+			size_t nLinesTotal(data.size()/length);
+			if (conc.rank()==0) std::cout << "tb file contains " << nLinesTotal << " lines\n";
+			for (size_t i = 0; i < nLinesTotal; i++) {
+					kxGap.push_back    (data[i*length]);
+					kyGap.push_back    (data[i*length+1]);
+					kzGap.push_back    (data[i*length+2]);
+					DeltaGap1.push_back(data[i*length+3]);
+					DeltaGap2.push_back(data[i*length+4]);
+					DeltaGap3.push_back(data[i*length+5]);
+			}
+			size_t nLines = kxGap.size();
+			if (conc.rank()==0) std::cout << nLines <<" entries used from gap input file\n";
+		}
+
 
 	};
 }

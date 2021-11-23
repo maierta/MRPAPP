@@ -50,7 +50,7 @@ def plotBandstructure(fileID = ""):
 
 	# fig,ax=subplots(nrows=2,ncols=2)
 
-	data = np.loadtxt("ek_high_sym_"+fileID+".txt")
+	data = np.loadtxt("ek_high_sym_"+fileID+".txt", delimiter=",")
 
 	nbands = int(0.5*(data.shape[1]-3))
 	nk = data.shape[0]

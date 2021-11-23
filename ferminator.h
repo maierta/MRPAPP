@@ -77,7 +77,7 @@ namespace rpa {
 		{
 			// if (param.readFSFromFile) readFromFile(); // if data has additional columns for deltakf and vkf
 			if (param.readFSFromFile) {
-				readFromFile(); // if data has kFx, kFy, kFz, band, deltaKf, vKf
+				readFromFile();// if data has kFx, kFy, kFz, band, deltakf, vkf
 				// readFromFile2();// if data only has kFx, kFy, kFz, band
 				if (conc.rank()==0) writeKF();
 			} else {

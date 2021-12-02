@@ -77,16 +77,26 @@ namespace rpa {
 
 			setupInteractionMatrix();
 
-			// if (param.options.find("calcSus")!=std::string::npos && param.scState) {
-			// 	if (conc.rank()==0) readSCGap(kField, gapField, param.scGapfile);
-			// 	std::cout << "GapFile was read in \n";
-			// 	for (size_t ik=0;ik<kField.size();ik++) {
-			// 		conc.broadcast(kField[ik]);
-			// 		conc.broadcast(gapField[0][ik]);
-			// 		conc.broadcast(gapField[1][ik]);
-			// 		conc.broadcast(gapField[2][ik]);
-			// 	}
-			// }
+			if (param.options.find("calcSus")!=std::string::npos && param.scState) {
+				if (conc.rank()==0) {
+					std::cout << "Now readin in GapFile\n";
+					readGapFromFile();
+					std::cout << "GapFile was read in \n";
+				}
+				conc.broadcast(kxGap);
+				conc.broadcast(kyGap);
+				conc.broadcast(kzGap);
+				conc.broadcast(DeltaGap1);
+				conc.broadcast(DeltaGap2);
+				conc.broadcast(DeltaGap3);
+				if (conc.rank()==0) std::cout << "... and broadcast\n";
+				// for (size_t ik=0;ik<kxGap.size();ik++) {
+				// 	conc.broadcast(kxGap[ik]);
+				// 	conc.broadcast(gapField[0][ik]);
+				// 	conc.broadcast(gapField[1][ik]);
+				// 	conc.broadcast(gapField[2][ik]);
+				// }
+			}
 
 
 		}
@@ -355,14 +365,14 @@ namespace rpa {
 		}
 
 		void readGapFromFile() {
-			std::string file = param.gapFile;
+			std::string file = param.scGapfile;
 			VectorType data;
 			loadVector(data,file);
 			// We assume that each line has the format dx,dy,dz,orb1,orb2,t
 			size_t length = 6;
 			// if (param.complexHopping) length=7;
 			size_t nLinesTotal(data.size()/length);
-			if (conc.rank()==0) std::cout << "tb file contains " << nLinesTotal << " lines\n";
+			if (conc.rank()==0) std::cout << "gapfile contains " << nLinesTotal << " lines\n";
 			for (size_t i = 0; i < nLinesTotal; i++) {
 					kxGap.push_back    (data[i*length]);
 					kyGap.push_back    (data[i*length+1]);

@@ -232,6 +232,7 @@ namespace rpa {
 							}
 						}
 					} else if (dim==3) {
+						if (conc.rank()==0) std::cout << "shift=" << shift[0] << "," << shift[1] << "," << shift[2] << "\n";
 						for (size_t ikz = 0; ikz < nkz; ++ikz) {
 							for (size_t iky = 0; iky < nk; ++iky) {
 								for (size_t ikx = 0; ikx < nk; ++ikx) {

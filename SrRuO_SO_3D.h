@@ -48,6 +48,7 @@ namespace rpa {
 		std::vector<FieldType> DeltaGap2;
 		std::vector<FieldType> DeltaGap3;
 
+		size_t nTotal;
 
 		model(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
 			param(parameters),
@@ -79,9 +80,19 @@ namespace rpa {
 
 			if (param.options.find("calcSus")!=std::string::npos && param.scState) {
 				if (conc.rank()==0) {
-					std::cout << "Now readin in GapFile\n";
+					std::cout << "Now reading in GapFile\n";
 					readGapFromFile();
 					std::cout << "GapFile was read in \n";
+				}
+
+				conc.broadcast(nTotal);
+				if (conc.rank()!=0) {
+					kxGap.resize(nTotal);
+					kyGap.resize(nTotal);
+					kzGap.resize(nTotal);
+					DeltaGap1.resize(nTotal);
+					DeltaGap2.resize(nTotal);
+					DeltaGap3.resize(nTotal);
 				}
 				conc.broadcast(kxGap);
 				conc.broadcast(kyGap);
@@ -90,12 +101,6 @@ namespace rpa {
 				conc.broadcast(DeltaGap2);
 				conc.broadcast(DeltaGap3);
 				if (conc.rank()==0) std::cout << "... and broadcast\n";
-				// for (size_t ik=0;ik<kxGap.size();ik++) {
-				// 	conc.broadcast(kxGap[ik]);
-				// 	conc.broadcast(gapField[0][ik]);
-				// 	conc.broadcast(gapField[1][ik]);
-				// 	conc.broadcast(gapField[2][ik]);
-				// }
 			}
 
 
@@ -345,6 +350,7 @@ namespace rpa {
 
 		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
 			// return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now
+			std::cout << "kx:"<<k[0]<<", ky:"<<k[1]<<", kz:"<< k[2]<<"\n";
 			FieldType delta=1.0e-5;
 			for (size_t ik=0; ik < kxGap.size(); ik++) {
 				bool x = (abs(k[0]-kxGap[ik]) < delta); 
@@ -372,6 +378,7 @@ namespace rpa {
 			size_t length = 6;
 			// if (param.complexHopping) length=7;
 			size_t nLinesTotal(data.size()/length);
+			nTotal = nLinesTotal;
 			if (conc.rank()==0) std::cout << "gapfile contains " << nLinesTotal << " lines\n";
 			for (size_t i = 0; i < nLinesTotal; i++) {
 					kxGap.push_back    (data[i*length]);

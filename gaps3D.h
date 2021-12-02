@@ -91,7 +91,7 @@ namespace rpa {
             ComplexType Delta(0.0);
 
         const ComplexType ii = ComplexType(0.0,1.0);
-
+        // std::cout << "gAmpl:" << param.gAmpl << "\n";
 		if (param.gAmpl=="KFeSe_overdoped_PhenD" ||
 		    param.gAmpl=="KFe2Se2_underdoped_PhenD") { // take the sign(Delta)
 			// bands.getEkAndAk(k,ek,ak);	
@@ -106,7 +106,7 @@ namespace rpa {
 			} else { // antibonding band (shift kx by pi)
 			    return param.Delta0 * (-abs(cos(k[0])) - cos(k[1]));
 			}
-        } else if (param.gAmpl=="dwave_ladders_orbital") {
+        } else if (param.gAmpl=="dwave_ladders_orbital" || param.gAmpl=="") {
             return model.calcSCGap(k, band, ak);
 		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral" || param.gAmpl == "SrRuO_helical_Astrid") {
 			Delta = param.Delta0 * (crystHarm2D(k,w[band],band) + ii*crystHarmIm2D(k,wIm[band],band)) ;
@@ -807,7 +807,8 @@ namespace rpa {
 
                 kz.resize(10,VectorType(0,0.0));
                 k0.resize(10,FieldType(0.0));
-
+            } else if (param.gAmpl == "") {
+                // use calcScGap in model file
             }  else {
                 std::cout << "Gap not implemented! Bailing out.\n";
                 exit(0);

@@ -160,7 +160,7 @@ namespace rpa {
 			scState(0),
 			scGapfile(""),
 			printGap(0),
-			gAmpl("LaOFeAs_s_1"),
+			gAmpl(""),
 			Delta0(0.04),
 			Omega0(0.1),
 			signF(-1.0),

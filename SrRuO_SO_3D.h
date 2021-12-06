@@ -350,7 +350,7 @@ namespace rpa {
 
 		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
 			// return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now
-			std::cout << "kx:"<<k[0]<<", ky:"<<k[1]<<", kz:"<< k[2]<<"\n";
+			// std::cout << "kx:"<<k[0]<<", ky:"<<k[1]<<", kz:"<< k[2]<<"\n";
 			FieldType delta=1.0e-5;
 			for (size_t ik=0; ik < kxGap.size(); ik++) {
 				bool x = (abs(k[0]-kxGap[ik]) < delta); 

@@ -353,9 +353,9 @@ namespace rpa {
 			// std::cout << "kx:"<<k[0]<<", ky:"<<k[1]<<", kz:"<< k[2]<<"\n";
 			FieldType delta=1.0e-5;
 			for (size_t ik=0; ik < kxGap.size(); ik++) {
-				bool x = (abs(k[0]-kxGap[ik]) < delta); 
-				bool y = (abs(k[1]-kyGap[ik]) < delta); 
-				bool z = (abs(k[2]-kzGap[ik]) < delta); 
+				bool x = (fabs(k[0]-kxGap[ik]) < delta); 
+				bool y = (fabs(k[1]-kyGap[ik]) < delta); 
+				bool z = (fabs(k[2]-kzGap[ik]) < delta); 
 				if (x & y & z) {
 					if (band==0 || band==1) {
 						return ComplexType(DeltaGap1[ik],0);

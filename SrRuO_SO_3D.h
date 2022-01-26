@@ -78,30 +78,30 @@ namespace rpa {
 
 			setupInteractionMatrix();
 
-			if (param.options.find("calcSus")!=std::string::npos && param.scState) {
-				if (conc.rank()==0) {
-					std::cout << "Now reading in GapFile\n";
-					readGapFromFile();
-					std::cout << "GapFile was read in \n";
-				}
+			// if (param.options.find("calcSus")!=std::string::npos && param.scState) {
+			// 	if (conc.rank()==0) {
+			// 		std::cout << "Now reading in GapFile\n";
+			// 		readGapFromFile();
+			// 		std::cout << "GapFile was read in \n";
+			// 	}
 
-				conc.broadcast(nTotal);
-				if (conc.rank()!=0) {
-					kxGap.resize(nTotal);
-					kyGap.resize(nTotal);
-					kzGap.resize(nTotal);
-					DeltaGap1.resize(nTotal);
-					DeltaGap2.resize(nTotal);
-					DeltaGap3.resize(nTotal);
-				}
-				conc.broadcast(kxGap);
-				conc.broadcast(kyGap);
-				conc.broadcast(kzGap);
-				conc.broadcast(DeltaGap1);
-				conc.broadcast(DeltaGap2);
-				conc.broadcast(DeltaGap3);
-				if (conc.rank()==0) std::cout << "... and broadcast\n";
-			}
+			// 	conc.broadcast(nTotal);
+			// 	if (conc.rank()!=0) {
+			// 		kxGap.resize(nTotal);
+			// 		kyGap.resize(nTotal);
+			// 		kzGap.resize(nTotal);
+			// 		DeltaGap1.resize(nTotal);
+			// 		DeltaGap2.resize(nTotal);
+			// 		DeltaGap3.resize(nTotal);
+			// 	}
+			// 	conc.broadcast(kxGap);
+			// 	conc.broadcast(kyGap);
+			// 	conc.broadcast(kzGap);
+			// 	conc.broadcast(DeltaGap1);
+			// 	conc.broadcast(DeltaGap2);
+			// 	conc.broadcast(DeltaGap3);
+			// 	if (conc.rank()==0) std::cout << "... and broadcast\n";
+			// }
 
 
 		}

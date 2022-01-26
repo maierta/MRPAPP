@@ -391,7 +391,7 @@ namespace rpa {
 				g3 = 0.0425*sx + 0.0340*sy - 0.0227*s2x - 0.0182*s2y + 0.0170*d1 + 0.0136*d2;
 				g4 = 0.0425*sy - 0.0240*sx - 0.0227*s2y + 0.0182*s2x + 0.0170*d2 - 0.0136*d1;
 			} 
-			Delta = g3 + ii*g4;
+			Delta = param.Delta0*(g3 + ii*g4);
 			return Delta;
 		}
 

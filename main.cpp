@@ -177,10 +177,13 @@ int main(int argc,char *argv[])
 		pairing<FieldType,BandsType,SuscType,GapType,psimag::Matrix,ModelType,ConcurrencyType> pairing(param,model,concurrency,param.interpolateChi,qMesh);
 	}
 
-	std::string cstr = "parameters_" + param.fileID + ".txt";
-	const char *filename1 = cstr.c_str();
-	std::ofstream os1(filename1);
-	if (concurrency.rank()==0) param.writeParameters(os1);
+	if (concurrency.rank()==0) {
+		std::string cstr = "parameters_" + param.fileID + ".txt";
+		const char *filename1 = cstr.c_str();
+		std::ofstream os1(filename1);
+		param.writeParameters(os1);
+	}
+	concurrency.barrier();
 
 
 	// if(param.options.find("calcTest")!=std::string::npos) {

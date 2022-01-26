@@ -348,7 +348,7 @@ namespace rpa {
 		// 			  // << chiField[iq].calcSus() << ", " << data[2*msize*msize + 3 + iq*step] << "\n";
 		// 	}
 
-		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
+		std::complex<Field> calcSCGapReadIn(VectorType& k, size_t band, ComplexMatrixType& Uk) {
 			// return ComplexType(0.0,0.0); // uses function in gaps3D.h directly for now
 			// std::cout << "kx:"<<k[0]<<", ky:"<<k[1]<<", kz:"<< k[2]<<"\n";
 			FieldType delta=1.0e-5;
@@ -368,6 +368,19 @@ namespace rpa {
 			}
 			std::cout << "k-point not found in gap file !!! \n";
 			exit(0);
+		}
+
+		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
+
+			ComplexType Delta(0);
+			if (band==0 || band==1) {
+				Delta = 0;
+			} else if (band==2 || band==3) {
+				Delta = 0;
+			} else if (band==4 || band==5) {
+				Delta = 0;
+			} 
+			return Delta;
 		}
 
 		void readGapFromFile() {

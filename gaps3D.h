@@ -807,7 +807,7 @@ namespace rpa {
 
                 kz.resize(10,VectorType(0,0.0));
                 k0.resize(10,FieldType(0.0));
-            } else if (param.gAmpl == "") {
+            } else if (param.gAmpl == "" || param.gAmpl == "SrRuO_A1g") {
                 // use calcScGap in model file
             }  else {
                 std::cout << "Gap not implemented! Bailing out.\n";

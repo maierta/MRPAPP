@@ -594,7 +594,7 @@ namespace rpa {
 				std::vector<ComplexType> gap1(param.nOrb);
 				for (size_t iband=0;iband<param.nOrb;iband++) {	
 					gap1[iband] = Delta(k,iband,ak);
-					gap1[iband] *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off
+					// gap1[iband] *= pow(param.Omega0,2)/(pow(ek[iband],2)+pow(param.Omega0,2)); // Lorentzian cut-off
 					// gap1[iband] *= exp(-std::pow(ek[iband],2) / std::pow(param.Omega0,2)); // Gaussian cut-off
 				}
 

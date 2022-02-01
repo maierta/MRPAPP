@@ -371,27 +371,43 @@ namespace rpa {
 		}
 
 		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
-			ComplexType g3, g4, Delta;
-			FieldType sx, sy, s2x, s2y, d1, d2;
-			sx = sin(k[0]);
-			sy = sin(k[1]);
-			s2x = sin(2*k[0]);
-			s2y = sin(2*k[1]);
-			d1 = sin(k[0])*cos(k[1]);
-			d2 = sin(k[1])*cos(k[0]);
+			ComplexType Delta;
 			const ComplexType ii = ComplexType(0.0,1.0);
+			if (param.gAmpl == "") {
+				ComplexType g3, g4;
+				FieldType sx, sy, s2x, s2y, d1, d2;
+				sx = sin(k[0]);
+				sy = sin(k[1]);
+				s2x = sin(2*k[0]);
+				s2y = sin(2*k[1]);
+				d1 = sin(k[0])*cos(k[1]);
+				d2 = sin(k[1])*cos(k[0]);
 
-			if (band==0 || band==1) {
-				g3 = -0.2410*sx - 0.1925*sy - 0.090*s2x - 0.072*s2y - 0.1270*d1 - 0.1013*d2;
-				g4 = -0.2410*sy + 0.1925*sx - 0.090*s2y + 0.072*s2x - 0.1270*d2 + 0.1013*d1;
-			} else if (band==2 || band==3) {
-				g3 = -0.1114*sx - 0.089*sy - 0.0073*s2x - 0.0057*s2y - 0.1370*d1 - 0.1095*d2;
-				g4 = -0.1114*sy + 0.089*sx - 0.0073*s2y + 0.0057*s2x - 0.1370*d2 + 0.1095*d1;
-			} else if (band==4 || band==5) {
-				g3 = 0.0425*sx + 0.0340*sy - 0.0227*s2x - 0.0182*s2y + 0.0170*d1 + 0.0136*d2;
-				g4 = 0.0425*sy - 0.0240*sx - 0.0227*s2y + 0.0182*s2x + 0.0170*d2 - 0.0136*d1;
-			} 
-			Delta = param.Delta0*(g3 + ii*g4);
+				if (band==0 || band==1) {
+					g3 = -0.2410*sx - 0.1925*sy - 0.090*s2x - 0.072*s2y - 0.1270*d1 - 0.1013*d2;
+					g4 = -0.2410*sy + 0.1925*sx - 0.090*s2y + 0.072*s2x - 0.1270*d2 + 0.1013*d1;
+				} else if (band==2 || band==3) {
+					g3 = -0.1114*sx - 0.089*sy - 0.0073*s2x - 0.0057*s2y - 0.1370*d1 - 0.1095*d2;
+					g4 = -0.1114*sy + 0.089*sx - 0.0073*s2y + 0.0057*s2x - 0.1370*d2 + 0.1095*d1;
+				} else if (band==4 || band==5) {
+					g3 = 0.0425*sx + 0.0340*sy - 0.0227*s2x - 0.0182*s2y + 0.0170*d1 + 0.0136*d2;
+					g4 = 0.0425*sy - 0.0240*sx - 0.0227*s2y + 0.0182*s2x + 0.0170*d2 - 0.0136*d1;
+				} 
+				Delta = param.Delta0*(g3 + ii*g4);
+
+			} else if (param.gAmpl == "SrRuO_A1g") {
+				FieldType cxs, cxy;
+				cxs = cos(k[0]) + cos(k[1]);
+				cxy = cos(k[0]) * cos(k[1]);
+
+				if (band==0 || band==1) {
+					Delta = 0.3700 + 0.2454*cxs - 0.0564*cxy;
+				} else if (band==2 || band==3) {
+					Delta = 0.5483 + 0.6702*cxs + 0.6870*cxy;
+				} else if (band==4 || band==5) {
+					Delta = 0.3023 + 0.6283*cxs + 0.9289*cxy;
+				} 
+			}
 			return Delta;
 		}
 

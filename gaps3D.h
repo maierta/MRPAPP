@@ -106,7 +106,7 @@ namespace rpa {
 			} else { // antibonding band (shift kx by pi)
 			    return param.Delta0 * (-abs(cos(k[0])) - cos(k[1]));
 			}
-        } else if (param.gAmpl=="dwave_ladders_orbital" || param.gAmpl=="") {
+        } else if (param.gAmpl=="dwave_ladders_orbital" || param.gAmpl=="" || param.gAmpl == "SrRuO_A1g") {
             return model.calcSCGap(k, band, ak);
 		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral" || param.gAmpl == "SrRuO_helical_Astrid") {
 			Delta = param.Delta0 * (crystHarm2D(k,w[band],band) + ii*crystHarmIm2D(k,wIm[band],band)) ;

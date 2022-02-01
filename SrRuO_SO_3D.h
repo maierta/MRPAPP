@@ -408,7 +408,7 @@ namespace rpa {
 					Delta = 0.3023 + 0.6283*cxs + 0.9289*cxy;
 				} 
 			}
-			return Delta;
+			return Delta * param.Delta0;
 		}
 
 		void readGapFromFile() {

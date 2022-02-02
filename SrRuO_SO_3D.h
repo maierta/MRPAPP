@@ -373,7 +373,7 @@ namespace rpa {
 		std::complex<Field> calcSCGap(VectorType& k, size_t band, ComplexMatrixType& Uk) {
 			ComplexType Delta;
 			const ComplexType ii = ComplexType(0.0,1.0);
-			if (param.gAmpl == "") {
+			if (param.gAmpl == "SrRuO_Eg") {
 				ComplexType g3, g4;
 				FieldType sx, sy, s2x, s2y, d1, d2;
 				sx = sin(k[0]);

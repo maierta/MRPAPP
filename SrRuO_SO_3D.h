@@ -407,7 +407,20 @@ namespace rpa {
 				} else if (band==4 || band==5) {
 					Delta = 0.3023 + 0.6283*cxs + 0.9289*cxy;
 				} 
+			} else if (param.gAmpl == "SrRuO_B1g") {
+				FieldType cd, cd2;
+				cd  = cos(k[0]) - cos(k[1]);
+				cd2 = cos(2*k[0]) - cos(2*k[1]);
+
+				if (band==0 || band==1) {
+					Delta = -0.8236*cd - 0.3012*cd2;
+				} else if (band==2 || band==3) {
+					Delta = -0.0045*cd - 0.0685*cd2;
+				} else if (band==4 || band==5) {
+					Delta = 0.0145*cd - 0.0743*cd2;
+				} 
 			}
+
 			return Delta * param.Delta0;
 		}
 

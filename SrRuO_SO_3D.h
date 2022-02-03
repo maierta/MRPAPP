@@ -25,7 +25,7 @@ namespace rpa {
 		typedef MatrixTemplate<ComplexType>	ComplexMatrixType;
 		typedef std::vector<Field>      	VectorType;
 		typedef Field 				FieldType;
-		const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
+		rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param;
 		ConcurrencyType& conc;
 		size_t dim;
 		
@@ -50,7 +50,7 @@ namespace rpa {
 
 		size_t nTotal;
 
-		model(const rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
+		model(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& parameters, ConcurrencyType& concurrency):
 			param(parameters),
 			conc(concurrency),
 			dim(param.dimension),
@@ -374,6 +374,11 @@ namespace rpa {
 			ComplexType Delta;
 			const ComplexType ii = ComplexType(0.0,1.0);
 			if (param.gAmpl == "SrRuO_Eg") {
+
+				// Pseudospin singlet gap
+                param.parity = 1;
+                param.oppositeSpinPairing = 1;
+                
 				ComplexType g3, g4;
 				FieldType sx, sy, s2x, s2y, d1, d2;
 				sx = sin(k[0]);
@@ -396,6 +401,11 @@ namespace rpa {
 				Delta = (g3 + ii*g4) * sin(k[2]/2);
 
 			} else if (param.gAmpl == "SrRuO_A1g") {
+
+				// Pseudospin singlet gap
+                param.parity = 1;
+                param.oppositeSpinPairing = 1;
+
 				FieldType cxs, cxy;
 				cxs = cos(k[0]) + cos(k[1]);
 				cxy = cos(k[0]) * cos(k[1]);
@@ -408,6 +418,11 @@ namespace rpa {
 					Delta = 0.3023 + 0.6283*cxs + 0.9289*cxy;
 				} 
 			} else if (param.gAmpl == "SrRuO_B1g") {
+
+				// Pseudospin singlet gap
+                param.parity = 1;
+                param.oppositeSpinPairing = 1;
+
 				FieldType cd, cd2;
 				cd  = cos(k[0]) - cos(k[1]);
 				cd2 = cos(2*k[0]) - cos(2*k[1]);

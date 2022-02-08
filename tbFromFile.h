@@ -50,7 +50,7 @@ namespace rpa {
 			readCSVFile();
 			// setupInteractionMatrix();
 			// if (param.sublattice==1) fixdr();
-			setupInteractionMatrix();
+			setupInteractionMatrix2();
 		}
 		
 		void readCSVFile() {
@@ -306,8 +306,7 @@ namespace rpa {
 			FieldType J(param.J);
 			FieldType Jp(param.Jp);
 
-			if (param.sublattice==1) limit=nOrb<10?nOrb/2:5;
-			// std::cout << "In rpa.h: limit=" << limit << "\n";
+			if (param.sublattice==1) limit=nOrb<10?nOrb/2:5; //Note: This only works for Fe-type problems with 2 Fe in unit cell where each Fe has 5 orbitals
 
 			
 			ComplexMatrixType spinSubMatrix(limit*limit,limit*limit);
@@ -374,6 +373,60 @@ namespace rpa {
 					}
 					}	
 				}					
+			}
+
+		void setupInteractionMatrix2() {
+			size_t nOrb(param.nOrb);
+			FieldType U(param.U);
+			FieldType Up(param.Up);
+			FieldType J(param.J);
+			FieldType Jp(param.Jp);
+
+
+			// First the diagonal terms (U and U')
+			for (size_t l1 = 0; l1 < nOrb; ++l1) {
+					for (size_t l2 = 0; l2 < nOrb; ++l2) {
+						if (param.orbToSite[l1] != param.orbToSite[l2]) continue; // orbital l1 and l2 belong to different sites
+						// size_t ind1 = l2+l1*nOrb;
+						size_t ind1 = param.OrbsToIndex(l1,l2);
+						if (l1==l2) {
+							spinMatrix(ind1,ind1)   = U+param.deltaU[l1];
+							chargeMatrix(ind1,ind1) = -U-param.deltaU[l1];;
+							} else {
+							spinMatrix(ind1,ind1)   = Up;
+							chargeMatrix(ind1,ind1) = Up-2*J;
+							}
+					}
+				}	
+			// The the off-diagonal terms
+			for (size_t l1=0; l1 < nOrb; l1++) {
+				for (size_t l2=0; l2 < nOrb; l2++) {
+					if (param.orbToSite[l1] != param.orbToSite[l2]) continue; // orbital l1 and l2 belong to different sites
+					if (l2!=l1) {
+					// size_t ind1 = l1+l1*nOrb;
+					size_t ind1 = param.OrbsToIndex(l1,l1);
+					// size_t ind2 = l2+l2*nOrb;
+					size_t ind2 = param.OrbsToIndex(l2,l2);
+						spinMatrix(ind1,ind2)   = J;
+						chargeMatrix(ind1,ind2) = -2.*Up+J;
+					}
+				}
+			}
+			// Finally the pair hopping terms
+			for (size_t l1=0; l1 < nOrb; l1++) {
+				for (size_t l2=0; l2 < nOrb; l2++) {
+					if (param.orbToSite[l1] != param.orbToSite[l2]) continue; // orbital l1 and l2 belong to different sites
+					if (l2!=l1) {
+					// size_t ind1 = l2+l1*nOrb;
+					size_t ind1 = param.OrbsToIndex(l1,l2);
+					// size_t ind2 = l1+l2*nOrb;
+					size_t ind2 = param.OrbsToIndex(l2,l1);
+						spinMatrix(ind1,ind2)   = Jp;
+						chargeMatrix(ind1,ind2) = -Jp;
+					}
+				}
+			}
+
 			}
 
 

@@ -584,7 +584,8 @@ namespace rpa {
 			BandsType bands(param,tbmodel,conc,kmesh,true);
 			VectorType ek(param.nOrb,0), k(3);
 			ComplexMatrixType ak(param.nOrb,param.nOrb);
-			std::ofstream os("gapAll.txt");
+			std::string filename = "gapAll_" + param.fileID + ".txt";
+			std::ofstream os(filename);
 			int width(10);
 			os.precision(width);
 			os << std::fixed;

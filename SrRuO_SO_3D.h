@@ -196,6 +196,8 @@ namespace rpa {
 						t12z = 0; t56z = 0; tdxy = 0; td = 0; 			
 				} else if (param.Case == "Cobo1") {
 						t12z = 0.005; t56z = 0.003; tdxy = 0; td = 0; 			
+				} else if (param.Case == "Cobo1b") {
+						t12z = 0.0; t56z = 0.004; tdxy = 0; td = 0; 			
 				} else if (param.Case == "Cobo2") {
 						t12z = 0.005; t56z = 0.004; tdxy = 0; td = 0; 			
 				} else if (param.Case == "Cobo3") {

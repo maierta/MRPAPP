@@ -726,6 +726,9 @@ namespace rpa {
 					}
 				}
 				if (conc.rank()==0) {
+					std::cout << "nOrbAtom: ";
+					for (size_t site=0; site< nSitesPerUnitCell; site++) std::cout << nOrbAtom[site] << " , ";
+					std::cout << "\n";
 					std::cout << "orbToSite: ";
 					for (size_t l=0;l<nOrb;l++) std::cout << l << "->" << orbToSite[l] << " ";
 					std::cout << "\n";

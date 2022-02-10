@@ -36,6 +36,7 @@ namespace rpa {
         std::vector<MatrixType> wIm;
         std::vector<std::vector<FieldType> > kz;
         std::vector<FieldType> k0;
+        bool paramsAreSet;
 		// momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh;
 		// BandsType bands; // to get orbital weights
 		// VectorType ek;
@@ -77,7 +78,8 @@ namespace rpa {
             nbands(param.nOrb),
             w(0),
             kz(0),
-            k0(0)
+            k0(0),
+            paramsAreSet(0)
 
 			// kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension),
 			// bands(param,conc,kmesh,false),
@@ -92,7 +94,9 @@ namespace rpa {
 
         const ComplexType ii = ComplexType(0.0,1.0);
         // std::cout << "gAmpl:" << param.gAmpl << "\n";
-		if (param.gAmpl=="KFeSe_overdoped_PhenD" ||
+		if (!paramsAreSet) {
+            return model.calcSCGap(k, band, ak);
+        } else if (param.gAmpl=="KFeSe_overdoped_PhenD" ||
 		    param.gAmpl=="KFe2Se2_underdoped_PhenD") { // take the sign(Delta)
 			// bands.getEkAndAk(k,ek,ak);	
 	    // Delta = crystHarm2(k,ak,band) * param.Delta0;
@@ -106,8 +110,6 @@ namespace rpa {
 			} else { // antibonding band (shift kx by pi)
 			    return param.Delta0 * (-abs(cos(k[0])) - cos(k[1]));
 			}
-        } else if (param.gAmpl=="dwave_ladders_orbital" || param.gAmpl=="" || param.gAmpl == "SrRuO_A1g" || param.gAmpl == "SrRuO_B1g" || param.gAmpl == "SrRuO_Eg") {
-            return model.calcSCGap(k, band, ak);
 		} else if (param.gAmpl=="SrRuO_helical" || param.gAmpl == "SrRuO_chiral" || param.gAmpl == "SrRuO_helical_Astrid") {
 			Delta = param.Delta0 * (crystHarm2D(k,w[band],band) + ii*crystHarmIm2D(k,wIm[band],band)) ;
 		} else {
@@ -120,6 +122,7 @@ namespace rpa {
 // in terms of amplitudes a,b,c for the s- or d-wave crystal harmonics
 
         void setParams3D() {
+            paramsAreSet = 1;
 			if (param.gAmpl == "dwave" || param.gAmpl == "dwave_ladders_band" || param.gAmpl == "dwave_ladders_orbital") { // simple coskx-cosky for all bands
                 crystHarm = &dwave;
 
@@ -807,11 +810,13 @@ namespace rpa {
 
                 kz.resize(10,VectorType(0,0.0));
                 k0.resize(10,FieldType(0.0));
-            } else if (param.gAmpl == "" || param.gAmpl == "SrRuO_A1g" || param.gAmpl == "SrRuO_B1g" || param.gAmpl == "SrRuO_Eg") {
+            // } else if (param.gAmpl == "" || param.gAmpl == "SrRuO_A1g" || param.gAmpl == "SrRuO_B1g" || param.gAmpl == "SrRuO_Eg") {
                 // use calcScGap in model file
             }  else {
-                std::cout << "Gap not implemented! Bailing out.\n";
-                exit(0);
+                paramsAreSet = 0;
+                // use calcScGap in model file
+                // std::cout << "Gap not implemented! Bailing out.\n";
+                // exit(0);
             }
         }
 

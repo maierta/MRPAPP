@@ -390,16 +390,27 @@ namespace rpa {
 				d1 = sin(k[0])*cos(k[1]);
 				d2 = sin(k[1])*cos(k[0]);
 
-				if (band==0 || band==1) {
+
+				if (band==0) {
 					g3 = -0.2410*sx - 0.1925*sy - 0.090*s2x - 0.072*s2y - 0.1270*d1 - 0.1013*d2;
 					g4 = -0.2410*sy + 0.1925*sx - 0.090*s2y + 0.072*s2x - 0.1270*d2 + 0.1013*d1;
-				} else if (band==2 || band==3) {
+				} else if (band==1) { // Pseudospin down --> add. minus sign since Delta_{up,down} = -Delta_{down, up}
+					g3 = +0.2410*sx + 0.1925*sy + 0.090*s2x + 0.072*s2y + 0.1270*d1 + 0.1013*d2;
+					g4 = +0.2410*sy - 0.1925*sx + 0.090*s2y - 0.072*s2x + 0.1270*d2 - 0.1013*d1;
+				} else if (band==2) {
 					g3 = -0.1114*sx - 0.089*sy - 0.0073*s2x - 0.0057*s2y - 0.1370*d1 - 0.1095*d2;
 					g4 = -0.1114*sy + 0.089*sx - 0.0073*s2y + 0.0057*s2x - 0.1370*d2 + 0.1095*d1;
-				} else {
+				} else if (band==3) { // Pseudospin down --> add. minus sign since Delta_{up,down} = -Delta_{down, up}
+					g3 = +0.1114*sx + 0.089*sy + 0.0073*s2x + 0.0057*s2y + 0.1370*d1 + 0.1095*d2;
+					g4 = +0.1114*sy - 0.089*sx + 0.0073*s2y - 0.0057*s2x + 0.1370*d2 - 0.1095*d1;					
+				} else if (band==4) {
 					g3 = 0.0425*sx + 0.0340*sy - 0.0227*s2x - 0.0182*s2y + 0.0170*d1 + 0.0136*d2;
 					g4 = 0.0425*sy - 0.0240*sx - 0.0227*s2y + 0.0182*s2x + 0.0170*d2 - 0.0136*d1;
-				} 
+				} else { // band==5  // Pseudospin down --> add. minus sign since Delta_{up,down} = -Delta_{down, up}
+					g3 = -0.0425*sx - 0.0340*sy + 0.0227*s2x + 0.0182*s2y - 0.0170*d1 - 0.0136*d2;
+					g4 = -0.0425*sy + 0.0240*sx + 0.0227*s2y - 0.0182*s2x - 0.0170*d2 + 0.0136*d1;				
+				}
+
 				Delta = ComplexType(g3, g4) * sin(k[2]/2);
 
 			} else if (param.gAmpl == "SrRuO_A1g") {
@@ -414,13 +425,20 @@ namespace rpa {
 				cxs = cos(k[0]) + cos(k[1]);
 				cxy = cos(k[0]) * cos(k[1]);
 
-				if (band==0 || band==1) {
+				if (band==0) {
 					gk = 0.3700 + 0.2454*cxs - 0.0564*cxy;
-				} else if (band==2 || band==3) {
+				} else if (band==1) {
+					gk = -0.3700 - 0.2454*cxs + 0.0564*cxy;					
+				} else if (band==2) {
 					gk = 0.5483 + 0.6702*cxs + 0.6870*cxy;
-				} else {
+				} else if (band==3) {
+					gk = -0.5483 - 0.6702*cxs - 0.6870*cxy;					
+				} else if (band==4) {
 					gk = 0.3023 + 0.6283*cxs + 0.9289*cxy;
-				} 
+				} else {
+					gk = -0.3023 - 0.6283*cxs - 0.9289*cxy;					
+				}
+
 				Delta = ComplexType(gk, 0);
 
 			} else if (param.gAmpl == "SrRuO_IsoS") {
@@ -430,28 +448,18 @@ namespace rpa {
                 param.parity = 1;
                 param.oppositeSpinPairing = 1;
 
-				if (band==0 || band==1) {
+				if (band==0) {
 					gk = 0.1;
-				} else if (band==2 || band==3) {
+				} else if (band==1) { // Pseudo-spin down --> add. minus sign in gap since singlet
+					gk = -0.1;
+				} else if (band==2) {
+					gk = 0.1;
+				} else if (band==3) {
+					gk = -0.1;
+				} else if (band==4){
 					gk = 0.1;
 				} else {
-					gk = 0.1;
-				} 
-				Delta = ComplexType(gk, 0);
-
-			} else if (param.gAmpl == "SrRuO_SonAlpha") {
-
-				FieldType gk;
-				// Pseudospin singlet gap
-                param.parity = 1;
-                param.oppositeSpinPairing = 1;
-
-				if (band==0 || band==1) {
-					gk = 0.1;
-				} else if (band==2 || band==3) {
-					gk = 0.0;
-				} else {
-					gk = 0.0;
+					gk = -0.1;
 				} 
 				Delta = ComplexType(gk, 0);
 
@@ -462,12 +470,18 @@ namespace rpa {
                 param.parity = 1;
                 param.oppositeSpinPairing = 1;
 
-				if (band==0 || band==1) {
-					gk = 0.1;
-				} else if (band==2 || band==3) {
-					gk = 0.1;
-				} else {
+				if (band==0) {
+					gk =  0.1;
+				} else if (band==1) {
 					gk = -0.1;
+				} else if (band==2) {
+					gk =  0.1;
+				} else if (band==3) {
+					gk = -0.1;
+				} else if (band==4) {
+					gk = -0.1;
+				} else {
+					gk =  0.1;
 				} 
 				Delta = ComplexType(gk, 0);
 
@@ -478,12 +492,18 @@ namespace rpa {
                 param.parity = 1;
                 param.oppositeSpinPairing = 1;
 
-				if (band==0 || band==1) {
-					gk = 0.1;
-				} else if (band==2 || band==3) {
+				if (band==0) {
+					gk =  0.1;
+				} else if (band==1) {
 					gk = -0.1;
+				} else if (band==2) {
+					gk = -0.1;
+				} else if (band==3) {
+					gk =  0.1;
+				} else if (band==4) {
+					gk =  0.1;
 				} else {
-					gk = 0.1;
+					gk = -0.1;
 				} 
 				Delta = ComplexType(gk, 0);
 
@@ -498,12 +518,18 @@ namespace rpa {
 				cd  = cos(k[0]) - cos(k[1]);
 				cd2 = cos(2*k[0]) - cos(2*k[1]);
 
-				if (band==0 || band==1) {
+				if (band==0) {
 					gk = -0.8236*cd - 0.3012*cd2;
-				} else if (band==2 || band==3) {
+				} else if (band==1) {// Pseudo-spin down --> add. minus sign in gap since singlet
+					gk = +0.8236*cd + 0.3012*cd2;
+				} else if (band==2) {
 					gk = -0.0045*cd - 0.0685*cd2;
-				} else  {
+				} else if (band==3) {
+					gk = +0.0045*cd + 0.0685*cd2;
+				} else if (band==4) {
 					gk = 0.0145*cd - 0.0743*cd2;
+				} else {
+					gk = -0.0145*cd + 0.0743*cd2;
 				} 
 				Delta = ComplexType(gk, 0);
 

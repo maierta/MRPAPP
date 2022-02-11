@@ -439,6 +439,22 @@ namespace rpa {
 				} 
 				Delta = ComplexType(gk, 0);
 
+			} else if (param.gAmpl == "SrRuO_SonAlpha") {
+
+				FieldType gk;
+				// Pseudospin singlet gap
+                param.parity = 1;
+                param.oppositeSpinPairing = 1;
+
+				if (band==0 || band==1) {
+					gk = 0.1;
+				} else if (band==2 || band==3) {
+					gk = 0.0;
+				} else {
+					gk = 0.0;
+				} 
+				Delta = ComplexType(gk, 0);
+
 			}  else if (param.gAmpl == "SrRuO_spm1") {
 
 				FieldType gk;

@@ -507,6 +507,9 @@ namespace rpa {
 				} 
 				Delta = ComplexType(gk, 0);
 
+			} else {
+                std::cout << "Gap not implemented! Bailing out.\n";
+                exit(0);				
 			}
 
 			return Delta * param.Delta0;

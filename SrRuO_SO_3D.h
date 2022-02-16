@@ -255,24 +255,24 @@ namespace rpa {
 			for (size_t l=0; l<6; l++) for (size_t b=0; b<6; b++) eigenvects(l,b) = ComplexType(0,0);
 			// Pseudospin up 
 			eigenvals[0] = evals[0];
-			for (size_t l=0; l<3; l++) eigenvects(l,0) = H0(l,0);
+			for (size_t l=0; l<6; l++) eigenvects(l,0) = H0(l,0);
 			eigenvals[1] = evals[2];
-			for (size_t l=0; l<3; l++) eigenvects(l,1) = H0(l,2);
+			for (size_t l=0; l<6; l++) eigenvects(l,1) = H0(l,2);
 			eigenvals[2] = evals[4];
-			for (size_t l=0; l<3; l++) eigenvects(l,2) = H0(l,4);
+			for (size_t l=0; l<6; l++) eigenvects(l,2) = H0(l,4);
 
 			// Pseudospin down
 			eigenvals[3] = evals[1];
-			for (size_t l=0; l<3; l++) eigenvects(l,3) = H0(l,1);
 			eigenvals[4] = evals[3];
-			for (size_t l=0; l<3; l++) eigenvects(l,4) = H0(l,3);
 			eigenvals[5] = evals[5];
-			for (size_t l=0; l<3; l++) eigenvects(l,5) = H0(l,5);
 
 			for (size_t b=0; b<3; b++) {
-				eigenvects(3,b+3) = -conj(eigenvects(0,b)); // pseudospin down xz
-				eigenvects(4,b+3) = -conj(eigenvects(1,b)); // pseudospin down yz
-				eigenvects(5,b+3) =  conj(eigenvects(2,b)); // pseudospin down xy
+				eigenvects(0,b+3) = -conj(eigenvects(0,b)); //  xz
+				eigenvects(1,b+3) = -conj(eigenvects(1,b)); //  yz
+				eigenvects(2,b+3) =  conj(eigenvects(2,b)); //  xy
+				eigenvects(3,b+3) = -conj(eigenvects(0,b)); //  xz
+				eigenvects(4,b+3) = -conj(eigenvects(1,b)); //  yz
+				eigenvects(5,b+3) =  conj(eigenvects(2,b)); //  xy
 			}
 
 

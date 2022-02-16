@@ -106,11 +106,13 @@ namespace rpa {
 
 		}
 		
-		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& H0) {
+		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
 
 			FieldType ekXZ, ekYZ, ekXY;
 			FieldType gxzyz, Txzxy, Tyzxy;
 			FieldType cx,cy,cxy,c2x,c2y,sx,sy,cz2,cx2,cy2,sx2,sy2,sz2;
+
+			FieldType hField(1.0e-16); // Small Zeeman field to disctinguish between pseudospin up and down bands
 
 			sx = sin(k[0]); sy = sin(k[1]); sx2 = sin(0.5*k[0]); sy2 = sin(0.5*k[1]); sz2 = sin(0.5*k[2]);
 			cx = cos(k[0]); cy = cos(k[1]); cxy = cos(k[0])*cos(k[1]);
@@ -143,8 +145,10 @@ namespace rpa {
 
 			// for (size_t i=0; i<nbands; i++) 
 				// for (size_t j=0; j<nbands; j++) H0(i,j) = ComplexType(0.,0.);
+
+			ComplexMatrixType H0(5,5);
 					
-			H0(0,0) = ekXZ;
+			H0(0,0) = ekXZ - hField*spinOfEll[0];
 			H0(0,1) = gxzyz - ii*lso;
 			H0(0,2) = ii*lso;
 			H0(0,3) = 0;
@@ -152,7 +156,7 @@ namespace rpa {
 			H0(0,5) = Txzxy;
 
 			H0(1,0) = gxzyz + ii*lso;
-			H0(1,1) = ekYZ;
+			H0(1,1) = ekYZ - hField*spinOfEll[1];;
 			H0(1,2) = -lso;
 			H0(1,3) = 0;
 			H0(1,4) = 0;
@@ -160,7 +164,7 @@ namespace rpa {
 
 			H0(2,0) = -ii*lso;
 			H0(2,1) = -lso;
-			H0(2,2) = ekXY;
+			H0(2,2) = ekXY - hField*spinOfEll[2];;
 			H0(2,3) = Txzxy;
 			H0(2,4) = Tyzxy;
 			H0(2,5) = 0;
@@ -168,7 +172,7 @@ namespace rpa {
 			H0(3,0) = 0;
 			H0(3,1) = 0;
 			H0(3,2) = Txzxy;
-			H0(3,3) = ekXZ;
+			H0(3,3) = ekXZ - hField*spinOfEll[3];;
 			H0(3,4) = gxzyz + ii*lso;
 			H0(3,5) = ii*lso;
 
@@ -176,7 +180,7 @@ namespace rpa {
 			H0(4,1) = 0;
 			H0(4,2) = Tyzxy;
 			H0(4,3) = gxzyz - ii*lso;
-			H0(4,4) = ekYZ;
+			H0(4,4) = ekYZ - hField*spinOfEll[4];;
 			H0(4,5) = lso;
 
 			H0(5,0) = Txzxy;
@@ -184,7 +188,7 @@ namespace rpa {
 			H0(5,2) = 0;
 			H0(5,3) = -ii*lso;
 			H0(5,4) = lso;
-			H0(5,5) = ekXY;
+			H0(5,5) = ekXY - hField*spinOfEll[5];;
 
 
 			// Optionally add k-SOC terms
@@ -244,7 +248,33 @@ namespace rpa {
 				H0(5,4) += beta + ii*alpha;
 			}
 
-			eigen(eigenvals,H0);
+			VectorType evals(5);
+			eigen(evals,H0);
+
+
+			for (size_t l=0; l<6; l++) for (size_t b=0; b<6; b++) eigenvects(l,b) = ComplexType(0,0);
+			// Pseudospin up 
+			eigenvals[0] = evals[0];
+			for (size_t l=0; l<3; l++) eigenvects(l,0) = H0(l,0);
+			eigenvals[1] = evals[2];
+			for (size_t l=0; l<3; l++) eigenvects(l,1) = H0(l,2);
+			eigenvals[2] = evals[4];
+			for (size_t l=0; l<3; l++) eigenvects(l,2) = H0(l,4);
+
+			// Pseudospin down
+			eigenvals[3] = evals[1];
+			for (size_t l=0; l<3; l++) eigenvects(l,3) = H0(l,1);
+			eigenvals[4] = evals[3];
+			for (size_t l=0; l<3; l++) eigenvects(l,4) = H0(l,3);
+			eigenvals[5] = evals[5];
+			for (size_t l=0; l<3; l++) eigenvects(l,5) = H0(l,5);
+
+			for (size_t b=0; b<3; b++) {
+				eigenvects(3,b+3) = -conj(eigenvects(0,b)); // pseudospin down xz
+				eigenvects(4,b+3) = -conj(eigenvects(1,b)); // pseudospin down yz
+				eigenvects(5,b+3) =  conj(eigenvects(2,b)); // pseudospin down xy
+			}
+
 
 		}
 

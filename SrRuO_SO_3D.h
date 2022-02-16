@@ -146,7 +146,7 @@ namespace rpa {
 			// for (size_t i=0; i<nbands; i++) 
 				// for (size_t j=0; j<nbands; j++) H0(i,j) = ComplexType(0.,0.);
 
-			ComplexMatrixType H0(5,5);
+			ComplexMatrixType H0(6,6);
 					
 			H0(0,0) = ekXZ - hField*spinOfEll[0];
 			H0(0,1) = gxzyz - ii*lso;
@@ -248,7 +248,7 @@ namespace rpa {
 				H0(5,4) += beta + ii*alpha;
 			}
 
-			VectorType evals(5);
+			VectorType evals(6);
 			eigen(evals,H0);
 
 
@@ -270,9 +270,9 @@ namespace rpa {
 				eigenvects(0,b+3) = -conj(eigenvects(0,b)); //  xz
 				eigenvects(1,b+3) = -conj(eigenvects(1,b)); //  yz
 				eigenvects(2,b+3) =  conj(eigenvects(2,b)); //  xy
-				eigenvects(3,b+3) = -conj(eigenvects(0,b)); //  xz
-				eigenvects(4,b+3) = -conj(eigenvects(1,b)); //  yz
-				eigenvects(5,b+3) =  conj(eigenvects(2,b)); //  xy
+				eigenvects(3,b+3) = -conj(eigenvects(3,b)); //  xz
+				eigenvects(4,b+3) = -conj(eigenvects(4,b)); //  yz
+				eigenvects(5,b+3) =  conj(eigenvects(5,b)); //  xy
 			}
 
 

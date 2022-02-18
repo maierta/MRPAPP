@@ -28,31 +28,19 @@ inline void GEEV(char jobvl,char jobvr,int n,psimag::Matrix<std::complex<double>
 						      &(w[0]),&(work[0]),&lwork,&(rwork[0]),info);
 						}
 
-extern "C" void 
-#ifdef glyph
-	zgemm_
-#else
-	zgemm
-#endif
-		(char *,char *,int *,int *,int *,std::complex<double> *,
+
+#ifndef glyph
+	extern "C" void 
+	zgemm(char *,char *,int *,int *,int *,std::complex<double> *,
 					  std::complex<double> *,int *,std::complex<double> *,
 					  int *,std::complex<double> *,std::complex<double> *,int *);
 
-extern "C" void 
-#ifdef glyph
-	dgetrf_
-#else
-	dgetrf
-#endif
-	(int *,int *,double *,int *,int *,int *);
+	extern "C" void 
+	dgetrf(int *,int *,double *,int *,int *,int *);
 	
 	extern "C" void 
-#ifdef glyph
-	dgetri_
-#else
-	dgetri
+	dgetri(int *, double *, int *, int *, double *, int *, int *);
 #endif
-	(int *, double *, int *, int *, double *, int *, int *);
 
 
 inline void GETRF(int m, int n, 

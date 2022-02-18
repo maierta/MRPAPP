@@ -164,7 +164,7 @@ namespace rpa {
 
 			H0(2,0) = -ii*lso;
 			H0(2,1) = -lso;
-			H0(2,2) = ekXY + hField*spinOfEll[2]; // spin down
+			H0(2,2) = ekXY - hField*spinOfEll[2]; // spin down
 			H0(2,3) = Txzxy;
 			H0(2,4) = Tyzxy;
 			H0(2,5) = 0;
@@ -172,7 +172,7 @@ namespace rpa {
 			H0(3,0) = 0;
 			H0(3,1) = 0;
 			H0(3,2) = Txzxy;
-			H0(3,3) = ekXZ + hField*spinOfEll[3]; // spin down
+			H0(3,3) = ekXZ - hField*spinOfEll[3]; // spin down
 			H0(3,4) = gxzyz + ii*lso;
 			H0(3,5) = ii*lso;
 
@@ -180,7 +180,7 @@ namespace rpa {
 			H0(4,1) = 0;
 			H0(4,2) = Tyzxy;
 			H0(4,3) = gxzyz - ii*lso;
-			H0(4,4) = ekYZ + hField*spinOfEll[4]; // spin down
+			H0(4,4) = ekYZ - hField*spinOfEll[4]; // spin down
 			H0(4,5) = lso;
 
 			H0(5,0) = Txzxy;

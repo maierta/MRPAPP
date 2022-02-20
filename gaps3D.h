@@ -231,6 +231,24 @@ namespace rpa {
                 kz.resize(param.nOrb,VectorType(0,0.0));
                 k0.resize(param.nOrb,FieldType(0.0));
 
+            } else if (param.gAmpl == "SrRuO_spmWave") { // Simple sign switched s-wave for Sr2RuO4 with SO coupling 
+            //  gk = 1 for all bands
+ 
+                crystHarm = &swave;
+                param.parity = 1;
+                param.oppositeSpinPairing = 1;
+
+                w.resize(param.nOrb,MatrixType(3,1));
+                w[0](0,0) =   1.0; // Pseudospin up
+                w[3](0,0) =  -1.0; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[1](0,0) =   1.0; // Pseudospin up
+                w[4](0,0) =  -1.0; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+                w[2](0,0) =  -1.0; // Pseudospin up
+                w[5](0,0) =   1.0; // Pseudospin down (Delta_{up,down} = -Delta_{down,up} for singlet gap)
+
+                kz.resize(param.nOrb,VectorType(0,0.0));
+                k0.resize(param.nOrb,FieldType(0.0));
+
             } else if (param.gAmpl == "SrRuO_chiral") { // Simple chiral gap sin kx + i sin ky for Sr2RuO4 with SO coupling 
 
 

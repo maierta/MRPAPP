@@ -253,10 +253,15 @@ namespace rpa {
 			eigenvals[0] = evals[0];
 			eigenvals[1] = evals[2];
 			eigenvals[2] = evals[4];
+			for (size_t l=0; l<6; l++) {
+				eigenvects(l,0) = H0(l,0);
+				eigenvects(l,1) = H0(l,2);
+				eigenvects(l,2) = H0(l,4);
+			}
 			// Pseudospin down
-			eigenvals[3] = evals[1];
-			eigenvals[4] = evals[3];
-			eigenvals[5] = evals[5];
+			eigenvals[3] = eigenvals[0];
+			eigenvals[4] = eigenvals[2];
+			eigenvals[5] = eigenvals[4];
 
 			for (size_t b=0; b<3; b++) {
 				eigenvects(0,b+3) =  conj(eigenvects(3,b)); //  xz

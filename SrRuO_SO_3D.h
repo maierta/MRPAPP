@@ -467,6 +467,44 @@ namespace rpa {
 
 				Delta = ComplexType(gk, 0);
 
+			} else if (param.gAmpl == "SrRuO_spid") {
+
+				FieldType gk, gki;
+
+				// Pseudospin singlet gap
+                param.parity = 1;
+                param.oppositeSpinPairing = 1;
+
+				FieldType cxs, cxy;
+				cxs = cos(k[0]) + cos(k[1]);
+				cxy = cos(k[0]) * cos(k[1]);
+
+				FieldType cd, cd2;
+				cd  = cos(k[0]) - cos(k[1]);
+				cd2 = cos(2*k[0]) - cos(2*k[1]);
+
+				if (band==0) {
+					gk  = 0.3700 + 0.2454*cxs - 0.0564*cxy;
+					gki = -0.8236*cd - 0.3012*cd2;
+				} else if (band==3) {
+					gk  = -0.3700 - 0.2454*cxs + 0.0564*cxy;					
+					gki = +0.8236*cd + 0.3012*cd2;
+				} else if (band==1) {
+					gk  = 0.5483 + 0.6702*cxs + 0.6870*cxy;
+					gki = -0.0045*cd - 0.0685*cd2;
+				} else if (band==4) {
+					gk  = -0.5483 - 0.6702*cxs - 0.6870*cxy;					
+					gki = +0.0045*cd + 0.0685*cd2;
+				} else if (band==2) {
+					gk  = 0.3023 + 0.6283*cxs + 0.9289*cxy;
+					gki = 0.0145*cd - 0.0743*cd2;
+				} else { // band==5
+					gk  = -0.3023 - 0.6283*cxs - 0.9289*cxy;					
+					gki = -0.0145*cd + 0.0743*cd2;
+				}
+
+				Delta = ComplexType(gk, gki);
+
 			} else if (param.gAmpl == "SrRuO_IsoS") {
 
 				FieldType gk;

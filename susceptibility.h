@@ -174,9 +174,13 @@ namespace rpa {
 						//        calcChi0(param,kmesh,bands,q,conc,chi0Matrix[iQ],kMap);
 					   // }
 
-					   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
-					       calcChi0(param,kmesh,q,bands,conc,chi0Matrix[iQ],param.cacheBands);
-
+						if (!param.scState) {
+						   calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+						       calcChi0(param,kmesh,q,bands,conc,chi0Matrix[iQ],param.cacheBands);
+						} else { // use finite w constructor for SC state calculation, but set w=0
+							calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 
+							  calcChi0(param,kmesh,q,bands,conc,chi0Matrix[iQ],0.0,param.cacheBands); // Constructor for pre-calculated bands
+						}
 	           			} else { // Finite frequency calculation
 					   // if (param.cacheBands) { // Band energies and eigenvectors are pre-calculated
 						calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType> 

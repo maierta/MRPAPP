@@ -30,9 +30,11 @@ namespace rpa {
 	inline std::complex<FieldType> susInt(const FieldType& e1, const FieldType& e2, 
 					                	  const FieldType& invT, const FieldType& omega,
 					                	  const FieldType& damp=FieldType(1.0e-3)) {
+		if (omega==0) return susInt(e1, e2, invT);
+
 		std::complex<FieldType> sus(0);
 		FieldType xx1(e1*invT);
-		FieldType xx2(e2*invT);
+		FieldType xx2((e2)*invT);
 		FieldType r1 = PsimagLite::fermi(xx1)-PsimagLite::fermi(xx2);
 		sus = r1/(e2-e1+omega+std::complex<FieldType>(0.0,damp));
 		return sus;
@@ -151,21 +153,24 @@ namespace rpa {
 
 		if (Delta1s == 0 && Delta2s == 0) {
 
-			return susInt(e1,e2,invT,omega,damp);
+			if (omega==0) return susInt(e1,e2,invT);
+			else return susInt(e1,e2,invT,omega,damp);
 
 		} else if (Delta1s == 0 && Delta2s != 0) {
 	
 			FieldType EnergyBCS2(sqrt(pow(e2,2)+Delta2s));
 			r2 = e2 / EnergyBCS2;
 			uk2 = 0.5*(1.0+r2); vk2 = 0.5*(1.0-r2);
-			return susInt(e1,EnergyBCS2,invT,omega,damp) * uk2 + susInt(e1,-EnergyBCS2,invT,omega,damp) * vk2;
+			if (omega==0) return susInt(e1,EnergyBCS2,invT) * uk2 + susInt(e1,-EnergyBCS2,invT) * vk2;
+			else return susInt(e1,EnergyBCS2,invT,omega,damp) * uk2 + susInt(e1,-EnergyBCS2,invT,omega,damp) * vk2;
 
 		} else if (Delta1s != 0 && Delta2s == 0) {
 	
 			FieldType EnergyBCS1(sqrt(pow(e1,2)+Delta1s));
 			r1 = e1 / EnergyBCS1;
 			uk1 = 0.5*(1.0+r1); vk1 = 0.5*(1.0-r1);
-			return susInt(EnergyBCS1,e2,invT,omega,damp) * uk1 + susInt(-EnergyBCS1,e2,invT,omega,damp) * vk1;
+			if (omega==0) return susInt(EnergyBCS1,e2,invT) * uk1 + susInt(-EnergyBCS1,e2,invT) * vk1;
+			else return susInt(EnergyBCS1,e2,invT,omega,damp) * uk1 + susInt(-EnergyBCS1,e2,invT,omega,damp) * vk1;
 
 		} else {
 
@@ -180,10 +185,18 @@ namespace rpa {
 			FieldType skq3(uk1*vk2);
 			FieldType skq4(vk1*uk2);
 
-			sus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq1 
-				+ susInt(-EnergyBCS1,-EnergyBCS2,invT,omega,damp) * skq2
-				+ susInt(+EnergyBCS1,-EnergyBCS2,invT,omega,damp) * skq3
-				+ susInt(-EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq4;
+			if (omega==0) { 
+				sus = susInt(+EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq1 
+					+ susInt(-EnergyBCS1,-EnergyBCS2,invT,omega,damp) * skq2
+					+ susInt(+EnergyBCS1,-EnergyBCS2,invT,omega,damp) * skq3
+					+ susInt(-EnergyBCS1,+EnergyBCS2,invT,omega,damp) * skq4;
+			} else {
+				sus = susInt(+EnergyBCS1,+EnergyBCS2,invT) * skq1 
+					+ susInt(-EnergyBCS1,-EnergyBCS2,invT) * skq2
+					+ susInt(+EnergyBCS1,-EnergyBCS2,invT) * skq3
+					+ susInt(-EnergyBCS1,+EnergyBCS2,invT) * skq4;
+			}
+
 
 			return sus;
 

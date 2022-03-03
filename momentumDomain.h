@@ -130,16 +130,24 @@ namespace rpa {
 					   ConcurrencyType& concurrency, 
 					   const std::string& path, 
 					   size_t numberOfkpoints): 
-		param(parameters),
-		conc(concurrency),
-		nk(numberOfkpoints),
-		nktot(nk),
-		momenta(nk,3)
-		{ 
-			if (path == "Path1") set_momenta_Path1(); 
-			if (path == "Path2") set_momenta_Path2(); 
-			if (path == "Path3") set_momenta_Path3(); 
-		}
+			param(parameters),
+			conc(concurrency),
+			a1(param.a1),
+			a2(param.a2),
+			a3(param.a3),
+			shift(3,-0.5),
+			dGInverse(3,3),
+			nk(numberOfkpoints),
+			nktot(nk),
+			b(3,3),
+			momenta(nk,3)
+			{ 
+				set_primitiveVectors();
+
+				if (path == "Path1") set_momenta_Path1(); 
+				if (path == "Path2") set_momenta_Path2(); 
+				if (path == "Path3") set_momenta_Path3(); 
+			}
 
 
 
@@ -352,46 +360,46 @@ namespace rpa {
 
 			size_t nks(nk/7);
 			size_t ind(0);
-			for (size_t ik=0; ik<nks; ik++) { // Gamma -> X
-				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
-				momenta(ind,1) = 0.0;
-				momenta(ind,2) = 0.0;
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> X // 0 --> 0.5*b1
+				momenta(ind,0) = float(ik)/float(nks) * 0.5*(*this).b(0,0);
+				momenta(ind,1) = float(ik)/float(nks) * 0.5*(*this).b(0,1);
+				momenta(ind,2) = float(ik)/float(nks) * 0.5*(*this).b(0,2);
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // X -> M
-				momenta(ind,0) = param.pi_f;
-				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
-				momenta(ind,2) = 0.0;
+			for (size_t ik=0; ik<nks; ik++) { // X -> M // 0.5*b1 --> 0.5*b1 + 0.5*b2
+				momenta(ind,0) = 0.5*(*this).b(0,0) + float(ik)/float(nks) * 0.5*(*this).b(1,0);
+				momenta(ind,1) = 0.5*(*this).b(0,1) + float(ik)/float(nks) * 0.5*(*this).b(1,1);
+				momenta(ind,2) = 0.5*(*this).b(0,2) + float(ik)/float(nks) * 0.5*(*this).b(1,2);
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // M -> Gamma
-				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
-				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f;
-				momenta(ind,2) = 0.0;
+			for (size_t ik=0; ik<nks; ik++) { // M -> Gamma // 0.5*b1+0.5*b2 --> 0
+				momenta(ind,0) = 0.5*(*this).b(0,0) + 0.5*(*this).b(1,0) - float(ik)/float(nks) * (0.5*(*this).b(0,0) + 0.5*(*this).b(1,0));
+				momenta(ind,1) = 0.5*(*this).b(0,1) + 0.5*(*this).b(1,1) - float(ik)/float(nks) * (0.5*(*this).b(0,1) + 0.5*(*this).b(1,1));
+				momenta(ind,2) = 0.5*(*this).b(0,2) + 0.5*(*this).b(1,2) - float(ik)/float(nks) * (0.5*(*this).b(0,2) + 0.5*(*this).b(1,2));
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // Gamma -> Z
-				momenta(ind,0) = 0.0;
-				momenta(ind,1) = 0.0;
-				momenta(ind,2) = float(ik)/float(nks) * param.pi_f;
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> Z // 0 --> 0.5*b3
+				momenta(ind,0) = float(ik)/float(nks) * 0.5*(*this).b(2,0); 
+				momenta(ind,1) = float(ik)/float(nks) * 0.5*(*this).b(2,1); 
+				momenta(ind,2) = float(ik)/float(nks) * 0.5*(*this).b(2,2); 
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // Z -> R
-				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
-				momenta(ind,1) = 0.0;
-				momenta(ind,2) = param.pi_f;
+			for (size_t ik=0; ik<nks; ik++) { // Z -> R // 0.5*b3 --> 0.5*b1+0.5*b3
+				momenta(ind,0) = 0.5*(*this).b(2,0) + float(ik)/float(nks) * 0.5*(*this).b(0,0);
+				momenta(ind,1) = 0.5*(*this).b(2,1) + float(ik)/float(nks) * 0.5*(*this).b(0,1);
+				momenta(ind,2) = 0.5*(*this).b(2,2) + float(ik)/float(nks) * 0.5*(*this).b(0,2);
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // R -> A
-				momenta(ind,0) = param.pi_f;
-				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
-				momenta(ind,2) = param.pi_f;
+			for (size_t ik=0; ik<nks; ik++) { // R -> A // 0.5*b1+0.5*b3 --> 0.5*b1+0.5*b2+0.5*b3
+				momenta(ind,0) = 0.5*(*this).b(0,0) + 0.5*(*this).b(2,0) + float(ik)/float(nks) * 0.5*(*this).b(1,0);
+				momenta(ind,1) = 0.5*(*this).b(0,1) + 0.5*(*this).b(2,1) + float(ik)/float(nks) * 0.5*(*this).b(1,1);
+				momenta(ind,2) = 0.5*(*this).b(0,2) + 0.5*(*this).b(2,2) + float(ik)/float(nks) * 0.5*(*this).b(1,2);
 				ind += 1;
 			}
 			for (size_t ik=0; ik<nks; ik++) { // A -> Z
-				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
-				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f; 
-				momenta(ind,2) = param.pi_f;
+				momenta(ind,0) = 0.5*(*this).b(0,0) + 0.5*(*this).b(2,0) + 0.5*(*this).b(1,0) - float(ik)/float(nks) * (0.5*(*this).b(0,0) + 0.5*(*this).b(2,0) + 0.5*(*this).b(1,0)); 
+				momenta(ind,1) = 0.5*(*this).b(0,1) + 0.5*(*this).b(2,1) + 0.5*(*this).b(1,1) - float(ik)/float(nks) * (0.5*(*this).b(0,1) + 0.5*(*this).b(2,1) + 0.5*(*this).b(1,1));
+				momenta(ind,2) = 0.5*(*this).b(0,2) + 0.5*(*this).b(2,2) + 0.5*(*this).b(1,2) - float(ik)/float(nks) * (0.5*(*this).b(0,2) + 0.5*(*this).b(2,2) + 0.5*(*this).b(1,2));
 				ind += 1;
 			}
 		}

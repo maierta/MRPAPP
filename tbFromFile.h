@@ -382,6 +382,10 @@ namespace rpa {
 			FieldType J(param.J);
 			FieldType Jp(param.Jp);
 
+			for (size_t i=0; i<spinMatrix.n_row(); ++i) for (size_t j=0; j<spinMatrix.n_col(); ++j) {
+				spinMatrix(i,j) = 0.0;
+				chargeMatrix(i,j) = 0.0;
+			}
 
 			// First the diagonal terms (U and U')
 			for (size_t l1 = 0; l1 < nOrb; ++l1) {

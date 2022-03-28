@@ -182,8 +182,10 @@ int main(int argc,char *argv[])
 		const char *filename1 = cstr.c_str();
 		std::ofstream os1(filename1);
 		param.writeParameters(os1);
+		os1.close();
 	}
-	concurrency.barrier();
+	std::cout << "All done!\n";
+	// concurrency.barrier();
 
 
 	// if(param.options.find("calcTest")!=std::string::npos) {

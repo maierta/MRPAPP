@@ -120,7 +120,10 @@ namespace rpa {
 			} else {
 				VectorSuscType chi0Matrix (nq1In*nq2In*nq3In*nwIn,SuscType(parameters,concurrency));
 				calcElements(chi0Matrix);
-				if (conc.rank()==0) std::cout << "Now printing out chiq \n"; writeChiqTxt(chi0Matrix);
+				if (conc.rank()==0) {
+					std::cout << "Now printing out chiq \n"; 
+					writeChiqTxt(chi0Matrix);
+				}
 			}
 
 		}
@@ -392,8 +395,12 @@ namespace rpa {
 			os2 << std::fixed;
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
+				std::cout << "iq:"<<iq<< " rank: " << conc.rank() << " sus: " << tbmodel.calcSus(chi0Matrix[0], "zz") << "\n";
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
 				calcRPAResult(chi0Matrix[iq],tbmodel.spinMatrix,chiRPA,q);
+				std::cout << "RPA result: " << tbmodel.calcSus(chiRPA, "zz") << "\n";
+				std::cout << "spinMatrix: " << tbmodel.calcSus(tbmodel.spinMatrix, "zz") << "\n";
+				std::cout << "chi0 result: " << tbmodel.calcSus(chi0Matrix[iq], "zz") << "\n";
 				ComplexType susRzz(tbmodel.calcSus(chiRPA,"zz"));
 				ComplexType susRpm(tbmodel.calcSus(chiRPA,"+-"));
 				// ComplexType sus1(chi0Matrix[iq].calcSus());
@@ -410,6 +417,8 @@ namespace rpa {
 				    << real(sus4) << " , " << imag(sus4) 
 				    << "\n";
 			}
+			os2.close();
+			std::cout <<  "File is written \n";
 		}
 
 		void writeChiSChiC(std::vector<ComplexMatrixType>& chiS,

@@ -381,6 +381,7 @@ namespace rpa {
 			FieldType Up(param.Up);
 			FieldType J(param.J);
 			FieldType Jp(param.Jp);
+			// if (conc.rank()==0) std::cout << "U:"<<U<<" U'"<<Up<<" J:"<<J<<" Jp:"<<Jp<<"\n";
 
 			for (size_t i=0; i<spinMatrix.n_row(); ++i) for (size_t j=0; j<spinMatrix.n_col(); ++j) {
 				spinMatrix(i,j) = 0.0;
@@ -389,17 +390,17 @@ namespace rpa {
 
 			// First the diagonal terms (U and U')
 			for (size_t l1 = 0; l1 < nOrb; ++l1) {
-					for (size_t l2 = 0; l2 < nOrb; ++l2) {
-						if (param.orbToSite[l1] != param.orbToSite[l2]) continue; // orbital l1 and l2 belong to different sites
-						// size_t ind1 = l2+l1*nOrb;
-						size_t ind1 = param.OrbsToIndex(l1,l2);
-						if (l1==l2) {
-							spinMatrix(ind1,ind1)   = U+param.deltaU[l1];
-							chargeMatrix(ind1,ind1) = -U-param.deltaU[l1];;
-							} else {
-							spinMatrix(ind1,ind1)   = Up;
-							chargeMatrix(ind1,ind1) = Up-2*J;
-							}
+				for (size_t l2 = 0; l2 < nOrb; ++l2) {
+					if (param.orbToSite[l1] != param.orbToSite[l2]) continue; // orbital l1 and l2 belong to different sites
+					// size_t ind1 = l2+l1*nOrb;
+					size_t ind1 = param.OrbsToIndex(l1,l2);
+					if (l1==l2) {
+						spinMatrix(ind1,ind1)   = U;
+						chargeMatrix(ind1,ind1) = -U;
+						} else {
+						spinMatrix(ind1,ind1)   = Up;
+						chargeMatrix(ind1,ind1) = Up-2*J;
+						}
 					}
 				}	
 			// The the off-diagonal terms
@@ -431,6 +432,7 @@ namespace rpa {
 				}
 			}
 
+			// std::cout << "U matrix: " << spinMatrix << "\n";
 			}
 
 

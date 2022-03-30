@@ -329,8 +329,10 @@ namespace rpa {
 				}
 				rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh2(param,conc,path,nkPath);
 				numberOfQ = nkPath * nw;
+				// std::cout << "nkPath: " << nkPath << "\n";
 				momenta.resize(nkPath, 3);
 				for (size_t ik=0; ik<kmesh2.momenta.n_row(); ik++) {
+					// if (conc.rank()==1) std::cout << kmesh2.momenta(ik,0) << "," << kmesh2.momenta(ik,1) << "," << kmesh2.momenta(ik,2) << "\n";
 					momenta(ik,0) = kmesh2.momenta(ik,0);
 					momenta(ik,1) = kmesh2.momenta(ik,1);
 					momenta(ik,2) = kmesh2.momenta(ik,2);
@@ -375,10 +377,11 @@ namespace rpa {
 			// Setup linear omega-mesh
 			for (size_t i=0; i<nw; i++) omega[i] = wmin + (wmax - wmin) * float(i)/fmax(float(nw-1),float(1));
 			// Now combine vectors
+			size_t nQ = momenta.n_row();
 			QVec.resize(numberOfQ, VectorType(4,0));
 			indexToiq.resize(numberOfQ);
 			indexToiw.resize(numberOfQ);
-			for (size_t iq=0; iq<nq1*nq2*nq3; iq++) for (size_t iw=0; iw<nw; iw++) {
+			for (size_t iq=0; iq<nQ; iq++) for (size_t iw=0; iw<nw; iw++) {
 				size_t index = iw + iq * nw;
 				indexToiq[index] = iq;
 				indexToiw[index] = iw;
@@ -423,12 +426,12 @@ namespace rpa {
 			os2 << std::fixed;
 			SuscType chiRPA(param,conc);
 			for (size_t iq=0;iq<numberOfQ;iq++) {
-				std::cout << "iq:"<<iq<< " rank: " << conc.rank() << " sus: " << tbmodel.calcSus(chi0Matrix[0], "zz") << "\n";
+				// std::cout << "iq:"<<iq<< " rank: " << conc.rank() << " sus: " << tbmodel.calcSus(chi0Matrix[0], "zz") << "\n";
 				q[0]=QVec[iq][0]; q[1]=QVec[iq][1]; q[2]=QVec[iq][2];
 				calcRPAResult(chi0Matrix[iq],tbmodel.spinMatrix,chiRPA,q);
-				std::cout << "RPA result: " << tbmodel.calcSus(chiRPA, "zz") << "\n";
-				std::cout << "spinMatrix: " << tbmodel.calcSus(tbmodel.spinMatrix, "zz") << "\n";
-				std::cout << "chi0 result: " << tbmodel.calcSus(chi0Matrix[iq], "zz") << "\n";
+				// std::cout << "RPA result: " << tbmodel.calcSus(chiRPA, "zz") << "\n";
+				// std::cout << "spinMatrix: " << tbmodel.calcSus(tbmodel.spinMatrix, "zz") << "\n";
+				// std::cout << "chi0 result: " << tbmodel.calcSus(chi0Matrix[iq], "zz") << "\n";
 				ComplexType susRzz(tbmodel.calcSus(chiRPA,"zz"));
 				ComplexType susRpm(tbmodel.calcSus(chiRPA,"+-"));
 				// ComplexType sus1(chi0Matrix[iq].calcSus());

@@ -130,7 +130,7 @@ namespace rpa {
 				// First expand eigenvects matrix to twice the size
 				ComplexMatrixType temp (2*nbands,2*nbands);
 				// for (size_t i=0; i<nbands;i++) for (size_t j=0; j<nbands;j++) temp(i,j)=ComplexType(0.0,0.0);
-				VectorType tempE(2*nbands,0.0);
+				VectorType tempE(2*nbands,0);
 				for (size_t i=0; i<nbands;i++) {
 					for (size_t j=0; j<nbands;j++) {
 						temp(i,j) = eigenvects(i,j);

@@ -79,14 +79,16 @@ namespace rpa {
 						tbmodel(modelIn),
 						conc(concurrency),
 						// qMesh(param,nqxIn,nqzIn,3),
-						numberOfQ(nq1In*nq2In*nq3In*nwIn),
+						// numberOfQ(nq1In*nq2In*nq3In*nwIn),
+						numberOfQ(1),
 						msize(param.nOrb*param.nOrb),
 						nq1(nq1In),
 						nq2(nq2In),
 						nq3(nq3In),
 						nw(nwIn),
 						omega(nw,0),
-						QVec(numberOfQ,VectorType(4,0)),
+						// QVec(numberOfQ,VectorType(4,0)),
+						QVec(1,VectorType(4,0)),
 						indexToiq(numberOfQ,0),
 						indexToiw(numberOfQ,0),
 						wmin_(wmin),
@@ -95,12 +97,13 @@ namespace rpa {
 						kMap(0)
 		{
 
-			if (conc.rank()==0) std::cout << "numberOfQ: " << numberOfQ << "\n";
 
 			// Setup q-mesh based on nq's and q-limits
 			setupQandOmegaMesh(nq1,nq2,nq3,numberOfQ,nw,
 				               qxmin,qxmax,qymin,qymax,qzmin,qzmax,
 				               wmin,wmax,QVec);
+			numberOfQ = QVec.size();
+			std::cout << "numberOfQ after setup: " << numberOfQ << "\n";
 
 			if (param.scState==1 && param.printGap==1 && conc.rank()==0) {
 				if (conc.rank()==0) std::cout << "Now writing gap.txt \n";
@@ -118,9 +121,9 @@ namespace rpa {
 				else calcEmeryChi0(chi0,chi0_g,chi0_gg);
 				calcEmeryRPA(chi0,chi0_g,chi0_gg);
 			} else {
-				VectorSuscType chi0Matrix (nq1In*nq2In*nq3In*nwIn,SuscType(parameters,concurrency));
+				VectorSuscType chi0Matrix (numberOfQ,SuscType(parameters,concurrency));
 				calcElements(chi0Matrix);
-				if (conc.rank()==0) {
+			if (conc.rank()==0) {
 					std::cout << "Now printing out chiq \n"; 
 					writeChiqTxt(chi0Matrix);
 				}
@@ -131,6 +134,7 @@ namespace rpa {
 
 		void calcElements(VectorSuscType& chi0Matrix) {
 			// Setup k-mesh for chi0 calculation
+			std::cout << "numberOfQ in calcElements: " << numberOfQ << "\n";
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
 			BandsType bands(param,tbmodel,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
@@ -151,7 +155,6 @@ namespace rpa {
 
 				}
 			}
-
 			RangeType range(0,numberOfQ,conc);
 			// SuscType chi0QW(param,conc);
 			for (;!range.end();range.next()) {
@@ -315,34 +318,58 @@ namespace rpa {
 								std::vector<std::vector<FieldType> >& QVec
 								) {
 
-			MatrixType momenta(nq1*nq2*nq3,3);
-			if (nq1 == 1 && nq2 == 1 && nq3 == 1) { //Q is fixed
-				momenta(0,0) = qxmin;
-				momenta(0,1) = qymin;
-				momenta(0,2) = qzmin;
-			} else if (nq1 > 1 && nq2 == 1 && nq3 == 1) { // 1D Q-Scan
-				for (size_t iq1=0;iq1<nq1;iq1++){
-					momenta(iq1,0) = qxmin + float(iq1)/float(nq1-1) * (qxmax - qxmin);
-					momenta(iq1,1) = qymin + float(iq1)/float(nq1-1) * (qymax - qymin);
-					momenta(iq1,2) = qzmin + float(iq1)/float(nq1-1) * (qzmax - qzmin);
+			MatrixType momenta(0,3);
+
+			if (param.qGridType == "Path") {
+				if (conc.rank()==0) std::cout << "Setting up Q-Path along high sym. dir. \n";
+				// Setup momenta along high-symmetry direction
+				std::string path("Path2");
+				size_t nkPath(nq1*3);
+				if (param.dimension == 3) {
+					path = "Path3";
+					nkPath = nq1*7;
 				}
-			} else if (nq1 > 1 && nq2 > 1 && nq3 == 1) { // 2D Q-scan (in-plane)
-				for (size_t iq2=0;iq2<nq2;iq2++){
+				rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh2(param,conc,path,nkPath);
+				numberOfQ = nkPath * nw;
+				momenta.resize(nkPath, 3);
+				for (size_t ik=0; ik<kmesh2.momenta.n_row(); ik++) {
+					momenta(ik,0) = kmesh2.momenta(ik,0);
+					momenta(ik,1) = kmesh2.momenta(ik,1);
+					momenta(ik,2) = kmesh2.momenta(ik,2);
+				}
+
+			} else {
+				numberOfQ = nq1*nq2*nq3*nw;
+				if (conc.rank()==0) std::cout << "Setting up regular Q-grid \n";
+				momenta.resize(nq1*nq2*nq3,3);
+				if (nq1 == 1 && nq2 == 1 && nq3 == 1) { //Q is fixed
+					momenta(0,0) = qxmin;
+					momenta(0,1) = qymin;
+					momenta(0,2) = qzmin;
+				} else if (nq1 > 1 && nq2 == 1 && nq3 == 1) { // 1D Q-Scan
 					for (size_t iq1=0;iq1<nq1;iq1++){
-						size_t index(iq1 + nq1*iq2);
-						momenta(index,0) = qxmin + float(iq1)/float(nq1-1) * (qxmax - qxmin);
-						momenta(index,1) = qymin + float(iq2)/float(nq2-1) * (qymax - qymin);
-						momenta(index,2) = qzmin;
+						momenta(iq1,0) = qxmin + float(iq1)/float(nq1-1) * (qxmax - qxmin);
+						momenta(iq1,1) = qymin + float(iq1)/float(nq1-1) * (qymax - qymin);
+						momenta(iq1,2) = qzmin + float(iq1)/float(nq1-1) * (qzmax - qzmin);
 					}
-				}
-			} else if (nq1 > 1 && nq2 > 1 && nq3 > 1) { // 3D Q-scan
-				for (size_t iq3=0;iq3<nq3;iq3++){
+				} else if (nq1 > 1 && nq2 > 1 && nq3 == 1) { // 2D Q-scan (in-plane)
 					for (size_t iq2=0;iq2<nq2;iq2++){
 						for (size_t iq1=0;iq1<nq1;iq1++){
-							size_t index(iq1 + nq1*iq2 + nq1*nq2*iq3);
+							size_t index(iq1 + nq1*iq2);
 							momenta(index,0) = qxmin + float(iq1)/float(nq1-1) * (qxmax - qxmin);
 							momenta(index,1) = qymin + float(iq2)/float(nq2-1) * (qymax - qymin);
-							momenta(index,2) = qzmin + float(iq3)/float(nq3-1) * (qzmax - qzmin);
+							momenta(index,2) = qzmin;
+						}
+					}
+				} else if (nq1 > 1 && nq2 > 1 && nq3 > 1) { // 3D Q-scan
+					for (size_t iq3=0;iq3<nq3;iq3++){
+						for (size_t iq2=0;iq2<nq2;iq2++){
+							for (size_t iq1=0;iq1<nq1;iq1++){
+								size_t index(iq1 + nq1*iq2 + nq1*nq2*iq3);
+								momenta(index,0) = qxmin + float(iq1)/float(nq1-1) * (qxmax - qxmin);
+								momenta(index,1) = qymin + float(iq2)/float(nq2-1) * (qymax - qymin);
+								momenta(index,2) = qzmin + float(iq3)/float(nq3-1) * (qzmax - qzmin);
+							}
 						}
 					}
 				}
@@ -350,6 +377,7 @@ namespace rpa {
 			// Setup linear omega-mesh
 			for (size_t i=0; i<nw; i++) omega[i] = wmin + (wmax - wmin) * float(i)/fmax(float(nw-1),float(1));
 			// Now combine vectors
+			QVec.resize(numberOfQ, VectorType(4,0));
 			for (size_t iq=0; iq<nq1*nq2*nq3; iq++) for (size_t iw=0; iw<nw; iw++) {
 				size_t index = iw + iq * nw;
 				indexToiq[index] = iq;
@@ -360,6 +388,7 @@ namespace rpa {
 				QVec[index][3] = omega[iw];  
 			}
 
+			std::cout << "numberOfQ in setupQ: " << numberOfQ << "\n";
 
 		}
 

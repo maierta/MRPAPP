@@ -184,7 +184,6 @@ int main(int argc,char *argv[])
 		param.writeParameters(os1);
 		os1.close();
 	}
-	std::cout << "All done!\n";
 	// concurrency.barrier();
 
 

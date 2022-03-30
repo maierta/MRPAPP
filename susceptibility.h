@@ -103,7 +103,6 @@ namespace rpa {
 				               qxmin,qxmax,qymin,qymax,qzmin,qzmax,
 				               wmin,wmax,QVec);
 			numberOfQ = QVec.size();
-			std::cout << "numberOfQ after setup: " << numberOfQ << "\n";
 
 			if (param.scState==1 && param.printGap==1 && conc.rank()==0) {
 				if (conc.rank()==0) std::cout << "Now writing gap.txt \n";
@@ -134,7 +133,6 @@ namespace rpa {
 
 		void calcElements(VectorSuscType& chi0Matrix) {
 			// Setup k-mesh for chi0 calculation
-			std::cout << "numberOfQ in calcElements: " << numberOfQ << "\n";
 			momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmesh(param,conc,param.nkInt,param.nkIntz,param.dimension);
 			kmesh.set_momenta(false);
 			BandsType bands(param,tbmodel,conc,kmesh,param.cacheBands); // false = no Caching // true = Caching, needed here because we pre-calculate energies 
@@ -378,6 +376,8 @@ namespace rpa {
 			for (size_t i=0; i<nw; i++) omega[i] = wmin + (wmax - wmin) * float(i)/fmax(float(nw-1),float(1));
 			// Now combine vectors
 			QVec.resize(numberOfQ, VectorType(4,0));
+			indexToiq.resize(numberOfQ);
+			indexToiw.resize(numberOfQ);
 			for (size_t iq=0; iq<nq1*nq2*nq3; iq++) for (size_t iw=0; iw<nw; iw++) {
 				size_t index = iw + iq * nw;
 				indexToiq[index] = iq;
@@ -388,7 +388,6 @@ namespace rpa {
 				QVec[index][3] = omega[iw];  
 			}
 
-			std::cout << "numberOfQ in setupQ: " << numberOfQ << "\n";
 
 		}
 

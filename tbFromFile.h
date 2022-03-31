@@ -46,15 +46,14 @@ namespace rpa {
 			spinMatrix(nbands*nbands,nbands*nbands),
 			chargeMatrix(nbands*nbands,nbands*nbands)
 		{
-			std::cout << "In model \n";
 			if (param.LS==1) setupLMatrix();
-			std::cout << "Reading tb file \n";
+			if (conc.rank()==0) std::cout << "Reading tb file \n";
 			readCSVFile();
 			// setupInteractionMatrix();
 			// if (param.sublattice==1) fixdr();
-			std::cout << "Setting up interaction matrix\n";
+			if (conc.rank()==0) std::cout << "Setting up interaction matrix\n";
 			setupInteractionMatrix2();
-			std::cout << "Interaction matrix set up\n";
+			if (conc.rank()==0) std::cout << "Interaction matrix set up\n";
 		}
 		
 		void readCSVFile() {

@@ -738,7 +738,7 @@ namespace rpa {
 					for (size_t l=0;l<nOrb;l++) std::cout << l << "->" << orbToSite[l] << " ";
 					std::cout << "\n";
 				}
-				std::cout << "Done setting up orbital indices\n";
+				if (conc.rank()==0) std::cout << "Done setting up orbital indices\n";
 			}
 
 

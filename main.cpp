@@ -116,11 +116,10 @@ int main(int argc,char *argv[])
 	parameters<FieldType,psimag::Matrix,ConcurrencyType> param(concurrency);
 	param.readFromInputFile(filename);
 	param.setupOrbitalIndices();
-	std::cout << "Back in main\n";
 
-	std::cout << "Now setting up model\n";
+	if (conc.rank()==0) std::cout << "Now setting up model\n";
 	ModelType model(param, concurrency);
-	std::cout << "Model has been setup\n";
+	if (conc.rank()==0) std::cout << "Model has been setup\n";
 	calcBands(param,model,concurrency);
 
 	// if(param.options.find("calcBands")!=std::string::npos) {

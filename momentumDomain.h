@@ -336,22 +336,22 @@ namespace rpa {
 
 			size_t nks(nk/3);
 			size_t ind(0);
-			for (size_t ik=0; ik<nks; ik++) { // Gamma -> X
-				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
-				momenta(ind,1) = 0.0;
-				momenta(ind,2) = 0.0;
+			for (size_t ik=0; ik<nks; ik++) { // Gamma -> X // 0 --> 0.5*b1
+				momenta(ind,0) = float(ik)/float(nks) * 0.5*(*this).b(0,0);
+				momenta(ind,1) = float(ik)/float(nks) * 0.5*(*this).b(0,1);
+				momenta(ind,2) = float(ik)/float(nks) * 0.5*(*this).b(0,2);
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // X -> M
-				momenta(ind,0) = param.pi_f;
-				momenta(ind,1) = float(ik)/float(nks) * param.pi_f;
-				momenta(ind,2) = 0.0;
+			for (size_t ik=0; ik<nks; ik++) { // X -> M // 0.5*b1 --> 0.5*b1 + 0.5*b2
+				momenta(ind,0) = 0.5*(*this).b(0,0) + float(ik)/float(nks) * 0.5*(*this).b(1,0);
+				momenta(ind,1) = 0.5*(*this).b(0,1) + float(ik)/float(nks) * 0.5*(*this).b(1,1);
+				momenta(ind,2) = 0.5*(*this).b(0,2) + float(ik)/float(nks) * 0.5*(*this).b(1,2);
 				ind += 1;
 			}
-			for (size_t ik=0; ik<nks; ik++) { // M -> Gamma
-				momenta(ind,0) = param.pi_f - float(ik)/float(nks) * param.pi_f;
-				momenta(ind,1) = param.pi_f - float(ik)/float(nks) * param.pi_f;
-				momenta(ind,2) = 0.0;
+			for (size_t ik=0; ik<nks; ik++) { // M -> Gamma // 0.5*b1+0.5*b2 --> 0
+				momenta(ind,0) = 0.5*(*this).b(0,0) + 0.5*(*this).b(1,0) - float(ik)/float(nks) * (0.5*(*this).b(0,0) + 0.5*(*this).b(1,0));
+				momenta(ind,1) = 0.5*(*this).b(0,1) + 0.5*(*this).b(1,1) - float(ik)/float(nks) * (0.5*(*this).b(0,1) + 0.5*(*this).b(1,1));
+				momenta(ind,2) = 0.5*(*this).b(0,2) + 0.5*(*this).b(1,2) - float(ik)/float(nks) * (0.5*(*this).b(0,2) + 0.5*(*this).b(1,2));
 				ind += 1;
 			}
 		}

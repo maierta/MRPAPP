@@ -117,9 +117,9 @@ int main(int argc,char *argv[])
 	param.readFromInputFile(filename);
 	param.setupOrbitalIndices();
 
-	if (conc.rank()==0) std::cout << "Now setting up model\n";
+	if (concurrency.rank()==0) std::cout << "Now setting up model\n";
 	ModelType model(param, concurrency);
-	if (conc.rank()==0) std::cout << "Model has been setup\n";
+	if (concurrency.rank()==0) std::cout << "Model has been setup\n";
 	calcBands(param,model,concurrency);
 
 	// if(param.options.find("calcBands")!=std::string::npos) {

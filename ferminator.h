@@ -539,6 +539,38 @@ namespace rpa {
 
 			size_t nkSearch(512);
 			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
+		
+		} else if (Case_ == "Fe12442_2D") {
+			// 10 FS sheets total; 6 around (0,0), 4 around (pi,0)
+			nSheets = 10;
+			nTotal = nSheets * nkPerSheet;
+			resizeContainers();
+
+			FSCenters[0][0] = 0.; FSCenters[0][1] = 0.;
+			FSBand   [0]    =  6;
+			FSCenters[1][0] = 0.; FSCenters[1][1] = 0.;
+			FSBand   [1]    =  7;
+			FSCenters[2][0] = 0.; FSCenters[2][1] = 0.;
+			FSBand   [2]    =  8;
+			FSCenters[3][0] = 0.; FSCenters[3][1] = 0.;
+			FSBand   [3]    =  9;
+			FSCenters[4][0] = 0.; FSCenters[4][1] = 0.;
+			FSBand   [4]    = 10;
+			FSCenters[5][0] = 0.; FSCenters[5][1] = 0.;
+			FSBand   [5]    = 11;
+
+			FSCenters[6][0] = Pi; FSCenters[0][1] = 0.;
+			FSBand   [6]    = 12;			
+			FSCenters[7][0] = Pi; FSCenters[0][1] = 0.;
+			FSBand   [7]    = 13;			
+			FSCenters[8][0] = Pi; FSCenters[0][1] = 0.;
+			FSBand   [8]    = 14;			
+			FSCenters[9][0] = Pi; FSCenters[0][1] = 0.;
+			FSBand   [9]    = 15;			
+
+			size_t nkSearch(512);
+			for (size_t iSheet=0;iSheet<nSheets;iSheet++) calcKF(nkSearch,iSheet,param.kz2D,2);
+		
 		}   else if (Case_ == "FeSe_monolayer") {
 			// 5 FS sheets total, 3 hole around (0,0) + 2 electron pockets
 			nSheets = 7;

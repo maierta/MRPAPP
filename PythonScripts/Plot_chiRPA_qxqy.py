@@ -1,4 +1,3 @@
-#! python
 import sys
 from numpy import *
 from matplotlib.pyplot import *

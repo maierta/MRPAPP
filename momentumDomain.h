@@ -226,12 +226,11 @@ namespace rpa {
 						for (size_t ikx = 0; ikx < nk; ++ikx) {
 							for (size_t iky = 0; iky < nk; ++iky) {
 								size_t ind = index(ikx,iky);
-								momenta(ind,0) = (float(ikx)/float(nk) + shift[0]) * b(0,0) + 
-												 (float(iky)/float(nk) + shift[1]) * b(1,0) ;
-								momenta(ind,1) = (float(ikx)/float(nk) + shift[0]) * b(0,1) + 
-											     (float(iky)/float(nk) + shift[1]) * b(1,1) ;
-								momenta(ind,2) = param.kz2D;
-
+								for (size_t i=0; i<3; i++) {
+									momenta(ind,i) = (float(ikx)/float(nk) + shift[0]) * b(0,i) + 
+													 (float(iky)/float(nk) + shift[1]) * b(1,i) +
+													  						param.kz2D * b(2,i);
+								}
 								// std::cout << "momenta=" << momenta(ind,0) << "," << momenta(ind,1) << "\n";
 
 								index2Components(ind,0) = ikx;
@@ -246,7 +245,7 @@ namespace rpa {
 								for (size_t ikx = 0; ikx < nk; ++ikx) {
 									size_t ind = index(ikx,iky,ikz);
 									for (size_t i=0; i<3; i++) {
-										momenta(ind,i) = (float(ikx)/float(nk)  + shift[0])  * (*this).b(0,i) + 
+										momenta(ind,i) = (float(ikx)/float(nk)  + shift[0]) * (*this).b(0,i) + 
 														 (float(iky)/float(nk)  + shift[1]) * (*this).b(1,i) +
 													     (float(ikz)/float(nkz) + shift[2]) * (*this).b(2,i) ;
 									}

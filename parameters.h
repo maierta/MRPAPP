@@ -320,7 +320,7 @@ namespace rpa {
 
 		        if (dimension==2) {
 		        	nkIntz=1;
-		        	kz2D *= pi_f;
+		        	// kz2D *= pi_f;
 		        }
 		        if (Case == "BSCCObilayer_OD_1band_onlyA") kz2D *= pi_f;
 

@@ -1,7 +1,7 @@
 from matplotlib.pyplot import *
 from numpy import *
 
-def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0):
+def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=list(range(0,10))):
     data=eval(open(file).read())
 
     U  = array(data['U'])
@@ -37,19 +37,39 @@ def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0):
     nkz = unique(kf[:,2]).shape[0]
     print(nkz,"different kz values!")
     
-    ncols = 5; nrows=2
+    # ncols = 5; nrows=2
     f, ax =subplots(ncols=ncols,nrows=nrows,figsize=(4*ncols,4*nrows))
     for kz in range(nkz):
         index = 0
-        for i in range(ncols):
-            for j in range(nrows):
-                ax[j,i].scatter(kf[:,0],kf[:,1],c=evec[index,:],cmap=get_cmap('BrBG'),s=50,lw=0.2)
-                ax[j,i].set_aspect('equal')
-                ax[j,i].set_title(r'$\lambda=$'+str(round(e[index],4)))
+        if (ncols>1) & (nrows>1):
+            for i in range(ncols):
+                for j in range(nrows):
+                    ax[j,i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+                    ax[j,i].set_aspect('equal')
+                    ax[j,i].grid(color='darkgrey')
+                    ax[j,i].use_sticky_edges = False
+
+                    ax[j,i].margins(y=0.5, x=0.1)
+                    ax[j,i].set_xlabel(r"$k_x/\pi$")
+                    ax[j,i].set_ylabel(r"$k_y/\pi$")
+                    ax[j,i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
+                    index += 1
+        else:
+            for i in range(max(ncols, nrows)):
+                ax[i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+                ax[i].set_aspect('equal')
+                ax[i].grid(color='darkgrey')
+                ax[i].use_sticky_edges = False
+
+                ax[i].margins(y=0.5, x=0.1)
+                ax[i].set_xlabel(r"$k_x/\pi$")
+                ax[i].set_ylabel(r"$k_y/\pi$")
+                ax[i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
                 index += 1
     
 
     f.suptitle(r"U="+str(U)+", U'="+str(Up)+", J="+str(J)+", J'="+str(Jp))
+    # f.tight_layout()
     show()
 
     return kf,evec[returnEvec,:]

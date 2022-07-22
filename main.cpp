@@ -57,7 +57,7 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 		// std::cout << "adjusting chem. pot." << abs(filling) - param.nTarget << "\n";
 
 		FieldType delta = 1.0e-3;
-		while (abs(filling - param.nTarget) > delta) {
+		while (fabs(filling - param.nTarget) > delta) {
 			// adjust chemical potential to yield target density
 			param.mu -= 0.1*(filling - param.nTarget);
 			// if (conc.rank()==0) std::cout << "mu adjusted to " << param.mu << "\n";

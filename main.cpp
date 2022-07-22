@@ -62,6 +62,7 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 			param.mu -= 0.1*(filling - param.nTarget);
 			// if (conc.rank()==0) std::cout << "mu adjusted to " << param.mu << "\n";
 			filling = bands.calcFilling();
+			// if (conc.rank()==0) std::cout << "New filling " << filling << "\n";
 		}
 
 		if (conc.rank()==0) {

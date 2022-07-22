@@ -321,7 +321,8 @@ namespace rpa {
 			if (param.qGridType == "Path") {
 				if (conc.rank()==0) std::cout << "Setting up Q-Path along high sym. dir. \n";
 				// Setup momenta along high-symmetry direction
-				std::string path("Path2");
+				// std::string path("Path2");
+				std::string path(param.momentumPath);
 				size_t nkPath(nq1*3);
 				if (param.dimension == 3) {
 					path = "Path3";

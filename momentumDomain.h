@@ -147,6 +147,8 @@ namespace rpa {
 				if (path == "Path1") set_momenta_Path1(); 
 				if (path == "Path2") set_momenta_Path2(); 
 				if (path == "Path3") set_momenta_Path3(); 
+				if (path == "triangular") set_momenta_Path4(); 
+				if (path == "triangularExtended") set_momenta_Path5(); 
 			}
 
 
@@ -400,6 +402,54 @@ namespace rpa {
 				momenta(ind,0) = 0.5*(*this).b(0,0) + 0.5*(*this).b(2,0) + 0.5*(*this).b(1,0) - float(ik)/float(nks) * (0.5*(*this).b(0,0) + 0.5*(*this).b(2,0) + 0.5*(*this).b(1,0)); 
 				momenta(ind,1) = 0.5*(*this).b(0,1) + 0.5*(*this).b(2,1) + 0.5*(*this).b(1,1) - float(ik)/float(nks) * (0.5*(*this).b(0,1) + 0.5*(*this).b(2,1) + 0.5*(*this).b(1,1));
 				momenta(ind,2) = 0.5*(*this).b(0,2) + 0.5*(*this).b(2,2) + 0.5*(*this).b(1,2) - float(ik)/float(nks) * (0.5*(*this).b(0,2) + 0.5*(*this).b(2,2) + 0.5*(*this).b(1,2));
+				ind += 1;
+			}
+		}
+
+		void set_momenta_Path4() { //Gamma -> M -> K -> Gamma for triangular lattice
+
+			size_t nks(nk/3);
+			size_t ind(0);
+			for (size_t ik=0; ik<nks; ik++) { // Gamma = 0 -> M = (pi, -pi/sqrt(3))
+				momenta(ind,0) = float(ik)/float(nks) * param.pi_f;
+				momenta(ind,1) = float(ik)/float(nks) * (-param.pi_f/sqrt(3.));
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // M -> K = (4*pi/3, 0)
+				momenta(ind,0) = param.pi_f + float(ik)/float(nks) * param.pi_f/3.;
+				momenta(ind,1) = -param.pi_f/sqrt(3.) + float(ik)/float(nks) * param.pi_f/sqrt(3.);
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // K -> Gamma = (0,0)
+				momenta(ind,0) = 4.*param.pi_f/3. - float(ik)/float(nks) * 4.*param.pi_f/3.;
+				momenta(ind,1) = 0.0;
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+		}
+
+		void set_momenta_Path5() { //Gamma -> M -> K -> Gamma for triangular lattice in extended BZ
+
+			size_t nks(nk/3);
+			size_t ind(0);
+			for (size_t ik=0; ik<nks; ik++) { // Gamma = 0 -> M = (2*pi, -2*pi/sqrt(3))
+				momenta(ind,0) = float(ik)/float(nks) * 2.*param.pi_f;
+				momenta(ind,1) = float(ik)/float(nks) * (-2.*param.pi_f/sqrt(3.));
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // M -> K = (8*pi/3, 0)
+				momenta(ind,0) = 2.*param.pi_f + float(ik)/float(nks) * 2.*param.pi_f/3.;
+				momenta(ind,1) = -2.*param.pi_f/sqrt(3.) + float(ik)/float(nks) * 2.*param.pi_f/sqrt(3.);
+				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // K -> Gamma = (0,0)
+				momenta(ind,0) = 8.*param.pi_f/3. - float(ik)/float(nks) * 8.*param.pi_f/3.;
+				momenta(ind,1) = 0.0;
+				momenta(ind,2) = 0.0;
 				ind += 1;
 			}
 		}

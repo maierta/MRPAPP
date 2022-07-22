@@ -75,7 +75,7 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 	bands.calcBandStructure(filename);
 
 	// Now calculate bands along high-symmetry direction
-	std::string path("Path2");
+	std::string path(param.momentumPath);
 	size_t nkPath(1080);
 	if (param.dimension == 3) {
 		path = "Path3";

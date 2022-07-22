@@ -105,6 +105,7 @@ namespace rpa {
 		bool explicitSpin;
 		Field couplingRatio;
 		std::string qGridType;
+		std::string momentumPath;
 
 			
 		// size_t nktot;
@@ -224,7 +225,8 @@ namespace rpa {
 			oppositeSpinPairing(1), // pairing between up/down electrons
 			explicitSpin(0),
 			couplingRatio(1.0),
-			qGridType("")
+			qGridType(""),
+			momentumPath("Path2")
 
 			// single-band model in 2-sub-lattice formulation
 			// dimension(2),
@@ -445,6 +447,7 @@ namespace rpa {
 		        else if (text.find("explicitSpin")!=std::string::npos) str >> (*this).explicitSpin;
 		        else if (text.find("couplingRatio")!=std::string::npos) str >> (*this).couplingRatio;
 		        else if (text.find("qGridType")!=std::string::npos) str >> (*this).qGridType;
+		        else if (text.find("momentumPath")!=std::string::npos) str >> (*this).momentumPath;
 		        else if (text.find("readFSFromFile")!=std::string::npos) str >> (*this).readFSFromFile;
 			}
 
@@ -571,6 +574,7 @@ namespace rpa {
 				os << "explicitSpin = " << (*this).explicitSpin << "\n";
 				os << "couplingRatio = " << (*this).couplingRatio << "\n";
 				os << "qGridType = " << (*this).qGridType << "\n";
+				os << "momentumPath = " << (*this).momentumPath << "\n";
 				os << "readFSFromFile = " << (*this).readFSFromFile << "\n";
 			}
 
@@ -702,6 +706,7 @@ namespace rpa {
 		        conc.broadcast((*this).explicitSpin);
 		        conc.broadcast((*this).couplingRatio);
 		        conc.broadcast((*this).qGridType);
+		        conc.broadcast((*this).momentumPath);
 		        conc.broadcast((*this).readFSFromFile);
 			}
 

@@ -37,5 +37,8 @@
 #include "modelFromFileSO.h"
 #elif USE_KAGOME
 #include "Kagome.h"
+#elif
+#include "tbFromFile.h"
 #endif
 
+#endif

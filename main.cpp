@@ -1,11 +1,11 @@
 #include "Matrix.h"
 // #include "bands.h"
+#include "model.h"
 #include "bandstructure.h"
 #include "susceptibility.h"
 #include "parameters.h"
 #include "momentumDomain.h"
 #include "utilities.h"
-#include "model.h"
 #include "Range.h"
 #ifndef USE_MPI
 #include "ConcurrencySerial.h"

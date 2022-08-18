@@ -72,8 +72,14 @@ void calcBands(rpa::parameters<Field,MatrixTemplate,ConcurrencyType>& param, Mod
 	}
 
 	// Now that chemical potential is fixed to give target filling, calculate bandstructure
+	std::vector<FieldType> p1 = {1., 0, 0};
+	std::vector<FieldType> p2 = {0, 1., 0};
+	std::vector<FieldType> p3 = {0, 0, 1.};
+	rpa::momentumDomain<Field,psimag::Matrix,ConcurrencyType> kmeshS(param,conc,param.nkBands,param.nkIntz,param.dimension, p1, p2, p3);
+	kmeshS.set_momenta(false);	
+	rpa::bandstructure<Field,psimag::Matrix, ModelType, ConcurrencyType> bandsS(param,model,conc,kmeshS,false);
 	std::string filename = "ek_" + param.fileID + ".txt";
-	bands.calcBandStructure(filename);
+	bandsS.calcBandStructure(filename);
 
 	// Now calculate bands along high-symmetry direction
 	std::string path(param.momentumPath);

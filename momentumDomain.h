@@ -148,6 +148,7 @@ namespace rpa {
 				if (path == "Path2") set_momenta_Path2(); 
 				if (path == "Path3") set_momenta_Path3(); 
 				if (path == "triangular") set_momenta_Path4(); 
+				if (path == "triangular2") set_momenta_Path4_b(); 
 				if (path == "triangularExtended") set_momenta_Path5(); 
 			}
 
@@ -425,6 +426,30 @@ namespace rpa {
 				momenta(ind,0) = 4.*param.pi_f/3. - float(ik)/float(nks) * 4.*param.pi_f/3.;
 				momenta(ind,1) = 0.0;
 				momenta(ind,2) = 0.0;
+				ind += 1;
+			}
+		}
+
+		void set_momenta_Path4_b() { //Gamma -> (0.5,0) -> (1/3,1/3) -> Gamma in terms of rec. lattice b vectors
+
+			size_t nks(nk/3);
+			size_t ind(0);
+			for (size_t ik=0; ik<nks; ik++) { // Gamma = 0 -> (0.5,0) = 0.5*b1
+				momenta(ind,0) = float(ik)/float(nks) * 0.5*(*this).b(0,0);
+				momenta(ind,1) = float(ik)/float(nks) * 0.5*(*this).b(0,1);
+				momenta(ind,2) = float(ik)/float(nks) * 0.5*(*this).b(0,2);
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // (0.5,0) --> (1/3, 1/3): 0.5*b1 --> 1/3*b1+1/3*b2
+				momenta(ind,0) = (0.5 - float(ik)/float(nks) * (0.5 - 1./3.))*(*this).b(0,0) + float(ik)/float(nks)*1./3.*(*this).b(1,0);
+				momenta(ind,1) = (0.5 - float(ik)/float(nks) * (0.5 - 1./3.))*(*this).b(0,1) + float(ik)/float(nks)*1./3.*(*this).b(1,1);
+				momenta(ind,2) = (0.5 - float(ik)/float(nks) * (0.5 - 1./3.))*(*this).b(0,2) + float(ik)/float(nks)*1./3.*(*this).b(1,2);
+				ind += 1;
+			}
+			for (size_t ik=0; ik<nks; ik++) { // (1/3,1/3) --> Gamma
+				momenta(ind,0) = 1./3.*((*this).b(0,0)+(*this).b(1,0)) * (1. - float(ik)/float(nks));
+				momenta(ind,1) = 1./3.*((*this).b(0,1)+(*this).b(1,1)) * (1. - float(ik)/float(nks));
+				momenta(ind,2) = 1./3.*((*this).b(0,2)+(*this).b(1,2)) * (1. - float(ik)/float(nks));
 				ind += 1;
 			}
 		}

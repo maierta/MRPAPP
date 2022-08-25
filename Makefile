@@ -7,8 +7,8 @@ INCLUDES =  -I$(SRC_DIR) \
 	-I$(SRC_DIR)/PsimagLite/src \
 
 EXENAME		     = mrpapp
-CC                   = mpicxx
-cc                   = mpicxx
+CC                   = /usr/local/bin/mpicxx
+cc                   = /usr/local/bin/mpicxx
 MatrixBoundsChecking = -DNDEBUG
 
 # FLAGS        = $(MatrixBoundsChecking)  -g  -Wall  -Werror -DUSE_MPI  -DUSE_SCGAP3D

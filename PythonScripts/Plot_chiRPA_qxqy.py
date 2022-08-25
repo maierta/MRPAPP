@@ -1,11 +1,12 @@
 import sys
+import argparse
 from numpy import *
 from matplotlib.pyplot import *
 
 
 style.use("bmh")
 
-def plotchi(file="chiRPA.txt"):
+def plotchi(file, interpolate):
 
 	print("Plotting file",file)
 	imag = False # Plot imaginary part of chi; otherwise real part
@@ -55,7 +56,10 @@ def plotchi(file="chiRPA.txt"):
 	fig2 = figure(figsize=(8,6))
 	ax2=fig2.add_subplot(111)
 
-	cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="none",origin='lower',cmap='jet')
+	if interpolate:
+		cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="spline16",origin='lower',cmap='jet')
+	else:
+		cset = ax2.imshow(z.reshape(nk,nk),extent=(x.min(),x.max(),y.min(),y.max()),interpolation="none",origin='lower',cmap='jet')
 	fig2.colorbar(cset)
 	ax2.set_xlabel(r"$q_x/\pi$",fontsize=13,labelpad=10)
 	ax2.set_ylabel(r"$q_y/\pi$",fontsize=13,labelpad=10)
@@ -68,9 +72,10 @@ def plotchi(file="chiRPA.txt"):
 	show()
 
 if __name__ == "__main__":
-    if len(sys.argv)>1:
-    	file = sys.argv[1]
-    	plotchi(file)
-    else:
-    	plotchi()
+	parser = argparse.ArgumentParser(description="plot chi(q,w")
+	parser.add_argument('--file', dest="file", action="store", default="chiRPA.txt")
+	parser.add_argument('--interpolate', dest="interpolate", action="store_true", default=False)
+	input_args = parser.parse_args()
+
+	plotchi(input_args.file, interpolate=input_args.interpolate)
     

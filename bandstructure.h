@@ -336,8 +336,7 @@ public:
   // b++) { Mkq[ik](i,b) = akq[ik](l1,b) * conj(akq[ik](l2,b));
   // 				// if (ik==0) std::cout << i << "," << b << ","
   // << Mkq[ik](i,b) << "\n"; 				if (calcGap) {
-  // if (param.explicitSpin) { 						MkqFF[ik](i,b) =
-  // akq[ik](l1,b)
+  // if (param.explicitSpin) { MkqFF[ik](i,b) = akq[ik](l1,b)
   // * akq[ik](l2,(b+int(nbands/2))%nbands); // Pseudospin up-down pairing }
   // else
   // { 						MkqFF[ik](i,b) = akq[ik](l1,b) *

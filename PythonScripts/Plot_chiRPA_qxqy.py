@@ -1,4 +1,3 @@
-import sys
 import argparse
 from numpy import *
 from matplotlib.pyplot import *
@@ -19,10 +18,9 @@ def plotchi(file, interpolate, column=8):
     # file = "chiRPA.txt"
 
     data=loadtxt(file,delimiter=",")
-    from mpl_toolkits.mplot3d import Axes3D
 
     nk = unique(data[:,0]).shape[0]
-    nkz = unique(data[:,2]).shape[0]
+    # nkz = unique(data[:,2]).shape[0]
     #x,y = mgrid[0:1:nk*1j,0:1:nk*1j]
     x = data[:,0].reshape(nk,nk)/pi
     y = data[:,1].reshape(nk,nk)/pi

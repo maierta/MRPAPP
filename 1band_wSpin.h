@@ -1,4 +1,4 @@
-// Model file for Sr2RuO4 with spin-orbit coupling --> 6 bands total
+// Model file for 1-band model with explicit spin --> 2 bands total
 #ifndef SINGLEBAND_WSPIN_H
 #define SINGLEBAND_WSPIN_H
 
@@ -73,8 +73,8 @@ namespace rpa {
 			// Basis is (spin up, spin down)
 			// Note that Hamiltonian is block-diagonal in 2 pseudospin blocks
 			
-			eigenvals[0] = ek; // pseudospin up
-			eigenvals[1] = ek; // pseudospin down
+			eigenvals[0] = ek; // pin up
+			eigenvals[1] = ek; // spin down
 			eigenvects(0,0) = 1.0; 
 			eigenvects(0,1) = 0.0; 
 			eigenvects(1,1) = 1.0;

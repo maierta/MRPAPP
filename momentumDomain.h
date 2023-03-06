@@ -105,6 +105,8 @@ public:
         nktot(nk), b(3, 3), momenta(nk, 3) {
     set_primitiveVectors();
 
+    if (path == "Path0")
+      set_momenta_Path0();
     if (path == "Path1")
       set_momenta_Path1();
     if (path == "Path2")
@@ -279,29 +281,23 @@ public:
     }
   }
 
-  void set_momenta_Path1() {
+  void set_momenta_Path0() {
 
-    size_t nks(nk / 4);
+    size_t nks(nk / 3);
     size_t ind(0);
-    for (size_t ik = 0; ik < nks; ik++) { // Gamma -> M
+    for (size_t ik = 0; ik < nks; ik++) { // (0,0) --> (pi,pi)
       momenta(ind, 0) = float(ik) / float(nks) * param.pi_f;
       momenta(ind, 1) = float(ik) / float(nks) * param.pi_f;
       momenta(ind, 2) = 0.0;
       ind += 1;
     }
-    for (size_t ik = 0; ik < nks; ik++) {
-      momenta(ind, 0) = param.pi_f + float(ik) / float(nks) * param.pi_f;
+    for (size_t ik = 0; ik < nks; ik++) { // (pi,pi) --> (pi,0)
+      momenta(ind, 0) = param.pi_f; 
       momenta(ind, 1) = param.pi_f - float(ik) / float(nks) * param.pi_f;
       momenta(ind, 2) = 0.0;
       ind += 1;
     }
-    for (size_t ik = 0; ik < nks; ik++) {
-      momenta(ind, 0) = 2. * param.pi_f - float(ik) / float(nks) * param.pi_f;
-      momenta(ind, 1) = 0.0;
-      momenta(ind, 2) = 0.0;
-      ind += 1;
-    }
-    for (size_t ik = 0; ik < nks; ik++) {
+    for (size_t ik = 0; ik < nks; ik++) { // (pi,0) --> (0,0)
       momenta(ind, 0) = param.pi_f - float(ik) / float(nks) * param.pi_f;
       momenta(ind, 1) = 0.0;
       momenta(ind, 2) = 0.0;
@@ -309,7 +305,37 @@ public:
     }
   }
 
-  void set_momenta_Path2() { // Gamma -> X -> M -> Gamma
+  void set_momenta_Path1() {
+
+    size_t nks(nk / 4);
+    size_t ind(0);
+    for (size_t ik = 0; ik < nks; ik++) { // (0,0) --> (pi,pi)
+      momenta(ind, 0) = float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (pi,pi) --> (2pi,0)
+      momenta(ind, 0) = param.pi_f + float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (2pi,0) --> (pi,0)
+      momenta(ind, 0) = 2. * param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = 0.0;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (pi,0) --> (0,0)
+      momenta(ind, 0) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = 0.0;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+  }
+
+  void set_momenta_Path2() { // Gamma -> X -> M -> Gamma in units of rec. latt. vecs.
 
     size_t nks(nk / 3);
     size_t ind(0);

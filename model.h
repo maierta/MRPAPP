@@ -37,6 +37,10 @@
 #include "modelFromFileSO.h"
 #elif USE_KAGOME
 #include "Kagome.h"
+#elif USE_1BANDABWSPIN
+#include "1band_AB_wSpin.h"
+#elif USE_1BANDAB
+#include "1band_AB.h"
 #elif
 #include "tbFromFile.h"
 #endif

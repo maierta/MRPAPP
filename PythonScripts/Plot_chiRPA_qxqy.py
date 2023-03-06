@@ -27,7 +27,7 @@ def plotchi(file, interpolate, column=8):
 
     omega = data[0,3]
 
-    ax=figure().gca(projection='3d')
+    ax=figure().add_subplot(projection='3d')
     z=data[:,column]
     ax.plot_surface(x,y,z.reshape(nk,nk),rstride=1,cstride=1,linewidth=1.0,alpha=0.75,cmap='jet')
     zmax=ax.get_zlim()[1]

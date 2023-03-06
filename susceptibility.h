@@ -215,7 +215,9 @@ public:
                   << numberOfQ
                   // << " total. ChiPhys=" << chi0Matrix[iQ].calcSus()
                   << " total. ChiPhys="
-                  << chi0Matrix[iQ].calcSus()
+                  // << tbmodel.calcSus(chi0Matrix[iQ], "zz")
+                  << tbmodel.calcSus(chi0Matrix[iQ], "+-")
+                  // << chi0Matrix[iQ].calcSus()
                   // << "chi0_{1133}" << chi0Matrix[iQ](0,18)
                   << "\n";
       }

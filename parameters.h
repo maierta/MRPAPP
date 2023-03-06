@@ -104,6 +104,7 @@ namespace rpa {
 		bool oppositeSpinPairing;
 		bool explicitSpin;
 		Field couplingRatio;
+		Field zeemanField;
 		std::string qGridType;
 		std::string momentumPath;
 
@@ -225,6 +226,7 @@ namespace rpa {
 			oppositeSpinPairing(1), // pairing between up/down electrons
 			explicitSpin(0),
 			couplingRatio(1.0),
+			zeemanField(0.0),
 			qGridType(""),
 			momentumPath("Path2")
 
@@ -446,6 +448,7 @@ namespace rpa {
 		        else if (text.find("oppositeSpinPairing")!=std::string::npos) str >> (*this).oppositeSpinPairing;
 		        else if (text.find("explicitSpin")!=std::string::npos) str >> (*this).explicitSpin;
 		        else if (text.find("couplingRatio")!=std::string::npos) str >> (*this).couplingRatio;
+		        else if (text.find("zeemanField")!=std::string::npos) str >> (*this).zeemanField;
 		        else if (text.find("qGridType")!=std::string::npos) str >> (*this).qGridType;
 		        else if (text.find("momentumPath")!=std::string::npos) str >> (*this).momentumPath;
 		        else if (text.find("readFSFromFile")!=std::string::npos) str >> (*this).readFSFromFile;
@@ -573,6 +576,7 @@ namespace rpa {
 				os << "oppositeSpinPairing = " << (*this).oppositeSpinPairing << "\n";
 				os << "explicitSpin = " << (*this).explicitSpin << "\n";
 				os << "couplingRatio = " << (*this).couplingRatio << "\n";
+				os << "zeemanField = " << (*this).zeemanField << "\n";
 				os << "qGridType = " << (*this).qGridType << "\n";
 				os << "momentumPath = " << (*this).momentumPath << "\n";
 				os << "readFSFromFile = " << (*this).readFSFromFile << "\n";
@@ -705,6 +709,7 @@ namespace rpa {
 		        conc.broadcast((*this).oppositeSpinPairing);
 		        conc.broadcast((*this).explicitSpin);
 		        conc.broadcast((*this).couplingRatio);
+		        conc.broadcast((*this).zeemanField);
 		        conc.broadcast((*this).qGridType);
 		        conc.broadcast((*this).momentumPath);
 		        conc.broadcast((*this).readFSFromFile);

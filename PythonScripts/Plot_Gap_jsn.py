@@ -1,7 +1,9 @@
 from matplotlib.pyplot import *
 from numpy import *
+import argparse
 
-def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=list(range(0,10))):
+# def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=list(range(0,10))):
+def eigen(file,firstBZ,returnEvec, ncols, nrows, evList):
     data=eval(open(file).read())
 
     U  = array(data['U'])
@@ -49,7 +51,7 @@ def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=l
                     ax[j,i].grid(color='darkgrey')
                     ax[j,i].use_sticky_edges = False
 
-                    ax[j,i].margins(y=0.5, x=0.1)
+                    # ax[j,i].margins(y=0.5, x=0.1)
                     ax[j,i].set_xlabel(r"$k_x/\pi$")
                     ax[j,i].set_ylabel(r"$k_y/\pi$")
                     ax[j,i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
@@ -61,7 +63,7 @@ def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=l
                 ax[i].grid(color='darkgrey')
                 ax[i].use_sticky_edges = False
 
-                ax[i].margins(y=0.5, x=0.1)
+                # ax[i].margins(y=0.5, x=0.1)
                 ax[i].set_xlabel(r"$k_x/\pi$")
                 ax[i].set_ylabel(r"$k_y/\pi$")
                 ax[i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
@@ -75,5 +77,11 @@ def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=l
     return kf,evec[returnEvec,:]
 
 if __name__ == "__main__":
-    file = sys.argv[1]
-    eigen(file)
+
+    parser = argparse.ArgumentParser(description="plot leading eigenvectors")
+    parser.add_argument('--file', dest="file", action="store", default="Gap.jsn")
+    parser.add_argument('--ncols', dest="ncols", action="store", default=5)
+    parser.add_argument('--nrows', dest="nrows", action="store", default=2)
+    parser.add_argument('--evList', dest="evList", nargs='+', type=int, action="store", default=list(range(0, 10)))
+    input_args = parser.parse_args()
+    eigen(file = input_args.file, firstBZ=True, returnEvec=0, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)

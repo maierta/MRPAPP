@@ -119,6 +119,8 @@ public:
       set_momenta_Path4_b();
     if (path == "triangularExtended")
       set_momenta_Path5();
+    if (path == "PathYX")
+      set_momenta_Path6();
   }
 
   void set_primitiveVectors() {
@@ -292,7 +294,7 @@ public:
       ind += 1;
     }
     for (size_t ik = 0; ik < nks; ik++) { // (pi,pi) --> (pi,0)
-      momenta(ind, 0) = param.pi_f; 
+      momenta(ind, 0) = param.pi_f;
       momenta(ind, 1) = param.pi_f - float(ik) / float(nks) * param.pi_f;
       momenta(ind, 2) = 0.0;
       ind += 1;
@@ -335,7 +337,8 @@ public:
     }
   }
 
-  void set_momenta_Path2() { // Gamma -> X -> M -> Gamma in units of rec. latt. vecs.
+  void
+  set_momenta_Path2() { // Gamma -> X -> M -> Gamma in units of rec. latt. vecs.
 
     size_t nks(nk / 3);
     size_t ind(0);
@@ -539,6 +542,24 @@ public:
     }
   }
 
+  void set_momenta_Path6() {
+
+    size_t nks(nk / 2);
+    size_t ind(0);
+    for (size_t ik = 0; ik < nks; ik++) { // (0,pi) --> (0,0)
+      momenta(ind, 0) = 0.0;
+      momenta(ind, 1) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (0,0) --> (pi,0)
+      momenta(ind, 0) = float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = 0.0;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+  }
+
   size_t index(size_t ikx, size_t iky, size_t ikz = 0) const {
     // return ikz+iky*nkz+ikx*nkz*nk;
     return ikx + iky * nk + ikz * nk * nk;
@@ -620,8 +641,8 @@ public:
 
   // void interpolateBiLinear(const VectorType& q,
   // 						 const ComplexVectorType&
-  // complexField, 						 ComplexType& result)
-  // const
+  // complexField, 						 ComplexType&
+  // result) const
   // {
 
   // 	// First find indices of vertices of cube surrounding q

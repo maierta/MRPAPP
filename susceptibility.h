@@ -214,9 +214,9 @@ public:
                   << "  of "
                   << numberOfQ
                   // << " total. ChiPhys=" << chi0Matrix[iQ].calcSus()
-                  << " total. ChiPhys="
-                  // << tbmodel.calcSus(chi0Matrix[iQ], "zz")
+                  << " total. ChiPhys=" << tbmodel.calcSus(chi0Matrix[iQ], "zz")
                   << tbmodel.calcSus(chi0Matrix[iQ], "+-")
+                  << tbmodel.calcSus(chi0Matrix[iQ], "-+")
                   // << chi0Matrix[iQ].calcSus()
                   // << "chi0_{1133}" << chi0Matrix[iQ](0,18)
                   << "\n";
@@ -349,6 +349,9 @@ public:
       // std::string path("Path2");
       std::string path(param.momentumPath);
       size_t nkPath(nq1 * 3);
+      if (param.momentumPath == "Path0_extended") {
+        nkPath = nq1*5;
+        }
       if (param.dimension == 3) {
         path = "Path3";
         nkPath = nq1 * 7;
@@ -457,8 +460,9 @@ public:
             os << imag(chi0Matrix[iq](l1, l2)) << " , ";
         ComplexType sus0(tbmodel.calcSus(chi0Matrix[iq], "zz"));
         ComplexType sus1(tbmodel.calcSus(chi0Matrix[iq], "+-"));
+        ComplexType sus2(tbmodel.calcSus(chi0Matrix[iq], "-+"));
         os << real(sus0) << " , " << imag(sus0) << " , " << real(sus1) << " , "
-           << imag(sus1);
+           << imag(sus1) << " , " << real(sus2) << " , " << imag(sus2);
         os << "\n";
       }
     }
@@ -482,17 +486,19 @@ public:
       // tbmodel.calcSus(chi0Matrix[iq], "zz") << "\n";
       ComplexType susRzz(tbmodel.calcSus(chiRPA, "zz"));
       ComplexType susRpm(tbmodel.calcSus(chiRPA, "+-"));
+      ComplexType susRmp(tbmodel.calcSus(chiRPA, "-+"));
       // ComplexType sus1(chi0Matrix[iq].calcSus());
       ComplexType sus1(tbmodel.calcSus(chi0Matrix[iq], "zz"));
       ComplexType sus2(tbmodel.calcSus(chi0Matrix[iq], "+-"));
-      ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq], "xx"));
-      ComplexType sus4(tbmodel.calcSus(chi0Matrix[iq], "yy"));
+      /* ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq], "-+")); */
+      /* ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq], "xx")); */
+      /* ComplexType sus4(tbmodel.calcSus(chi0Matrix[iq], "yy")); */
       os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3]
           << " , ";
-      os2 << real(susRzz) << "," << imag(susRzz) << " ," << real(susRpm) << ","
-          << imag(susRpm) << " ," << real(sus1) << " , " << imag(sus1) << " , "
-          << real(sus2) << " , " << imag(sus2) << " , " << real(sus3) << " , "
-          << imag(sus3) << " , " << real(sus4) << " , " << imag(sus4) << "\n";
+      os2 << real(susRzz) << " , " << imag(susRzz) << " , " << real(susRpm)
+          << " , " << imag(susRpm) << " , " << real(susRmp) << " , "
+          << imag(susRmp) << " , " << real(sus1) << " , " << imag(sus1) << " , "
+          << real(sus2) << " , " << imag(sus2) << "\n";
     }
     os2.close();
     std::cout << "File is written \n";

@@ -39,6 +39,8 @@
 #include "Kagome.h"
 #elif USE_1BANDABWSPIN
 #include "1band_AB_wSpin.h"
+#elif USE_1BANDALTERMAGNET
+#include "1band_Altermagnet_wSpin.h"
 #elif USE_1BANDAB
 #include "1band_AB.h"
 #elif

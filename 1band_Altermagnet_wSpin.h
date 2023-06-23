@@ -1,7 +1,7 @@
-// Model file for 1-band model with AB-sublattices and explicit spin --> 2 bands
+// Model file for 1-band altermagnet model with AB-sublattices and explicit spin --> 2 bands
 // total
-#ifndef SINGLEBAND_AB_WSPIN_H
-#define SINGLEBAND_AB_WSPIN_H
+#ifndef SINGLEBAND_ALTERMAGNET_WSPIN_H
+#define SINGLEBAND_ALTERMAGNET_WSPIN_H
 
 #include <cstdlib> // for atof and atoi
 #include <fstream>
@@ -86,7 +86,7 @@ public:
 
     FieldType ekAB = -2 * t * (cx + cy);
     FieldType ekAA = -4 * tp * cxy - 2 * t1 * c2x - 2 * t2 * c2y;
-    FieldType ekBB = -4 * tp * cxy - 2 * t1 * c2x - 2 * t2 * c2y;
+    FieldType ekBB = -4 * tp * cxy - 2 * t2 * c2x - 2 * t1 * c2y;
 
     // Write Hamiltonian into eigenvects
     // Basis is (A, up; B, up; A, down; B, down)

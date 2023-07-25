@@ -490,7 +490,7 @@ public:
       // ComplexType sus1(chi0Matrix[iq].calcSus());
       ComplexType sus1(tbmodel.calcSus(chi0Matrix[iq], "zz"));
       ComplexType sus2(tbmodel.calcSus(chi0Matrix[iq], "+-"));
-      /* ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq], "-+")); */
+      ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq], "-+"));
       /* ComplexType sus3(tbmodel.calcSus(chi0Matrix[iq], "xx")); */
       /* ComplexType sus4(tbmodel.calcSus(chi0Matrix[iq], "yy")); */
       os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3]
@@ -498,7 +498,7 @@ public:
       os2 << real(susRzz) << " , " << imag(susRzz) << " , " << real(susRpm)
           << " , " << imag(susRpm) << " , " << real(susRmp) << " , "
           << imag(susRmp) << " , " << real(sus1) << " , " << imag(sus1) << " , "
-          << real(sus2) << " , " << imag(sus2) << "\n";
+          << real(sus2) << " , " << imag(sus2) << " , " << real(sus3) << " , " << imag(sus3) << "\n"; 
     }
     os2.close();
     std::cout << "File is written \n";

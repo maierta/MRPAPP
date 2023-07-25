@@ -230,7 +230,7 @@ namespace rpa {
 			std::string cstr = "GammaPPOrb_" + param.fileID + ".txt";
 			const char *filename = cstr.c_str();
 			std::ofstream os(filename);
-			os << "#i\t j\t l1\t l2\t l3\t l4\t Gammma_{l1,l2,l3,l4}(k_i,k_j)\n";
+			os << "#i, j, l1, l2, l3, l4, Gammma_{l1,l2,l3,l4}(k_i,k_j)\n";
 
 			for (;!range.end();range.next()) {
 				ind = range.index();
@@ -539,8 +539,8 @@ namespace rpa {
                 
 
 				if (storeGammaOrb_)	{
-					os << ik1 << "\t" << ik2 << "\t" << l1 << "\t" << l2 << "\t" << l3 << "\t" << l4 << "\t" << real(gammaOrb(ind1,ind2)) << "\t" << real(c1*gammaOrb(ind1,ind2)) << "\n";
-					if (ik1!=ik2) os << ik2 << "\t" << ik1 << "\t" << l1 << "\t" << l2 << "\t" << l3 << "\t" << l4 << "\t" << real(gammaOrb(ind1,ind2)) << "\t" << real(c1*gammaOrb(ind1,ind2)) << "\n";
+					os << ik1 << "," << ik2 << "," << l1 << "," << l2 << "," << l3 << "," << l4 << "," << real(gammaOrb(ind1,ind2)) << "," << real(c1*gammaOrb(ind1,ind2)) << "\n";
+					if (ik1!=ik2) os << ik2 << "," << ik1 << "," << l1 << "," << l2 << "," << l3 << "," << l4 << "," << real(gammaOrb(ind1,ind2)) << "," << real(c1*gammaOrb(ind1,ind2)) << "\n";
 					}
 
                 // c2 += conj(c1)*gammaOrb(ind1,ind2);

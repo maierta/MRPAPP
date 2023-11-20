@@ -56,11 +56,13 @@ namespace rpa {
 		}
 		
 		inline void getBands(const VectorType k, VectorType& eigenvals, ComplexMatrixType& eigenvects) {
-	    	FieldType t, tp, cy, cx;
+	    	FieldType t, tp, tpp, cy, cx, c2x, c2y;
 			t = param.hopping_t;
 			tp = param.hopping_tp;
+			tpp = param.hopping_tpp;
 			cx = cos(k[0]); cy = cos(k[1]);
-			eigenvals[0] = -2*t*(cx+cy)-4*tp*cx*cy - param.mu;
+			c2x = cos(2.*k[0]); c2y = cos(2*k[1]);
+			eigenvals[0] = -2*t*(cx+cy)-4*tp*cx*cy - -2.*tpp*(c2x+c2y) - param.mu;
 			eigenvects(0,0) = 1.0;
 		}
 

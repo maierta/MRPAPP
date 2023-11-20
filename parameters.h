@@ -61,6 +61,7 @@ public:
   std::string tbfile;
   Field hopping_t;
   Field hopping_tp;
+  Field hopping_tpp;
   Field hopping_t1;
   Field hopping_t2;
   std::string fileID;
@@ -128,7 +129,7 @@ public:
         nwn(100), Case(""), dimension(2), nkBands(64), nkInt(64), nkIntz(16),
         kz2D(0.0), FSnkz(1), nOrb(1), mu(-0.1), nTarget(1.0),
         adjustChemicalPotential(0), tbfile(""), hopping_t(1.0), hopping_tp(0.0),
-        hopping_t1(0.0), hopping_t2(0.0), fileID(""),
+        hopping_tpp(0.0), hopping_t1(0.0), hopping_t2(0.0), fileID(""),
         fsfile("FSforPairing.dat"), readFSFromFile(0), nkPerSheet(40),
         complexHopping(0), pairingSpinParity(0), pairingFromSpin(1),
         pairingFromCharge(1), storeChi(0), storeGammaOrb(0), readChi(0),
@@ -268,6 +269,8 @@ public:
       str >> (*this).hopping_t;
     else if (text.find("1hopping_tp") != std::string::npos)
       str >> (*this).hopping_tp;
+    else if (text.find("4hopping_tpp") != std::string::npos)
+      str >> (*this).hopping_tpp;
     else if (text.find("2hopping_t1") != std::string::npos)
       str >> (*this).hopping_t1;
     else if (text.find("3hopping_t2") != std::string::npos)
@@ -520,6 +523,7 @@ public:
     os << "tbParametersFile = " << (*this).tbfile << "\n";
     os << "hopping_t = " << (*this).hopping_t << "\n";
     os << "hopping_tp = " << (*this).hopping_tp << "\n";
+    os << "hopping_tpp = " << (*this).hopping_tpp << "\n";
     os << "hopping_t1 = " << (*this).hopping_t1 << "\n";
     os << "hopping_t2 = " << (*this).hopping_t2 << "\n";
     os << "fileID = " << (*this).fileID << "\n";
@@ -660,6 +664,7 @@ public:
     conc.broadcast((*this).tbfile);
     conc.broadcast((*this).hopping_t);
     conc.broadcast((*this).hopping_tp);
+    conc.broadcast((*this).hopping_tpp);
     conc.broadcast((*this).hopping_t1);
     conc.broadcast((*this).hopping_t2);
     conc.broadcast((*this).fileID);

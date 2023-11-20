@@ -125,6 +125,8 @@ public:
       set_momenta_Path5();
     if (path == "PathYX")
       set_momenta_Path6();
+    if (path == "Path7")
+      set_momenta_Path7();
   }
 
   void set_primitiveVectors() {
@@ -304,6 +306,36 @@ public:
       ind += 1;
     }
     for (size_t ik = 0; ik < nks; ik++) { // (pi,0) --> (0,0)
+      momenta(ind, 0) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = 0.0;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+  }
+
+  void set_momenta_Path7() { // (0,0) - (pi,pi) - (0,pi) - (pi,0) - (0,0)
+
+    size_t nks(nk / 4);
+    size_t ind(0);
+    for (size_t ik = 0; ik < nks; ik++) { // (0,0) --> (pi,pi)
+      momenta(ind, 0) = float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (pi,pi) --> (0,pi)
+      momenta(ind, 0) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = param.pi_f;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (0,pi)--> (pi,0)
+      momenta(ind, 0) = float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 1) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 2) = 0.0;
+      ind += 1;
+    }
+    for (size_t ik = 0; ik < nks; ik++) { // (pi,0)--> (0,0)
       momenta(ind, 0) = param.pi_f - float(ik) / float(nks) * param.pi_f;
       momenta(ind, 1) = 0.0;
       momenta(ind, 2) = 0.0;

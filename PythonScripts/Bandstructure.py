@@ -20,7 +20,7 @@ def plotBandstructure(fileID = ""):
 
 
 	from matplotlib.colors import LinearSegmentedColormap
-	colors=['#348ABD','#E24A33','#4431AC']
+	colors=['#348ABD','#E24A33','#4431AC', '#5171DA']
 	cmap = LinearSegmentedColormap.from_list('my_list',colors,N=256)
 
 

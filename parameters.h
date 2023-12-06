@@ -3,7 +3,6 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
-#include "ConcurrencyMpi.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>

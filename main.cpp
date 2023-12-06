@@ -4,7 +4,6 @@
 #include "bandstructure.h"
 #include "model.h"
 #include "momentumDomain.h"
-#include "parameters.h"
 #include "susceptibility.h"
 #include "utilities.h"
 #ifndef USE_MPI
@@ -14,6 +13,9 @@ typedef PsimagLite::ConcurrencySerial<double> ConcurrencyType;
 #include "ConcurrencyMpi.h"
 typedef PsimagLite::ConcurrencyMpi<double> ConcurrencyType;
 #endif
+
+// must be included after concurreny
+#include "parameters.h"
 
 #include "chi0.h"
 #include "pairing.h"

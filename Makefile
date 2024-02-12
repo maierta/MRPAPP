@@ -7,17 +7,17 @@ INCLUDES =  -I$(SRC_DIR) \
 	-I$(SRC_DIR)/PsimagLite/src \
 
 EXENAME		     = mrpapp
-CC                   = /usr/local/bin/mpicxx
-cc                   = /usr/local/bin/mpicxx
+CC                   = mpicxx
+cc                   = mpicxx
 MatrixBoundsChecking = -DNDEBUG
 
 # FLAGS        = $(MatrixBoundsChecking)  -g  -Wall  -Werror -DUSE_MPI  -DUSE_SCGAP3D
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D
 # FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BAFEAS
 
-#FLAGS        = $(MatrixBoundsChecking)  -O2 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
+FLAGS        = $(MatrixBoundsChecking)  -O2 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
 # FLAGS        = $(MatrixBoundsChecking)  -O3 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_TBFILE
-FLAGS        = $(MatrixBoundsChecking)  -O3 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_1BANDABWSPIN
+#FLAGS        = $(MatrixBoundsChecking)  -O3 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_1BANDABWSPIN
 
 # FLAGS        = $(MatrixBoundsChecking)  -O3 -Warray-bounds -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_1BAND
 #FLAGS        = $(MatrixBoundsChecking)  -O2 -Wall  -Werror -DUSE_MPI -DUSE_SCGAP3D -DUSE_BILAYER_FESC

@@ -122,6 +122,23 @@ public:
       for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
         calcKF(nkSearch, iSheet, param.kz2D, 2);
 
+    } else if (Case_ == "La3Ni2O6_twoOrb_bilayer") {
+      // 2 FS sheets total, one around (pi,pi), one around (0,0)
+      nSheets = 2;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = 0;
+      FSCenters[0][1] = 0;
+      FSBand[0] = 3;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 2;
+
+      size_t nkSearch(128);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
     } else if (Case_ == "KFeSe_10Orbit_underdoped_2D") {
       // 4 FS sheets total, two around (pi,pi), two around (-pi,pi)
       nSheets = 4;

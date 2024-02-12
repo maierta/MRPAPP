@@ -41,8 +41,8 @@ def plotchi(file, interpolate, column=8):
     if imag:
         ax.set_title(r"$\chi\prime\prime(q,\omega)$ for $\omega=$"+str(round(omega,5)),fontsize=13)
     else:
-        ax.set_title(r"$\chi\prime(q,\omega)$ for $\omega=$"+str(round(omega,5)),fontsize=13)
-
+        # ax.set_title(r"$\chi\prime(q,\omega)$ for $\omega=$"+str(round(omega,5)),fontsize=13)
+        ax.set_zlabel(r"$\chi\prime(q,\omega=0)$",fontsize=13,labelpad=10)
     ax.set_facecolor("white")
     # ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
     # ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
@@ -64,6 +64,7 @@ def plotchi(file, interpolate, column=8):
     fig2.colorbar(cset)
     ax2.set_xlabel(r"$q_x/\pi$",fontsize=13,labelpad=10)
     ax2.set_ylabel(r"$q_y/\pi$",fontsize=13,labelpad=10)
+
 
     if imag:
         ax2.set_title(r"$\chi\prime\prime(q,\omega)$ for $\omega=$"+str(round(omega,5)))

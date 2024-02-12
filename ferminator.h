@@ -76,7 +76,33 @@ public:
 
   void setFSValues() {
 
-    if (Case_ == "La3Ni2O7_twoOrb_bilayer") {
+    if (Case_ == "La4Ni3O10_twoOrb_trilayer") {
+      // 5 FS sheets total, two around (0,0), 3 around (pi,pi)
+      nSheets = 5;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = 0;
+      FSCenters[3][1] = 0;
+      FSBand[3] = 3;
+      FSCenters[4][0] = 0;
+      FSCenters[4][1] = 0;
+      FSBand[4] = 4;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "La3Ni2O7_twoOrb_bilayer") {
       // 3 FS sheets total, two around (pi,pi), one around (0,0)
       nSheets = 3;
       nTotal = nSheets * nkPerSheet;

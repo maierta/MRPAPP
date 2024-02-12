@@ -38,37 +38,46 @@ def eigen(file,firstBZ,returnEvec, ncols, nrows, evList):
     # kz0 = abs(kf[:,2]-0.0) < 1.0e-3
     nkz = unique(kf[:,2]).shape[0]
     print(nkz,"different kz values!")
-    
+
     # ncols = 5; nrows=2
-    f, ax =subplots(ncols=ncols,nrows=nrows,figsize=(4*ncols,4*nrows))
-    for kz in range(nkz):
-        index = 0
-        if (ncols>1) & (nrows>1):
-            for i in range(ncols):
-                for j in range(nrows):
-                    ax[j,i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
-                    ax[j,i].set_aspect('equal')
-                    ax[j,i].grid(color='darkgrey')
-                    ax[j,i].use_sticky_edges = False
+    if (nrows > 1) | (ncols > 1):
+        f, ax =subplots(ncols=ncols,nrows=nrows,figsize=(4*ncols,4*nrows))
+        for kz in range(nkz):
+            index = 0
+            if (ncols>1) & (nrows>1):
+                for i in range(ncols):
+                    for j in range(nrows):
+                        ax[j,i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+                        ax[j,i].set_aspect('equal')
+                        ax[j,i].grid(color='darkgrey')
+                        ax[j,i].use_sticky_edges = False
 
-                    # ax[j,i].margins(y=0.5, x=0.1)
-                    ax[j,i].set_xlabel(r"$k_x/\pi$")
-                    ax[j,i].set_ylabel(r"$k_y/\pi$")
-                    ax[j,i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
+                        # ax[j,i].margins(y=0.5, x=0.1)
+                        ax[j,i].set_xlabel(r"$k_x/\pi$")
+                        ax[j,i].set_ylabel(r"$k_y/\pi$")
+                        ax[j,i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
+                        index += 1
+            else:
+                for i in range(max(ncols, nrows)):
+                    ax[i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+                    ax[i].set_aspect('equal')
+                    ax[i].grid(color='darkgrey')
+                    ax[i].use_sticky_edges = False
+
+                    # ax[i].margins(y=0.5, x=0.1)
+                    ax[i].set_xlabel(r"$k_x/\pi$")
+                    ax[i].set_ylabel(r"$k_y/\pi$")
+                    ax[i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
                     index += 1
-        else:
-            for i in range(max(ncols, nrows)):
-                ax[i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
-                ax[i].set_aspect('equal')
-                ax[i].grid(color='darkgrey')
-                ax[i].use_sticky_edges = False
-
-                # ax[i].margins(y=0.5, x=0.1)
-                ax[i].set_xlabel(r"$k_x/\pi$")
-                ax[i].set_ylabel(r"$k_y/\pi$")
-                ax[i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
-                index += 1
-    
+    else:
+        f, ax =subplots(ncols=1,nrows=1,figsize=(4,4))
+        ax.scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[0],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+        ax.set_aspect('equal')
+        ax.grid(color='darkgrey')
+        ax.use_sticky_edges = False
+        ax.set_xlabel(r"$k_x/\pi$")
+        ax.set_ylabel(r"$k_y/\pi$")
+        ax.set_title(r'$\lambda=$'+str(round(e[evList[0]],4)))
 
     f.suptitle(r"U="+str(U)+", U'="+str(Up)+", J="+str(J)+", J'="+str(Jp))
     # f.tight_layout()
@@ -84,4 +93,6 @@ if __name__ == "__main__":
     parser.add_argument('--nrows', dest="nrows", action="store", default=2)
     parser.add_argument('--evList', dest="evList", nargs='+', type=int, action="store", default=list(range(0, 10)))
     input_args = parser.parse_args()
-    eigen(file = input_args.file, firstBZ=True, returnEvec=0, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)
+    kf, ev = eigen(file = input_args.file, firstBZ=True, returnEvec=0, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)
+    for i in range(kf.shape[0]):
+        print(kf[i, 0], " , ", kf[i, 1], " , ", ev[i])

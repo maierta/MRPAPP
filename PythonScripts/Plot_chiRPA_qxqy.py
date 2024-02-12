@@ -76,7 +76,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="plot chi(q,w")
     parser.add_argument('--file', dest="file", action="store", default="chiRPA.txt")
     parser.add_argument('--interpolation', action=argparse.BooleanOptionalAction)
-    parser.add_argument('--column', dest="column", action="store", default=8)
+    parser.add_argument('--column', dest="column", action="store", default=4)
     input_args = parser.parse_args()
 
     plotchi(input_args.file, interpolate=input_args.interpolation, column=int(input_args.column))

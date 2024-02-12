@@ -396,8 +396,8 @@ public:
       ind += 1;
     }
     for (size_t ik = 0; ik < nks; ik++) { // (pi,pi) --> (0,0)
-      momenta(ind, 0) = param.pi_f - float(ik) / float(nks) * param.pi_f;
-      momenta(ind, 1) = param.pi_f - float(ik) / float(nks) * param.pi_f;
+      momenta(ind, 0) = param.pi_f - float(ik) / float(nks - 1) * param.pi_f;
+      momenta(ind, 1) = param.pi_f - float(ik) / float(nks - 1) * param.pi_f;
       momenta(ind, 2) = 0.0;
       ind += 1;
     }

@@ -228,6 +228,42 @@ public:
     return 0.125 * chiPhys;
   }
 
+  std::complex<Field> calcSusi1i2(const ComplexMatrixType &sus,
+                                const std::string &component = "zz", size_t i1=0, size_t i2=0) const {
+      std::complex<Field> chiPhys(0.0);
+      int s1, s2, s3, s4, o1, o2, o3, o4, l1, l2, l3, l4;
+      for (size_t ind1 = 0; ind1 < msize; ind1++) {
+        for (size_t ind2 = 0; ind2 < msize; ind2++) {
+          l1 = param.indexToOrb(ind1, 0);
+          l2 = param.indexToOrb(ind1, 1);
+          l3 = param.indexToOrb(ind2, 0);
+          l4 = param.indexToOrb(ind2, 1);
+          s1 = spinOfEll[l1];
+          s2 = spinOfEll[l2];
+          s3 = spinOfEll[l3];
+          s4 = spinOfEll[l4];
+          o1 = orbOfEll[l1];
+          o2 = orbOfEll[l2];
+          o3 = orbOfEll[l3];
+          o4 = orbOfEll[l4];
+
+          if (o1 == o2 && o3 == o4 && o1 == i1 && o3 == i2) {
+            if (component == "zz" && s1 == s2 && s3 == s4) {
+              chiPhys +=
+                  sus(ind1, ind2) * ComplexType(s1, 0) * ComplexType(s3, 0);
+            } else if (component == "+-" && s1 == +1 && s3 == +1 && s2 == -1 &&
+                       s4 == -1) { // for +- - susc.
+              chiPhys += sus(ind1, ind2);
+            } else if (component == "-+" && s1 == -1 && s3 == -1 && s2 == +1 &&
+                       s4 == +1) { // for -+ - susc.
+              chiPhys += sus(ind1, ind2);
+            }
+          }
+        }
+      }
+      return 0.125 * chiPhys;
+    }    
+    
   std::complex<Field> calcSCGap(
       VectorType &k, size_t band,
       ComplexMatrixType &Uk) { // dummy function; handled by gaps3g.h directly

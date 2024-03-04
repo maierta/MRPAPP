@@ -76,7 +76,104 @@ public:
 
   void setFSValues() {
 
-    if (Case_ == "La4Ni3O10_twoOrb_trilayer") {
+    if (Case_ == "Kagome_2") {
+      // 1 FS sheet around (0,0) from band 0
+      nSheets = 1;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = 0;
+      FSCenters[0][1] = 0;
+      FSBand[0] = 0;
+
+      size_t nkSearch(2048);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "Kagome_1") {
+      // 1 FS sheet around (0,0) from band 1
+      nSheets = 1;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = 0;
+      FSCenters[0][1] = 0;
+      FSBand[0] = 1;
+
+      size_t nkSearch(2048);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "La3Ni2O7_twoOrb_tl") {
+      // 4 FS sheets total, two around (0,0), two around (pi,pi)
+      nSheets = 4;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 1;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 2;
+      FSCenters[2][0] = 0;
+      FSCenters[2][1] = 0;
+      FSBand[2] = 3;
+      FSCenters[3][0] = 0;
+      FSCenters[3][1] = 0;
+      FSBand[3] = 4;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "La3Ni2O7_twoOrb_sl") {
+      // 2 FS sheets total, one around (0,0), one around (pi,pi)
+      nSheets = 2;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = 0;
+      FSCenters[1][1] = 0;
+      FSBand[1] = 1;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "La3Ni2O7_twoOrb_tl-ml") {
+      // 6 FS sheets total, three around (0,0), 3 around (pi,pi)
+      nSheets = 6;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 1;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 2;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 3;
+      FSCenters[3][0] = 0;
+      FSCenters[3][1] = 0;
+      FSBand[3] = 4;
+      FSCenters[4][0] = 0;
+      FSCenters[4][1] = 0;
+      FSBand[4] = 5;
+      FSCenters[5][0] = 0;
+      FSCenters[5][1] = 0;
+      FSBand[5] = 6;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "La4Ni3O10_twoOrb_trilayer") {
       // 5 FS sheets total, two around (0,0), 3 around (pi,pi)
       nSheets = 5;
       nTotal = nSheets * nkPerSheet;
@@ -1335,7 +1432,7 @@ public:
         sgnOld = sgnW;
         kOld = k;
         ikF += 1;
-        FieldType radius(1.2 * Pi / float(nkSearch) * float(ikF));
+        FieldType radius(4.0 * Pi / float(nkSearch) * float(ikF));
         k[0] = FSCenters[iSheet][0] + radius * cos(Theta);
         k[1] = FSCenters[iSheet][1] + radius * sin(Theta);
         k[2] = kz;

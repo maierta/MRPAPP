@@ -1,3 +1,4 @@
+
 // Model file for  single band model
 #ifndef KAGOME_H
 #define KAGOME_H

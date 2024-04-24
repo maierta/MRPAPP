@@ -69,9 +69,11 @@ def eigen(file,firstBZ,returnEvec, ncols, nrows, evList):
                     ax[i].set_ylabel(r"$k_y/\pi$")
                     ax[i].set_title(r'$\lambda=$'+str(round(e[evList[index]],4)))
                     index += 1
-    else:
-        f, ax =subplots(ncols=1,nrows=1,figsize=(4,4))
-        ax.scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[0],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+    else: # just a single subplot
+        f, ax =subplots(ncols=1,nrows=1,figsize=(6,5))
+        cc = evec[evList[0],:] / abs(evec[evList[0],:]).max() # normalize
+        cb = ax.scatter(kf[:,0]/pi,kf[:,1]/pi,c=cc,cmap=get_cmap('RdBu_r'),s=50,lw=0.2, vmin=-1, vmax=1)
+        f.colorbar(cb)
         ax.set_aspect('equal')
         ax.grid(color='darkgrey')
         ax.use_sticky_edges = False
@@ -89,10 +91,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="plot leading eigenvectors")
     parser.add_argument('--file', dest="file", action="store", default="Gap.jsn")
+    parser.add_argument('--firstBZ', dest="firstBZ", action=argparse.BooleanOptionalAction)
     parser.add_argument('--ncols', dest="ncols", action="store", default=5)
     parser.add_argument('--nrows', dest="nrows", action="store", default=2)
     parser.add_argument('--evList', dest="evList", nargs='+', type=int, action="store", default=list(range(0, 10)))
     input_args = parser.parse_args()
-    kf, ev = eigen(file = input_args.file, firstBZ=True, returnEvec=0, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)
+    kf, ev = eigen(file = input_args.file, firstBZ=input_args.firstBZ, returnEvec=0, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)
     for i in range(kf.shape[0]):
         print(kf[i, 0], " , ", kf[i, 1], " , ", ev[i])

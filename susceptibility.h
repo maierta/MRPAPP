@@ -388,9 +388,9 @@ public:
               qzmin + float(iq1) / float(nq1 - 1) * (qzmax - qzmin);
         }
       } else if (nq1 > 1 && nq2 > 1 && nq3 == 1) { // 2D Q-scan (in-plane)
-        for (size_t iq2 = 0; iq2 < nq2; iq2++) {
-          for (size_t iq1 = 0; iq1 < nq1; iq1++) {
-            size_t index(iq1 + nq1 * iq2);
+        for (size_t iq1 = 0; iq1 < nq1; iq1++) {
+          for (size_t iq2 = 0; iq2 < nq2; iq2++) {
+            size_t index(iq2 + nq2 * iq1);
             momenta(index, 0) =
                 qxmin + float(iq1) / float(nq1 - 1) * (qxmax - qxmin);
             momenta(index, 1) =
@@ -399,10 +399,10 @@ public:
           }
         }
       } else if (nq1 > 1 && nq2 > 1 && nq3 > 1) { // 3D Q-scan
-        for (size_t iq3 = 0; iq3 < nq3; iq3++) {
+        for (size_t iq1 = 0; iq1 < nq1; iq1++) {
           for (size_t iq2 = 0; iq2 < nq2; iq2++) {
-            for (size_t iq1 = 0; iq1 < nq1; iq1++) {
-              size_t index(iq1 + nq1 * iq2 + nq1 * nq2 * iq3);
+            for (size_t iq3 = 0; iq3 < nq3; iq3++) {
+              size_t index(iq3 + nq3 * iq2 + nq3 * nq2 * iq1);
               momenta(index, 0) =
                   qxmin + float(iq1) / float(nq1 - 1) * (qxmax - qxmin);
               momenta(index, 1) =
@@ -474,10 +474,10 @@ public:
     os2 << std::fixed;
     SuscType chiRPA(param, conc);
 //     os2 << "kx , ky, kz, w, ReChizz, ImChizz, ReChipm, ImChipm, ReChimp, ImChimp, ReChi0zz, ImChi0zz, ReChi0pm, ImChi0pm, "
-//         << "ReChi0mp, ImChi0mp" 
+//         << "ReChi0mp, ImChi0mp"
 // #ifdef USE_1BANDALTERMAGNET
 //         << ", ReChi"
-      
+
     for (size_t iq = 0; iq < numberOfQ; iq++) {
       // std::cout << "iq:"<<iq<< " rank: " << conc.rank() << " sus: " <<
       // tbmodel.calcSus(chi0Matrix[0], "zz") << "\n";
@@ -509,12 +509,12 @@ public:
       ComplexType susmpBA(tbmodel.calcSusi1i2(chiRPA, "-+", 1, 0));
 #endif
       os2 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3]
-          << " , " << real(susRzz) << " , " << imag(susRzz) 
-          << " , " << real(susRpm) << " , " << imag(susRpm) 
-          << " , " << real(susRmp) << " , " << imag(susRmp) 
-          << " , " << real(sus1) << " , " << imag(sus1) 
-          << " , " << real(sus2) << " , " << imag(sus2) 
-          << " , " << real(sus3) << " , " << imag(sus3) 
+          << " , " << real(susRzz) << " , " << imag(susRzz)
+          << " , " << real(susRpm) << " , " << imag(susRpm)
+          << " , " << real(susRmp) << " , " << imag(susRmp)
+          << " , " << real(sus1) << " , " << imag(sus1)
+          << " , " << real(sus2) << " , " << imag(sus2)
+          << " , " << real(sus3) << " , " << imag(sus3)
 #ifdef USE_1BANDALTERMAGNET
           << " , " << real(suspmAA) << " , " << imag(suspmAA) // 16, 17
           << " , " << real(suspmBB) << " , " << imag(suspmBB) // 18, 19
@@ -525,7 +525,7 @@ public:
           << " , " << real(susmpAB) << " , " << imag(susmpAB) // 28, 29
           << " , " << real(susmpBA) << " , " << imag(susmpBA) // 30, 31
 #endif
-          << "\n"; 
+          << "\n";
     }
     os2.close();
     std::cout << "File is written \n";

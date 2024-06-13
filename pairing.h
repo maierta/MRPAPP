@@ -243,10 +243,10 @@ public:
         calcGammaPPTerms(ind, q, k1, k2, ik1, ik2, band1, band2, GammaPPkkp,
                          GammaZkkp, chiTerm, os);
 
-      if (GammaPPkkp < 0.0) {
-        std::cout << "GammaPPkkp negative !! \n";
-        exit(0);
-      }
+      // if (GammaPPkkp < 0.0) {
+      //   std::cout << "GammaPPkkp negative !! \n";
+      //   exit(0);
+      // }
 
       Container[ind] = GammaPPkkp;
       ContainerZ[ind] = GammaZkkp;

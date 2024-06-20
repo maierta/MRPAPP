@@ -69,7 +69,7 @@ void _Assert(const char * filename, int lineno,
     {
       std::ostringstream msg;
       msg << "ASSERTION FAILED AT:"<<filename<<":"<<lineno<<"\n";
-      std::cout << msg;
+      std::cout << msg.str();
       throw std::exception();
     }
 }

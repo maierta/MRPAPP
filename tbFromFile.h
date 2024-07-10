@@ -55,8 +55,10 @@ public:
     if (conc.rank() == 0)
       std::cout << "Setting up interaction matrix\n";
     setupInteractionMatrix2();
-    if (conc.rank() == 0)
+    if (conc.rank() == 0) {
       std::cout << "Interaction matrix set up\n";
+      writeInteractionMatrix();
+    }
   }
 
   void readCSVFile() {
@@ -478,6 +480,23 @@ public:
     }
 
     // std::cout << "U matrix: " << spinMatrix << "\n";
+  }
+
+  void writeInteractionMatrix() {
+    size_t msize(param.nOrb * param.nOrb);
+    int width(5);
+    std::string cstr = "Us_" + param.fileID + ".txt";
+    const char *filename = cstr.c_str();
+    std::ofstream os(filename);
+    os.precision(width);
+    os << std::fixed;
+    for (size_t ind1 = 0; ind1 < msize; ind1++)
+        for (size_t ind2 = 0; ind2 < msize; ind2++) {
+            // std::cout << spinMatrix(ind1, ind2) << " \n";
+            os << real(spinMatrix(ind1, ind2)) << " , ";
+        }
+    os << "\n";
+
   }
 
   void fixdr() { // This is to shift position of all orbitals to the same site

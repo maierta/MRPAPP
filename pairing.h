@@ -243,10 +243,6 @@ public:
         calcGammaPPTerms(ind, q, k1, k2, ik1, ik2, band1, band2, GammaPPkkp,
                          GammaZkkp, chiTerm, os);
 
-      // if (GammaPPkkp < 0.0) {
-      //   std::cout << "GammaPPkkp negative !! \n";
-      //   exit(0);
-      // }
 
       Container[ind] = GammaPPkkp;
       ContainerZ[ind] = GammaZkkp;
@@ -260,6 +256,11 @@ public:
                   << GammaZkkp << " , "
                   << "chiTerm=" << chiTerm << "\n";
       // }
+      if (chiTerm < 0.0) {
+        std::cout << "RPA spin susceptibility (chiTerm) negative !! \n";
+        exit(0);
+      }
+
     }
 
     conc.reduce(Container);
@@ -420,7 +421,7 @@ public:
 
     calcRPAResult(chiq, model.spinMatrix, chiRPAs, q);
     chiTerm = real(chiRPAs.calcSus());
-    // std::cout << "in calcGammaPPTerms: chiRPAs=" << chiRPAs.calcSus() <<
+    // std::cout << "in calcGammaPPTerms: q, chiRPAs=" << q << " , " << chiRPAs.calcSus() <<
     // "\n";
     calcRPAResult(chiq, model.chargeMatrix, chiRPAc, q);
     // if (conc.rank()==0) std::cout << "in calcGammaPPTerms: chiRPAc=" <<

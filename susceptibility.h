@@ -443,27 +443,48 @@ public:
       const char *filename = cstr.c_str();
       std::ofstream os(filename);
       os.precision(width);
+      cstr = "chi1Full_" + param.fileID + ".txt";
+      const char *filename1 = cstr.c_str();
+      std::ofstream os1(filename1);
+      os1.precision(width);
       os << std::fixed;
+      os1 << std::fixed;
       os << "nq1,nq2,nq3,nw: \n";
+      os1 << "nq1,nq2,nq3,nw: \n";
       os << nq1 << " , " << nq2 << " , " << nq3 << " , " << nw << "\n";
+      os1 << nq1 << " , " << nq2 << " , " << nq3 << " , " << nw << "\n";
+      SuscType chi1Matrix(param, conc);
       for (size_t iq = 0; iq < numberOfQ; iq++) {
         q[0] = QVec[iq][0];
         q[1] = QVec[iq][1];
         q[2] = QVec[iq][2];
+        calcRPAResult(chi0Matrix[iq], tbmodel.spinMatrix, chi1Matrix, q);
         os << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3]
            << " , ";
+        os1 << q[0] << " , " << q[1] << " , " << q[2] << " , " << QVec[iq][3]
+           << " , ";
         for (size_t l1 = 0; l1 < msize; l1++)
-          for (size_t l2 = 0; l2 < msize; l2++)
+          for (size_t l2 = 0; l2 < msize; l2++) {
             os << real(chi0Matrix[iq](l1, l2)) << " , ";
+            os1 << real(chi1Matrix(l1, l2)) << " , ";
+          }
         for (size_t l1 = 0; l1 < msize; l1++)
-          for (size_t l2 = 0; l2 < msize; l2++)
+          for (size_t l2 = 0; l2 < msize; l2++) {
             os << imag(chi0Matrix[iq](l1, l2)) << " , ";
+            os1 << imag(chi1Matrix(l1, l2)) << " , ";
+          }
         ComplexType sus0(tbmodel.calcSus(chi0Matrix[iq], "zz"));
         ComplexType sus1(tbmodel.calcSus(chi0Matrix[iq], "+-"));
         ComplexType sus2(tbmodel.calcSus(chi0Matrix[iq], "-+"));
         os << real(sus0) << " , " << imag(sus0) << " , " << real(sus1) << " , "
            << imag(sus1) << " , " << real(sus2) << " , " << imag(sus2);
         os << "\n";
+        sus0 = tbmodel.calcSus(chi1Matrix, "zz");
+        sus1 = tbmodel.calcSus(chi1Matrix, "+-");
+        sus2 = tbmodel.calcSus(chi1Matrix, "-+");
+        os1 << real(sus0) << " , " << imag(sus0) << " , " << real(sus1) << " , "
+           << imag(sus1) << " , " << real(sus2) << " , " << imag(sus2);
+        os1 << "\n";
       }
     }
     std::string cstr = "chiRPA_" + param.fileID + ".txt";

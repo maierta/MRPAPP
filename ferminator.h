@@ -174,7 +174,7 @@ public:
         calcKF(nkSearch, iSheet, param.kz2D, 2);
 
     } else if (Case_ == "Ni_2323_n7") {
-      // 7 FS sheets total; 4 around (pi,pi) + 3 around (0,0)
+      // 7 FS sheets total; 5 around (pi,pi) + 3 around (0,0)
       nSheets = 7;
       nTotal = nSheets * nkPerSheet;
       resizeContainers();
@@ -200,6 +200,41 @@ public:
       FSCenters[6][0] = 0;
       FSCenters[6][1] = 0;
       FSBand[6] = 7;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "Ni_2323_n7_30GPa") {
+      // 8 FS sheets total; 5 around (pi,pi) + 3 around (0,0)
+      nSheets = 8;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = Pi;
+      FSCenters[3][1] = Pi;
+      FSBand[3] = 3;
+      FSCenters[4][0] = Pi;
+      FSCenters[4][1] = Pi;
+      FSBand[4] = 4;
+      FSCenters[5][0] = 0;
+      FSCenters[5][1] = 0;
+      FSBand[5] = 5;
+      FSCenters[6][0] = 0;
+      FSCenters[6][1] = 0;
+      FSBand[6] = 6;
+      FSCenters[7][0] = 0;
+      FSCenters[7][1] = 0;
+      FSBand[7] = 7;
 
       size_t nkSearch(1024);
       for (size_t iSheet = 0; iSheet < nSheets; iSheet++)

@@ -96,6 +96,6 @@ if __name__ == "__main__":
     parser.add_argument('--nrows', dest="nrows", action="store", default=2)
     parser.add_argument('--evList', dest="evList", nargs='+', type=int, action="store", default=list(range(0, 10)))
     input_args = parser.parse_args()
-    kf, ev = eigen(file = input_args.file, firstBZ=input_args.firstBZ, returnEvec=0, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)
+    kf, ev = eigen(file = input_args.file, firstBZ=input_args.firstBZ, returnEvec=input_args.evList, ncols=int(input_args.ncols), nrows=int(input_args.nrows), evList=input_args.evList)
     for i in range(kf.shape[0]):
-        print(kf[i, 0], " , ", kf[i, 1], " , ", ev[i])
+        print(kf[i, 0], " , ", kf[i, 1], " , ", ev[:, i])

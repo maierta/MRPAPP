@@ -47,7 +47,8 @@ def eigen(file,firstBZ,returnEvec, ncols, nrows, evList):
             if (ncols>1) & (nrows>1):
                 for i in range(ncols):
                     for j in range(nrows):
-                        ax[j,i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+                        cc = evec[evList[index],:] / abs(evec[evList[index],:]).max() # normalize
+                        ax[j,i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=cc,cmap=get_cmap('RdBu_r'),s=50,lw=0.2, vmin=-1, vmax=1)
                         ax[j,i].set_aspect('equal')
                         ax[j,i].grid(color='darkgrey')
                         ax[j,i].use_sticky_edges = False
@@ -59,7 +60,8 @@ def eigen(file,firstBZ,returnEvec, ncols, nrows, evList):
                         index += 1
             else:
                 for i in range(max(ncols, nrows)):
-                    ax[i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=evec[evList[index],:],cmap=get_cmap('RdBu_r'),s=50,lw=0.2)
+                    cc = evec[evList[index],:] / abs(evec[evList[index],:]).max() # normalize
+                    ax[i].scatter(kf[:,0]/pi,kf[:,1]/pi,c=cc,cmap=get_cmap('RdBu_r'),s=50,lw=0.2, vmin=-1, vmax=1)
                     ax[i].set_aspect('equal')
                     ax[i].grid(color='darkgrey')
                     ax[i].use_sticky_edges = False

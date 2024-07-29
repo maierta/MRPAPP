@@ -282,7 +282,7 @@ public:
       FSCenters[2][1] = Pi;
       FSBand[2] = 1;
 
-      size_t nkSearch(128);
+      size_t nkSearch(1024);
       for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
         calcKF(nkSearch, iSheet, param.kz2D, 2);
 

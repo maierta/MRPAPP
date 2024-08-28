@@ -1,0 +1,19 @@
+# gitignore
+
+# Build directories (exclude build-aux)
+build*
+
+# Bin directories
+bin*
+
+# OS generated files
+.DS_Store
+
+# IDE generated files and folders
+*~
+*#
+*.swp
+.idea
+
+mrpapp_stripped
+mrpapp

@@ -1,6 +1,12 @@
 ################################################################################
 # Author: Peter Doak, doakpw@ornl.gov, Oak Ridge National Lab
 #
+# // Copyright (C) 2024 UT-Battelle, LLC
+# // All rights reserved.
+# //
+# // See LICENSE for terms of usage.
+# //
+#
 # Checks for HIP and and accordingly sets MRPAPP_HAVE_HIP
 
 set(ROCM_ROOT
@@ -53,6 +59,7 @@ set(MRPAPP_HAVE_HIP FALSE CACHE INTERNAL "")
 set(MRPAPP_HAVE_MAGMA FALSE CACHE INTERNAL "")
 set(MRPAPP_GPU_LIBS "" CACHE INTERNAL "")
 
+include(mrpapp_defines)
 include(CheckLanguage)
 check_language(HIP)
 if (CMAKE_HIP_COMPILER)
@@ -61,9 +68,9 @@ if (CMAKE_HIP_COMPILER)
   set(MRPAPP_HAVE_HIP TRUE CACHE INTERNAL "")
   set(MRPAPP_HAVE_GPU TRUE CACHE INTERNAL "")
   # Probably probably these should be public properties of the hip targets
-  dca_add_haves_define(MRPAPP_HAVE_HIP)
-  dca_add_haves_define(MRPAPP_HAVE_GPU)
-  dca_add_haves_define(__HIP_PLATFORM_AMD__)
+  mrpapp_add_define(MRPAPP_HAVE_HIP)
+  mrpapp_add_define(MRPAPP_HAVE_GPU)
+  mrpapp_add_define(__HIP_PLATFORM_AMD__)
   list(APPEND MRPAPP_GPU_LIBS hip::host roc::hipblas)
   set(MRPAPP_HIP_PROPERTIES "CMAKE_HIP_ARCHITECTURES gfx906,gfx908")
   set(CMAKE_HIP_STANDARD 17)

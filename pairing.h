@@ -19,35 +19,22 @@
 #include <vector>
 
 namespace rpa {
-extern "C" void
-#ifdef glyph
-    dgeev_
-#else
-    dgeev
-#endif
+extern "C" void dgeev_
     // JOBVL,JOBVR, N,    A,        LDA, WR,      WI,      VL,       LDVL,   VR,
     // , LDVR,  WORK,   LWORK, INFO
-    (char *, char *, int *, double *, int *, double *, double *, double *,
-     int *, double *, int *, double *, int *, int *);
-inline void GEEV(char jobvl, char jobvr, int n, psimag::Matrix<double> &A,
-                 int lda, std::vector<double> &wr, std::vector<double> &wi,
-                 psimag::Matrix<double> &vl, int ldvl,
-                 psimag::Matrix<double> &vr, int ldvr,
-                 std::vector<double> &work, int &lwork, int *info) {
-#ifdef glyph
-  dgeev_
-#else
-  dgeev
-#endif
-      (&jobvl, &jobvr, &n, &(A(0, 0)), &lda, &(wr[0]), &(wi[0]), &(vl(0, 0)),
-       &ldvl, &(vr(0, 0)), &ldvr, &(work[0]), &lwork, info);
+    (char*, char*, int*, double*, int*, double*, double*, double*, int*, double*, int*, double*,
+     int*, int*);
+inline void GEEV(char jobvl, char jobvr, int n, psimag::Matrix<double>& A, int lda,
+                 std::vector<double>& wr, std::vector<double>& wi, psimag::Matrix<double>& vl,
+                 int ldvl, psimag::Matrix<double>& vr, int ldvr, std::vector<double>& work,
+                 int& lwork, int* info) {
+  dgeev_(&jobvl, &jobvr, &n, &(A(0, 0)), &lda, &(wr[0]), &(wi[0]), &(vl(0, 0)), &ldvl, &(vr(0, 0)),
+         &ldvr, &(work[0]), &lwork, info);
 }
 
-template <typename Field, typename BandsType, typename SuscType,
-          typename GapType, template <typename> class MatrixTemplate,
-          typename ModelType, typename ConcurrencyType>
+template <typename Field, typename BandsType, typename SuscType, typename GapType,
+          template <typename> class MatrixTemplate, typename ModelType, typename ConcurrencyType>
 class pairing {
-
 private:
   typedef Field FieldType;
   typedef std::complex<Field> ComplexType;
@@ -57,15 +44,15 @@ private:
   typedef std::vector<Field> VectorType;
   typedef std::vector<ComplexType> ComplexVectorType;
 
-  rpa::parameters<Field, MatrixTemplate, ConcurrencyType> &param;
-  rpa::model<Field, MatrixTemplate, ConcurrencyType> &model;
-  const size_t &dim;
-  ConcurrencyType &conc;
+  rpa::parameters<Field, MatrixTemplate, ConcurrencyType>& param;
+  rpa::model<Field, MatrixTemplate, ConcurrencyType>& model;
+  const size_t& dim;
+  ConcurrencyType& conc;
   size_t interpolateChi_;
   size_t storeChi_;
   size_t storeGammaOrb_;
   size_t readChi_;
-  momentumDomain<FieldType, psimag::Matrix, ConcurrencyType> &qMesh;
+  momentumDomain<FieldType, psimag::Matrix, ConcurrencyType>& qMesh;
   const size_t &nOrb, nk;
   size_t msize;
   momentumDomain<FieldType, psimag::Matrix, ConcurrencyType> kMesh;
@@ -76,9 +63,7 @@ private:
   std::vector<FieldType> deltakF;
   std::vector<FieldType> vkF;
   SuscType chi0;
-  chi0q<FieldType, SuscType, BandsType, GapType, psimag::Matrix,
-        ConcurrencyType>
-      susq;
+  chi0q<FieldType, SuscType, BandsType, GapType, psimag::Matrix, ConcurrencyType> susq;
 
   SuscType chiRPAs;
   SuscType chiRPAc;
@@ -96,30 +81,47 @@ private:
   size_t nTotal;
   std::vector<SuscType> chiStore;
   std::vector<VectorType> qStore;
-  ferminator<FieldType, BandsType, MatrixTemplate, ModelType, ConcurrencyType>
-      FSpoints;
+  ferminator<FieldType, BandsType, MatrixTemplate, ModelType, ConcurrencyType> FSpoints;
   size_t nkF;
   MatrixType chikk;
 
 public:
-  pairing(rpa::parameters<Field, MatrixTemplate, ConcurrencyType> &parameters,
-          ModelType &modelIn, ConcurrencyType &concurrency,
-          const size_t interpolateChi,
-          momentumDomain<FieldType, psimag::Matrix, ConcurrencyType> &qMeshIn)
-      : param(parameters), model(modelIn), dim(param.dimension),
-        conc(concurrency), interpolateChi_(interpolateChi),
-        storeChi_(param.storeChi), storeGammaOrb_(param.storeGammaOrb),
-        readChi_(param.readChi), qMesh(qMeshIn), nOrb(param.nOrb),
-        nk(parameters.nkInt), msize(param.nOrb * param.nOrb),
+  pairing(rpa::parameters<Field, MatrixTemplate, ConcurrencyType>& parameters, ModelType& modelIn,
+          ConcurrencyType& concurrency, const size_t interpolateChi,
+          momentumDomain<FieldType, psimag::Matrix, ConcurrencyType>& qMeshIn)
+      : param(parameters),
+        model(modelIn),
+        dim(param.dimension),
+        conc(concurrency),
+        interpolateChi_(interpolateChi),
+        storeChi_(param.storeChi),
+        storeGammaOrb_(param.storeGammaOrb),
+        readChi_(param.readChi),
+        qMesh(qMeshIn),
+        nOrb(param.nOrb),
+        nk(parameters.nkInt),
+        msize(param.nOrb * param.nOrb),
         kMesh(param, conc, param.nkInt, param.nkIntz, param.dimension),
-        bands(param, model, conc, kMesh, param.cacheBands), chi0(param, conc),
-        susq(param, qMesh, param.chifile, conc), chiRPAs(param, conc),
-        chiRPAc(param, conc), chi0s(param, conc), chi0c(param, conc),
-        temps(msize, msize), tempc(msize, msize), gammaPP(0, 0), gammaZ(0, 0),
-        paritySign(param.pairingSpinParity ? -1.0 : 1.0), // 1=triplet,0=singlet
-        normalization(0, 0), Zofk(0, 0), nTotal(0),
-        chiStore(0, SuscType(param, conc)), qStore(0, VectorType(3)),
-        FSpoints(param, model, conc), nkF(FSpoints.nTotal), chikk(nkF, nkF) {
+        bands(param, model, conc, kMesh, param.cacheBands),
+        chi0(param, conc),
+        susq(param, qMesh, param.chifile, conc),
+        chiRPAs(param, conc),
+        chiRPAc(param, conc),
+        chi0s(param, conc),
+        chi0c(param, conc),
+        temps(msize, msize),
+        tempc(msize, msize),
+        gammaPP(0, 0),
+        gammaZ(0, 0),
+        paritySign(param.pairingSpinParity ? -1.0 : 1.0),  // 1=triplet,0=singlet
+        normalization(0, 0),
+        Zofk(0, 0),
+        nTotal(0),
+        chiStore(0, SuscType(param, conc)),
+        qStore(0, VectorType(3)),
+        FSpoints(param, model, conc),
+        nkF(FSpoints.nTotal),
+        chikk(nkF, nkF) {
     // determineKF(file);
 
     if (conc.rank() == 0)
@@ -142,10 +144,9 @@ public:
     std::ostringstream ss;
     ss << param.temperature;
     std::string tempStr(ss.str());
-    std::string filenameChiPP("chiPairing_" + param.fileID + "_T_" + tempStr +
-                              ".txt");
+    std::string filenameChiPP("chiPairing_" + param.fileID + "_T_" + tempStr + ".txt");
     if (interpolateChi_ == 0) {
-      kMesh.set_momenta(false); // for chi claculation
+      kMesh.set_momenta(false);  // for chi claculation
       if (param.cacheBands)
         bands.precalculate_ekak();
       if (storeChi_ == 1 || readChi_ == 1) {
@@ -161,8 +162,7 @@ public:
           conc.broadcast(chiStore[iq]);
         }
         std::cout << "... and broadcasted \n";
-        std::cout << "q,chi " << qStore[nTotal - 1] << ", "
-                  << chiStore[nTotal - 1].calcSus() << "\n";
+        std::cout << "q,chi " << qStore[nTotal - 1] << ", " << chiStore[nTotal - 1].calcSus() << "\n";
       }
     }
     calcNorm();
@@ -213,7 +213,7 @@ public:
     // FieldType term2(0.0);
 
     std::string cstr = "GammaPPOrb_" + param.fileID + ".txt";
-    const char *filename = cstr.c_str();
+    const char* filename = cstr.c_str();
     std::ofstream os(filename);
     os << "#i, j, l1, l2, l3, l4, Gammma_{l1,l2,l3,l4}(k_i,k_j)\n";
 
@@ -240,17 +240,14 @@ public:
         calcGammaPPEmery(q, k1, k2, ik1, ik2, band1, band2, GammaPPkkp, os);
 
       else
-        calcGammaPPTerms(ind, q, k1, k2, ik1, ik2, band1, band2, GammaPPkkp,
-                         GammaZkkp, chiTerm, os);
-
+        calcGammaPPTerms(ind, q, k1, k2, ik1, ik2, band1, band2, GammaPPkkp, GammaZkkp, chiTerm, os);
 
       Container[ind] = GammaPPkkp;
       ContainerZ[ind] = GammaZkkp;
       Container2[ind] = chiTerm;
       if (conc.rank() == 0)
-        std::cout << "now calculating " << ind << " of " << nTotal
-                  << " terms with ik1=" << ik1 << " and ik2=" << ik2
-                  << " GammaPPkkp=" << GammaPPkkp
+        std::cout << "now calculating " << ind << " of " << nTotal << " terms with ik1=" << ik1
+                  << " and ik2=" << ik2 << " GammaPPkkp=" << GammaPPkkp
                   << " , "
                      " GammaZkkp="
                   << GammaZkkp << " , "
@@ -260,7 +257,6 @@ public:
         std::cout << "RPA spin susceptibility (chiTerm) negative !! \n";
         exit(0);
       }
-
     }
 
     conc.reduce(Container);
@@ -286,23 +282,20 @@ public:
     }
   }
 
-  void calcGammaPPEmery(std::vector<FieldType> q, VectorType &k1,
-                        VectorType &k2, size_t ik1, size_t ik2, size_t band1,
-                        size_t band2, FieldType &result, std::ofstream &os) {
+  void calcGammaPPEmery(std::vector<FieldType> q, VectorType& k1, VectorType& k2, size_t ik1,
+                        size_t ik2, size_t band1, size_t band2, FieldType& result, std::ofstream& os) {
     ComplexMatrixType chi0_gg(19, 19);
-    ComplexMatrixType chi0(3, 3);    // not needed (dummy)
-    ComplexMatrixType chi0_g(19, 3); // not needed (dummy)
+    ComplexMatrixType chi0(3, 3);     // not needed (dummy)
+    ComplexMatrixType chi0_g(19, 3);  // not needed (dummy)
 
-    FieldType dummy(0.0); // dummy float for Gamma_Z, which is not calculated
-                          // for Emery model
+    FieldType dummy(0.0);  // dummy float for Gamma_Z, which is not calculated
+                           // for Emery model
 
-    calcChi0Matrix<FieldType, SuscType, BandsType, GapType, MatrixTemplate,
-                   ConcurrencyType>
-        calcChi0(param, kMesh, bands, q, conc, chi0, chi0_g, chi0_gg);
+    calcChi0Matrix<FieldType, SuscType, BandsType, GapType, MatrixTemplate, ConcurrencyType> calcChi0(
+        param, kMesh, bands, q, conc, chi0, chi0_g, chi0_gg);
 
     // Now calculate RPA result of interaction
-    interactionEmery<FieldType, psimag::Matrix, ConcurrencyType> rpaEmery(
-        param);
+    interactionEmery<FieldType, psimag::Matrix, ConcurrencyType> rpaEmery(param);
 
     // First calculate the effective interaction with chi0
     ComplexMatrixType GammaS(19, 19);
@@ -311,10 +304,10 @@ public:
     ComplexMatrixType bareCharge(19, 19);
 
     rpaEmery.calcRPAResult(chi0_gg, 1, GammaS, bareSpin,
-                           q); // renormalized spin interaction
+                           q);  // renormalized spin interaction
 
     rpaEmery.calcRPAResult(chi0_gg, 0, GammaC, bareCharge,
-                           q); // renormalized charge interaction
+                           q);  // renormalized charge interaction
 
     // Determine GammaC and GammaS from chiRPA
     ComplexMatrixType chiRPAC(19, 19);
@@ -323,21 +316,17 @@ public:
     rpaEmery.calcChiRPAFromGammaRPA(GammaS, 1, q, chiRPAS);
     // Now re-calculate GammaC from chiRPA
     rpaEmery.setupVBare(q);
-    rpaEmery.calcGammaFromChiRPA(rpaEmery.V_Charge, rpaEmery.V_Charge_coupl,
-                                 chiRPAC, GammaC);
-    rpaEmery.calcGammaFromChiRPA(rpaEmery.V_Spin, rpaEmery.V_Spin_coupl,
-                                 chiRPAS, GammaS);
+    rpaEmery.calcGammaFromChiRPA(rpaEmery.V_Charge, rpaEmery.V_Charge_coupl, chiRPAC, GammaC);
+    rpaEmery.calcGammaFromChiRPA(rpaEmery.V_Spin, rpaEmery.V_Spin_coupl, chiRPAS, GammaS);
 
     calcGammaPPOrbEmery(GammaS, GammaC, bareSpin, bareCharge, k1, k2, temps);
 
-    calcGammaPPBand(temps, temps, ik1, ik2, k1, k2, band1, band2, result, dummy,
-                    os);
+    calcGammaPPBand(temps, temps, ik1, ik2, k1, k2, band1, band2, result, dummy, os);
   }
 
-  void calcGammaPPOrbEmery(ComplexMatrixType &GammaS, ComplexMatrixType &GammaC,
-                           ComplexMatrixType &bareSpin,
-                           ComplexMatrixType &bareCharge, VectorType &k1,
-                           VectorType &k2, ComplexMatrixType &result) {
+  void calcGammaPPOrbEmery(ComplexMatrixType& GammaS, ComplexMatrixType& GammaC,
+                           ComplexMatrixType& bareSpin, ComplexMatrixType& bareCharge,
+                           VectorType& k1, VectorType& k2, ComplexMatrixType& result) {
     // the singlet interaction is 1/2*(3*GammaS - GammaC)
     // which then is multiplied with the basis g^i_{l1,l2}(k) * g^j_{l3,l4}(-k')
     VectorType mk2(3, 0);
@@ -348,10 +337,8 @@ public:
       mk2[i] = -k2[i];
     for (size_t i = 0; i < mk1.size(); ++i)
       mk1[i] = -k1[i];
-    sepBasis<FieldType, psimag::Matrix, ConcurrencyType> basisLeft(param, conc,
-                                                                   k2);
-    sepBasis<FieldType, psimag::Matrix, ConcurrencyType> basisRight(param, conc,
-                                                                    mk1);
+    sepBasis<FieldType, psimag::Matrix, ConcurrencyType> basisLeft(param, conc, k2);
+    sepBasis<FieldType, psimag::Matrix, ConcurrencyType> basisRight(param, conc, mk1);
     // sepBasis<FieldType,psimag::Matrix,ConcurrencyType>
     // basisLeft(param,conc,mk1);
     // sepBasis<FieldType,psimag::Matrix,ConcurrencyType>
@@ -370,11 +357,9 @@ public:
                     basisLeft(i, l1, l2) * basisRight(j, l3, l4) * 0.5 *
                     // result(ind1,ind2) += basisLeft(i,l3,l4) *
                     // basisRight(j,l1,l2) *
-                    ((-3 * (GammaS(i, j) - bareSpin(i, j)) -
-                      param.staticUFactor * bareSpin(i, j)) *
+                    ((-3 * (GammaS(i, j) - bareSpin(i, j)) - param.staticUFactor * bareSpin(i, j)) *
                          FieldType(param.pairingFromSpin) +
-                     ((GammaC(i, j) - bareCharge(i, j)) +
-                      param.staticUFactor * bareCharge(i, j)) *
+                     ((GammaC(i, j) - bareCharge(i, j)) + param.staticUFactor * bareCharge(i, j)) *
                          FieldType(param.pairingFromCharge));
                 // 1.0*(GammaC(i,j)); // only consider charge channel
               }
@@ -383,17 +368,17 @@ public:
     return;
   }
 
-  void calcGammaPPTerms(size_t ind, std::vector<FieldType> q, VectorType &k1,
-                        VectorType &k2, size_t ik1, size_t ik2, size_t band1,
-                        size_t band2, FieldType &resultPP, FieldType &resultZ,
-                        FieldType &chiTerm, std::ofstream &os) {
+  void calcGammaPPTerms(size_t ind, std::vector<FieldType> q, VectorType& k1, VectorType& k2,
+                        size_t ik1, size_t ik2, size_t band1, size_t band2, FieldType& resultPP,
+                        FieldType& resultZ, FieldType& chiTerm, std::ofstream& os) {
     // SuscType* chiq;
     SuscType chiq(param, conc);
     SuscType chi0Intq(param, conc);
     if (interpolateChi_ == 1) {
       getChi0forQ(q, chi0Intq);
       chiq = chi0Intq;
-    } else if (interpolateChi_ == 0 && readChi_ == 0) {
+    }
+    else if (interpolateChi_ == 0 && readChi_ == 0) {
       // std::cout << "Calculating chi for q=" << q << "\n";
 
       if (param.cacheBands) {
@@ -405,9 +390,8 @@ public:
       // 	calcChi0Matrix<FieldType,SuscType,BandsType,GapType,MatrixTemplate,ConcurrencyType>
       //           calcChi0(param,kMesh,bands,q,conc,chi0);
       // }
-      calcChi0Matrix<FieldType, SuscType, BandsType, GapType, MatrixTemplate,
-                     ConcurrencyType>
-          calcChi0(param, kMesh, q, bands, conc, chi0, param.cacheBands);
+      calcChi0Matrix<FieldType, SuscType, BandsType, GapType, MatrixTemplate, ConcurrencyType> calcChi0(
+          param, kMesh, q, bands, conc, chi0, param.cacheBands);
       // for (size_t i=0;i<msize;i++) for (size_t j=0;j<msize;j++) chi0(i,j) =
       // calcChi0(i,j); chi0.setLowerTriangle();
       chiq = chi0;
@@ -415,7 +399,8 @@ public:
         qStore[ind] = q;
         chiStore[ind] = chi0;
       }
-    } else if (interpolateChi_ == 0 && readChi_ == 1) {
+    }
+    else if (interpolateChi_ == 0 && readChi_ == 1) {
       chiq = chiStore[ind];
     }
 
@@ -441,8 +426,8 @@ public:
     // std::vector<std::complex<double> > chiRow(25,0);
     // if (ik1==0&&ik2==24) std::cout << "in calcGammaPPTerms chiRPAs=" <<
     // chiRPAs.calcSus() << "\n";
-    calcGammaPPOrb(chi0s, chi0c, model.spinMatrix, chiRPAs, model.chargeMatrix,
-                   chiRPAc, temps, tempc);
+    calcGammaPPOrb(chi0s, chi0c, model.spinMatrix, chiRPAs, model.chargeMatrix, chiRPAc, temps,
+                   tempc);
 
     // if (storeGammaOrb_)	{
     // 	for (size_t i=0; i < msize; i++) for (size_t j=0; j < msize; j++) {
@@ -457,20 +442,15 @@ public:
     // 	}
     // }
 
-    calcGammaPPBand(temps, tempc, ik1, ik2, k1, k2, band1, band2, resultPP,
-                    resultZ, os);
+    calcGammaPPBand(temps, tempc, ik1, ik2, k1, k2, band1, band2, resultPP, resultZ, os);
     // if (ik1==0&&ik2==40) std::cout << "in calcGammaPPTerms result=" << result
     // << "\n";
   }
 
-  void calcGammaPPOrb(const ComplexMatrixType &usc0us,
-                      const ComplexMatrixType &ucc0uc,
-                      const ComplexMatrixType &ms,
-                      const ComplexMatrixType &ucsu,
-                      const ComplexMatrixType &mc,
-                      const ComplexMatrixType &uccu,
-                      ComplexMatrixType &resultPP, ComplexMatrixType &resultZ) {
-
+  void calcGammaPPOrb(const ComplexMatrixType& usc0us, const ComplexMatrixType& ucc0uc,
+                      const ComplexMatrixType& ms, const ComplexMatrixType& ucsu,
+                      const ComplexMatrixType& mc, const ComplexMatrixType& uccu,
+                      ComplexMatrixType& resultPP, ComplexMatrixType& resultZ) {
     for (size_t l1 = 0; l1 < nOrb; l1++) {
       for (size_t l2 = 0; l2 < nOrb; l2++) {
         for (size_t l3 = 0; l3 < nOrb; l3++) {
@@ -479,15 +459,13 @@ public:
             size_t ind2 = param.OrbsToIndex(l3, l4);
             size_t ind3 = ind1;
             size_t ind4 = ind2;
-            if (param.pairingSpinParity == 0) { // Singlet vertex
-              resultPP(ind1, ind2) =
-                  0.5 * (ms(ind3, ind4) - mc(ind3, ind4)) *
-                      param.staticUFactor -
-                  0.5 * uccu(ind3, ind4) * param.chargeFactor +
-                  3. / 2. * ucsu(ind3, ind4) * param.spinFactor;
-            } else if (param.pairingSpinParity == 1) { // Triplet vertex
-              resultPP(ind1, ind2) =
-                  -0.5 * uccu(ind3, ind4) - 0.5 * ucsu(ind3, ind4);
+            if (param.pairingSpinParity == 0) {  // Singlet vertex
+              resultPP(ind1, ind2) = 0.5 * (ms(ind3, ind4) - mc(ind3, ind4)) * param.staticUFactor -
+                                     0.5 * uccu(ind3, ind4) * param.chargeFactor +
+                                     3. / 2. * ucsu(ind3, ind4) * param.spinFactor;
+            }
+            else if (param.pairingSpinParity == 1) {  // Triplet vertex
+              resultPP(ind1, ind2) = -0.5 * uccu(ind3, ind4) - 0.5 * ucsu(ind3, ind4);
             }
             if (param.calcLambdaZ) {
               resultZ = 0.5 * uccu(ind3, ind4) * param.chargeFactor +
@@ -500,12 +478,9 @@ public:
     }
   }
 
-  void calcGammaPPBand(const ComplexMatrixType &gammaOrb,
-                       const ComplexMatrixType &gammaOrbZ, size_t ik1,
-                       size_t ik2, VectorType &k1, VectorType &k2, size_t band1,
-                       size_t band2, FieldType &resultPP, FieldType &resultZ,
-                       std::ofstream &os) {
-
+  void calcGammaPPBand(const ComplexMatrixType& gammaOrb, const ComplexMatrixType& gammaOrbZ,
+                       size_t ik1, size_t ik2, VectorType& k1, VectorType& k2, size_t band1,
+                       size_t band2, FieldType& resultPP, FieldType& resultZ, std::ofstream& os) {
     VectorType ek1(nOrb, 0);
     VectorType ek2(nOrb, 0);
     ComplexMatrixType ak1(nOrb, nOrb);
@@ -547,27 +522,22 @@ public:
             // ak2(l1,band2) * conj(ak2(l4,band2));
 
             ComplexType c1 =
-                ak2(l2, band2) *
-                ak2m(l3, band2) * // works for Emery model and general case!!!
-                conj(ak1(l1, band1)) *
-                conj(ak1m(l4, band1)); // as in Kreisel et al. PRB 88, 094522
+                ak2(l2, band2) * ak2m(l3, band2) *  // works for Emery model and general case!!!
+                conj(ak1(l1, band1)) * conj(ak1m(l4, band1));  // as in Kreisel et al. PRB 88, 094522
             c2 += c1 * gammaOrb(ind1, ind2);
 
             if (param.calcLambdaZ) {
-              ComplexType c3 = ak2(l2, band2) *
-                               conj(ak2(l4, band2)) * // for Gamma_Z
+              ComplexType c3 = ak2(l2, band2) * conj(ak2(l4, band2)) *  // for Gamma_Z
                                conj(ak1(l1, band1)) * ak1(l3, band1);
               c4 += c3 * gammaOrb(ind1, ind2);
             }
 
             if (storeGammaOrb_) {
-              os << ik1 << "," << ik2 << "," << l1 << "," << l2 << "," << l3
-                 << "," << l4 << "," << real(gammaOrb(ind1, ind2)) << ","
-                 << real(c1 * gammaOrb(ind1, ind2)) << "\n";
+              os << ik1 << "," << ik2 << "," << l1 << "," << l2 << "," << l3 << "," << l4 << ","
+                 << real(gammaOrb(ind1, ind2)) << "," << real(c1 * gammaOrb(ind1, ind2)) << "\n";
               if (ik1 != ik2)
-                os << ik2 << "," << ik1 << "," << l1 << "," << l2 << "," << l3
-                   << "," << l4 << "," << real(gammaOrb(ind1, ind2)) << ","
-                   << real(c1 * gammaOrb(ind1, ind2)) << "\n";
+                os << ik2 << "," << ik1 << "," << l1 << "," << l2 << "," << l3 << "," << l4 << ","
+                   << real(gammaOrb(ind1, ind2)) << "," << real(c1 * gammaOrb(ind1, ind2)) << "\n";
             }
 
             // c2 += conj(c1)*gammaOrb(ind1,ind2);
@@ -584,15 +554,15 @@ public:
     // if (conc.rank()==0) std::cout << "c2 = " << c2 << "\n";
   }
 
-  void getChi0forQ(VectorType &q, SuscType &chi) {
+  void getChi0forQ(VectorType& q, SuscType& chi) {
     // mapQto1Quadrant(q);
     // ComplexVectorType susVec(qMesh.nktot);
-    interpolation<FieldType, MatrixTemplate, SuscType, ConcurrencyType>
-        interpolate(qMesh, susq);
+    interpolation<FieldType, MatrixTemplate, SuscType, ConcurrencyType> interpolate(qMesh, susq);
     if (param.dimension == 2) {
       interpolate.BiLinearGeneral(q, chi);
       // interpolate.BiLinear(q,chi);
-    } else if (param.dimension == 3) {
+    }
+    else if (param.dimension == 3) {
       interpolate.TriLinearGeneral(q, chi);
     }
   }
@@ -606,8 +576,7 @@ public:
       // FieldType vkF2 = bands.fermiVelocity2D(k,band);
       // std::cout << k[0] << " , " << k[1] << " , " << band << " , " << vkF2 <<
       // "\n";
-      normalization[ik] =
-          FSpoints.deltakF[ik] / (pow(2. * param.pi_f, dim) * FSpoints.vkF[ik]);
+      normalization[ik] = FSpoints.deltakF[ik] / (pow(2. * param.pi_f, dim) * FSpoints.vkF[ik]);
     }
   }
 
@@ -617,15 +586,14 @@ public:
     // gammapp_diag.R
     size_t nkF(FSpoints.nTotal);
     std::string cstr = "Gammakkp_" + param.fileID + ".txt";
-    const char *filename = cstr.c_str();
+    const char* filename = cstr.c_str();
     std::ofstream os(filename);
     os << "nkF:\n" << nkF << "\n";
     os << "kFx:\n" << FSpoints.kFx << "\n";
     os << "kFy:\n" << FSpoints.kFy << "\n";
     os << "kFz:\n" << FSpoints.kFz << "\n";
     os << "U,U',J,J':\n"
-       << param.U << " , " << param.Up << " , " << param.J << " , " << param.Jp
-       << "\n\n";
+       << param.U << " , " << param.Up << " , " << param.J << " , " << param.Jp << "\n\n";
     os << "Gamma(k,k'): \n";
     os << gammaPP << "\n\n";
     os << "GammaZ(k,k'): \n";
@@ -638,11 +606,11 @@ public:
 
     // Now write in jsn format for post-processing with python/matplotlib
     std::string cstr2 = "Gammakkp_" + param.fileID + ".jsn";
-    const char *filename2 = cstr2.c_str();
+    const char* filename2 = cstr2.c_str();
     std::ofstream os2(filename2);
     int width(13);
     os2.precision(width);
-    os2 << std::fixed; // scientific;
+    os2 << std::fixed;  // scientific;
     os2 << "{ ";
     os2 << "\"U\": " << param.U << ",\n";
     os2 << "\"Up\": " << param.Up << ",\n";
@@ -653,8 +621,7 @@ public:
 
     os2 << " \"kfPoints\": [\n";
     for (size_t ik = 0; ik < nkF; ik++) {
-      os2 << "[" << FSpoints.kFx[ik] << " ," << FSpoints.kFy[ik] << " ,"
-          << FSpoints.kFz[ik] << "] ";
+      os2 << "[" << FSpoints.kFx[ik] << " ," << FSpoints.kFy[ik] << " ," << FSpoints.kFz[ik] << "] ";
       if (ik < nkF - 1)
         os2 << ",";
     }
@@ -739,7 +706,7 @@ public:
     os2.close();
   }
 
-  void eigen(MatrixType &matrix, VectorType &wr, MatrixType &vr) const {
+  void eigen(MatrixType& matrix, VectorType& wr, MatrixType& vr) const {
     int n = matrix.n_row();
     int lwork = 4 * n;
     std::vector<double> work(lwork);
@@ -754,7 +721,6 @@ public:
   }
 
   void calcZofk() {
-
     for (size_t ik = 0; ik < nkF; ik++)
       Zofk[ik] = 1.0;
     if (param.calcLambdaZ) {
@@ -766,7 +732,6 @@ public:
   }
 
   void calcEigenVectors() {
-
     std::cout << "Now calculating the eigenvalues and -vectors of BSE\n";
 
     MatrixType matrix(gammaPP);
@@ -781,11 +746,11 @@ public:
     eigen(matrix, eigenvals, eigenvects);
     // Now print out eigenvalues and -vectors
     std::string cstr = "Gap_" + param.fileID + ".jsn";
-    const char *filename = cstr.c_str();
+    const char* filename = cstr.c_str();
     std::ofstream os2(filename);
     int width(13);
     os2.precision(width);
-    os2 << std::fixed; // scientific;
+    os2 << std::fixed;  // scientific;
     os2 << "{ ";
     os2 << "\"U\": " << param.U << ",\n";
     os2 << "\"Up\": " << param.Up << ",\n";
@@ -796,8 +761,7 @@ public:
 
     os2 << " \"kfPoints\": [\n";
     for (size_t ik = 0; ik < nkF; ik++) {
-      os2 << "[" << FSpoints.kFx[ik] << " ," << FSpoints.kFy[ik] << " ,"
-          << FSpoints.kFz[ik] << "] ";
+      os2 << "[" << FSpoints.kFx[ik] << " ," << FSpoints.kFy[ik] << " ," << FSpoints.kFz[ik] << "] ";
       if (ik < nkF - 1)
         os2 << ",";
     }
@@ -845,7 +809,7 @@ public:
 
   void writeMatrixElementsOnFs() {
     std::string cstr = "akOnFS_" + param.fileID + ".txt";
-    const char *filename = cstr.c_str();
+    const char* filename = cstr.c_str();
     std::ofstream os(filename);
     os << "nkF: \n";
     os << nkF << "\n";
@@ -877,6 +841,6 @@ public:
   }
 };
 
-} // namespace rpa
+}  // namespace rpa
 
 #endif

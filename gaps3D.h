@@ -98,9 +98,9 @@ public:
                                        // description
       param.parity = 1.0;              // even parity (d-wave) gap
       if (band == 0) {                 // bonding band
-        return param.Delta0 * (abs(cos(k[0])) - cos(k[1]));
+        return param.Delta0 * (std::abs(cos(k[0])) - cos(k[1]));
       } else { // antibonding band (shift kx by pi)
-        return param.Delta0 * (-abs(cos(k[0])) - cos(k[1]));
+        return param.Delta0 * (-std::abs(cos(k[0])) - cos(k[1]));
       }
     } else if (param.gAmpl == "SrRuO_helical" ||
                param.gAmpl == "SrRuO_chiral" ||

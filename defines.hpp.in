@@ -1,0 +1,12 @@
+# // Copyright (C) 2023 UT-Battelle, LLC
+# // All rights reserved.
+# //
+# // See LICENSE for terms of usage.
+# //
+
+#ifndef MRPAPP_DEFINES_HPP
+#define MRPAPP_DEFINES_HPP
+
+@mrpapp_cxx_defines_string@
+
+#endif    

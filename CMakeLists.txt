@@ -69,6 +69,9 @@ set_property(CACHE MRPAPP_MODEL PROPERTY STRINGS SRRUO SRRUO3D SRRUO3DSUH 1BAND 
 include(mrpapp_defines)
 mrpapp_write_definitions_file()
 
+include(mrpapp_linking)
+add_subdirectory(linalg/util)
+
 add_executable(mrpapp ${MRPAPP_SRC})
 target_include_directories(mrpapp PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
   ${PROJECT_SOURCE_DIR}/PartialPsimag 

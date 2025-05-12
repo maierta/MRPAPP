@@ -38,33 +38,34 @@ TEST_CASE("VectorCPUTest::PointerMemoryType", "[linalg]") {
     CHECK(testing::isHostPointer(vec.ptr()));
   }
 }
+
+TEST_CASE("VectorCPUGPUTest::Constructors", "[linalg]") {
+  size_t size = 3;
+
+  Vector<float, DeviceType::CPU> vec("name", size);
+  // Set the elements.
+  for (int i = 0; i < vec.size(); ++i) {
+    float el = 3 * i - 2;
+    vec[i] = el;
+  }
+
+  Vector<float, DeviceType::GPU> vec_copy(vec);
+  CHECK(vec.size() == vec_copy.size());
+  CHECK(vec.size() <= vec_copy.capacity());
+  CHECK(testing::isDevicePointer(vec_copy.ptr()));
+
+  Vector<float, DeviceType::CPU> vec_copy_copy(vec_copy);
+  CHECK(vec.size() == vec_copy_copy.size());
+  CHECK(vec.size() <= vec_copy_copy.capacity());
+  CHECK(testing::isHostPointer(vec_copy_copy.ptr()));
+
+  for (int i = 0; i < vec.size(); ++i) {
+    CHECK(vec[i] == vec_copy_copy[i]);
+    CHECK(vec.ptr(i) != vec_copy_copy.ptr(i));
+  }
 }
-// TEST(VectorCPUGPUTest, Constructors) {
-//   size_t size = 3;
 
-//   dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
-//   // Set the elements.
-//   for (int i = 0; i < vec.size(); ++i) {
-//     float el = 3 * i - 2;
-//     vec[i] = el;
-//   }
-
-//   dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(vec);
-//   ASSERT_EQ(vec.size(), vec_copy.size());
-//   ASSERT_LE(vec.size(), vec_copy.capacity());
-//   ASSERT_TRUE(testing::isDevicePointer(vec_copy.ptr()));
-
-//   dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(vec_copy);
-//   EXPECT_EQ(vec.size(), vec_copy_copy.size());
-//   EXPECT_LE(vec.size(), vec_copy_copy.capacity());
-//   EXPECT_TRUE(testing::isHostPointer(vec_copy_copy.ptr()));
-
-//   for (int i = 0; i < vec.size(); ++i) {
-//     EXPECT_EQ(vec[i], vec_copy_copy[i]);
-//     EXPECT_NE(vec.ptr(i), vec_copy_copy.ptr(i));
-//   }
-// }
-
+}
 // TEST(VectorCPUGPUTest, Assignement) {
 //   {
 //     // Assign a vector that fits into the capacity.

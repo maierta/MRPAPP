@@ -11,17 +11,15 @@
 // - return code checking,
 // - error message printing.
 
-#ifndef DCA_LINALG_UTIL_ERROR_CUDA_HPP
-#define DCA_LINALG_UTIL_ERROR_CUDA_HPP
+#ifndef MRPAPP_LINALG_UTIL_ERROR_CUDA_HPP
+#define MRPAPP_LINALG_UTIL_ERROR_CUDA_HPP
 
 #include <cuda_runtime.h>
 #include <string>
 #include <stdexcept>
 
-namespace dca {
-namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 // Performs extra cuda code checking when debugging.
 // Remark: Use the macro checkErrorsCudaDebug instead of the function in the code to avoid overhead
@@ -29,7 +27,7 @@ namespace util {
 void checkErrorsCudaDebugInternal(std::string function_name, std::string file_name, int line);
 #ifdef DEBUG_CUDA
 #define checkErrorsCudaDebug() \
-  dca::linalg::util::checkErrorsCudaDebugInternal(__FUNCTION__, __FILE__, __LINE__)
+  mrpapp::checkErrorsCudaDebugInternal(__FUNCTION__, __FILE__, __LINE__)
 #else
 #define checkErrorsCudaDebug()
 #endif
@@ -48,9 +46,9 @@ void printErrorMessage(cudaError_t error, std::string function_name, std::string
 // The macros provide the interfaces that automatically pass the function name, the filename, and
 // the line to the function call.
 #define checkRC(return_code) \
-  dca::linalg::util::checkRCInternal(return_code, __FUNCTION__, __FILE__, __LINE__)
+  mrpapp::checkRCInternal(return_code, __FUNCTION__, __FILE__, __LINE__)
 #define checkRCMsg(return_code, extra_error_string)                                 \
-  dca::linalg::util::checkRCInternal(return_code, __FUNCTION__, __FILE__, __LINE__, \
+  mrpapp::checkRCInternal(return_code, __FUNCTION__, __FILE__, __LINE__, \
                                      extra_error_string)
 inline void checkRCInternal(cudaError_t return_code, std::string function_name,
                             std::string file_name, int line, std::string extra_error_string = "") {
@@ -60,8 +58,4 @@ inline void checkRCInternal(cudaError_t return_code, std::string function_name,
   }
 }
 
-}  // util
-}  // linalg
-}  // dca
-
-#endif  // DCA_LINALG_UTIL_ERROR_CUDA_HPP
+#endif  // MRPAPP_LINALG_UTIL_ERROR_CUDA_HPP

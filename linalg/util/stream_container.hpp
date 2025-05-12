@@ -21,8 +21,8 @@
 #include "gpu_stream.hpp"
 
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 class StreamContainer {
 public:
@@ -64,7 +64,7 @@ private:
   std::vector<std::array<GpuStream, streams_per_thread_>> streams_;
 };
 
-}  // namespace util
+}  // namespace mrpapp
 }  // namespace linalg
 
 #endif  // MRPAPP_STREAM_CONTAINER_HPP

@@ -12,7 +12,7 @@
 #ifndef MRPAPP_DEVICE_TYPE_HPP
 #define MRPAPP_DEVICE_TYPE_HPP
 
-namespace linalg {
+namespace mrpapp {
 
 enum DeviceType : int { CPU, GPU };
 

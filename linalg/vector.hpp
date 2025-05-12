@@ -1,5 +1,5 @@
-// Copyright (C) 2018 ETH Zurich
-// Copyright (C) 2018 UT-Battelle, LLC
+// Copyright (C) 2025 ETH Zurich
+// Copyright (C) 2025 UT-Battelle, LLC
 // All rights reserved.
 //
 // See LICENSE for terms of usage.
@@ -8,11 +8,12 @@
 // Author: Peter Staar (taa@zurich.ibm.com)
 //         Raffaele Solca' (rasolca@itp.phys.ethz.ch)
 //         Giovanni Balduzzi (gbalduzz@itp.phys.ethz.ch)
+//         Peter W. Doak (doakpw@ornl.gov)
 //
 // This file provides the Vector object for different device types.
 
-#ifndef DCA_LINALG_VECTOR_HPP
-#define DCA_LINALG_VECTOR_HPP
+#ifndef MRPAPP_LINALG_VECTOR_HPP
+#define MRPAPP_LINALG_VECTOR_HPP
 
 #include <cassert>
 #include <cmath>
@@ -30,7 +31,6 @@
 #include "linalg/util/copy.hpp"
 #include "linalg/util/stream_functions.hpp"
 
-namespace dca {
 namespace linalg {
 // dca::linalg::
 
@@ -325,7 +325,7 @@ template <typename ScalarType, DeviceType device_name, class Allocator>
 void Vector<ScalarType, device_name, Allocator>::setToZeroAsync(const util::GpuStream& stream
                                                                 [[maybe_unused]]) {
   // TODO: implement in copy.hpp.
-#ifdef DCA_HAVE_GPU
+#ifdef MRPAPP_HAVE_GPU
   checkRC(cudaMemsetAsync(data_, 0, size_ * sizeof(ScalarType), stream));
 #else
   std::memset(data_, 0, size_ * sizeof(ScalarType));
@@ -335,14 +335,14 @@ void Vector<ScalarType, device_name, Allocator>::setToZeroAsync(const util::GpuS
 template <typename ScalarType, DeviceType device_name, class Allocator>
 void Vector<ScalarType, device_name, Allocator>::setToZero(const util::GpuStream& stream
                                                            [[maybe_unused]]) {
-  dca::linalg::util::Memory<device_name>::setToZero(data_, size_, stream);
+  mrpapp::Memory<device_name>::setToZero(data_, size_, stream);
 }
 
 // template <typename ScalarType, DeviceType device_name, class Allocator>
 // void Vector<ScalarType, device_name, Allocator>::setToZero(const util::GpuStream& stream
 // [[maybe_unused]]) {
 //   // TODO: implement in copy.hpp.
-//   dca::linalg::util::memory<device_name>::setToZero(data_, size_, stream);
+//   mrpapp::memory<device_name>::setToZero(data_, size_, stream);
 // }
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
@@ -429,7 +429,8 @@ std::size_t Vector<ScalarType, device_name, Allocator>::deviceFingerprint() cons
   return device_name == GPU ? capacity_ * sizeof(ScalarType) : 0;
 }
 
+extern template clase Vector<double, linalg::CPU>;
+  
 }  // namespace linalg
-}  // namespace dca
 
-#endif  // DCA_LINALG_VECTOR_HPP
+#endif  // MRPAPP_LINALG_VECTOR_HPP

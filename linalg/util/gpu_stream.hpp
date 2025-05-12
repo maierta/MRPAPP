@@ -19,11 +19,11 @@
 
 
 namespace linalg {
-namespace util {
+namespace mrpapp {
 
 #ifdef MRPAPP_HAVE_GPU
 
-// dca::linalg::util::
+// mrpapp::
 
 class GpuStream {
 public:
@@ -110,7 +110,7 @@ public:
 
 #endif  // MRPAPP_HAVE_GPU
 
-}  // namespace util
+}  // namespace mrpapp
 }  // namespace linalg
 
 #endif  // MRPAPP_CUDA_STREAM_HPP

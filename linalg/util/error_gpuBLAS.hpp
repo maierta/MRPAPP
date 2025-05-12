@@ -32,7 +32,7 @@
 #include <string>
 
 namespace linalg {
-namespace util {
+namespace mrpapp {
 
 // Returns the error string related to error.
 std::string errorStringCublas(cublasStatus_t error);

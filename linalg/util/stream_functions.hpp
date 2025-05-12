@@ -16,8 +16,8 @@
 #include "stream_container.hpp"
 
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 // Global stream container.
 inline StreamContainer& getStreamContainer() {
@@ -42,7 +42,7 @@ inline void syncStream(int thread_id, int stream_id) {
   getStreamContainer().sync(thread_id, stream_id);
 }
 
-}  // namespace util
+}  // namespace mrpapp
 }  // namespace linalg
 
 #endif  // MRPAPP_STREAM_FUNCTIONS_HPP

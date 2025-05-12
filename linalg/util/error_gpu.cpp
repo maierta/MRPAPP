@@ -17,8 +17,8 @@
 
 namespace dca {
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 void checkErrorsCudaDebugInternal(std::string function_name, std::string file_name, int line) {
   // cudaDeviceSynchronize();

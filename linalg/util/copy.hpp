@@ -9,24 +9,23 @@
 //
 // This file provides memory copy utilities.
 
-#ifndef DCA_LINALG_UTIL_COPY_HPP
-#define DCA_LINALG_UTIL_COPY_HPP
+#ifndef MRPAPP_LINALG_UTIL_COPY_HPP
+#define MRPAPP_LINALG_UTIL_COPY_HPP
 
 #include <cassert>
 #include <complex>
 #include <cstring>
-#include "dca/linalg/device_type.hpp"
+#include "device_type.hpp"
 #include "gpu_stream.hpp"
 
-#ifdef DCA_HAVE_GPU
-#include "dca/platform/dca_gpu.h"
+#ifdef MRPAPP_HAVE_GPU
+#include "platform/mrpapp_gpu.h"
 #endif
-#include "dca/linalg/util/stream_functions.hpp"
+#include "stream_functions.hpp"
 
-namespace dca {
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 template <typename ScalarType>
 inline void memoryCopyCpu(ScalarType* dest, const ScalarType* src, size_t sz) {
@@ -70,7 +69,7 @@ void memoryCopyCpu(ScalarType* dest, int ld_dest, const ScalarType* src, int ld_
   }
 }
 
-#ifdef DCA_HAVE_GPU
+#ifdef MRPAPP_HAVE_GPU
 // Fully synchronous 1D memory copy, i.e. all operations in the GPU queue are executed before the
 // execution of this copy.
 // The host continues the execution of the program when the copy is terminated.
@@ -217,8 +216,8 @@ void memoryCopyAsync(ScalarType* dest, const ScalarType* src, size_t size, const
 }
 
 // Asynchronous 1D memory copy (stream = getStream(thread_id, stream_id)).
-// Preconditions: 0 <= thread_id < DCA_MAX_THREADS,
-//                0 <= stream_id < DCA_STREAMS_PER_THREADS.
+// Preconditions: 0 <= thread_id < MRPAPP_MAX_THREADS,
+//                0 <= stream_id < MRPAPP_STREAMS_PER_THREADS.
 template <typename ScalarType>
 void memoryCopyAsync(ScalarType* dest, const ScalarType* src, size_t size, int thread_id,
                      int stream_id = 0) {
@@ -246,8 +245,8 @@ void memoryCopyAsync(ScalarType* dest, int ld_dest, const ScalarType* src, int l
 
 // Asynchronous 2D memory copy (stream = getStream(thread_id, stream_id)).
 // Preconditions: ld_dest >= size.first, ld_src >= size.first,
-//                0 <= thread_id < DCA_MAX_THREADS,
-//                0 <= stream_id < DCA_STREAMS_PER_THREADS.
+//                0 <= thread_id < MRPAPP_MAX_THREADS,
+//                0 <= stream_id < MRPAPP_STREAMS_PER_THREADS.
 template <typename ScalarType>
 void memoryCopyAsync(ScalarType* dest, int ld_dest, const ScalarType* src, int ld_src,
                      std::pair<int, int> size, int thread_id, int stream_id) {
@@ -256,7 +255,7 @@ void memoryCopyAsync(ScalarType* dest, int ld_dest, const ScalarType* src, int l
 
 // Asynchronous 1D memory copy (stream = getStream(thread_id, stream_id))
 // + synchronization of stream.
-// Preconditions: 0 <= thread_id < DCA_MAX_THREADS,
+// Preconditions: 0 <= thread_id < MRPAPP_MAX_THREADS,
 template <typename ScalarType>
 void memoryCopy(ScalarType* dest, const ScalarType* src, size_t size, int thread_id, int stream_id) {
   memoryCopyAsync(dest, src, size, thread_id, stream_id);
@@ -266,8 +265,8 @@ void memoryCopy(ScalarType* dest, const ScalarType* src, size_t size, int thread
 // Asynchronous 2D memory copy (stream = getStream(thread_id, stream_id))
 // + synchronization of stream.
 // Preconditions: ld_dest >= size.first, ld_src >= size.first,
-//                0 <= thread_id < DCA_MAX_THREADS,
-//                0 <= stream_id < DCA_STREAMS_PER_THREADS.
+//                0 <= thread_id < MRPAPP_MAX_THREADS,
+//                0 <= stream_id < MRPAPP_STREAMS_PER_THREADS.
 template <typename ScalarType>
 void memoryCopy(ScalarType* dest, int ld_dest, const ScalarType* src, int ld_src,
                 std::pair<int, int> size, int thread_id, int stream_id) {
@@ -326,10 +325,9 @@ void memoryCopyD2H(Scalar1* dest, int ld_dest, const Scalar2* src, int ld_src,
   throw std::runtime_error("memoryCopyH2D should never be called in a non GPU build.");
 }
 
-#endif  // DCA_HAVE_GPU
+#endif  // MRPAPP_HAVE_GPU
 
-}  // namespace util
+}  // namespace mrpapp
 }  // namespace linalg
-}  // namespace dca
 
-#endif  // DCA_LINALG_UTIL_COPY_HPP
+#endif  // MRPAPP_LINALG_UTIL_COPY_HPP

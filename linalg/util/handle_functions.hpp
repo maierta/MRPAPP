@@ -30,8 +30,8 @@
 #endif
 
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 #ifdef MRPAPP_HAVE_GPU
 

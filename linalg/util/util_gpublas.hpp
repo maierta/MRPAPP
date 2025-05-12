@@ -15,8 +15,8 @@
 
 namespace dca {
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 int getGpuBLASVersion();
 

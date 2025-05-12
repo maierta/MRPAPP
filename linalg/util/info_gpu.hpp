@@ -17,8 +17,8 @@
 #endif
 
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 // Prints the specs of the cuda devices found by the application.
 void printInfoDevices();

@@ -15,9 +15,8 @@
 #include "util_gpublas.hpp"
 #include "handle_functions.hpp"
 
-namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 #if defined(MRPAPP_HAVE_GPU)
 
@@ -39,5 +38,4 @@ int getGpuBLASVersion() {
 
 #endif  // MRPAPP_HAVE_CUDA
 
-}  // namespace util
-}  // namespace linalg
+}  // namespace mrpapp

@@ -16,8 +16,8 @@
 
 namespace dca {
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 std::string errorStringCublas(cublasStatus_t error) {
   switch (error) {

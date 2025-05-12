@@ -9,28 +9,26 @@
 //
 // This file provides include all types of allocators, and provides a default selector.
 
-#ifndef DCA_LINALG_UTIL_ALLOCATORS_HPP
-#define DCA_LINALG_UTIL_ALLOCATORS_HPP
+#ifndef MRPAPP_LINALG_UTIL_ALLOCATORS_HPP
+#define MRPAPP_LINALG_UTIL_ALLOCATORS_HPP
 
 #include <stdexcept>
-#include "dca/config/haves_defines.hpp"
 #include "aligned_allocator.hpp"
-#include "dca/linalg/device_type.hpp"
-#ifdef DCA_HAVE_GPU
+#include "device_type.hpp"
+#ifdef MRPAPP_HAVE_GPU
 #include "device_allocator.hpp"
 #include "managed_allocator.hpp"
 #include "pinned_allocator.hpp"
-#endif  // DCA_HAVE_GPU
+#endif  // MRPAPP_HAVE_GPU
 
-namespace dca {
 namespace linalg {
-namespace util {
+namespace mrpapp {
 namespace selector {
-// dca::linalg::util::selector::
+// mrpapp::selector::
 template <typename T, DeviceType device>
 struct DefaultAllocator;
 
-#ifdef DCA_HAVE_GPU
+#ifdef MRPAPP_HAVE_GPU
 template <typename T>
 struct DefaultAllocator<T, CPU> {
   using type = PinnedAllocator<T>;
@@ -58,7 +56,7 @@ struct DefaultAllocator<T, GPU> {
   using type = UnusedAllocator;
 };
 
-#endif  // DCA_HAVE_GPU
+#endif  // MRPAPP_HAVE_GPU
 
 }  // selector
 // dca::linalg::util:
@@ -68,6 +66,5 @@ using DefaultAllocator = typename selector::DefaultAllocator<T, device>::type;
 
 }  // util
 }  // linalg
-}  // dca
 
-#endif  // DCA_LINALG_UTIL_ALLOCATORS_HPP
+#endif  // MRPAPP_LINALG_UTIL_ALLOCATORS_HPP

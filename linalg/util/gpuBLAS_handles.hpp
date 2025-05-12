@@ -26,8 +26,8 @@
 #include "gpu_stream.hpp"
 
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 class GpuBLASHandle {
 public:

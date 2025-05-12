@@ -32,8 +32,8 @@
 
 namespace dca {
 namespace linalg {
-namespace util {
-// dca::linalg::util::
+namespace mrpapp {
+// mrpapp::
 
 // Returns the error string related to error.
 std::string errorStringCublas(cublasStatus_t error);

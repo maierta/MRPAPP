@@ -17,13 +17,13 @@
 #include "defines.hpp"
 #if defined(MRPAPP_HAVE_CUDA)
 #include <cublas_v2.h>
-#include "linalg/util/error_cuda.hpp"
+#include "error_cuda.hpp"
 #elif defined(MRPAPP_HAVE_HIP)
 #include <hip/hip_runtime.h>
 #include <hipblas/hipblas.h>
 #include <hip/hip_complex.h>
 #include "platform/cuda2hip.h"
-#include "linalg/util/error_hip.hpp"
+#include "error_hip.hpp"
 #endif
 #include "platform/error_gpuBLAS.hpp"
 

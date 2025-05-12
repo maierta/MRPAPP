@@ -65,152 +65,89 @@ TEST_CASE("VectorCPUGPUTest::Constructors", "[linalg]") {
   }
 }
 
+TEST_CASE("VectorCPUGPUTest::Set", "[linalg]") {
+  SECTION("Assignment fits capacity")
+  {
+    // Assign a vector that fits into the capacity.
+    size_t size = 3;
+
+    Vector<float, DeviceType::GPU> vec_copy(10);
+    auto old_ptr = vec_copy.ptr();
+    auto capacity = vec_copy.capacity();
+    Vector<float, DeviceType::CPU> vec_copy_copy(6);
+    auto old_ptr_2 = vec_copy_copy.ptr();
+    auto capacity_2 = vec_copy_copy.capacity();
+
+    Vector<float, DeviceType::CPU> vec("name", size);
+    // Set the elements.
+    for (int i = 0; i < vec.size(); ++i) {
+      float el = 3 * i - 2;
+      vec[i] = el;
+    }
+
+    vec_copy.set(vec, 0, 1);
+    CHECK(vec.size() ==  vec_copy.size());
+    CHECK(capacity ==  vec_copy.capacity());
+    CHECK(old_ptr ==  vec_copy.ptr());
+    CHECK(testing::isDevicePointer(vec_copy.ptr()));
+
+    vec_copy_copy.set(vec_copy, 0, 1);
+    CHECK(vec.size() ==  vec_copy_copy.size());
+    CHECK(capacity_2 ==  vec_copy_copy.capacity());
+    CHECK(old_ptr_2 ==  vec_copy_copy.ptr());
+    CHECK(testing::isHostPointer(vec_copy_copy.ptr()));
+
+    for (int i = 0; i < vec.size(); ++i) {
+      CHECK(vec[i] ==  vec_copy_copy[i]);
+      CHECK(vec.ptr(i) != vec_copy_copy.ptr(i));
+    }
+  }
+  SECTION("Assignment exceeds capacity")
+  {
+    // Assign a vector that doesn't fit into the capacity.
+    Vector<float, DeviceType::GPU> vec_copy(10);
+    Vector<float, DeviceType::CPU> vec_copy_copy(6);
+    size_t size = std::max(vec_copy.capacity(), vec_copy_copy.capacity()) + 1;
+
+    Vector<float, DeviceType::CPU> vec("name", size);
+    // Set the elements.
+    for (int i = 0; i < vec.size(); ++i) {
+      float el = 3 * i - 2;
+      vec[i] = el;
+    }
+
+    vec_copy.set(vec, 0, 1);
+    CHECK(vec.size() ==  vec_copy.size());
+    CHECK(vec.size() <= vec_copy.capacity());
+    CHECK(!(testing::isHostPointer(vec_copy.ptr())));
+
+    vec_copy_copy.set(vec_copy, 0, 1);
+    CHECK(vec.size() ==  vec_copy_copy.size());
+    CHECK(vec.size() <= vec_copy_copy.capacity());
+    CHECK(testing::isHostPointer(vec_copy_copy.ptr()));
+
+    for (int i = 0; i < vec.size(); ++i) {
+      CHECK(vec[i] ==  vec_copy_copy[i]);
+      CHECK(vec.ptr(i) != vec_copy_copy.ptr(i));
+    }
+  }
 }
-// TEST(VectorCPUGPUTest, Assignement) {
-//   {
-//     // Assign a vector that fits into the capacity.
-//     size_t size = 3;
 
-//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
-//     auto old_ptr = vec_copy.ptr();
-//     auto capacity = vec_copy.capacity();
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
-//     auto old_ptr_2 = vec_copy_copy.ptr();
-//     auto capacity_2 = vec_copy_copy.capacity();
+TEST_CASE("VectorCPUTest::setAsync", "[linalg]") {
+  std::vector<int> vec(4, 1);
 
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
-//     // Set the elements.
-//     for (int i = 0; i < vec.size(); ++i) {
-//       float el = 3 * i - 2;
-//       vec[i] = el;
-//     }
+  Vector<int, DeviceType::GPU> vec_copy;
+  Vector<int, DeviceType::CPU> vec_copy_copy;
 
-//     vec_copy = vec;
-//     ASSERT_EQ(vec.size(), vec_copy.size());
-//     ASSERT_EQ(capacity, vec_copy.capacity());
-//     ASSERT_EQ(old_ptr, vec_copy.ptr());
-//     ASSERT_TRUE(testing::isDevicePointer(vec_copy.ptr()));
+  GpuStream stream;
 
-//     vec_copy_copy = vec_copy;
-//     EXPECT_EQ(vec.size(), vec_copy_copy.size());
-//     EXPECT_EQ(capacity_2, vec_copy_copy.capacity());
-//     EXPECT_EQ(old_ptr_2, vec_copy_copy.ptr());
-//     EXPECT_TRUE(testing::isHostPointer(vec_copy_copy.ptr()));
+  vec_copy.setAsync(vec, stream);
+  vec_copy_copy.setAsync(vec_copy, stream);
+  stream.sync();
 
-//     for (int i = 0; i < vec.size(); ++i) {
-//       EXPECT_EQ(vec[i], vec_copy_copy[i]);
-//       EXPECT_NE(vec.ptr(i), vec_copy_copy.ptr(i));
-//     }
-//   }
-//   {
-//     // Assign a vector that doesn't fit into the capacity.
-//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
-//     size_t size = std::max(vec_copy.capacity(), vec_copy_copy.capacity()) + 1;
+  CHECK(vec.size() ==  vec_copy_copy.size());
+  for (int i = 0; i < vec.size(); ++i)
+    CHECK(vec[i] ==  vec_copy_copy[i]);
+}
 
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
-//     // Set the elements.
-//     for (int i = 0; i < vec.size(); ++i) {
-//       float el = 3 * i - 2;
-//       vec[i] = el;
-//     }
-
-//     vec_copy = vec;
-//     ASSERT_EQ(vec.size(), vec_copy.size());
-//     ASSERT_LE(vec.size(), vec_copy.capacity());
-//     ASSERT_FALSE(testing::isHostPointer(vec_copy.ptr()));
-
-//     vec_copy_copy = vec_copy;
-//     EXPECT_EQ(vec.size(), vec_copy_copy.size());
-//     EXPECT_LE(vec.size(), vec_copy_copy.capacity());
-//     EXPECT_TRUE(testing::isHostPointer(vec_copy_copy.ptr()));
-
-//     for (int i = 0; i < vec.size(); ++i) {
-//       EXPECT_EQ(vec[i], vec_copy_copy[i]);
-//       EXPECT_NE(vec.ptr(i), vec_copy_copy.ptr(i));
-//     }
-//   }
-// }
-
-// TEST(VectorCPUGPUTest, Set) {
-//   {
-//     // Assign a vector that fits into the capacity.
-//     size_t size = 3;
-
-//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
-//     auto old_ptr = vec_copy.ptr();
-//     auto capacity = vec_copy.capacity();
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
-//     auto old_ptr_2 = vec_copy_copy.ptr();
-//     auto capacity_2 = vec_copy_copy.capacity();
-
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
-//     // Set the elements.
-//     for (int i = 0; i < vec.size(); ++i) {
-//       float el = 3 * i - 2;
-//       vec[i] = el;
-//     }
-
-//     vec_copy.set(vec, 0, 1);
-//     ASSERT_EQ(vec.size(), vec_copy.size());
-//     ASSERT_EQ(capacity, vec_copy.capacity());
-//     ASSERT_EQ(old_ptr, vec_copy.ptr());
-//     ASSERT_TRUE(testing::isDevicePointer(vec_copy.ptr()));
-
-//     vec_copy_copy.set(vec_copy, 0, 1);
-//     EXPECT_EQ(vec.size(), vec_copy_copy.size());
-//     EXPECT_EQ(capacity_2, vec_copy_copy.capacity());
-//     EXPECT_EQ(old_ptr_2, vec_copy_copy.ptr());
-//     EXPECT_TRUE(testing::isHostPointer(vec_copy_copy.ptr()));
-
-//     for (int i = 0; i < vec.size(); ++i) {
-//       EXPECT_EQ(vec[i], vec_copy_copy[i]);
-//       EXPECT_NE(vec.ptr(i), vec_copy_copy.ptr(i));
-//     }
-//   }
-//   {
-//     // Assign a vector that doesn't fit into the capacity.
-//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
-//     size_t size = std::max(vec_copy.capacity(), vec_copy_copy.capacity()) + 1;
-
-//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
-//     // Set the elements.
-//     for (int i = 0; i < vec.size(); ++i) {
-//       float el = 3 * i - 2;
-//       vec[i] = el;
-//     }
-
-//     vec_copy.set(vec, 0, 1);
-//     ASSERT_EQ(vec.size(), vec_copy.size());
-//     ASSERT_LE(vec.size(), vec_copy.capacity());
-//     ASSERT_FALSE(testing::isHostPointer(vec_copy.ptr()));
-
-//     vec_copy_copy.set(vec_copy, 0, 1);
-//     EXPECT_EQ(vec.size(), vec_copy_copy.size());
-//     EXPECT_LE(vec.size(), vec_copy_copy.capacity());
-//     EXPECT_TRUE(testing::isHostPointer(vec_copy_copy.ptr()));
-
-//     for (int i = 0; i < vec.size(); ++i) {
-//       EXPECT_EQ(vec[i], vec_copy_copy[i]);
-//       EXPECT_NE(vec.ptr(i), vec_copy_copy.ptr(i));
-//     }
-//   }
-// }
-
-// TEST(VectorCPUTest, setAsync) {
-//   std::vector<int> vec(4, 1);
-
-//   dca::mrpapp::Vector<int, dca::mrpapp::GPU> vec_copy;
-//   dca::mrpapp::Vector<int, dca::mrpapp::CPU> vec_copy_copy;
-
-//   mrpapp::GpuStream stream;
-
-//   vec_copy.setAsync(vec, stream);
-//   vec_copy_copy.setAsync(vec_copy, stream);
-//   stream.sync();
-
-//   EXPECT_EQ(vec.size(), vec_copy_copy.size());
-//   for (int i = 0; i < vec.size(); ++i)
-//     EXPECT_EQ(vec[i], vec_copy_copy[i]);
-// }
+}

@@ -31,7 +31,6 @@
 #include <stdexcept>
 #include <string>
 
-namespace linalg {
 namespace mrpapp {
 
 // Returns the error string related to error.
@@ -54,7 +53,6 @@ inline void checkRCInternal(cublasStatus_t return_code, std::string function_nam
   }
 }
 
-}  // util
-}  // linalg
+}
 
 #endif  // MRPAPP_ERROR_CUBLAS_HPP

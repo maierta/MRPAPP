@@ -17,8 +17,6 @@
 #include "defines.hpp"
 #include "platform/mrpapp_gpu.h"
 
-
-namespace linalg {
 namespace mrpapp {
 
 #ifdef MRPAPP_HAVE_GPU
@@ -111,6 +109,5 @@ public:
 #endif  // MRPAPP_HAVE_GPU
 
 }  // namespace mrpapp
-}  // namespace linalg
 
 #endif  // MRPAPP_CUDA_STREAM_HPP

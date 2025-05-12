@@ -18,7 +18,6 @@
 #error "This file requires GPU support."
 #endif
 
-namespace linalg {
 namespace mrpapp {
 // mrpapp::
 
@@ -86,6 +85,5 @@ bool operator!=(const PinnedAllocator<T>&, const PinnedAllocator<U>&) {
 }
 
 }  // namespace mrpapp
-}  // namespace linalg
 
 #endif  // MRPAPP_LINALG_UTIL_ALLOCATORS_PINNED_ALLOCATOR_HPP

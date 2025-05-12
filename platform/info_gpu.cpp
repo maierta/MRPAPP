@@ -12,12 +12,12 @@
 
 #include "defines.hpp"
 #if defined(MRPAPP_HAVE_CUDA)
-#include "linalg/util/error_cuda.hpp"
+#include "error_cuda.hpp"
 #elif defined(MRPAPP_HAVE_HIP)
-#include "linalg/util/error_hip.hpp"
+#include "error_hip.hpp"
 #include "util/cuda2hip.h"
 #endif
-#include "linalg/util/info_gpu.hpp"
+#include "info_gpu.hpp"
 #include <iostream>
 #include <string>
 #include <sstream>

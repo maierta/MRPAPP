@@ -14,7 +14,7 @@
 
 namespace mrpapp {
 
-enum DeviceType : int { CPU, GPU };
+enum class DeviceType { CPU, GPU };
 
 }
 

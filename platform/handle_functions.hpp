@@ -29,7 +29,6 @@
 #include "gpu_stream.hpp"
 #endif
 
-namespace linalg {
 namespace mrpapp {
 // mrpapp::
 
@@ -81,7 +80,6 @@ inline void resizeHandleContainer(const std::size_t max_threads) {
 
 #endif  // MRPAPP_HAVE_GPU
 
-}  // util
-}  // linalg
+}
 
 #endif  // MRPAPP_HANDLE_FUNCTIONS_HPP

@@ -24,14 +24,14 @@
 #if defined(MRPAPP_HAVE_CUDA)
 #include <cuda.h>
 #include <cuda_runtime.h>
-#include "linalg/util/error_cuda.hpp"
+#include "error_cuda.hpp"
 
 #define HIP_SYMBOL(x) x
 
 #elif defined(MRPAPP_HAVE_HIP)
 #include <hip/hip_runtime.h>
 #include "platform/cuda2hip.h"
-#include "linalg/util/error_hip.hpp"
+#include "error_hip.hpp"
 #endif
 
 #endif

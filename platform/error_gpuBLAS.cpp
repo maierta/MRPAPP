@@ -10,14 +10,11 @@
 //
 // This file implements cublas related utilities.
 
-#include "linalg/util/error_gpuBLAS.hpp"
+#include "error_gpuBLAS.hpp"
 #include <stdexcept>
 #include <string>
 
-namespace dca {
-namespace linalg {
 namespace mrpapp {
-// mrpapp::
 
 std::string errorStringCublas(cublasStatus_t error) {
   switch (error) {
@@ -53,6 +50,4 @@ void printErrorMessage(cublasStatus_t error, std::string function_name, std::str
                     file_name, line, cuda_error_str);
 }
 
-}  // util
-}  // linalg
-}  // dca
+}

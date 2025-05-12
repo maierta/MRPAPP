@@ -9,14 +9,12 @@
 //
 // This file implements error_cuda functions.
 #include "defines.hpp"
-#include "platform/mrpapp_gpu.h"
+#include "mrpapp_gpu.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <stdexcept>
 
-namespace dca {
-namespace linalg {
 namespace mrpapp {
 // mrpapp::
 
@@ -25,7 +23,7 @@ void checkErrorsCudaDebugInternal(std::string function_name, std::string file_na
 
   cudaError_t ret = cudaGetLastError();
 
-#ifdef DCA_HAVE_HIP
+#ifdef MRPAPP_HAVE_HIP
   // hip reports this whenever you call getLastError and the stream is not empty of calls
   // To us this is not an error we're in an Async regime it's expected
   if(ret == hipErrorNotReady)
@@ -65,5 +63,3 @@ void printErrorMessage(std::string error, std::string function_name, std::string
   std::cout << s.str() << std::endl;
 }
 }  // util
-}  // linalg
-}  // dca

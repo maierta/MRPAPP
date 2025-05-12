@@ -15,7 +15,6 @@
 
 #include "stream_container.hpp"
 
-namespace linalg {
 namespace mrpapp {
 // mrpapp::
 
@@ -43,6 +42,5 @@ inline void syncStream(int thread_id, int stream_id) {
 }
 
 }  // namespace mrpapp
-}  // namespace linalg
 
 #endif  // MRPAPP_STREAM_FUNCTIONS_HPP

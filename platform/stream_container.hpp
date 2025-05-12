@@ -20,9 +20,7 @@
 
 #include "gpu_stream.hpp"
 
-namespace linalg {
 namespace mrpapp {
-// mrpapp::
 
 class StreamContainer {
 public:
@@ -65,6 +63,5 @@ private:
 };
 
 }  // namespace mrpapp
-}  // namespace linalg
 
 #endif  // MRPAPP_STREAM_CONTAINER_HPP

@@ -19,7 +19,7 @@
 
 #ifdef MRPAPP_HAVE_GPU
 #include "platform/mrpapp_gpu_complex.h"
-#include "gpu_type_mapping.hpp"
+#include "platform/gpu_type_mapping.hpp"
 #endif
 
 namespace mrpapp {
@@ -79,7 +79,7 @@ struct CUDAScalar_impl<T, IsReal<T>> {
 
 template <typename T>
 struct CUDAScalar_impl<T, IsComplex<T>> {
-  using value_type = util::CUDAComplex<RealAlias<T>>;
+  using value_type = CUDAComplex<RealAlias<T>>;
 };
 
 template <typename T>

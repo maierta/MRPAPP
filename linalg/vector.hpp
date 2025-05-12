@@ -25,17 +25,16 @@
 #include <vector>
 
 #include "platform/mrpapp_gpu.h"
-#include "linalg/device_type.hpp"
-#include "linalg/util/memory.hpp"
-#include "linalg/util/allocators/allocators.hpp"
-#include "linalg/util/copy.hpp"
-#include "linalg/util/stream_functions.hpp"
+#include "device_type.hpp"
+#include "memory.hpp"
+#include "allocators/allocators.hpp"
+#include "copy.hpp"
+#include "stream_functions.hpp"
 
-namespace linalg {
-// dca::linalg::
+namespace mrpapp {
 
 template <typename ScalarType, DeviceType device_name = DeviceType::CPU,
-          class Allocator = util::DefaultAllocator<ScalarType, device_name>>
+          class Allocator = DefaultAllocator<ScalarType, device_name>>
 class Vector : public Allocator {
 public:
   using ThisType = Vector<ScalarType, device_name, Allocator>;
@@ -80,12 +79,12 @@ public:
   // Returns the i-th element of the vector.
   // Preconditions: 0 <= i < size().first.
   // This method is available only if device_name == CPU.
-  template <DeviceType dn = device_name, typename = std::enable_if_t<dn == CPU>>
+  template <DeviceType dn = device_name, typename = std::enable_if_t<dn == DeviceType::CPU>>
   ScalarType& operator[](size_t i) {
     assert(i < size_);
     return data_[i];
   }
-  template <DeviceType dn = device_name, typename = std::enable_if_t<dn == CPU>>
+  template <DeviceType dn = device_name, typename = std::enable_if_t<dn == DeviceType::CPU>>
   const ScalarType& operator[](size_t i) const {
     assert(i < size_);
     return data_[i];
@@ -111,10 +110,10 @@ public:
 
   // Asynchronous assignment.
   template <class Container>
-  void setAsync(const Container& rhs, const util::GpuStream& stream);
+  void setAsync(const Container& rhs, const GpuStream& stream);
 
-  void setToZeroAsync(const util::GpuStream& stream);
-  void setToZero(const util::GpuStream& stream);
+  void setToZeroAsync(const GpuStream& stream);
+  void setToZero(const GpuStream& stream);
 
   template <class Container>
   void setAsync(const Container& rhs, int thred_id, int stream_id = 0);
@@ -182,7 +181,7 @@ private:
   ValueType* data_;
 
   template <typename ScalarType2, DeviceType device_name2, class Allocator2>
-  friend class dca::linalg::Vector;
+  friend class Vector;
 
   static const std::string default_name_;
 };
@@ -214,7 +213,7 @@ Vector<ScalarType, device_name, Allocator>::Vector(const std::string& name, size
   assert(capacity_ >= size_);
   data_ = Allocator::allocate(capacity_);
   if (size) {  // Avoid cuda calls when initializing static vectors.
-    util::Memory<device_name>::setToZero(data_, capacity_);
+    Memory<device_name>::setToZero(data_, capacity_);
   }
 }
 
@@ -249,10 +248,10 @@ template <typename ScalarType, DeviceType device_name, class Allocator>
 Vector<ScalarType, device_name, Allocator>& Vector<ScalarType, device_name, Allocator>::operator=(
     const ThisType& rhs) {
   resizeNoCopy(rhs.size());
-  if (device_name == CPU)
-    util::memoryCopyCpu(data_, rhs.data_, size_);
+  if (device_name == DeviceType::CPU)
+    memoryCopyCpu(data_, rhs.data_, size_);
   else
-    util::memoryCopy(data_, rhs.data_, size_);
+    memoryCopy(data_, rhs.data_, size_);
 
   return *this;
 }
@@ -262,10 +261,10 @@ template <DeviceType device_name2, class Allocator2>
 Vector<ScalarType, device_name, Allocator>& Vector<ScalarType, device_name, Allocator>::operator=(
     const Vector<ScalarType, device_name2, Allocator2>& rhs) {
   resizeNoCopy(rhs.size());
-  if (device_name == CPU && device_name2 == CPU)
-    util::memoryCopyCpu(data_, rhs.data_, size_);
+  if (device_name == DeviceType::CPU && device_name2 == DeviceType::CPU)
+    memoryCopyCpu(data_, rhs.data_, size_);
   else
-    util::memoryCopy(data_, rhs.data_, size_);
+    memoryCopy(data_, rhs.data_, size_);
 
   return *this;
 }
@@ -275,10 +274,10 @@ template <class Container>
 Vector<ScalarType, device_name, Allocator>& Vector<ScalarType, device_name, Allocator>::operator=(
     const Container& rhs) {
   resizeNoCopy(rhs.size());
-  if (device_name == CPU)
-    util::memoryCopyCpu(data_, rhs.data(), size_);
+  if (device_name == DeviceType::CPU)
+    memoryCopyCpu(data_, rhs.data(), size_);
   else
-    util::memoryCopy(data_, rhs.data(), size_);
+    memoryCopy(data_, rhs.data(), size_);
 
   return *this;
 }
@@ -301,7 +300,7 @@ template <class Container>
 void Vector<ScalarType, device_name, Allocator>::set(const Container& rhs, int thread_id,
                                                      int stream_id) {
   resizeNoCopy(rhs.size());
-  util::memoryCopy(data_, rhs.data(), size_, thread_id, stream_id);
+  memoryCopy(data_, rhs.data(), size_, thread_id, stream_id);
 }
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
@@ -309,20 +308,20 @@ template <class Container>
 void Vector<ScalarType, device_name, Allocator>::copyTo(Container& rhs) const {
   if (rhs.size() != size())
     throw(std::logic_error("The size of the destination container is different."));
-  util::memoryCopy(rhs.data(), data_, size_);
+  memoryCopy(rhs.data(), data_, size_);
 }
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
 template <class Container>
 void Vector<ScalarType, device_name, Allocator>::setAsync(const Container& rhs,
-                                                          const util::GpuStream& stream) {
+                                                          const GpuStream& stream) {
   resizeNoCopy(rhs.size());
-  util::memoryCopyAsync(data_, rhs.data(), size_, stream);
+  memoryCopyAsync(data_, rhs.data(), size_, stream);
   //  cudaDeviceSynchronize();
 }
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
-void Vector<ScalarType, device_name, Allocator>::setToZeroAsync(const util::GpuStream& stream
+void Vector<ScalarType, device_name, Allocator>::setToZeroAsync(const GpuStream& stream
                                                                 [[maybe_unused]]) {
   // TODO: implement in copy.hpp.
 #ifdef MRPAPP_HAVE_GPU
@@ -333,13 +332,13 @@ void Vector<ScalarType, device_name, Allocator>::setToZeroAsync(const util::GpuS
 }
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
-void Vector<ScalarType, device_name, Allocator>::setToZero(const util::GpuStream& stream
+void Vector<ScalarType, device_name, Allocator>::setToZero(const GpuStream& stream
                                                            [[maybe_unused]]) {
   mrpapp::Memory<device_name>::setToZero(data_, size_, stream);
 }
 
 // template <typename ScalarType, DeviceType device_name, class Allocator>
-// void Vector<ScalarType, device_name, Allocator>::setToZero(const util::GpuStream& stream
+// void Vector<ScalarType, device_name, Allocator>::setToZero(const GpuStream& stream
 // [[maybe_unused]]) {
 //   // TODO: implement in copy.hpp.
 //   mrpapp::memory<device_name>::setToZero(data_, size_, stream);
@@ -349,7 +348,7 @@ template <typename ScalarType, DeviceType device_name, class Allocator>
 template <class Container>
 void Vector<ScalarType, device_name, Allocator>::setAsync(const Container& rhs, const int thread_id,
                                                           const int stream_id) {
-  setAsync(rhs, util::getStream(thread_id, stream_id));
+  setAsync(rhs, getStream(thread_id, stream_id));
 }
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
@@ -358,7 +357,7 @@ void Vector<ScalarType, device_name, Allocator>::resize(size_t new_size) {
     int new_capacity = (new_size / 64 + 1) * 64;
 
     ValueType* new_data = Allocator::allocate(new_capacity);
-    util::memoryCopy(new_data, data_, size_);
+    memoryCopy(new_data, data_, size_);
     Allocator::deallocate(data_);
 
     data_ = new_data;
@@ -392,8 +391,8 @@ void Vector<ScalarType, device_name, Allocator>::clear() {
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
 void Vector<ScalarType, device_name, Allocator>::print() const {
-  if (device_name == GPU) {
-    Vector<ScalarType, CPU> copy(*this);
+  if (device_name == DeviceType::GPU) {
+    Vector<ScalarType, DeviceType::CPU> copy(*this);
     return copy.print();
   }
 
@@ -426,11 +425,11 @@ void Vector<ScalarType, device_name, Allocator>::printFingerprint() const {
 
 template <typename ScalarType, DeviceType device_name, class Allocator>
 std::size_t Vector<ScalarType, device_name, Allocator>::deviceFingerprint() const {
-  return device_name == GPU ? capacity_ * sizeof(ScalarType) : 0;
+  return device_name == DeviceType::GPU ? capacity_ * sizeof(ScalarType) : 0;
 }
 
-extern template clase Vector<double, linalg::CPU>;
+extern template class Vector<double, DeviceType::CPU>;
   
-}  // namespace linalg
+}
 
 #endif  // MRPAPP_LINALG_VECTOR_HPP

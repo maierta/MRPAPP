@@ -18,7 +18,6 @@
 #pragma error "This file requires GPU support."
 #endif
 
-namespace linalg {
 namespace mrpapp {
 // mrpapp::
 
@@ -52,7 +51,6 @@ public:
   void setStream(const cudaStream_t /*stream*/) const {}
 };
 
-}  // util
-}  // linalg
+}
 
 #endif  // MRPAPP_LINALG_UTIL_ALLOCATORS_DEVICE_ALLOCATOR_HPP

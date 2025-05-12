@@ -11,10 +11,10 @@
 
 #include "vector.hpp"
 
-namespace linalg {
+namespace mrpapp {
 
-template clase Vector<double, linalg::CPU>;
+template class Vector<double, DeviceType::CPU>;
 
-}  // namespace linalg
+}
 
 

@@ -12,48 +12,49 @@
 #include <string>
 #include <utility>
 #include "catch2/catch_test_macros.hpp"
-//#include "gpu_test_util.hpp"
+#include "gpu_test_util.hpp"
 
-TEST_CASE(VectorCPUTest, PointerMemoryType) {
+namespace mrpapp {
+TEST_CASE("VectorCPUTest::PointerMemoryType", "[linalg]") {
   size_t size = 3;
   size_t capacity = 11;
   std::string name("vector name");
 
   // Tests all the constructors.
   {
-    linalg::Vector<float, linalg::CPU> vec(name, size, capacity);
-    ASSERT_TRUE(testing::isHostPointer(vec.ptr()));
+    mrpapp::Vector<float, DeviceType::CPU> vec(name, size, capacity);
+    CHECK(testing::isHostPointer(vec.ptr()));
   }
   {
-    linalg::Vector<int, linalg::CPU> vec(size);
-    EXPECT_TRUE(testing::isHostPointer(vec.ptr()));
+    Vector<int, DeviceType::CPU> vec(size);
+    CHECK(testing::isHostPointer(vec.ptr()));
   }
   {
-    linalg::Vector<std::complex<double>, linalg::CPU> vec(size, capacity);
-    EXPECT_TRUE(testing::isHostPointer(vec.ptr()));
+    Vector<std::complex<double>, DeviceType::CPU> vec(size, capacity);
+    CHECK(testing::isHostPointer(vec.ptr()));
   }
   {
-    linalg::Vector<int, linalg::CPU> vec(name, size);
-    EXPECT_TRUE(testing::isHostPointer(vec.ptr()));
+    Vector<int, DeviceType::CPU> vec(name, size);
+    CHECK(testing::isHostPointer(vec.ptr()));
   }
 }
-
+}
 // TEST(VectorCPUGPUTest, Constructors) {
 //   size_t size = 3;
 
-//   dca::linalg::Vector<float, dca::linalg::CPU> vec("name", size);
+//   dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
 //   // Set the elements.
 //   for (int i = 0; i < vec.size(); ++i) {
 //     float el = 3 * i - 2;
 //     vec[i] = el;
 //   }
 
-//   dca::linalg::Vector<float, dca::linalg::GPU> vec_copy(vec);
+//   dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(vec);
 //   ASSERT_EQ(vec.size(), vec_copy.size());
 //   ASSERT_LE(vec.size(), vec_copy.capacity());
 //   ASSERT_TRUE(testing::isDevicePointer(vec_copy.ptr()));
 
-//   dca::linalg::Vector<float, dca::linalg::CPU> vec_copy_copy(vec_copy);
+//   dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(vec_copy);
 //   EXPECT_EQ(vec.size(), vec_copy_copy.size());
 //   EXPECT_LE(vec.size(), vec_copy_copy.capacity());
 //   EXPECT_TRUE(testing::isHostPointer(vec_copy_copy.ptr()));
@@ -69,14 +70,14 @@ TEST_CASE(VectorCPUTest, PointerMemoryType) {
 //     // Assign a vector that fits into the capacity.
 //     size_t size = 3;
 
-//     dca::linalg::Vector<float, dca::linalg::GPU> vec_copy(10);
+//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
 //     auto old_ptr = vec_copy.ptr();
 //     auto capacity = vec_copy.capacity();
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec_copy_copy(6);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
 //     auto old_ptr_2 = vec_copy_copy.ptr();
 //     auto capacity_2 = vec_copy_copy.capacity();
 
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec("name", size);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
 //     // Set the elements.
 //     for (int i = 0; i < vec.size(); ++i) {
 //       float el = 3 * i - 2;
@@ -102,11 +103,11 @@ TEST_CASE(VectorCPUTest, PointerMemoryType) {
 //   }
 //   {
 //     // Assign a vector that doesn't fit into the capacity.
-//     dca::linalg::Vector<float, dca::linalg::GPU> vec_copy(10);
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec_copy_copy(6);
+//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
 //     size_t size = std::max(vec_copy.capacity(), vec_copy_copy.capacity()) + 1;
 
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec("name", size);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
 //     // Set the elements.
 //     for (int i = 0; i < vec.size(); ++i) {
 //       float el = 3 * i - 2;
@@ -135,14 +136,14 @@ TEST_CASE(VectorCPUTest, PointerMemoryType) {
 //     // Assign a vector that fits into the capacity.
 //     size_t size = 3;
 
-//     dca::linalg::Vector<float, dca::linalg::GPU> vec_copy(10);
+//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
 //     auto old_ptr = vec_copy.ptr();
 //     auto capacity = vec_copy.capacity();
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec_copy_copy(6);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
 //     auto old_ptr_2 = vec_copy_copy.ptr();
 //     auto capacity_2 = vec_copy_copy.capacity();
 
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec("name", size);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
 //     // Set the elements.
 //     for (int i = 0; i < vec.size(); ++i) {
 //       float el = 3 * i - 2;
@@ -168,11 +169,11 @@ TEST_CASE(VectorCPUTest, PointerMemoryType) {
 //   }
 //   {
 //     // Assign a vector that doesn't fit into the capacity.
-//     dca::linalg::Vector<float, dca::linalg::GPU> vec_copy(10);
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec_copy_copy(6);
+//     dca::mrpapp::Vector<float, dca::mrpapp::GPU> vec_copy(10);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec_copy_copy(6);
 //     size_t size = std::max(vec_copy.capacity(), vec_copy_copy.capacity()) + 1;
 
-//     dca::linalg::Vector<float, dca::linalg::CPU> vec("name", size);
+//     dca::mrpapp::Vector<float, dca::mrpapp::CPU> vec("name", size);
 //     // Set the elements.
 //     for (int i = 0; i < vec.size(); ++i) {
 //       float el = 3 * i - 2;
@@ -199,8 +200,8 @@ TEST_CASE(VectorCPUTest, PointerMemoryType) {
 // TEST(VectorCPUTest, setAsync) {
 //   std::vector<int> vec(4, 1);
 
-//   dca::linalg::Vector<int, dca::linalg::GPU> vec_copy;
-//   dca::linalg::Vector<int, dca::linalg::CPU> vec_copy_copy;
+//   dca::mrpapp::Vector<int, dca::mrpapp::GPU> vec_copy;
+//   dca::mrpapp::Vector<int, dca::mrpapp::CPU> vec_copy_copy;
 
 //   mrpapp::GpuStream stream;
 
@@ -211,4 +212,4 @@ TEST_CASE(VectorCPUTest, PointerMemoryType) {
 //   EXPECT_EQ(vec.size(), vec_copy_copy.size());
 //   for (int i = 0; i < vec.size(); ++i)
 //     EXPECT_EQ(vec[i], vec_copy_copy[i]);
-}
+// }

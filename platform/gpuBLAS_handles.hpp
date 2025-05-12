@@ -25,9 +25,7 @@
 #include "error_gpuBLAS.hpp"
 #include "gpu_stream.hpp"
 
-namespace linalg {
 namespace mrpapp {
-// mrpapp::
 
 class GpuBLASHandle {
 public:
@@ -60,7 +58,6 @@ private:
   cublasHandle_t handle_ = nullptr;
 };
 
-}  // util
-}  // linalg
+}
 
 #endif  // MRPAPP_GPUBLAS_HANDLE_HPP

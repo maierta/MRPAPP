@@ -14,7 +14,6 @@
 #include <cstdlib>
 #include <new>
 
-namespace linalg {
 namespace mrpapp {
 
 template <typename T>
@@ -37,7 +36,6 @@ protected:
   }
 };
 
-}  // util
-}  // linalg
+}
 
 #endif  // MRPAPP_LINALG_UTIL_ALLOCATORS_ALIGNED_ALLOCATOR_HPP

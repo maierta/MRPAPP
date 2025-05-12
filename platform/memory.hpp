@@ -18,7 +18,7 @@
 #include <cstring>
 #include <stdexcept>
 
-#include "platform/mrpapp_gpu.h"
+#include "mrpapp_gpu.h"
 #include "util/type_help.hpp"
 #include "device_type.hpp"
 #include "gpu_stream.hpp"
@@ -29,13 +29,12 @@
 #endif
 
 namespace mrpapp {
-// mrpapp::
 
 template <DeviceType device_name>
 struct Memory {};
 
 template <>
-struct Memory<CPU> {
+struct Memory<DeviceType::CPU> {
   // Sets the elements to 0. Only defined for arithmetic types and
   // std::complex of aritmetic types.
   template <typename ScalarType>
@@ -61,14 +60,14 @@ struct Memory<CPU> {
   }
 #ifdef MRPAPP_HAVE_GPU
   template <typename Scalar>
-  static std::enable_if_t<util::IsCUDAComplex_t<Scalar>::value == true, void> setToZero(
+  static std::enable_if_t<IsCUDAComplex_t<Scalar>::value == true, void> setToZero(
       Scalar* ptr, size_t size) {
     std::memset(ptr, 0, sizeof(Scalar) * size);
   }
 
 #ifdef MRPAPP_HAVE_HIP
   template <typename Scalar>
-  static std::enable_if_t<util::IsMagmaComplex_t<Scalar>::value == true, void> setToZero(
+  static std::enable_if_t<IsMagmaComplex_t<Scalar>::value == true, void> setToZero(
       Scalar* ptr, size_t size) {
     std::memset(ptr, 0, sizeof(Scalar) * size);
   }
@@ -78,13 +77,13 @@ struct Memory<CPU> {
 
 #ifdef MRPAPP_HAVE_GPU
 template <>
-struct Memory<GPU> {
+struct Memory<DeviceType::GPU> {
   // Sets the elements to 0. Only defined for arithmetic types and
   // std::complex of aritmetic types.
 
   /// Specialization for float2, double2, cuComplex, cuDoubleComplex
   template <typename ScalarType>
-  static std::enable_if_t<dca::util::IsCUDAComplex_t<ScalarType>::value == true, void> setToZero(ScalarType ptr, size_t size) {
+  static std::enable_if_t<IsCUDAComplex_t<ScalarType>::value == true, void> setToZero(ScalarType ptr, size_t size) {
     checkRC(cudaMemset(ptr, 0, size * sizeof(ScalarType)));
   }
 
@@ -100,7 +99,7 @@ struct Memory<GPU> {
   }
 
   template <typename Scalar>
-  static std::enable_if_t<dca::util::IsCUDAComplex_t<Scalar>::value == true, void> setToZero(
+  static std::enable_if_t<IsCUDAComplex_t<Scalar>::value == true, void> setToZero(
       Scalar* ptr, size_t size) {
     checkRC(cudaMemset(ptr, 0, size * sizeof(Scalar)));
   }

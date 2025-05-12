@@ -18,7 +18,6 @@
 #error "This file requires GPU support."
 #endif
 
-namespace linalg {
 namespace mrpapp {
 // mrpapp::
 
@@ -63,7 +62,6 @@ private:
   cudaStream_t stream_ = nullptr;
 };
 
-}  // util
-}  // linalg
+}
 
 #endif  // MRPAPP_LINALG_UTIL_ALLOCATORS_MANAGED_ALLOCATOR_HPP

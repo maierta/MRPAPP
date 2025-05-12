@@ -58,4 +58,5 @@ inline void checkRCInternal(cudaError_t return_code, std::string function_name,
   }
 }
 
+}
 #endif  // MRPAPP_LINALG_UTIL_ERROR_CUDA_HPP

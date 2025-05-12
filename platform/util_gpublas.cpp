@@ -39,3 +39,4 @@ int getGpuBLASVersion() {
 #endif  // MRPAPP_HAVE_CUDA
 
 }  // namespace mrpapp
+

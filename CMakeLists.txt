@@ -89,6 +89,8 @@ include(mrpapp_defines)
 mrpapp_write_definitions_file()
 
 include(mrpapp_linking)
+
+add_subdirectory(platform)
 add_subdirectory(linalg)
 
 add_executable(mrpapp ${MRPAPP_SRC})

@@ -23,9 +23,7 @@
 #endif
 #include "stream_functions.hpp"
 
-namespace linalg {
 namespace mrpapp {
-// mrpapp::
 
 template <typename ScalarType>
 inline void memoryCopyCpu(ScalarType* dest, const ScalarType* src, size_t sz) {
@@ -328,6 +326,5 @@ void memoryCopyD2H(Scalar1* dest, int ld_dest, const Scalar2* src, int ld_src,
 #endif  // MRPAPP_HAVE_GPU
 
 }  // namespace mrpapp
-}  // namespace linalg
 
 #endif  // MRPAPP_LINALG_UTIL_COPY_HPP

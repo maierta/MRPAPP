@@ -10,18 +10,14 @@
 //
 
 
-#ifndef DCA_LINALG_UTIL_UTIL_GPUBLAS_HPP
-#define DCA_LINALG_UTIL_UTIL_GPUBLAS_HPP
+#ifndef MRPAPP_LINALG_UTIL_UTIL_GPUBLAS_HPP
+#define MRPAPP_LINALG_UTIL_UTIL_GPUBLAS_HPP
 
-namespace dca {
-namespace linalg {
 namespace mrpapp {
-// mrpapp::
+
 
 int getGpuBLASVersion();
 
-}  // util
-}  // linalg
-}  // dca
+}
 
-#endif  // DCA_LINALG_UTIL_UTIL_CUBLAS_HPP
+#endif  // MRPAPP_LINALG_UTIL_UTIL_CUBLAS_HPP

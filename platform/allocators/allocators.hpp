@@ -21,7 +21,6 @@
 #include "pinned_allocator.hpp"
 #endif  // MRPAPP_HAVE_GPU
 
-namespace linalg {
 namespace mrpapp {
 namespace selector {
 // mrpapp::selector::
@@ -30,23 +29,23 @@ struct DefaultAllocator;
 
 #ifdef MRPAPP_HAVE_GPU
 template <typename T>
-struct DefaultAllocator<T, CPU> {
+struct DefaultAllocator<T, DeviceType::CPU> {
   using type = PinnedAllocator<T>;
 };
 
 template <typename T>
-struct DefaultAllocator<T, GPU> {
+struct DefaultAllocator<T, DeviceType::GPU> {
   using type = DeviceAllocator<T>;
 };
 #else
 
 template <typename T>
-struct DefaultAllocator<T, CPU> {
+struct DefaultAllocator<T, DeviceType::CPU> {
   using type = AlignedAllocator<T>;
 };
 
 template <typename T>
-struct DefaultAllocator<T, GPU> {
+struct DefaultAllocator<T, DeviceType::GPU> {
   struct UnusedAllocator {
     T* allocate(std::size_t) {
       throw(std::logic_error("GPU not available."));
@@ -59,12 +58,10 @@ struct DefaultAllocator<T, GPU> {
 #endif  // MRPAPP_HAVE_GPU
 
 }  // selector
-// dca::linalg::util:
 
 template <typename T, DeviceType device>
 using DefaultAllocator = typename selector::DefaultAllocator<T, device>::type;
 
-}  // util
-}  // linalg
+} 
 
 #endif  // MRPAPP_LINALG_UTIL_ALLOCATORS_HPP

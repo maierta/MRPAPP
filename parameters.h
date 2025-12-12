@@ -34,6 +34,7 @@ public:
   std::vector<Field> deltaU;
   std::vector<Field> a1, a2, a3;
   std::vector<Field> chia1, chia2, chia3;
+  Field latticeConstant;
   size_t nqx, nqy, nqz;
   Field qxmin, qxmax, qymin, qymax, qzmin, qzmax;
   size_t nw;
@@ -58,7 +59,10 @@ public:
   Field mu;
   Field nTarget;
   bool adjustChemicalPotential;
+  bool readInteractionMatrices;
   std::string tbfile;
+  std::string intSfile;
+  std::string intCfile;
   Field hopping_t;
   Field hopping_tp;
   Field hopping_tpp;
@@ -66,7 +70,9 @@ public:
   Field hopping_t2;
   std::string fileID;
   std::string fsfile;
+  std::string fsinfofile;
   bool readFSFromFile;
+  bool readFSInfoFromFile;
   size_t nkPerSheet;
   bool complexHopping;
   size_t pairingSpinParity;
@@ -122,24 +128,26 @@ public:
         U_pd_coupl(0.0), U_pp_coupl(0.0), U1(1.0), U2(0.5), U3(0.25),
         lambda_SO(0.0), k_SOC(0), staticUFactor(1.0), chargeFactor(1.0),
         spinFactor(1.0), deltaU(5, 0.0), a1(3, 0), a2(3, 0), a3(3, 0),
-        chia1(3, 0), chia2(3, 0), chia3(3, 0), nqx(1), nqy(1), nqz(1),
-        qxmin(0.0), qxmax(0.0), qymin(0.0), qymax(0.0), qzmin(0.0), qzmax(0.0),
-        nw(1), wmin(0.0), wmax(0.0), cacheBands(0), scState(0), scGapfile(""),
-        printGap(0), gAmpl(""), Delta0(0.04), Omega0(0.1), signF(-1.0),
-        nwn(100), Case(""), dimension(2), nkBands(64), nkInt(64), nkIntz(16),
-        kz2D(0.0), FSnkz(1), nOrb(1), mu(-0.1), nTarget(1.0),
-        adjustChemicalPotential(0), tbfile(""), hopping_t(1.0), hopping_tp(0.0),
+        chia1(3, 0), chia2(3, 0), chia3(3, 0), latticeConstant(1.0), nqx(1),
+        nqy(1), nqz(1), qxmin(0.0), qxmax(0.0), qymin(0.0), qymax(0.0),
+        qzmin(0.0), qzmax(0.0), nw(1), wmin(0.0), wmax(0.0), cacheBands(0),
+        scState(0), scGapfile(""), printGap(0), gAmpl(""), Delta0(0.04),
+        Omega0(0.1), signF(-1.0), nwn(100), Case(""), dimension(2), nkBands(64),
+        nkInt(64), nkIntz(16), kz2D(0.0), FSnkz(1), nOrb(1), mu(-0.1),
+        nTarget(1.0), adjustChemicalPotential(0), readInteractionMatrices(0),
+        tbfile(""), intSfile(""), intCfile(""), hopping_t(1.0), hopping_tp(0.0),
         hopping_tpp(0.0), hopping_t1(0.0), hopping_t2(0.0), fileID(""),
-        fsfile("FSforPairing.dat"), readFSFromFile(0), nkPerSheet(40),
-        complexHopping(0), pairingSpinParity(0), pairingFromSpin(1),
-        pairingFromCharge(1), storeChi(0), storeGammaOrb(0), readChi(0),
-        readChiForSus(0), chifile("none"), interpolateChi(0),
-        interpolateNqx(17), interpolateNqz(5), sublattice(0), deltax(0.0),
-        deltay(0.0), deltaz(0.0), kTrafo(0), options(""), subOptions(""),
-        WTrafo(3, 3), indexToOrb(0, 0), OrbsToIndex(0, 0), orbToSite(0), hyb(0),
-        LS(0), hybStrength(0.0), hybBand1(0), hybBand2(0), nSitesPerUnitCell(1),
-        nOrbAtom(0, 0), nOrbAtomStr(""), damp(1.0e-3), calcOnlyDiagonal(0),
-        writeFullChi0(0), fixEvecs(0), calcLambdaZ(0),
+        fsfile("FSforPairing.dat"), fsinfofile("FSInfo.dat"), readFSFromFile(0),
+        readFSInfoFromFile(0), nkPerSheet(40), complexHopping(0),
+        pairingSpinParity(0), pairingFromSpin(1), pairingFromCharge(1),
+        storeChi(0), storeGammaOrb(0), readChi(0), readChiForSus(0),
+        chifile("none"), interpolateChi(0), interpolateNqx(17),
+        interpolateNqz(5), sublattice(0), deltax(0.0), deltay(0.0), deltaz(0.0),
+        kTrafo(0), options(""), subOptions(""), WTrafo(3, 3), indexToOrb(0, 0),
+        OrbsToIndex(0, 0), orbToSite(0), hyb(0), LS(0), hybStrength(0.0),
+        hybBand1(0), hybBand2(0), nSitesPerUnitCell(1), nOrbAtom(0, 0),
+        nOrbAtomStr(""), damp(1.0e-3), calcOnlyDiagonal(0), writeFullChi0(0),
+        fixEvecs(0), calcLambdaZ(0),
         parity(1),              // even parity gap for BCS chi0 calculation
         oppositeSpinPairing(1), // pairing between up/down electrons
         explicitSpin(0), couplingRatio(1.0), zeemanField(0.0), qGridType(""),
@@ -263,8 +271,14 @@ public:
       str >> (*this).nTarget;
     else if (text.find("adjustChemicalPotential") != std::string::npos)
       str >> (*this).adjustChemicalPotential;
+    else if (text.find("readInteractionMatrices") != std::string::npos)
+      str >> (*this).readInteractionMatrices;
     else if (text.find("tbParametersFile") != std::string::npos)
       str >> (*this).tbfile;
+    else if (text.find("intSParametersFile") != std::string::npos)
+      str >> (*this).intSfile;
+    else if (text.find("intCParametersFile") != std::string::npos)
+      str >> (*this).intCfile;
     else if (text.find("0hopping_t") != std::string::npos)
       str >> (*this).hopping_t;
     else if (text.find("1hopping_tp") != std::string::npos)
@@ -281,6 +295,8 @@ public:
       str >> (*this).complexHopping;
     else if (text.find("FSforPairingFile") != std::string::npos)
       str >> (*this).fsfile;
+    else if (text.find("FSInfoFile") != std::string::npos)
+      str >> (*this).fsinfofile;
     else if (text.find("ChiForPairingFile") != std::string::npos)
       str >> (*this).chifile;
     else if (text.find("interpolateChi") != std::string::npos)
@@ -343,6 +359,8 @@ public:
       str >> (*this).deltaU[3];
     else if (text.find("deltaU4") != std::string::npos)
       str >> (*this).deltaU[4];
+    else if (text.find("latticeConstant") != std::string::npos)
+      str >> (*this).latticeConstant;
     else if (text.find("staticUFactor") != std::string::npos)
       str >> (*this).staticUFactor;
     else if (text.find("chargeFactor") != std::string::npos)
@@ -509,6 +527,8 @@ public:
       str >> (*this).momentumPath;
     else if (text.find("readFSFromFile") != std::string::npos)
       str >> (*this).readFSFromFile;
+    else if (text.find("readFSInfoFromFile") != std::string::npos)
+      str >> (*this).readFSInfoFromFile;
   }
 
   void writeParameters(std::ostream &os) {
@@ -520,7 +540,11 @@ public:
     os << "targetFilling = " << (*this).nTarget << "\n";
     os << "adjustChemicalPotential = " << (*this).adjustChemicalPotential
        << "\n";
+    os << "readInteractionMatrices = " << (*this).readInteractionMatrices
+       << "\n";
     os << "tbParametersFile = " << (*this).tbfile << "\n";
+    os << "intSParametersFile = " << (*this).intSfile << "\n";
+    os << "intCParametersFile = " << (*this).intCfile << "\n";
     os << "hopping_t = " << (*this).hopping_t << "\n";
     os << "hopping_tp = " << (*this).hopping_tp << "\n";
     os << "hopping_tpp = " << (*this).hopping_tpp << "\n";
@@ -529,6 +553,7 @@ public:
     os << "fileID = " << (*this).fileID << "\n";
     os << "complexHopping = " << (*this).complexHopping << "\n";
     os << "FSforPairingFile = " << (*this).fsfile << "\n";
+    os << "FSforPairingFile = " << (*this).fsinfofile << "\n";
     os << "pairingSpinParity = " << (*this).pairingSpinParity << "\n";
     os << "pairingFromSpin = " << (*this).pairingFromSpin << "\n";
     os << "pairingFromCharge = " << (*this).pairingFromCharge << "\n";
@@ -561,6 +586,7 @@ public:
     os << "CoulombSU = " << (*this).U3 << "\n";
     os << "Lambda_SO = " << (*this).lambda_SO << "\n";
     os << "k_SOC = " << (*this).k_SOC << "\n";
+    os << "latticeConstant = " << (*this).latticeConstant << "\n";
     os << "sublattice = " << (*this).sublattice << "\n";
     os << "deltaU0 = " << (*this).deltaU[0] << "\n";
     os << "deltaU1 = " << (*this).deltaU[1] << "\n";
@@ -642,6 +668,7 @@ public:
     os << "qGridType = " << (*this).qGridType << "\n";
     os << "momentumPath = " << (*this).momentumPath << "\n";
     os << "readFSFromFile = " << (*this).readFSFromFile << "\n";
+    os << "readFSInfoFromFile = " << (*this).readFSInfoFromFile << "\n";
   }
 
   void bcTest() {
@@ -661,7 +688,10 @@ public:
     conc.broadcast((*this).mu);
     conc.broadcast((*this).nTarget);
     conc.broadcast((*this).adjustChemicalPotential);
+    conc.broadcast((*this).readInteractionMatrices);
     conc.broadcast((*this).tbfile);
+    conc.broadcast((*this).intSfile);
+    conc.broadcast((*this).intCfile);
     conc.broadcast((*this).hopping_t);
     conc.broadcast((*this).hopping_tp);
     conc.broadcast((*this).hopping_tpp);
@@ -670,6 +700,7 @@ public:
     conc.broadcast((*this).fileID);
     conc.broadcast((*this).complexHopping);
     conc.broadcast((*this).fsfile);
+    conc.broadcast((*this).fsinfofile);
     conc.broadcast((*this).chifile);
     conc.broadcast((*this).interpolateChi);
     conc.broadcast((*this).interpolateNqx);
@@ -701,6 +732,7 @@ public:
     conc.broadcast((*this).deltaU[2]);
     conc.broadcast((*this).deltaU[3]);
     conc.broadcast((*this).deltaU[4]);
+    conc.broadcast((*this).latticeConstant);
     conc.broadcast((*this).staticUFactor);
     conc.broadcast((*this).chargeFactor);
     conc.broadcast((*this).spinFactor);
@@ -779,6 +811,7 @@ public:
     conc.broadcast((*this).qGridType);
     conc.broadcast((*this).momentumPath);
     conc.broadcast((*this).readFSFromFile);
+    conc.broadcast((*this).readFSInfoFromFile);
   }
 
   // void fixParameters() {

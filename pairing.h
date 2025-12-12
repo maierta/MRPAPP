@@ -119,7 +119,7 @@ public:
         paritySign(param.pairingSpinParity ? -1.0 : 1.0), // 1=triplet,0=singlet
         normalization(0, 0), Zofk(0, 0), nTotal(0),
         chiStore(0, SuscType(param, conc)), qStore(0, VectorType(3)),
-        FSpoints(param, model, conc), nkF(FSpoints.nTotal), chikk(nkF, nkF) {
+        FSpoints(param, model, conc, 1), nkF(FSpoints.nTotal), chikk(nkF, nkF) {
     // determineKF(file);
 
     if (conc.rank() == 0)
@@ -243,7 +243,6 @@ public:
         calcGammaPPTerms(ind, q, k1, k2, ik1, ik2, band1, band2, GammaPPkkp,
                          GammaZkkp, chiTerm, os);
 
-
       Container[ind] = GammaPPkkp;
       ContainerZ[ind] = GammaZkkp;
       Container2[ind] = chiTerm;
@@ -260,7 +259,6 @@ public:
         std::cout << "RPA spin susceptibility (chiTerm) negative !! \n";
         exit(0);
       }
-
     }
 
     conc.reduce(Container);
@@ -421,7 +419,8 @@ public:
 
     calcRPAResult(chiq, model.spinMatrix, chiRPAs, q);
     chiTerm = real(chiRPAs.calcSus());
-    // std::cout << "in calcGammaPPTerms: q, chiRPAs=" << q << " , " << chiRPAs.calcSus() <<
+    // std::cout << "in calcGammaPPTerms: q, chiRPAs=" << q << " , " <<
+    // chiRPAs.calcSus() <<
     // "\n";
     calcRPAResult(chiq, model.chargeMatrix, chiRPAc, q);
     // if (conc.rank()==0) std::cout << "in calcGammaPPTerms: chiRPAc=" <<
@@ -607,7 +606,10 @@ public:
       // std::cout << k[0] << " , " << k[1] << " , " << band << " , " << vkF2 <<
       // "\n";
       normalization[ik] =
-          FSpoints.deltakF[ik] / (pow(2. * param.pi_f, dim) * FSpoints.vkF[ik]);
+          FSpoints.deltakF[ik] /
+          (pow(2. * param.pi_f / param.latticeConstant, dim) *
+           FSpoints
+               .vkF[ik]); // Note that this assumes a lattice constant of 1.0
     }
   }
 

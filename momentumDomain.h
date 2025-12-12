@@ -208,16 +208,19 @@ public:
   void set_momenta(const bool &indexation) {
 
     if (dim == 2) {
-      if (conc.rank() == 0)
+      if (conc.rank() == 0) {
         std::cout << "shift=" << shift[0] << ", b[0,0]" << b(0, 0) << ", b[1,0]"
                   << b(1, 0) << "\n";
+        std::cout << "kz2D = " << param.kz2D << "\n";
+      }
       for (size_t ikx = 0; ikx < nk; ++ikx) {
         for (size_t iky = 0; iky < nk; ++iky) {
           size_t ind = index(ikx, iky);
           for (size_t i = 0; i < 3; i++) {
             momenta(ind, i) = (float(ikx) / float(nk) + shift[0]) * b(0, i) +
                               (float(iky) / float(nk) + shift[1]) * b(1, i) +
-                              param.kz2D * b(2, i);
+                              // (param.kz2D) * b(2, i);
+                              (param.kz2D + shift[2]) * b(2, i);
           }
           // std::cout << "momenta=" << momenta(ind,0) << "," << momenta(ind,1)
           // << "\n";
@@ -432,8 +435,7 @@ public:
     }
   }
 
-  void
-  set_momenta_Path2() { // Gamma -> X -> M -> Gamma in units of rec. latt. vecs.
+  void set_momenta_Path2() { // Gamma -> X -> M -> Gamma in units of rec. latt. vecs.
 
     size_t nks(nk / 3);
     size_t ind(0);

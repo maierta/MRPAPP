@@ -1,0 +1,1 @@
+#i, j, l1, l2, l3, l4, Gammma_{l1,l2,l3,l4}(k_i,k_j)

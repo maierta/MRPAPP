@@ -41,9 +41,13 @@
 #include "1band_AB_wSpin.h"
 #elif USE_1BANDALTERMAGNET
 #include "1band_Altermagnet_wSpin.h"
+#elif USE_1BANDALTERMAGNETLIEB
+#include "1band_Altermagnet_Lieb.h"
+#elif USE_1BANDALTERMAGNETLIEBWSPIN
+#include "1band_Altermagnet_Lieb_wSpin.h"
 #elif USE_1BANDAB
 #include "1band_AB.h"
-#elif
+#else
 #include "tbFromFile.h"
 #endif
 

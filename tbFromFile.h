@@ -52,9 +52,17 @@ public:
     readCSVFile();
     // setupInteractionMatrix();
     // if (param.sublattice==1) fixdr();
-    if (conc.rank() == 0)
+    if (conc.rank() == 0) {
       std::cout << "Setting up interaction matrix\n";
-    setupInteractionMatrix2();
+      std::cout << "param.readInteractionMatrices:"<< param.readInteractionMatrices <<"\n";
+    }
+    if (!param.readInteractionMatrices)
+        setupInteractionMatrix2();
+    else {
+        std::cout << "Reading matrices from files \n";
+        readInteractionMatrix();
+    }
+
     if (conc.rank() == 0) {
       std::cout << "Interaction matrix set up\n";
       writeInteractionMatrix();
@@ -448,7 +456,7 @@ public:
         }
       }
     }
-    // The the off-diagonal terms
+    // The off-diagonal terms
     for (size_t l1 = 0; l1 < nOrb; l1++) {
       for (size_t l2 = 0; l2 < nOrb; l2++) {
         if (param.orbToSite[l1] != param.orbToSite[l2])
@@ -482,18 +490,51 @@ public:
     // std::cout << "U matrix: " << spinMatrix << "\n";
   }
 
+  void readInteractionMatrix() {
+      std::string fileS = param.intSfile;
+      std::string fileC = param.intCfile;
+      VectorType dataS;
+      VectorType dataC;
+      std::cout << "Loading matrices from file " << fileS << "\n";
+      loadVector(dataS, fileS);
+      loadVector(dataC, fileC);
+      // We assume that each line is a row in the interaction matrix of size nOrb^2 x nOrb^2
+      size_t nOrb(param.nOrb);
+      size_t msize(nOrb * nOrb);
+      std::cout << "setting up matrices \n";
+      for (size_t i = 0; i < msize; i++) {
+          for (size_t j = 0; j < msize; j++) {
+              spinMatrix(i, j) = dataS[i * msize + j];
+              chargeMatrix(i, j) = dataC[i * msize + j];
+          }
+      }
+  }
+
   void writeInteractionMatrix() {
     size_t msize(param.nOrb * param.nOrb);
     int width(5);
     std::string cstr = "Us_" + param.fileID + ".txt";
     const char *filename = cstr.c_str();
     std::ofstream os(filename);
+    cstr = "Uc_" + param.fileID + ".txt";
+    const char *filenamec = cstr.c_str();
+    std::ofstream osc(filenamec);
     os.precision(width);
+    osc.precision(width);
     os << std::fixed;
+    osc << std::fixed;
     for (size_t ind1 = 0; ind1 < msize; ind1++)
         for (size_t ind2 = 0; ind2 < msize; ind2++) {
             // std::cout << spinMatrix(ind1, ind2) << " \n";
-            os << real(spinMatrix(ind1, ind2)) << " , ";
+            os << real(spinMatrix(ind1, ind2));
+            osc << real(chargeMatrix(ind1, ind2));
+            if (ind2 < msize-1) {
+                os << ",";
+                osc << ",";
+            } else {
+                os << "\n";
+                osc << "\n";
+            }
         }
     os << "\n";
 

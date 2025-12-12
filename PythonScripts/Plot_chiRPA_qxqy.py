@@ -29,7 +29,10 @@ def plotchi(file, interpolate, column=8):
 
     ax=figure().add_subplot(projection='3d')
     z=data[:,column]
-    ax.plot_surface(x,y,z.reshape(nk,nk),rstride=1,cstride=1,linewidth=1.0,alpha=0.75,cmap='jet')
+    ax.plot_surface(x,y,z.reshape(nk,nk),cmap='jet', linewidth=0.15, color="grey")
+    # ax.plot_wireframe(x,y,z.reshape(nk,nk), linewidth=0.5, alpha=0.5, edgecolor='royalblue', rstride=4, cstride=4)
+    ax.set_proj_type('persp', focal_length=0.3)
+
     zmax=ax.get_zlim()[1]
     ax.set_zlim(0,zmax)
     ax.contour(x,y,z.reshape(nk,nk),zdir='z',offset=0,cmap='jet')
@@ -81,4 +84,3 @@ if __name__ == "__main__":
     input_args = parser.parse_args()
 
     plotchi(input_args.file, interpolate=input_args.interpolation, column=int(input_args.column))
-    

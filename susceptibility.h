@@ -184,7 +184,7 @@ public:
                          MatrixTemplate, ConcurrencyType>
               calcChi0(param, kmesh, q, bands, conc, chi0Matrix[iQ],
                        param.cacheBands,
-                       0); // Last parameter is kMap for calc. chi0k
+                       1); // Last parameter is kMap for calc. chi0k
         } else { // use finite w constructor for SC state calculation, but set
                  // w=0
           calcChi0Matrix<FieldType, SuscType, BandsType, GapType,

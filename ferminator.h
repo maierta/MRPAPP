@@ -40,7 +40,7 @@ public:
   VectorIntType kFtoBand;
   VectorType deltakF, vkF, gammaB1GkF;
   std::vector<std::vector<FieldType>> FSCenters;
-  std::vector<size_t> FSBand;
+  std::vector<int> FSBand;
   BandsType bands;
   bool calcOW_;
   std::vector<std::vector<ComplexType>> weights;
@@ -59,24 +59,37 @@ public:
     // if (param.readFSFromFile) readFromFile(); // if data has additional
     // columns for deltakf and vkf
     if (param.readFSFromFile) {
-      readFromFile(); // if data has kFx, kFy, kFz, band, deltakf, vkf
-      // readFromFile2();// if data only has kFx, kFy, kFz, band
-      if (conc.rank() == 0)
-        writeKF();
+      // readFromFile(); // if data has kFx, kFy, kFz, band, deltakf, vkf
+      readFromFile2();// if data only has kFx, kFy, kFz, deltakF, band, and vkF still needs to be calculated
     } else {
       if (conc.rank() == 0)
         std::cout << "Now setting up Fermi surface for case " << Case_ << "\n";
       setFSValues();
       if (conc.rank() == 0)
-        writeKF();
-      if (conc.rank() == 0)
         std::cout << "Done setting up Fermi surface \n";
     }
+    if (conc.rank() == 0)
+      writeKF();
   }
 
   void setFSValues() {
 
-    if (Case_ == "Kagome_2") {
+    if (param.readFSInfoFromFile) {
+      // FSCenters and FSBands are already set from file
+      if (conc.rank() == 0)
+        std::cout << "Reading Fermi surface info from file\n";
+      readFSInfoFromFile();
+      // nTotal = nSheets * nkPerSheet;
+      size_t nkSearch(2048);
+      std::cout << "nSheets: " << nSheets << "\n";
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++) {
+        // std::cout << "Determining FS for sheet " << iSheet
+        //           << " with center at (" << FSCenters[iSheet][0] << ", "
+        //           << FSCenters[iSheet][1] << ") for band " << FSBand[iSheet]
+        //           << "\n";
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+      }
+    } else if (Case_ == "Kagome_2") {
       // 1 FS sheet around (0,0) from band 0
       nSheets = 1;
       nTotal = nSheets * nkPerSheet;
@@ -139,6 +152,249 @@ public:
       FSCenters[1][0] = 0;
       FSCenters[1][1] = 0;
       FSBand[1] = 1;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_15Bands_1212") {
+      // 15 Bands total; for <n> = 23 these give 3 sheets around (pi,pi), 2
+      // around (0,0)
+      nSheets = 5;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 9;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 10;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 11;
+      FSCenters[3][0] = 0;
+      FSCenters[3][1] = 0;
+      FSBand[3] = 12;
+      FSCenters[4][0] = 0;
+      FSCenters[4][1] = 0;
+      FSBand[4] = 13;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_8Bands_4G_4M") {
+      // 8 Bands total; assuming that these give 4 sheets around (0,0), 4 around
+      // (pi,pi) if some of these bands don't cross E_F, the algorithm shouldn't
+      // pick up any FS points for these bands
+      nSheets = 8;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = Pi;
+      FSCenters[3][1] = Pi;
+      FSBand[3] = 3;
+      FSCenters[4][0] = 0;
+      FSCenters[4][1] = 0;
+      FSBand[4] = 4;
+      FSCenters[5][0] = 0;
+      FSCenters[5][1] = 0;
+      FSBand[5] = 5;
+      FSCenters[6][0] = 0;
+      FSCenters[6][1] = 0;
+      FSBand[6] = 6;
+      FSCenters[7][0] = 0;
+      FSCenters[7][1] = 0;
+      FSBand[7] = 7;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_10Bands_5G_5M") {
+      // 10 Bands total; assuming that these give 5 sheets around (0,0), five
+      // around (pi,pi) if some of these bands don't cross E_F, the algorithm
+      // shouldn't pick up any FS points for these bands
+      nSheets = 10;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = Pi;
+      FSCenters[3][1] = Pi;
+      FSBand[3] = 3;
+      FSCenters[4][0] = Pi;
+      FSCenters[4][1] = Pi;
+      FSBand[4] = 4;
+      FSCenters[5][0] = 0;
+      FSCenters[5][1] = 0;
+      FSBand[5] = 5;
+      FSCenters[6][0] = 0;
+      FSCenters[6][1] = 0;
+      FSBand[6] = 6;
+      FSCenters[7][0] = 0;
+      FSCenters[7][1] = 0;
+      FSBand[7] = 7;
+      FSCenters[8][0] = 0;
+      FSCenters[8][1] = 0;
+      FSBand[8] = 8;
+      FSCenters[9][0] = 0;
+      FSCenters[9][1] = 0;
+      FSBand[9] = 9;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_12Bands_6G_6M") {
+      // 12 Bands total; assuming that these give 6 sheets around (0,0), 6
+      // around (pi,pi) if some of these bands don't cross E_F, the algorithm
+      // shouldn't pick up any FS points for these bands
+      nSheets = 12;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = Pi;
+      FSCenters[3][1] = Pi;
+      FSBand[3] = 3;
+      FSCenters[4][0] = Pi;
+      FSCenters[4][1] = Pi;
+      FSBand[4] = 4;
+      FSCenters[5][0] = Pi;
+      FSCenters[5][1] = Pi;
+      FSBand[5] = 5;
+      FSCenters[6][0] = 0;
+      FSCenters[6][1] = 0;
+      FSBand[6] = 6;
+      FSCenters[7][0] = 0;
+      FSCenters[7][1] = 0;
+      FSBand[7] = 7;
+      FSCenters[8][0] = 0;
+      FSCenters[8][1] = 0;
+      FSBand[8] = 8;
+      FSCenters[9][0] = 0;
+      FSCenters[9][1] = 0;
+      FSBand[9] = 9;
+      FSCenters[10][0] = 0;
+      FSCenters[10][1] = 0;
+      FSBand[10] = 10;
+      FSCenters[11][0] = 0;
+      FSCenters[11][1] = 0;
+      FSBand[11] = 11;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_7Sheets_2G_5M") {
+      // 7 FS sheets total, two around (0,0), five around (pi,pi)
+      nSheets = 7;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = Pi;
+      FSCenters[3][1] = Pi;
+      FSBand[3] = 3;
+      FSCenters[4][0] = Pi;
+      FSCenters[4][1] = Pi;
+      FSBand[4] = 4;
+      FSCenters[5][0] = 0;
+      FSCenters[5][1] = 0;
+      FSBand[5] = 5;
+      FSCenters[6][0] = 0;
+      FSCenters[6][1] = 0;
+      FSBand[6] = 6;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_6Sheets_2G_4M") {
+      // 6 FS sheets total, two around (0,0), four around (pi,pi)
+      nSheets = 6;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 0;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 1;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 2;
+      FSCenters[3][0] = Pi;
+      FSCenters[3][1] = Pi;
+      FSBand[3] = 3;
+      FSCenters[4][0] = 0;
+      FSCenters[4][1] = 0;
+      FSBand[4] = 4;
+      FSCenters[5][0] = 0;
+      FSCenters[5][1] = 0;
+      FSBand[5] = 5;
+
+      size_t nkSearch(1024);
+      for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
+        calcKF(nkSearch, iSheet, param.kz2D, 2);
+
+    } else if (Case_ == "LNO_5Sheets_2G_3M") {
+      // 5 FS sheets total, two around (0,0), three around (pi,pi)
+      nSheets = 5;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+
+      FSCenters[0][0] = Pi;
+      FSCenters[0][1] = Pi;
+      FSBand[0] = 1;
+      FSCenters[1][0] = Pi;
+      FSCenters[1][1] = Pi;
+      FSBand[1] = 2;
+      FSCenters[2][0] = Pi;
+      FSCenters[2][1] = Pi;
+      FSBand[2] = 3;
+      FSCenters[3][0] = 0;
+      FSCenters[3][1] = 0;
+      FSBand[3] = 4;
+      FSCenters[4][0] = 0;
+      FSCenters[4][1] = 0;
+      FSBand[4] = 5;
 
       size_t nkSearch(1024);
       for (size_t iSheet = 0; iSheet < nSheets; iSheet++)
@@ -1480,8 +1736,10 @@ public:
 
   void calcKF(const size_t nkSearch, const size_t iSheet, const FieldType &kz,
               int dim) {
+    std::cout << "param.nOrb: " << param.nOrb << "\n";
     VectorType w(param.nOrb);
     ComplexMatrixType v(param.nOrb, param.nOrb);
+    bool foundFS(0);
     // for (size_t iSheet=0;iSheet<nSheets;iSheet++) {
     for (size_t ik = 0; ik < nkPerSheet; ik++) {
       FieldType Theta = 2. * Pi / float(nkPerSheet) * float(ik);
@@ -1508,12 +1766,13 @@ public:
         sgnW = (ek > 0) - (ek < 0);
       }
       if (ikF <= nkSearch) {
+        foundFS = 1;
         FieldType kx(0.5 * (k[0] + kOld[0]));
         FieldType ky(0.5 * (k[1] + kOld[1]));
         // FieldType kz(0.5*(k[2]+kOld[2]));
         kFx.push_back(kx);
         kFy.push_back(ky);
-        kFz.push_back(kz);
+        kFz.push_back(k[2]);
         kFtoBand.push_back(FSBand[iSheet]);
         size_t ic(kFx.size() - 1);
         deltakF.push_back(calcDeltaKF(kFx[ic], kFy[ic], kFz[ic], iSheet, dim));
@@ -1524,6 +1783,8 @@ public:
           calcWeights(ic);
       }
     }
+    if (!foundFS & (conc.rank() == 0))
+      std::cout << "No FS point found for iSheet = " << iSheet << "\n";
     // }
   }
 
@@ -1742,6 +2003,41 @@ public:
     return rz;
   }
 
+  void readFSInfoFromFile() {
+    if (conc.rank() == 0) {
+      std::string file(param.fsinfofile);
+      VectorType data;
+      loadVector(data, file);
+      // We assume that each line has the format kFx,kFy,band
+      // Here kFx, kFy are the centers of the Fermi surface pockets
+      // which will get copied into FSCenters
+      size_t step = 3;
+      std::cout << "File=" << file << "\n";
+      nSheets = data.size() / step;
+      nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+      if (conc.rank() == 0)
+        std::cout << "number of FS sheets = " << nSheets << "\n";
+      for (size_t i = 0; i < nSheets; i++) {
+        FSCenters[i][0] = data[i * step];
+        FSCenters[i][1] = data[i * step + 1];
+        FSBand[i] = size_t(data[i * step + 2]);
+      }
+    }
+    conc.broadcast(nSheets);
+    conc.broadcast(nTotal);
+    if (conc.rank() != 0) {
+      // nTotal = nSheets * nkPerSheet;
+      resizeContainers();
+    }
+    for (size_t i = 0; i < nSheets; i++) {
+      std::cout << "Sheet " << i << ": " << FSCenters[i] << ", Band "
+                << FSBand[i] << "\n";
+      conc.broadcast(FSCenters[i]);
+    }
+    conc.broadcast(FSBand);
+  }
+
   void readFromFile() {
     if (conc.rank() == 0) {
       std::string file(param.fsfile);
@@ -1785,9 +2081,9 @@ public:
       std::string file(param.fsfile);
       VectorType data;
       loadVector(data, file);
-      // We assume that each line has the format kFx,kFy,kFz,band, vF
-      // dk still has to generated
-      size_t step = 6;
+      // We assume that each line has the format kFx,kFy,kFz,deltakF, band
+      // vF still has to generated
+      size_t step = 5;
       std::cout << "File=" << file << "\n";
       nTotal = data.size() / step;
       std::cout << "nTotal=" << nTotal << "\n";
@@ -1795,7 +2091,8 @@ public:
         FieldType kx(data[i * step]);
         FieldType ky(data[i * step + 1]);
         FieldType kz(data[i * step + 2]);
-        size_t band(data[i * step + 3]);
+        FieldType dkF(data[i * step + 3]);
+        size_t band(data[i * step + 4]);
         if (band + 1 > param.nOrb) {
           if (conc.rank() == 0)
             std::cout << "Too many bands! Exiting ... \n";
@@ -1804,12 +2101,19 @@ public:
         kFx.push_back(kx);
         kFy.push_back(ky);
         kFz.push_back(kz);
+        deltakF.push_back(dkF);
         kFtoBand.push_back(band);
-        vkF.push_back(calcVkF(kx, ky, kz, band, param.dimension));
+        FieldType vk = calcVkF(kx, ky, kz, band, param.dimension);
+        vkF.push_back(vk);
+        size_t ic(kFx.size() - 1);
+        if (calcOW_) {
+            weights.resize(nTotal, std::vector<ComplexType>(param.nOrb, 0));
+            weights2.resize(nTotal, std::vector<ComplexType>(param.nOrb, 0));
+            calcWeights(ic);
+        }
       }
-      deltakF.resize(nTotal);
-      gammaB1GkF.resize(nTotal);
-      calcDeltaKF2D();
+      // gammaB1GkF.resize(nTotal);
+      // calcDeltaKF2D();
     }
     conc.broadcast(nTotal);
     if (conc.rank() != 0) {

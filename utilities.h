@@ -7,14 +7,14 @@
 
 
 
-extern "C" void 
+extern "C" void
 #ifdef glyph
 	zheev_
 #else
 	zheev
 #endif
 	(char *,char *,int *,std::complex<double> *,int *,double *,std::complex<double> *,int *,double *,int *);
-	
+
 inline void GEEV(char jobvl,char jobvr,int n,psimag::Matrix<std::complex<double> > &A, int lda,
 				 std::vector<double>  &w,std::vector<std::complex<double> > &work,
 				 int lwork,std::vector<double> &rwork,int *info)
@@ -30,36 +30,36 @@ inline void GEEV(char jobvl,char jobvr,int n,psimag::Matrix<std::complex<double>
 
 
 #ifndef glyph
-	extern "C" void 
+	extern "C" void
 	zgemm(char *,char *,int *,int *,int *,std::complex<double> *,
 					  std::complex<double> *,int *,std::complex<double> *,
 					  int *,std::complex<double> *,std::complex<double> *,int *);
 
-	extern "C" void 
+	extern "C" void
 	dgetrf(int *,int *,double *,int *,int *,int *);
-	
-	extern "C" void 
+
+	extern "C" void
 	dgetri(int *, double *, int *, int *, double *, int *, int *);
 #endif
 
 
-inline void GETRF(int m, int n, 
- 			      psimag::Matrix<double> &a,int lda, 
- 			      std::vector<int> &ipiv, int *info) 
+inline void GETRF(int m, int n,
+ 			      psimag::Matrix<double> &a,int lda,
+ 			      std::vector<int> &ipiv, int *info)
 				 {
-#ifdef glyph						
+#ifdef glyph
 				psimag::LAPACK::dgetrf_
 #else
 				dgetrf
 #endif
 					(&m,&n,&(a(0,0)),&lda,&(ipiv[0]),info);
 				}
-inline void GETRI(int m, 
-			      psimag::Matrix<double> &a, int lda, 
-			      std::vector<int> &ipiv, 
-				  psimag::Matrix<double> &work, int lwork, int *info) 
+inline void GETRI(int m,
+			      psimag::Matrix<double> &a, int lda,
+			      std::vector<int> &ipiv,
+				  psimag::Matrix<double> &work, int lwork, int *info)
 				 {
-#ifdef glyph						
+#ifdef glyph
 				psimag::LAPACK::dgetri_
 #else
 				dgetri
@@ -67,15 +67,15 @@ inline void GETRI(int m,
 					(&m,&(a(0,0)),&lda,&(ipiv[0]),&(work(0,0)),&lwork,info);
 				}
 
-extern "C" void 
+extern "C" void
 #ifdef glyph
 	zgetrf_
 #else
 	zgetrf
 #endif
 	(int *,int *,std::complex<double> *,int *,int *,int *);
-	
-	extern "C" void 
+
+	extern "C" void
 #ifdef glyph
 	zgetri_
 #else
@@ -83,23 +83,23 @@ extern "C" void
 #endif
 	(int *, std::complex<double> *, int *, int *, std::complex<double> *, int *, int *);
 
-inline void GETRF(int m, int n, 
- 			      psimag::Matrix<std::complex<double> > &a,int lda, 
- 			      std::vector<int> &ipiv, int *info) 
+inline void GETRF(int m, int n,
+ 			      psimag::Matrix<std::complex<double> > &a,int lda,
+ 			      std::vector<int> &ipiv, int *info)
 				 {
-#ifdef glyph						
+#ifdef glyph
 				zgetrf_
 #else
 				zgetrf
 #endif
 					(&m,&n,&(a(0,0)),&lda,&(ipiv[0]),info);
 				}
-inline void GETRI(int m, 
-			      psimag::Matrix<std::complex<double> > &a, int lda, 
-			      std::vector<int> &ipiv, 
-				  psimag::Matrix<std::complex<double> > &work, int lwork, int *info) 
+inline void GETRI(int m,
+			      psimag::Matrix<std::complex<double> > &a, int lda,
+			      std::vector<int> &ipiv,
+				  psimag::Matrix<std::complex<double> > &work, int lwork, int *info)
 				 {
-#ifdef glyph						
+#ifdef glyph
 				zgetri_
 #else
 				zgetri
@@ -163,7 +163,7 @@ std::ostream& operator<<(std::ostream& os,std::vector<FieldType>& v)
 // 		{
 // 			size_t ind1(l1+l1*param.nOrb);
 // 			size_t ind2(l2+l2*param.nOrb);
-// 			chiPhys += 0.5*real(chi(ind1,ind2)) ; 
+// 			chiPhys += 0.5*real(chi(ind1,ind2)) ;
 // 		}
 // 	}
 // 	FieldType factor(1.0);
@@ -183,13 +183,13 @@ bool hasNonBlank(const std::string& b)
 template<typename FieldType>
 void loadVector(std::vector<FieldType>& v,const std::string& myfile)
 {
-	std::ifstream fin(myfile.c_str());
+    std::ifstream fin(myfile.c_str());
 	std::string buffer("");
 	while(!fin.eof()) {
 		char c;
 		fin.get(c);
 		if (c==',' || c=='\n') {
-			if (hasNonBlank(buffer)) 
+			if (hasNonBlank(buffer))
 			v.push_back(atof(buffer.c_str())); // use atoi for ints
 			buffer="";
 		} else {
@@ -207,7 +207,7 @@ std::ostream& operator<<(std::ostream& os, std::vector<MatrixTemplate<std::compl
 	size_t nel(v.size());
 	size_t nrow(v[0].n_row());
 	size_t ncol(v[0].n_col());
-	
+
 	for (size_t i=0;i<nel;i++) {
 		for (size_t j=0;j<nrow;j++) {
 			for (size_t k=0;k<ncol;k++) {
@@ -226,7 +226,7 @@ std::istream& operator>>(std::istream& is, std::vector<MatrixTemplate<std::compl
 	size_t nel(v.size());
 	size_t nrow(v[0].n_row());
 	size_t ncol(v[0].n_col());
-	
+
 	for (size_t i=0;i<nel;i++) {
 		for (size_t j=0;j<nrow;j++) {
 			for (size_t k=0;k<ncol;k++) {
@@ -253,9 +253,9 @@ void eigen(std::vector<FieldType>& eigenvals, MatrixTemplate<std::complex<FieldT
 }
 
 template<typename FieldType, template<typename> class MatrixTemplate>
-void calcRPAResult(MatrixTemplate<std::complex<FieldType> >& matrix0, 
-				   MatrixTemplate<std::complex<FieldType> >& interactionMatrix, 
-				   MatrixTemplate<std::complex<FieldType> >& matrix1, 
+void calcRPAResult(MatrixTemplate<std::complex<FieldType> >& matrix0,
+				   MatrixTemplate<std::complex<FieldType> >& interactionMatrix,
+				   MatrixTemplate<std::complex<FieldType> >& matrix1,
 				   std::vector<FieldType> q=std::vector<FieldType>(3,0.0)) {
 	int n = interactionMatrix.n_row();
 	// int m = matrix0.n_col();
@@ -290,9 +290,9 @@ void calcRPAResult(MatrixTemplate<std::complex<FieldType> >& matrix0,
 }
 
 template<typename FieldType, typename SuscType, template<typename> class MatrixTemplate>
-void calcRPAResult(SuscType& matrix0, 
-		   MatrixTemplate<std::complex<FieldType> >& interactionMatrix, 
-		   SuscType& matrix1, 
+void calcRPAResult(SuscType& matrix0,
+		   MatrixTemplate<std::complex<FieldType> >& interactionMatrix,
+		   SuscType& matrix1,
 		   std::vector<FieldType> q=std::vector<FieldType>(3,0.0)) {
 	int n = interactionMatrix.n_row();
 	std::vector<int> ipiv(n);

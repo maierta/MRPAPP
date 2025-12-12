@@ -186,7 +186,9 @@ namespace psimag {
   //====================================================================== Transposed Col Slice
   
   template<typename MatrixLikeType>
-  class TransposedColSlice {
+  class TransposedColSlice:
+    public ColSlice<MatrixLikeType> 
+  {
   public:
     
     typedef TransposedRowSlice<MatrixLikeType>  ThisType;

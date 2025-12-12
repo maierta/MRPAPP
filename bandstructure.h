@@ -389,6 +389,7 @@ public:
       for (size_t ik = 0; ik < nktot; ik++) {
         std::vector<FieldType> k(3);
         kmesh.momenta.getRow(ik, k);
+        // std::cout << k[2] / param.pi_f << "\n";
         os << k[0] / param.pi_f << "," << k[1] / param.pi_f << ","
            << k[2] / param.pi_f;
         for (size_t i = 0; i < nbands; ++i)

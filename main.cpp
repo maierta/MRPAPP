@@ -74,11 +74,15 @@ void calcBands(rpa::parameters<Field, MatrixTemplate, ConcurrencyType> &param,
 
   // Now that chemical potential is fixed to give target filling, calculate
   // bandstructure
-  std::vector<FieldType> p1 = {1., 0, 0};
-  std::vector<FieldType> p2 = {0, 1., 0};
-  std::vector<FieldType> p3 = {0, 0, 1.};
+  // std::vector<FieldType> p1 = {2, 0, 0};
+  // std::vector<FieldType> p2 = {0, 2, 0};
+  // std::vector<FieldType> p3 = {0, 0, 2};
+  // rpa::momentumDomain<Field, psimag::Matrix, ConcurrencyType> kmeshS(
+  //     param, conc, param.nkBands, param.nkIntz, param.dimension, p1, p2, p3);
+
   rpa::momentumDomain<Field, psimag::Matrix, ConcurrencyType> kmeshS(
-      param, conc, param.nkBands, param.nkIntz, param.dimension, p1, p2, p3);
+      param, conc, param.nkBands, param.nkIntz, param.dimension);
+
   kmeshS.set_momenta(false);
   rpa::bandstructure<Field, psimag::Matrix, ModelType, ConcurrencyType> bandsS(
       param, model, conc, kmeshS, false);
@@ -146,6 +150,8 @@ int main(int argc, char *argv[]) {
   typedef bandstructure<FieldType, psimag::Matrix, ModelType, ConcurrencyType>
       BandsType;
   if (param.options.find("calcFS") != std::string::npos) {
+    if (concurrency.rank() == 0)
+      std::cout << "Now setting up Fermi surface \n";
     ferminator<FieldType, BandsType, psimag::Matrix, ModelType, ConcurrencyType>
         FSpoints(param, model, concurrency, 1);
   }

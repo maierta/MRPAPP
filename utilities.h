@@ -147,9 +147,9 @@ inline void calcInverse(MType& matrix) {
 }
 
 template<typename FieldType>
-std::ostream& operator<<(std::ostream& os,std::vector<FieldType>& v)
-{
-	for (size_t i=0;i<v.size()-1;i++) os <<v[i]<< " "; os << v[v.size()-1];
+std::ostream& operator<<(std::ostream& os,std::vector<FieldType>& v) {
+    for (size_t i=0;i<v.size()-1;i++) os <<v[i]<< " ";
+    os << v[v.size()-1];
 	return os;
 }
 

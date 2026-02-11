@@ -83,7 +83,7 @@ public:
     for (size_t i = 0; i < nLinesTotal; i++) {
       size_t l1(size_t(data[i * length + 3] - 1));
       size_t l2(size_t(data[i * length + 4] - 1));
-      if (l1 < 0 | l2 < 0) {
+      if ((l1 < 0) | (l2 < 0)) {
         std::cout << " Orbital index must be larger than 0; bailing out! \n";
         exit(0);
       }

@@ -70,7 +70,9 @@ namespace psimag {
 	nRow=0; nCol=0; lDim=0; owner=true; data=0; col=0; 
       } 
       if(val==T(0))
-	memset(data,0,sizeof(T)*lDim*nCol);
+	for (size_t i = 0; i < lDim * nCol; ++i)
+	    data[i] = T{};
+	// memset(data,0,sizeof(T)*lDim*nCol);
       else
 	for(size_type i=0;i<nCol*lDim;i++) 
 	  data[i]=val;

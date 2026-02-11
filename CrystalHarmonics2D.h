@@ -175,7 +175,7 @@ namespace rpa {
 			kRot[2] = kvector[2];
 
 			// Build amplitudes w_j(kz)
-			std::vector<FieldType> wofkz(3,0);
+			std::vector<FieldType> wofkz(4,0);
 			for (size_t j=0;j<4;j++) {
 				wofkz[j] = 0.0;
 				for (size_t i=0;i<7;i++) {

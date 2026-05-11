@@ -2103,6 +2103,19 @@ public:
         kFz.push_back(kz);
         deltakF.push_back(dkF);
         kFtoBand.push_back(band);
+        // Check if k-point is really on the FS
+        VectorType w(param.nOrb);
+        ComplexMatrixType v(param.nOrb, param.nOrb);
+        VectorType k(3, 0);
+        k[0] = kx;
+        k[1] = ky;
+        k[2] = kz;
+        bands.getBands(k, w, v);
+        FieldType ek(w[band]);
+        if (std::abs(ek) > 0.01) {
+          if (conc.rank() == 0)
+              std::cout << "Warning: k-point " << k << " is not on the FS! Ek = " << ek << "\n";
+        }
         FieldType vk = calcVkF(kx, ky, kz, band, param.dimension);
         vkF.push_back(vk);
         size_t ic(kFx.size() - 1);

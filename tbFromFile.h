@@ -575,7 +575,7 @@ public:
       }
     }
     Field factor(1.0);
-    // if (param.sublattice==1) factor=param.nSitesPerUnitCell;
+    if (param.sublattice==1) factor=param.nSitesPerUnitCell;
     return chiPhys / factor;
   }
 

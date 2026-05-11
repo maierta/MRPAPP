@@ -70,9 +70,9 @@ def eigen(file, firstBZ, bStar, returnEvec, ncols, nrows, evList):
     nkz = unique(kf[:, 2]).shape[0]
     print(nkz, "different kz values!")
 
-    dd = pd.DataFrame([[kf[i, 0], kf[i, 1], evec[i, evList[0]], evList[0]] for i in range(nk)], columns=["kx", "ky", "evec", "index"])
+    dd = pd.DataFrame([[kf[i, 0], kf[i, 1], evec[evList[0], i], evList[0], e[evList[0]]] for i in range(nk)], columns=["kx", "ky", "evec", "index", "lambda"])
     for j in range(1, len(evList)):
-        dd2 = pd.DataFrame([[kf[i, 0], kf[i, 1], evec[i, evList[j]], evList[j]] for i in range(nk)], columns=["kx", "ky", "evec", "index"])
+        dd2 = pd.DataFrame([[kf[i, 0], kf[i, 1], evec[evList[j], i], evList[j], e[evList[j]]] for i in range(nk)], columns=["kx", "ky", "evec", "index", "lambda"])
         dd = pd.concat([dd, dd2], ignore_index=True)
 
     dd.to_csv(file+"_Plot_Gap.jsn_eigenvectors.csv", index=False)
@@ -123,15 +123,20 @@ def eigen(file, firstBZ, bStar, returnEvec, ncols, nrows, evList):
                     cc = (
                         evec[evList[index], :] / abs(evec[evList[index], :]).max()
                     )  # normalize
+                    col = ["darkgreen"] * nk
+                    for ik in range(0, nk):
+                        if sign(cc[ik]) < 0:
+                            col[ik] = "orange"
                     ax[i].scatter(
                         kf[:, 0] / pi,
                         kf[:, 1] / pi,
-                        c=cc,
-                        cmap=get_cmap("RdBu_r"),
-                        s=50,
+                        c=col,
+                        # cmap=get_cmap("RdBu_r"),
+                        s=100 * abs(cc),
+                        # s=50,
                         lw=0.2,
-                        vmin=-1,
-                        vmax=1,
+                        # vmin=-1,
+                        # vmax=1,
                     )
                     ax[i].set_aspect("equal")
                     ax[i].grid(color="darkgrey")
@@ -192,14 +197,14 @@ if __name__ == "__main__":
         "--b1",
         type=float,
         nargs="+",
-        default=[1, 0],
+        default=[2, 0],
         help="reciprocal lattice vector b1 in units of pi",
     )
     parser.add_argument(
         "--b2",
         type=float,
         nargs="+",
-        default=[0, 1],
+        default=[0, 2],
         help="reciprocal lattice vector b2 in units of pi",
     )
     input_args = parser.parse_args()
@@ -219,5 +224,6 @@ if __name__ == "__main__":
         evList=input_args.evList,
     )
     print(f"{kf.shape[0]} points on the Fermi surface")
+    # print(kf)
     # for i in range(kf.shape[0]):
     #     print(kf[i, 0], " , ", kf[i, 1], " , ", ev[:, i])

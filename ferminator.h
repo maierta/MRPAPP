@@ -2098,6 +2098,7 @@ public:
             std::cout << "Too many bands! Exiting ... \n";
           exit(0);
         }
+        // std::cout << "kF=" << kx << " " << ky << " " << kz << " band=" << band << "\n";
         kFx.push_back(kx);
         kFy.push_back(ky);
         kFz.push_back(kz);

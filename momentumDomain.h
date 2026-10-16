@@ -472,6 +472,7 @@ public:
   void set_momenta_Path3() { // Gamma -> X -> M -> Gamma -> Z -> R -> A -> Z
 
     size_t nks(nk / 7);
+    
     size_t ind(0);
     for (size_t ik = 0; ik < nks; ik++) { // Gamma -> X // 0 --> 0.5*b1
       momenta(ind, 0) = float(ik) / float(nks) * 0.5 * (*this).b(0, 0);

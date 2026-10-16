@@ -43,7 +43,7 @@ def shift21BZ(Kin, bStar):
 # def eigen(file = "Gap.jsn",firstBZ=True,returnEvec=0, ncols=5, nrows=2, evList=list(range(0,10))):
 def eigen(file, firstBZ, bStar, returnEvec, ncols, nrows, evList):
     data = eval(open(file).read())
-
+    
     U = np.array(data["U"])
     Up = np.array(data["Up"])
     J = np.array(data["J"])

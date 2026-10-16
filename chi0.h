@@ -157,6 +157,22 @@ public:
         chi0matrix(i, j) = ComplexType(0.0, 0.0);
 
     ComplexMatrixType Sm(nOrb, nOrb);
+    VectorType k(3), kq(3);
+    ComplexMatrixType c0(nOrb * nOrb, nOrb);
+    ComplexMatrixType c1(nOrb * nOrb, nOrb * nOrb);
+    std::vector<size_t> ind1Map(msize * msize), ind2Map(msize * msize);
+    std::vector<bool> diagonalMap(msize * msize, false);
+    for (size_t i = 0; i < msize; ++i) {
+      const size_t l1 = param.indexToOrb(i, 0);
+      const size_t l3 = param.indexToOrb(i, 1);
+      for (size_t j = 0; j < msize; ++j) {
+        const size_t l4 = param.indexToOrb(j, 0);
+        const size_t l2 = param.indexToOrb(j, 1);
+        ind1Map[i * msize + j] = param.OrbsToIndex(l1, l2);
+        ind2Map[i * msize + j] = param.OrbsToIndex(l3, l4);
+        diagonalMap[i * msize + j] = (l1 == l2 && l3 == l4);
+      }
+    }
     VectorType *ekq(&bands.ekq[0]);
     VectorType *ek(&bands.ek[0]);
     ComplexMatrixType *Mkq(&bands.Mkq[0]);
@@ -169,8 +185,6 @@ public:
         Mkq = &bands.Mkq[ik];
         Mk = &bands.Mk[ik];
       } else { // Need to calculate band tensors first
-        std::vector<FieldType> k(3);
-        std::vector<FieldType> kq(3);
         kmesh.momenta.getRow(ik, k);
         for (size_t i = 0; i < 3; ++i)
           kq[i] = k[i] + q[i];
@@ -189,21 +203,14 @@ public:
       }
 
       // Now build Mkq(l1,l3,b1) * Sm(b1,b2) * Mk(l4,l2,b2)
-      ComplexMatrixType c0(Mkq->n_row(), Sm.n_col());
-      ComplexMatrixType c1(c0.n_row(), Mk->n_col());
       matMul((*Mkq), Sm, c0);
       matMul(c0, (*Mk), c1);
 
       for (size_t i = 0; i < msize; i++)
         for (size_t j = 0; j < msize; j++) {
-          size_t l1 = param.indexToOrb(i, 0);
-          size_t l3 = param.indexToOrb(i, 1);
-          size_t l4 = param.indexToOrb(j, 0);
-          size_t l2 = param.indexToOrb(j, 1);
-          size_t ind1(param.OrbsToIndex(l1, l2));
-          size_t ind2(param.OrbsToIndex(l3, l4));
-          chi0matrix(ind1, ind2) += c1(i, j);
-          if (kMap_ && l1 == l2 && l3 == l4)
+          const size_t mapIndex = i * msize + j;
+          chi0matrix(ind1Map[mapIndex], ind2Map[mapIndex]) += c1(i, j);
+          if (kMap_ && diagonalMap[mapIndex])
             chi0k[ik] += real(c1(i, j));
         }
     }
@@ -236,6 +243,25 @@ public:
 
     ComplexMatrixType SmGG(nOrb, nOrb);
     ComplexMatrixType SmFF(nOrb, nOrb);
+    VectorType k(3), kq(3);
+    ComplexMatrixType c0(nOrb * nOrb, nOrb);
+    ComplexMatrixType c1(nOrb * nOrb, nOrb * nOrb);
+    ComplexMatrixType c2(nOrb * nOrb, nOrb * nOrb);
+    std::vector<size_t> ind1Map(msize * msize), ind2Map(msize * msize);
+    std::vector<size_t> ffInd1Map(msize * msize), ffInd2Map(msize * msize);
+    for (size_t i = 0; i < msize; ++i) {
+      const size_t i0 = param.indexToOrb(i, 0);
+      const size_t i1 = param.indexToOrb(i, 1);
+      for (size_t j = 0; j < msize; ++j) {
+        const size_t j0 = param.indexToOrb(j, 0);
+        const size_t j1 = param.indexToOrb(j, 1);
+        const size_t mapIndex = i * msize + j;
+        ind1Map[mapIndex] = param.OrbsToIndex(i0, j1);
+        ind2Map[mapIndex] = param.OrbsToIndex(i1, j0);
+        ffInd1Map[mapIndex] = param.OrbsToIndex(i1, j0);
+        ffInd2Map[mapIndex] = param.OrbsToIndex(j1, i0);
+      }
+    }
     VectorType *ekq, *ek;
     ComplexVectorType *gapkq, *gapk;
     ComplexMatrixType *Mkq, *Mk, *MkqFF, *MkFF;
@@ -262,8 +288,6 @@ public:
         MkqFF = &bands.MkqFF[ik];
         MkFF = &bands.MkFF[ik];
       } else { // Need to calculate band tensors first
-        std::vector<FieldType> k(3);
-        std::vector<FieldType> kq(3);
         kmesh.momenta.getRow(ik, k);
         for (size_t i = 0; i < 3; ++i)
           kq[i] = k[i] + q[i];
@@ -295,9 +319,6 @@ public:
       }
 
       // Now build Mkq(l1,l3,b1) * SmGG(b1,b2) * Mk(l4,l2,b2)
-      ComplexMatrixType c0(Mkq->n_row(), SmGG.n_col());
-      ComplexMatrixType c1(c0.n_row(), Mk->n_col());
-      ComplexMatrixType c2(c0.n_row(), Mk->n_col());
       matMul((*Mkq), SmGG, c0);
       matMul(c0, (*Mk), c1);
 
@@ -311,23 +332,12 @@ public:
 
       for (size_t i = 0; i < msize; i++)
         for (size_t j = 0; j < msize; j++) {
-          size_t l1 = param.indexToOrb(i, 0);
-          size_t l3 = param.indexToOrb(i, 1);
-          size_t l4 = param.indexToOrb(j, 0);
-          size_t l2 = param.indexToOrb(j, 1);
-          size_t ind1 = param.OrbsToIndex(l1, l2);
-          size_t ind2 = param.OrbsToIndex(l3, l4);
-          chi0matrix(ind1, ind2) += c1(i, j);
+          const size_t mapIndex = i * msize + j;
+          chi0matrix(ind1Map[mapIndex], ind2Map[mapIndex]) += c1(i, j);
           // if (param.scState) chi0matrix(ind1,ind2) += c2(i,j);
 
           if (param.scState) { // Add FF term
-            l4 = param.indexToOrb(i, 0);
-            l1 = param.indexToOrb(i, 1);
-            l2 = param.indexToOrb(j, 0);
-            l3 = param.indexToOrb(j, 1);
-            size_t ind1 = param.OrbsToIndex(l1, l2);
-            size_t ind2 = param.OrbsToIndex(l3, l4);
-            chi0matrix(ind1, ind2) += c2(i, j);
+            chi0matrix(ffInd1Map[mapIndex], ffInd2Map[mapIndex]) += c2(i, j);
           }
         }
     }

@@ -3,6 +3,7 @@
 #define UTILITIES_H
 
 #include "Matrix.h"
+#include <cassert>
 #include <vector>
 
 
@@ -113,7 +114,15 @@ typedef psimag::Matrix<std::complex<double> > ComplexMatrixType;
 typedef psimag::Matrix<double>  MatrixType;
 
 
-inline void matMul(ComplexMatrixType& matrix0, ComplexMatrixType& matrix1, ComplexMatrixType& matrix2) {
+inline void matMul(const ComplexMatrixType& matrix0,
+                   const ComplexMatrixType& matrix1,
+                   ComplexMatrixType& matrix2) {
+
+#ifndef NDEBUG
+	assert(matrix0.n_col() == matrix1.n_row());
+	assert(matrix2.n_row() == matrix0.n_row());
+	assert(matrix2.n_col() == matrix1.n_col());
+#endif
 
 	int m = matrix0.n_row();
 	int n = matrix1.n_col();
